@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "RoboRally";
-        cfg.width = 720;
-        cfg.height = 720;
+        cfg.width = 32*12;
+        cfg.height = 32*12;
 
         RoboRally roborally = new RoboRally();
 
