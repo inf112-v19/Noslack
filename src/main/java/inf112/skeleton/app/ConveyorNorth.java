@@ -9,7 +9,7 @@ public class ConveyorNorth implements GameObject{
     Sprite sprite;
 
     public ConveyorNorth(){
-        this.texture = new Texture(Gdx.files.internal("/assets/gameObjects/conveyor.png"));
+        this.texture = new Texture(Gdx.files.internal("/assets/gameObjects/conveyorNorth.png"));
         this.sprite = new Sprite(texture);
     }
 
