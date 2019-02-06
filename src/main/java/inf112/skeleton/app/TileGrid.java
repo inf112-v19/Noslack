@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 public class TileGrid{
     private Tile[][] tileGrid;
-    int rows;
-    int columns;
+    private int rows;
+    private int columns;
 
     /**
      * Default constructor.
@@ -31,8 +31,8 @@ public class TileGrid{
 
     /**
      *
-     * @param row
-     * @param column
+     * @param row: row of the requested tile
+     * @param column: column of the requested tile
      * @return Tile at specified coordinate
      */
     public Tile getTile(int row, int column){
@@ -46,7 +46,7 @@ public class TileGrid{
      * Todo:
      * Implement reading tile-layout from file, or randomisation.
      */
-    public void initiateTiles(Tile[][] tileGrid){
+    private void initiateTiles(Tile[][] tileGrid){
         for(int row = 0; row<rows; row++){
             for(int column = 0; column<columns; column++){
                 // Temporarily set to STANDARD_TILE

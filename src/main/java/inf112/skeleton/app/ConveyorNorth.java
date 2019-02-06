@@ -5,11 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class ConveyorNorth implements GameObject{
-    Texture texture;
-    Sprite sprite;
+    private Sprite sprite;
 
     public ConveyorNorth(){
-        this.texture = new Texture(Gdx.files.internal("/assets/gameObjects/conveyorNorth.png"));
+        Texture texture = new Texture(Gdx.files.internal("/assets/gameObjects/conveyorNorth.png"));
         this.sprite = new Sprite(texture);
     }
 

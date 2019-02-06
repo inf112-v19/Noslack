@@ -5,12 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Player implements GameObject{
-    private Texture texture;
     private Sprite sprite;
     private int health;
 
     public Player(){
-        this.texture = new Texture(Gdx.files.internal("/assets/gameObjects/player.png"));
+        Texture texture = new Texture(Gdx.files.internal("/assets/gameObjects/player.png"));
         this.sprite = new Sprite(texture);
         this.health = 9;
     }
