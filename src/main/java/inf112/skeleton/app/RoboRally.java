@@ -5,6 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.gameobjects.GameObject;
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class RoboRally extends Game {
     //private BitmapFont font;
@@ -99,9 +103,23 @@ public class RoboRally extends Game {
         // Work in progress
         for(int row = 0; row<GRID_ROWS; row++){
             for(int column = 0; column<GRID_COLUMNS; column++){
-                Sprite tileSprite = tileGrid.getTile(row, column).getSprite();
-                tileSprite.setPosition(drawPositionX, drawPositionY);
-                tileSprite.draw(batch);
+
+                // Retrieve current tile from grid
+                Tile tileBeingDrawn = tileGrid.getTile(row, column);
+                // Retrieve PriorityQueue of GameObjects on current tile
+                PriorityQueue<GameObject> objectsOnTile = tileBeingDrawn.getObjectsOnTile();
+
+                // Draw the tile
+                Sprite spriteOfTile = tileBeingDrawn.getSprite();
+                spriteOfTile.setPosition(drawPositionX, drawPositionY);
+                spriteOfTile.draw(batch);
+
+                // Draw GameObjects on tile
+                for (GameObject gameObject : objectsOnTile){
+                    Sprite spriteOfGameObject = gameObject.getSprite();
+                    spriteOfGameObject.setPosition(drawPositionX, drawPositionY);
+                    spriteOfGameObject.draw(batch);
+                }
 
                 this.drawPositionX += TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
             }

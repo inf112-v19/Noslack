@@ -3,18 +3,20 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 
-import java.util.ArrayList;
+import java.util.PriorityQueue;
 
-public class Tile {
+public class Tile implements GameObject{
 
-    private ArrayList<GameObject> objectsOnTile;
     private GameObjectType gameObjectType;
     private Texture texture;
     private Sprite sprite;
+    private PriorityQueue<GameObject> objectsOnTile;
 
     public Tile(GameObjectType gameObjectType){
-        objectsOnTile = new ArrayList<GameObject>();
+        objectsOnTile = new PriorityQueue<>();
         this.gameObjectType = gameObjectType;
         evaluateSprite();
     }
@@ -38,11 +40,35 @@ public class Tile {
         }
     }
 
-    public ArrayList<GameObject> getObjectsOnTile(){
+    public void addObjectOnTile(GameObject newObjectOnTile){
+        objectsOnTile.add(newObjectOnTile);
+    }
+
+    public void removeObjectFromTile(GameObject objectToRemove){
+        objectsOnTile.remove(objectToRemove);
+    }
+
+    /**
+     * Method that returns a PriorityQueue containing
+     * the GameObjects on the tile.
+     * @return  PriorityQueue of every GameObject on the tile
+     */
+    public PriorityQueue<GameObject> getObjectsOnTile(){
         return objectsOnTile;
     }
 
+    @Override
+    public GameObjectType getGameObjectType() {
+        return gameObjectType;
+    }
+
+    @Override
     public Sprite getSprite(){
         return sprite;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        return -1;
     }
 }

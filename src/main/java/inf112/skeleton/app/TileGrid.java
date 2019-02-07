@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import java.util.Iterator;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 
 public class TileGrid{
     private Tile[][] tileGrid;
