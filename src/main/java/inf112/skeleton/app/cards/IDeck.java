@@ -3,7 +3,7 @@ package inf112.skeleton.app.cards;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public interface Deck {
+public interface IDeck {
     Stack<RRCard> deck = new Stack<>();
 
     void shuffle();
