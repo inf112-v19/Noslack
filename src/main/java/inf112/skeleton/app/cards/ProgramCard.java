@@ -1,6 +1,6 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.cards;
 
-import javax.smartcardio.Card;
+import inf112.skeleton.app.Movement;
 
 /**
  * Program card lass that contains a priority and movement.

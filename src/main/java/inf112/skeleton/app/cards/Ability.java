@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.cards;
 
 public enum Ability {
     AblativeCoat, AbortSwitch,Brakes,CircuitBreaker, ConditionalProgram,

@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.cards;
 
 import java.util.ArrayList;
 import java.util.Stack;
