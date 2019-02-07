@@ -7,10 +7,12 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "PlaneTest";
-        cfg.width = 900;
-        cfg.height = 935;
+        cfg.title = "RoboRally";
+        cfg.width = 32*12;
+        cfg.height = 32*12;
 
-        new LwjglApplication(new TiledTest(), cfg);
+        RoboRally roborally = new RoboRally();
+
+        new LwjglApplication(roborally, cfg);
     }
 }
