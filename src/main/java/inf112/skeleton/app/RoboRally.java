@@ -23,7 +23,6 @@ public class RoboRally extends Game {
 
     private SpriteBatch batch;
     private TileGrid tileGrid;
-    private ProgramDeckOld programDeck;
 
     //public Deck abilityDeck;
 
@@ -35,7 +34,6 @@ public class RoboRally extends Game {
         batch = new SpriteBatch();
         currentPhase = 0;
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS);
-        programDeck = new ProgramDeckOld();
     }
 
     @Override

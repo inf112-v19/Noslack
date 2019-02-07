@@ -5,6 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class ProgramCardOld {
+
+    /**
+     * Old programCard.
+     */
+
+    /*
     private int priority;
     private ProgramTypeOld programTypeOld;
     private Texture texture;
@@ -60,5 +66,6 @@ public class ProgramCardOld {
     public int getPriority(){
         return priority;
     }
+    */
 
 }
