@@ -1,0 +1,11 @@
+
+Gruppen består av Stian, Vegard, Hans, Carl, Kristian og Halvard. Kompetansen i gruppen ...
+Vi bruker alle IntelliJ kompilator og har bestemt oss for å bruke workast som projectboard.
+
+Målet ved prosjektet er å lage spillet RoboRally, i førsteomgang slik at det er spillbart
+lokalt, med forbehold om at vi gjerne skal gjøre det mulig å spille på et LAN.
+
+Til første iterasjon tenker vi å få laget klasser for Board, Tile, Card og Deck.
+
+Gruppenavn: Noslack
+Teamlead:
