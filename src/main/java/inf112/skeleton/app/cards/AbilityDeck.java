@@ -36,6 +36,7 @@ public class AbilityDeck implements Deck {
         try{
             reader = new Scanner(file);
             while (reader.hasNext()) {
+                //ability=reader.nextLine();
                 deckList.add(new AbilityCard(reader.nextLine()));
             }
         }
