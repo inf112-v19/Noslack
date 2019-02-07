@@ -1,10 +1,12 @@
 package inf112.skeleton.app;
 
+import javax.smartcardio.Card;
+
 /**
  * Program card lass that contains a priority and movement.
   */
 
-public class ProgramCard {
+public class ProgramCard implements RRCard {
     private int priority;
     private Movement Move;
 
@@ -63,12 +65,9 @@ public class ProgramCard {
         }
     }
 
-    /**
-     * Render graphics of program card.
-     */
-    public void render(){
-        /* TODO
-        * Placement for graphics
-        */
+
+    @Override
+    public void render() {
+
     }
 }
