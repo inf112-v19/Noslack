@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.cards.Movement;
 import inf112.skeleton.app.cards.ProgramCard;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class ProgramCardTest {
         String move ="U Turn";
         ProgramCard card = new ProgramCard(priority,move);
         assertTrue(priority==card.getPriority());
-        assertTrue(card.getMove()==Movement.U);
+        assertTrue(card.getMove()== Movement.U);
 
     }
 
