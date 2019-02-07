@@ -25,7 +25,7 @@ public class ProgramCard {
         return priority;
     }
 
-    /** Get Movement enum
+    /** Get Movement enum for card.
       */
     public Movement getMove() {
         return Move;
