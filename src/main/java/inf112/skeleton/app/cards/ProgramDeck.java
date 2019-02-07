@@ -37,7 +37,10 @@ public class ProgramDeck implements Deck {
         try{
             reader = new Scanner(file);
             while (reader.hasNext()) {
-                deckList.add(new ProgramCard(reader.nextInt(), reader.nextLine()));
+                priority=reader.nextInt();
+                reader.skip(" ");
+                movement=reader.nextLine();
+                deckList.add(new ProgramCard(priority, movement));
             }
         }
         catch (FileNotFoundException e){
@@ -57,7 +60,7 @@ public class ProgramDeck implements Deck {
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
-        for (int i=0;i<health;i++){
+        for (int i=0;i<health;i++) {
             playerDeck.add(deck.pop());
         }
         return playerDeck;
