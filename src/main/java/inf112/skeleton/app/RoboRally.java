@@ -24,7 +24,7 @@ public class RoboRally extends Game {
     private SpriteBatch batch;
     private TileGrid tileGrid;
 
-    //public Deck abilityDeck;
+    //public IDeck abilityDeck;
 
     @Override
     public void create() {
