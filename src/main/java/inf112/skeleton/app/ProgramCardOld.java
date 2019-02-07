@@ -4,20 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class ProgramCard {
+public class ProgramCardOld {
     private int priority;
-    private ProgramType programType;
+    private ProgramTypeOld programTypeOld;
     private Texture texture;
     private Sprite sprite;
 
-    public ProgramCard(int priority, ProgramType programType){
+    public ProgramCardOld(int priority, ProgramTypeOld programTypeOld){
         this.priority = priority;
-        this.programType = programType;
+        this.programTypeOld = programTypeOld;
         evaluateSprite();
     }
 
     private void evaluateSprite(){
-        switch(programType){
+        switch(programTypeOld){
             case MOVE_ONE:
                 texture = new Texture(Gdx.files.internal("/assets/moveOneSprite.png"));
                 sprite = new Sprite(texture);

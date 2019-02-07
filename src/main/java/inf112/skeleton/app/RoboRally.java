@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.gameobjects.GameObject;
 
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game {
@@ -24,7 +23,7 @@ public class RoboRally extends Game {
 
     private SpriteBatch batch;
     private TileGrid tileGrid;
-    private ProgramDeck programDeck;
+    private ProgramDeckOld programDeck;
 
     //public Deck abilityDeck;
 
@@ -36,7 +35,7 @@ public class RoboRally extends Game {
         batch = new SpriteBatch();
         currentPhase = 0;
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS);
-        programDeck = new ProgramDeck();
+        programDeck = new ProgramDeckOld();
     }
 
     @Override
