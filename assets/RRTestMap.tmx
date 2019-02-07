@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="300" tileheight="300" infinite="0" nextlayerid="13" nextobjectid="8">
+ <tileset firstgid="1" source="RoboRallyTest.tsx"/>
+ <tileset firstgid="92" source="Holes.tsx"/>
+ <layer id="1" name="Base" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjZWBgYB3Fo5hMDAAyDQLR
+  </data>
+ </layer>
+ <layer id="4" name="Roads" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJwTYsAOeHCIiwGxEAnqYXp4oRgGJIBYBIidoTQMEwLo9ujhwApEuAsZ6NBYPQwMN/UArMADJg==
+  </data>
+ </layer>
+ <layer id="6" name="Walls &amp; Lasers" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAAKSQ8FIA0AXklIFZGwoTUUxNoQGlkO/HZr0VAPXqcyEAxMoCpFyXGgRSoRwYAnB4Cmw==
+  </data>
+ </layer>
+ <layer id="12" name="Holes" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAMsNFY/XABtA6ngVIPACcwACs=
+  </data>
+ </layer>
+ <layer id="9" name="Repair &amp; Rotate" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgagA+Nr09n+w3IlCMFsFPJHGqbhQ8AAMwMAKw=
+  </data>
+ </layer>
+ <layer id="10" name="Flags" width="12" height="12" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBgcGMgDCyIUDMKSAf2A+0AKDAkUx8ATe8A7w==
+  </data>
+ </layer>
+</map>
