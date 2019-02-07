@@ -2,11 +2,19 @@ package inf112.skeleton.app.cards;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class AbilityDeckTest {
+    private String filename = "inf112/skeleton/app/cards/testDocs/testAbility.txt";
 
     @Test
-    public void createDeck() {
+    public void getAbilityTest() {
+        Deck deck = new AbilityDeck(filename);
+        ArrayList<RRCard> testDeck;
+        testDeck=deck.deal(0);
+        AbilityCard card = (AbilityCard)testDeck.get(0);
+        assertSame(Ability.DoubleBarreledLaser,card.getAbility());
     }
 }
