@@ -1,7 +1,5 @@
 package inf112.skeleton.app.cards;
 
-import inf112.skeleton.app.Movement;
-
 /**
  * Program card lass that contains a priority and movement.
   */
