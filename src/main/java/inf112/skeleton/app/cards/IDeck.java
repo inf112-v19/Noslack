@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Scanner;
 
-public interface Deck {
+public interface IDeck {
     void createDeck();
 
     /**

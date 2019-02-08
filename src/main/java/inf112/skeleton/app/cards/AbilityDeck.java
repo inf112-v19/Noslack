@@ -7,7 +7,7 @@ import java.util.Stack;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class AbilityDeck implements Deck {
+public class AbilityDeck implements IDeck {
     private Stack<RRCard> deck;
     private ArrayList<RRCard> deckList;
     private String ability;

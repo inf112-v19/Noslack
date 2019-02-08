@@ -12,7 +12,7 @@ public class ProgramDeckTest {
 
     @Test
     public void sizeTest() {
-        Deck deck = new ProgramDeck(filename);
+        IDeck deck = new ProgramDeck(filename);
         ArrayList<RRCard> testDeck;
 
         testDeck=deck.deal(1);
@@ -21,7 +21,7 @@ public class ProgramDeckTest {
 
     @Test
     public void getInformationOnElement() {
-        Deck deck = new ProgramDeck(filename);
+        IDeck deck = new ProgramDeck(filename);
         ArrayList<RRCard> testDeck;
         //ProgramCard card= new ProgramCard(820,"Move 3");
         ProgramCard card;

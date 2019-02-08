@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class ProgramDeck implements Deck {
+public class ProgramDeck implements IDeck {
     private ArrayList<RRCard> deckList;
     private Stack<RRCard> deck;
     private File file;

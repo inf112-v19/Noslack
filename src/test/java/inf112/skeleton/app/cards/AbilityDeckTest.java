@@ -11,7 +11,7 @@ public class AbilityDeckTest {
 
     @Test
     public void sizeTest() {
-        Deck deck = new AbilityDeck(filename);
+        IDeck deck = new AbilityDeck(filename);
         ArrayList<RRCard> testDeck;
 
         testDeck=deck.deal(0);
@@ -20,7 +20,7 @@ public class AbilityDeckTest {
 
     @Test
     public void getAbilityTest() {
-        Deck deck = new AbilityDeck(filename);
+        IDeck deck = new AbilityDeck(filename);
         ArrayList<RRCard> testDeck;
         testDeck=deck.deal(0);
         AbilityCard card = (AbilityCard)testDeck.get(0);
