@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class AbilityDeck implements Deck {
-    private Scanner reader;
     private Stack<RRCard> deck;
     private ArrayList<RRCard> deckList;
     private String ability;
@@ -16,10 +15,12 @@ public class AbilityDeck implements Deck {
 
     /**
      * Creates a deck of cards
-     * @param fileName Name of file that is to be read into the game
+     * @param fileName File needs to be placed in cardDocs directory
      */
     public AbilityDeck(String fileName){
-        file =new File(fileName);
+        fileName = ".\\src\\main\\java\\inf112\\skeleton\\app\\cards\\cardDocs\\"+fileName;
+        file = new File(fileName);
+        //file =new File(fileName);
         deck  = new Stack<>();
         deckList = new ArrayList<>();
         createDeck();
@@ -34,11 +35,11 @@ public class AbilityDeck implements Deck {
     @Override
     public void createDeck() {
         try{
-            reader = new Scanner(file);
+            Scanner reader = new Scanner(file);
             while (reader.hasNext()) {
-                //ability=reader.nextLine();
                 deckList.add(new AbilityCard(reader.nextLine()));
             }
+            reader.close();
         }
         catch (FileNotFoundException e){
             e.printStackTrace();

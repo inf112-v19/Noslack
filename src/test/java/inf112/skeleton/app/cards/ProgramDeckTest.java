@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 
 public class ProgramDeckTest {
-    private String filename = "inf112/skeleton/app/cards/testDocs/testProgram.txt";
+    private String filename = "testProgram.txt";
 
     @Test
     public void sizeTest() {

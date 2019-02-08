@@ -7,7 +7,16 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class AbilityDeckTest {
-    private String filename = "inf112/skeleton/app/cards/testDocs/testAbility.txt";
+    private String filename = "testAbility.txt";
+
+    @Test
+    public void sizeTest() {
+        Deck deck = new AbilityDeck(filename);
+        ArrayList<RRCard> testDeck;
+
+        testDeck=deck.deal(0);
+        assertEquals(1,testDeck.size());
+    }
 
     @Test
     public void getAbilityTest() {
