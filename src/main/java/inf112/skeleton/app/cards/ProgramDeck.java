@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class ProgramDeck implements Deck {
-    private Scanner reader;
     private ArrayList<RRCard> deckList;
     private Stack<RRCard> deck;
     private File file;
@@ -17,9 +16,10 @@ public class ProgramDeck implements Deck {
 
     /**
      * Creates the deck of cards
-     * @param fileName Name of file that is to be read into the game
+     * @param fileName File needs to be placed in cardDocs directory
      */
     public ProgramDeck(String fileName){
+        fileName = ".\\src\\main\\java\\inf112\\skeleton\\app\\cards\\cardDocs\\"+fileName;
         file = new File(fileName);
         deck  = new Stack<>();
         deckList = new ArrayList<>();
@@ -35,13 +35,14 @@ public class ProgramDeck implements Deck {
     @Override
     public void createDeck() {
         try{
-            reader = new Scanner(file);
+            Scanner reader = new Scanner(file);
             while (reader.hasNext()) {
                 priority=reader.nextInt();
                 reader.skip(" ");
                 movement=reader.nextLine();
                 deckList.add(new ProgramCard(priority, movement));
             }
+            reader.close();
         }
         catch (FileNotFoundException e){
             e.printStackTrace();
