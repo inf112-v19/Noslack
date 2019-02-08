@@ -4,7 +4,7 @@ package inf112.skeleton.app.cards;
  * Abillty cards for the game RoboRally.
  * Uses the interface RRCard
  */
-public class AbilityCard implements RRCard {
+public class AbilityCard extends RRCard {
     private Ability ability;
 
 
@@ -108,7 +108,7 @@ public class AbilityCard implements RRCard {
         return ability;
     }
 
-    @Override
+    
     public void render() {
 
     }
