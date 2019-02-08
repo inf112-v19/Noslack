@@ -11,8 +11,6 @@ public class ProgramDeck implements IDeck {
     private ArrayList<RRCard> deckList;
     private Stack<RRCard> deck;
     private File file;
-    private int priority;
-    private String movement;
 
     /**
      * Creates the deck of cards
@@ -37,9 +35,9 @@ public class ProgramDeck implements IDeck {
         try{
             Scanner reader = new Scanner(file);
             while (reader.hasNext()) {
-                priority=reader.nextInt();
+                int priority=reader.nextInt();
                 reader.skip(" ");
-                movement=reader.nextLine();
+                String movement=reader.nextLine();
                 deckList.add(new ProgramCard(priority, movement));
             }
             reader.close();
