@@ -27,13 +27,13 @@ public class ProgramDeckTest {
         ProgramCard card;
 
         int priority=820;
-        Movement movement = Movement.MOVE3;
+        Program program = Program.MOVE3;
 
         testDeck=deck.deal(1);
         card=(ProgramCard)testDeck.get(0);
 
         assertEquals(priority,card.getPriority());
-        assertSame(movement,card.getMove());
+        assertSame(program,card.getMove());
 
 
     }

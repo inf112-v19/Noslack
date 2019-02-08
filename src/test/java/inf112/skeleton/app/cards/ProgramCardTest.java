@@ -1,7 +1,5 @@
 package inf112.skeleton.app.cards;
 
-import inf112.skeleton.app.cards.Movement;
-import inf112.skeleton.app.cards.ProgramCard;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +12,7 @@ public class ProgramCardTest {
         String move ="U Turn";
         ProgramCard card = new ProgramCard(priority,move);
         assertEquals(priority,card.getPriority());
-        assertSame(card.getMove(),Movement.U);
+        assertSame(card.getMove(), Program.U);
 
     }
 
@@ -24,6 +22,6 @@ public class ProgramCardTest {
         String move = "Move 3";
         ProgramCard card = new ProgramCard(priority,move);
         assertEquals(priority,card.getPriority());
-        assertSame(card.getMove(),Movement.MOVE3);
+        assertSame(card.getMove(), Program.MOVE3);
     }
 }

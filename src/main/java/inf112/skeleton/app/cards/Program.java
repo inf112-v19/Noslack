@@ -1,8 +1,8 @@
 package inf112.skeleton.app.cards;
 
 /**
- * Movement enum
+ * Program enum
  */
-public enum Movement {
+public enum Program {
     MOVE1, MOVE2, MOVE3, BACK, RIGHT, LEFT, U
 }
