@@ -39,6 +39,8 @@ public class Player implements GameObject {
         return sprite;
     }
 
+    public int getHealth(){return health;}
+
     public void updateOrientation(Orientation orientation){
         this.orientation = orientation;
     }
