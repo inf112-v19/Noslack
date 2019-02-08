@@ -3,8 +3,13 @@ package inf112.skeleton.app.gameobjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.cards.*;
+
+import java.util.ArrayList;
 
 public class Player implements GameObject {
+    private ArrayList<ProgramCard> ProgramCards;
+    private ArrayList<AbilityCard> AbilityCards;
     private Texture texture;
     private Sprite sprite;
     private int health;
@@ -76,19 +81,45 @@ public class Player implements GameObject {
     }
 
     /**
+     * Give Cards to Player
+     * @param AbilityCards IDeck of AbilityCards
+     * @param ProgramCards IDeck of ProgramCards
+     */
+    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
+        for (RRCard card:ProgramCards) this.ProgramCards.add((ProgramCard) card);
+        for (RRCard card:AbilityCards)this.AbilityCards.add((AbilityCard) card);
+    }
+
+    /**
      * Removes one health from the player.
      */
-    public void recieveDamage(){
-        this.health--;
-    }
+    public void recieveDamage(){this.health--;}
 
     /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).
      */
     public void repair(){
-        if(health < 9) {
-            this.health++;
-        }
+        if(health < 9)this.health++;
     }
 
+    /**
+     * Reset player for new round
+     */
+    public void reset(){
+        ProgramCards.clear();
+        AbilityCards.clear();
+
+    }
+
+    /**
+     *
+     * @return Player AbilityDeck
+     */
+    public ArrayList<AbilityCard> getAbilityCards(){return AbilityCards;}
+
+    /**
+     *
+     * @return Players ProgramDeck
+     */
+    public ArrayList<ProgramCard> getProgramCards(){return ProgramCards;}
 }

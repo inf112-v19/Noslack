@@ -24,6 +24,7 @@ public class ProgramDeck implements IDeck {
         createDeck();
     }
 
+
     @Override
     public void reset() {
         deck.clear();
@@ -56,6 +57,11 @@ public class ProgramDeck implements IDeck {
         deckList.clear();
     }
 
+    /**
+     *
+     * @param health Player health.
+     * @return ArrayList og ProgramCards
+     */
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();

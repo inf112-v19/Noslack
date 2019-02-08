@@ -17,6 +17,7 @@ public class AbilityDeck implements IDeck {
      * @param fileName File needs to be placed in cardDocs directory
      */
     public AbilityDeck(String fileName){
+
         fileName = ".\\src\\main\\java\\inf112\\skeleton\\app\\cards\\cardDocs\\"+fileName;
         file = new File(fileName);
         //file =new File(fileName);
@@ -55,7 +56,11 @@ public class AbilityDeck implements IDeck {
     }
 
 
-
+    /**
+     *
+     * @param health Player health.
+     * @return ArrayList of AbilityCards
+     */
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
