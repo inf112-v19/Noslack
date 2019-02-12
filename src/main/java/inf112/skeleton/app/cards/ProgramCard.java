@@ -4,7 +4,7 @@ package inf112.skeleton.app.cards;
  * Program card lass that contains a priority and movement.
   */
 
-public class ProgramCard extends RRCard {
+public class ProgramCard implements RRCard {
     private int priority;
     private Program Move;
 
@@ -66,6 +66,11 @@ public class ProgramCard extends RRCard {
 
 
     public void render() {
+
+    }
+
+    @Override
+    public void evaluateSprite() {
 
     }
 }
