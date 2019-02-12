@@ -1,12 +1,18 @@
 package inf112.skeleton.app.cards;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * Program card lass that contains a priority and movement.
   */
 
-public class ProgramCard extends RRCard {
+public class ProgramCard implements RRCard {
     private int priority;
-    private Program Move;
+    private Program move;
+    private Sprite sprite;
+    private Texture texture;
 
     /**
      *
@@ -15,57 +21,87 @@ public class ProgramCard extends RRCard {
      */
     public ProgramCard(int priority, String move) {
         this.priority = priority;
-        translateMove(move);
+        this.move=translateMove(move);
+        // evaluateSprite();
     }
 
     /** Get priority int
      */
-
     public int getPriority() {
-        return priority;
+        return this.priority;
     }
 
     /** Get Program enum for card.
       */
     public Program getMove() {
-        return Move;
+        return this.move;
     }
 
     /**
      * Translate string to Program
      * @param s description og movement to be translated.
      */
-    private void translateMove (String s){
+    private Program translateMove (String s){
         switch (s) {
             case "U Turn":
-                Move= Program.U;
-                break;
+                return Program.U;
             case "Rotate Left":
-                Move = Program.LEFT;
-                break;
+                return Program.LEFT;
             case "Rotate Right":
-                Move = Program.RIGHT;
-                break;
+                return Program.RIGHT;
             case "Back Up":
-                Move = Program.BACK;
-                break;
+                return Program.BACK;
             case "Move 1":
-                Move = Program.MOVE1;
-                break;
+                return Program.MOVE1;
             case "Move 2":
-                Move = Program.MOVE2;
-                break;
+                return Program.MOVE2;
             case "Move 3":
-                Move = Program.MOVE3;
-                break;
+                return Program.MOVE3;
             default:
                 throw new IllegalArgumentException("Invalid move: " + s);
         }
     }
 
 
+    @Override
+    public void evaluateSprite() {
+        /*
+        * Todo:
+        * Add cases for each Program enum to evaluate
+        * into each texture.
+        */
+        switch(this.move){
+            case U:
 
-    public void render() {
+                break;
+            case MOVE1:
 
+                break;
+            case MOVE2:
+
+                break;
+            case MOVE3:
+
+                break;
+            case BACK:
+
+                break;
+            case LEFT:
+
+                break;
+
+            case RIGHT:
+
+                break;
+            default: this.texture = new Texture(Gdx.files.internal("./assets/error.png"));
+
+        }
+
+        this.sprite = new Sprite(texture);
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return this.sprite;
     }
 }

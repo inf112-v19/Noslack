@@ -1,6 +1,10 @@
 package inf112.skeleton.app.cards;
 
-public abstract class RRCard {
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public interface RRCard {
+    void  evaluateSprite();
+    Sprite getSprite();
 
 
 }
