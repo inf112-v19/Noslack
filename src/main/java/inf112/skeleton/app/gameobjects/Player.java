@@ -58,16 +58,16 @@ public class Player implements GameObject {
      */
     public void evaluateSprite(){
         if(this.orientation == Orientation.FACING_NORTH) {
-            texture = new Texture(Gdx.files.internal("/assets/gameObjects/playerFacingNorth.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingNorth.png"));
         }
         if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("/assets/gameObjects/playerFacingWest.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingWest.png"));
         }
         if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("/assets/gameObjects/playerFacingSouth.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingSouth.png"));
         }
         if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("/assets/gameObjects/playerFacingEast.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingEast.png"));
         }
 
         this.sprite = new Sprite(texture);

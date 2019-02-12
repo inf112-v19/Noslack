@@ -2,10 +2,14 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.PriorityQueue;
 
@@ -16,6 +20,10 @@ public class RoboRally extends Game {
     private final int TILE_SIZE = 32;
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 12;
+
+    // Dealt cards background texture and sprite.
+    private Texture dealtCardsBackgroundTexture;
+    private Sprite dealtCardsBackgroundSprite;
 
     private int drawPositionX;
     private int drawPositionY;
@@ -28,12 +36,18 @@ public class RoboRally extends Game {
 
     @Override
     public void create() {
+        // Load Dealt cards background texture and sprite.
+
+
+        this.dealtCardsBackgroundTexture = new Texture(Gdx.files.internal("./assets/cards/dealtCardsBackground.png"));
+        this.dealtCardsBackgroundSprite = new Sprite(dealtCardsBackgroundTexture);
+
         this.drawPositionX = 0;
         this.drawPositionY = 0;
 
         batch = new SpriteBatch();
         currentPhase = 0;
-        tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS);
+        tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS, 1);
     }
 
     @Override
@@ -45,6 +59,7 @@ public class RoboRally extends Game {
         performPhase();
         activateTiles();
         renderGrid();
+        renderDealtCards();
         batch.end();
     }
 
@@ -53,6 +68,13 @@ public class RoboRally extends Game {
             performProgrammingPhase();
             currentPhase++;
             return;
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+            tileGrid.movePlayer(0, 0, -1);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+            tileGrid.movePlayer(0, 0, 1);
         }
 
         /*
@@ -84,8 +106,21 @@ public class RoboRally extends Game {
     }
 
     /**
-     * Renders the grid by looping through all
-     * the tiles and drawing each one, whilst
+     * This method renders the cards the player has
+     * been dealt.
+     */
+    private void renderDealtCards(){
+        this.drawPositionX = 0;
+        this.drawPositionY = 0;
+
+        // Draw background for dealt cards.
+
+        dealtCardsBackgroundSprite.draw(batch);
+    }
+
+    /**
+     * This method Renders the grid by looping through
+     * all the tiles and drawing each one, whilst
      * keeping track of- and updating the
      * drawposition.
      */
@@ -98,6 +133,10 @@ public class RoboRally extends Game {
          */
 
         // Work in progress
+
+        // Start draw position after the dealt cards.
+        this.drawPositionX = TILE_SIZE*4;
+        this.drawPositionY = 0;
         for(int row = 0; row<GRID_ROWS; row++){
             for(int column = 0; column<GRID_COLUMNS; column++){
 
@@ -120,7 +159,7 @@ public class RoboRally extends Game {
 
                 this.drawPositionX += TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
             }
-            this.drawPositionX = 0; // Resetting the horizontal drawPosition.
+            this.drawPositionX = TILE_SIZE*4; // Resetting the horizontal drawPosition.
             this.drawPositionY += TILE_SIZE;    // Moving the vertical drawPosition, one tile up.
         }
         // Resetting the vertical drawPosition.
