@@ -29,9 +29,7 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
-    public Orientation getOrientation() {
-        return orientation;
-    }
+
 
     /**
      * Constructor of Player class with orientation specified.
@@ -47,6 +45,10 @@ public class Player implements GameObject {
     @Override
     public Sprite getSprite() {return sprite;}
     public int getHealth(){return health;}
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
     public void updateOrientation(Orientation orientation){this.orientation = orientation;}
     @Override
     public int compareTo(Object other) {return 1; }
