@@ -19,88 +19,63 @@ public class AbilityCard implements RRCard {
      * @param ability Ability to be assigned to the card
      */
     public AbilityCard (String ability){
-        setAbility(ability);
+        this.ability=setAbility(ability);
     }
 
-    private void setAbility(String s){
+    private Ability setAbility(String s){
         switch (s) {
             case "Ablative Coat":
-                ability=Ability.AblativeCoat;
-                break;
+                return Ability.AblativeCoat;
             case "Abort Switch":
-                ability=Ability.AbortSwitch;
-                break;
+                return Ability.AbortSwitch;
             case "Brakes":
-                ability=Ability.Brakes;
-                break;
+                return Ability.Brakes;
             case "Circuit Breaker":
-                ability=Ability.CircuitBreaker;
-                break;
+                return Ability.CircuitBreaker;
             case "Conditional Program":
-                ability=Ability.ConditionalProgram;
-                break;
+                return Ability.ConditionalProgram;
             case "Crab Legs":
-                ability=Ability.CrabLegs;
-                break;
+                return Ability.CrabLegs;
             case "Double-Barreled Laser":
-                ability=Ability.DoubleBarreledLaser;
-                break;
+                return Ability.DoubleBarreledLaser;
             case "Dual Processor":
-                ability=Ability.DualProcessor;
-                break;
+                return Ability.DualProcessor;
             case "Extra Memory":
-                ability=Ability.ExtraMemory;
-                break;
+                return Ability.ExtraMemory;
             case "Fire Control":
-                ability=Ability.FireControl;
-                break;
+                return Ability.FireControl;
             case "Flywheel":
-                ability=Ability.Flywheel;
-                break;
+                return Ability.Flywheel;
             case "Fourth Gear":
-                ability=Ability.FourthGear;
-                break;
+                return Ability.FourthGear;
             case "Gyroscopic Stabilizer":
-                ability=Ability.GyroscopicStabilizer;
-                break;
+                return Ability.GyroscopicStabilizer;
             case "High-Powered Laser":
-                ability=Ability.HighPoweredLaser;
-                break;
+                return Ability.HighPoweredLaser;
             case "Mechanical Arm":
-                ability=Ability.MechanicalArm;
-                break;
+                return Ability.MechanicalArm;
             case "Mini Howitzer":
-                ability=Ability.MiniHowitzer;
-                break;
+                return Ability.MiniHowitzer;
             case "Power-Down Shield":
-                ability=Ability.PowerDownShield;
-                break;
+                return Ability.PowerDownShield;
             case "Pressor Beam":
-                ability=Ability.PressorBeam;
-                break;
+                return Ability.PressorBeam;
             case "Radio Control":
-                ability=Ability.RadioControl;
-                break;
+                return Ability.RadioControl;
             case "Ramming Gear":
-                ability=Ability.RammingGear;
-                break;
+                return Ability.RammingGear;
             case "Rear-Firing Laser":
-                ability=Ability.RearFiringLaser;
-                break;
+                return Ability.RearFiringLaser;
             case "Recompile":
-                ability=Ability.Recompile;
-                break;
+                return Ability.Recompile;
             case "Reverse Gear":
-                ability=Ability.ReverseGear;
-                break;
+                return Ability.ReverseGear;
             case "Scrambler":
-                ability= Ability.Scrambler;
+                return Ability.Scrambler;
             case "Superior Archive":
-                ability=Ability.SuperiorArchive;
-                break;
+                return Ability.SuperiorArchive;
             case "Tractor Beam":
-                ability=Ability.TractorBeam;
-                break;
+                return Ability.TractorBeam;
             default:
                 throw new IllegalArgumentException("Invalid ability: " + s);
 
@@ -122,9 +97,85 @@ public class AbilityCard implements RRCard {
          * into each texture.
          */
         switch(this.ability){
+            case AblativeCoat:
 
+                break;
+            case AbortSwitch:
+
+                break;
+            case Brakes:
+
+                break;
+            case CrabLegs:
+
+                break;
+            case CircuitBreaker:
+
+                break;
+            case ConditionalProgram:
+
+                break;
+            case DoubleBarreledLaser:
+
+                break;
+            case DualProcessor:
+
+                break;
+            case ExtraMemory:
+
+                break;
+            case FireControl:
+
+                break;
+            case Flywheel:
+
+                break;
+            case FourthGear:
+
+                break;
+            case GyroscopicStabilizer:
+
+                break;
+            case HighPoweredLaser:
+
+                break;
+            case MechanicalArm:
+
+                break;
+            case MiniHowitzer:
+
+                break;
+            case PowerDownShield:
+
+                break;
+            case PressorBeam:
+
+                break;
+            case RadioControl:
+
+                break;
+            case RammingGear:
+
+                break;
+            case Recompile:
+
+                break;
+            case RearFiringLaser:
+
+                break;
+            case ReverseGear:
+
+                break;
+            case Scrambler:
+
+                break;
+            case SuperiorArchive:
+
+                break;
+            case TractorBeam:
+
+                break;
             default: this.texture = new Texture(Gdx.files.internal("./assets/error.png"));
-
         }
 
         this.sprite = new Sprite(texture);

@@ -29,6 +29,10 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
