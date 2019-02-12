@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Round {
     private ArrayList<Player> Players;
-    public IDeck ProgramCards;
-    public IDeck AbilityCards;
+    public ProgramDeck ProgramCards;
+    public AbilityDeck AbilityCards;
 
 
     private final int FASES = 5;
@@ -36,7 +36,9 @@ public class Round {
     public void run(){
         for(int i =0;i<FASES;i++){
 
+
         }
+        reset();
     }
 
 
@@ -52,10 +54,9 @@ public class Round {
     /**
      * Reset for new round
      */
-    public void reset(){
+    protected void reset(){
         ProgramCards.reset();
         AbilityCards.reset();
         for (Player player:Players) player.reset();
-
     }
 }

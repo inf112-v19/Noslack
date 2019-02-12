@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Player implements GameObject {
     private ArrayList<ProgramCard> ProgramCards;
+    private Stack<ProgramCard> Program;
     private ArrayList<AbilityCard> AbilityCards;
     private Texture texture;
     private Sprite sprite;
@@ -36,29 +38,16 @@ public class Player implements GameObject {
         this.health = 9;
         this.orientation = orientation;
         evaluateSprite();
-
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
+    public Sprite getSprite() {return sprite;}
     public int getHealth(){return health;}
-
-    public void updateOrientation(Orientation orientation){
-        this.orientation = orientation;
-    }
-
+    public void updateOrientation(Orientation orientation){this.orientation = orientation;}
     @Override
-    public int compareTo(Object other) {
-        return 1;
-    }
-
+    public int compareTo(Object other) {return 1; }
     @Override
-    public GameObjectType getGameObjectType() {
-        return GameObjectType.PLAYER;
-    }
+    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
 
     /**
      * Method that evaluates the player's sprite based on the player's orientation.
@@ -108,18 +97,18 @@ public class Player implements GameObject {
     public void reset(){
         ProgramCards.clear();
         AbilityCards.clear();
-
     }
 
     /**
-     *
      * @return Player AbilityDeck
      */
-    public ArrayList<AbilityCard> getAbilityCards(){return AbilityCards;}
-
+    public ArrayList<AbilityCard> getAbilityCards() {return AbilityCards;}
     /**
-     *
      * @return Players ProgramDeck
      */
-    public ArrayList<ProgramCard> getProgramCards(){return ProgramCards;}
+    public ArrayList<ProgramCard> getProgramCards() {return ProgramCards;}
+    /**
+     * @return Program for round
+     */
+    public Stack<ProgramCard> getProgram() {return Program;}
 }
