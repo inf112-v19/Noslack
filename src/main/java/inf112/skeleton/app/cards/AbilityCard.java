@@ -1,11 +1,17 @@
 package inf112.skeleton.app.cards;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * Abillty cards for the game RoboRally.
  * Uses the interface RRCard
  */
 public class AbilityCard implements RRCard {
     private Ability ability;
+    private Texture texture;
+    private Sprite sprite;
 
 
     /**
@@ -115,6 +121,22 @@ public class AbilityCard implements RRCard {
 
     @Override
     public void evaluateSprite() {
+        /*
+         * Todo:
+         * Add cases for each Program enum to evaluate
+         * into each texture.
+         */
+        switch(this.ability){
 
+            default: this.texture = new Texture(Gdx.files.internal("./assets/error.png"));
+
+        }
+
+        this.sprite = new Sprite(texture);
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return this.sprite;
     }
 }

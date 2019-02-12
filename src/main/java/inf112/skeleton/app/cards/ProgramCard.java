@@ -1,5 +1,9 @@
 package inf112.skeleton.app.cards;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * Program card lass that contains a priority and movement.
   */
@@ -7,6 +11,8 @@ package inf112.skeleton.app.cards;
 public class ProgramCard implements RRCard {
     private int priority;
     private Program Move;
+    private Sprite sprite;
+    private Texture texture;
 
     /**
      *
@@ -16,6 +22,7 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority, String move) {
         this.priority = priority;
         translateMove(move);
+        evaluateSprite();
     }
 
     /** Get priority int
@@ -64,13 +71,24 @@ public class ProgramCard implements RRCard {
     }
 
 
+    @Override
+    public void evaluateSprite() {
+        /*
+        * Todo:
+        * Add cases for each Program enum to evaluate
+        * into each texture.
+        */
+        switch(this.Move){
 
-    public void render() {
+            default: this.texture = new Texture(Gdx.files.internal("./assets/error.png"));
 
+        }
+
+        this.sprite = new Sprite(texture);
     }
 
     @Override
-    public void evaluateSprite() {
-
+    public Sprite getSprite() {
+        return this.sprite;
     }
 }

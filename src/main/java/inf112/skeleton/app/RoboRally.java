@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.PriorityQueue;
 
