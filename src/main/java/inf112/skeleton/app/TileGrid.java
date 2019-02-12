@@ -18,6 +18,7 @@ public class TileGrid{
     private final String fileName = "./assets/maplayout.txt";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
+    private Coordinate[] respawnPositions;
     private Coordinate[] coordinatesOfPlayers;
 
     /**
@@ -28,6 +29,7 @@ public class TileGrid{
         this.columns = 12;
         tileGrid = new Tile[rows][columns];
         this.players = new Player[1];
+        this.respawnPositions = new Coordinate[1];
         this.coordinatesOfPlayers = new Coordinate[1];
         this.playersInitiated = 0;
 
@@ -45,6 +47,7 @@ public class TileGrid{
         this.columns = columns;
         tileGrid = new Tile[rows][columns];
         this.players = new Player[players];
+        this.respawnPositions = new Coordinate[players];
         this.coordinatesOfPlayers = new Coordinate[players];
         this.playersInitiated = 0;
 
@@ -97,6 +100,7 @@ public class TileGrid{
                                 tileGrid[row][column].addObjectOnTile(newPlayer);
                                 players[playersInitiated] = newPlayer; // Add new player to list of players.
                                 coordinatesOfPlayers[playersInitiated] = new Coordinate(row, column);
+                                respawnPositions[playersInitiated] = new Coordinate(row, column);
                                 playersInitiated++; // One more player has been initiated, move the index 1 up.
                                 break;
 
@@ -115,20 +119,54 @@ public class TileGrid{
     }
 
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
-        Player player = players[0];
 
-        for(int i = 0; i<32; i++) {
-            player.getSprite().translate(rowsToMove, columnsToMove);
-        }
-
+        Player player = players[playerNumber];
         Coordinate coordinatesOfPlayer = coordinatesOfPlayers[playerNumber];
         int rowOfPlayer = coordinatesOfPlayer.getRow();
         int columnOfPlayer = coordinatesOfPlayer.getColumn();
 
+        if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove, rowOfPlayer, columnOfPlayer)){
+            return;
+        }
 
+        player.getSprite().translate(rowsToMove * 32, columnsToMove * 32);
         tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
         tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(player);
         coordinatesOfPlayers[playerNumber] = new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove);
+    }
+
+    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove, int rowOfPlayer, int columnOfPlayer){
+
+        if((rowOfPlayer+rowsToMove > rows-1) || (rowOfPlayer+rowsToMove < 0)){
+            playerOutOfBounds(playerNumber);
+            return false;
+        }
+        if((columnOfPlayer+columnsToMove > columns-1) || (columnOfPlayer+columnsToMove < 0)){
+            playerOutOfBounds(playerNumber);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void playerOutOfBounds(int playerNumber){
+        // Respawn player
+        respawnPlayer(playerNumber);
+    }
+
+    private void respawnPlayer(int playerNumber){
+        Player player = players[playerNumber];
+
+        int rowOfPlayer = coordinatesOfPlayers[playerNumber].getRow();
+        int columnOfPlayer = coordinatesOfPlayers[playerNumber].getColumn();
+        tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
+
+        int respawnRow = respawnPositions[playerNumber].getRow();
+        int respawnColumn = respawnPositions[playerNumber].getColumn();
+        tileGrid[respawnRow][respawnColumn].addObjectOnTile(player);
+        coordinatesOfPlayers[playerNumber] = new Coordinate(respawnRow, respawnColumn);
+
+        //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
 
     public Player getPlayer(int playerNumber){
