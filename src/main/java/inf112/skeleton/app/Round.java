@@ -6,12 +6,13 @@ import inf112.skeleton.app.gameobjects.Player;
 import java.util.ArrayList;
 
 public class Round {
+
     private ArrayList<Player> Players;
     public ProgramDeck ProgramCards;
     public AbilityDeck AbilityCards;
 
 
-    private final int FASES = 5;
+    private final int PHASES = 5;
 
     /**
      * Need to decide if list of players or player nr
@@ -30,17 +31,16 @@ public class Round {
 
 
     /**
-     * Run through the fases.
+     * Run through the phases.
      * TODO
      */
     public void run(){
-        for(int i =0;i<FASES;i++){
+        for(int i =0;i<PHASES;i++){
 
 
         }
         reset();
     }
-
 
     private void createDecks(){
         ProgramCards = new ProgramDeck("ProgramCards.txt");

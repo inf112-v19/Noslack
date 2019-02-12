@@ -76,6 +76,12 @@ public class RoboRally extends Game {
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
             tileGrid.movePlayer(0, 0, 1);
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            tileGrid.movePlayer(0, 1, 0);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            tileGrid.movePlayer(0, -1, 0);
+        }
 
         /*
          * Todo:
@@ -111,10 +117,11 @@ public class RoboRally extends Game {
      */
     private void renderDealtCards(){
         this.drawPositionX = 0;
-        this.drawPositionY = 0;
+        this.drawPositionY = 4*TILE_SIZE;
 
         // Draw background for dealt cards.
 
+        dealtCardsBackgroundSprite.setPosition(drawPositionX, drawPositionY);
         dealtCardsBackgroundSprite.draw(batch);
     }
 
@@ -136,7 +143,7 @@ public class RoboRally extends Game {
 
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE*4;
-        this.drawPositionY = 0;
+        this.drawPositionY = TILE_SIZE*4;
         for(int row = 0; row<GRID_ROWS; row++){
             for(int column = 0; column<GRID_COLUMNS; column++){
 

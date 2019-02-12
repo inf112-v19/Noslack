@@ -16,7 +16,7 @@ public class Main {
         * from
         */
         cfg.width = 32*16;
-        cfg.height = 32*12;
+        cfg.height = 32*16;
 
         RoboRally roborally = new RoboRally();
 
