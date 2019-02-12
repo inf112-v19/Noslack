@@ -1,7 +1,7 @@
 package inf112.skeleton.app.cards;
 
-public interface RRCard {
+public abstract class RRCard {
 
-    void render();
+
 }
 

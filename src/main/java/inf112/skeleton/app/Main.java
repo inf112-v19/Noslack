@@ -8,7 +8,14 @@ public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "RoboRally";
-        cfg.width = 32*12;
+
+        /*
+        * The width is composed of 12 tile-sizes to
+        * fit the grid, and 4 tile-sizes to fit the
+        * cards the player has been dealt and may choose
+        * from
+        */
+        cfg.width = 32*16;
         cfg.height = 32*12;
 
         RoboRally roborally = new RoboRally();
