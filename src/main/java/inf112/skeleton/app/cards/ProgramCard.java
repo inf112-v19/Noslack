@@ -4,9 +4,9 @@ package inf112.skeleton.app.cards;
  * Program card lass that contains a priority and movement.
   */
 
-public class ProgramCard implements RRCard {
+public class ProgramCard extends RRCard {
     private int priority;
-    private Movement Move;
+    private Program Move;
 
     /**
      *
@@ -25,38 +25,38 @@ public class ProgramCard implements RRCard {
         return priority;
     }
 
-    /** Get Movement enum for card.
+    /** Get Program enum for card.
       */
-    public Movement getMove() {
+    public Program getMove() {
         return Move;
     }
 
     /**
-     * Translate string to Movement
+     * Translate string to Program
      * @param s description og movement to be translated.
      */
     private void translateMove (String s){
         switch (s) {
             case "U Turn":
-                Move= Movement.U;
+                Move= Program.U;
                 break;
             case "Rotate Left":
-                Move = Movement.LEFT;
+                Move = Program.LEFT;
                 break;
             case "Rotate Right":
-                Move = Movement.RIGHT;
+                Move = Program.RIGHT;
                 break;
             case "Back Up":
-                Move = Movement.BACK;
+                Move = Program.BACK;
                 break;
             case "Move 1":
-                Move = Movement.MOVE1;
+                Move = Program.MOVE1;
                 break;
             case "Move 2":
-                Move = Movement.MOVE2;
+                Move = Program.MOVE2;
                 break;
             case "Move 3":
-                Move = Movement.MOVE3;
+                Move = Program.MOVE3;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid move: " + s);
@@ -64,7 +64,7 @@ public class ProgramCard implements RRCard {
     }
 
 
-    @Override
+
     public void render() {
 
     }
