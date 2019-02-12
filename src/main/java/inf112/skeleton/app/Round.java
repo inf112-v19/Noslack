@@ -7,24 +7,26 @@ import java.util.ArrayList;
 
 public class Round {
 
-    private ArrayList<Player> Players;
+    private Player[] players;
     public ProgramDeck ProgramCards;
     public AbilityDeck AbilityCards;
+    private TileGrid tileGrid;
 
 
     private final int PHASES = 5;
 
     /**
      * Need to decide if list of players or player nr
-     * @param Players List of players that are in the game.
+     * @param players List of players that are in the game.
      */
-    public Round(ArrayList<Player> Players){
-        this.Players = Players;
+    public Round(Player[] players, TileGrid tileGrid){
+        this.tileGrid = tileGrid;
+        this.players = players;
         createDecks();
     }
 
     public void dealCards(){
-        for (Player player:Players)
+        for (Player player:players)
             player.drawCards(ProgramCards.deal(player.getHealth()), AbilityCards.deal(player.getHealth()));
     }
 
@@ -35,8 +37,18 @@ public class Round {
      * TODO
      */
     public void run(){
+        // Go through logic for each phase
         for(int i =0;i<PHASES;i++){
-
+            // Go through logic for each player
+            /* Todo:
+            * Implement priority functionality for multiple players.
+            */
+            for(Player player : players){
+                ProgramCard nextProgram = player.getNextProgram();
+                Program move = nextProgram.getMove();
+                int priority = nextProgram.getPriority();
+                tileGrid.applyProgram(move, player);
+            }
 
         }
         reset();

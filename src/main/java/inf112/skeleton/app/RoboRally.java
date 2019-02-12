@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.cards.AbilityDeck;
+import inf112.skeleton.app.cards.ProgramDeck;
 import inf112.skeleton.app.gameobjects.GameObject;
 
 import java.util.PriorityQueue;
@@ -19,6 +21,8 @@ public class RoboRally extends Game {
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 12;
 
+    private final int PHASES = 5;
+
     // Dealt cards background texture and sprite.
     private Texture dealtCardsBackgroundTexture;
     private Sprite dealtCardsBackgroundSprite;
@@ -28,7 +32,7 @@ public class RoboRally extends Game {
     private int currentPhase;
 
     private SpriteBatch batch;
-    private TileGrid tileGrid;
+    public TileGrid tileGrid;
 
     //public IDeck abilityDeck;
 
@@ -59,33 +63,6 @@ public class RoboRally extends Game {
         renderGrid();
         renderDealtCards();
         batch.end();
-    }
-
-    private void performPhase(){
-        if(currentPhase == 0){
-            performProgrammingPhase();
-            currentPhase++;
-            return;
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
-            tileGrid.movePlayer(0, 0, -1);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
-            tileGrid.movePlayer(0, 0, 1);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            tileGrid.movePlayer(0, 1, 0);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            tileGrid.movePlayer(0, -1, 0);
-        }
-
-        /*
-         * Todo:
-         * Implement phases with card turning.
-         */
-
     }
 
     private void performProgrammingPhase(){
@@ -171,6 +148,44 @@ public class RoboRally extends Game {
         this.drawPositionY = 0;
 
     }
+
+
+    //   ROUND LOGIC   //
+
+    private void performPhase(){
+        if(currentPhase == 0){
+            performProgrammingPhase();
+            currentPhase++;
+            return;
+        }
+
+        for(int i = 0; i<PHASES; i++){
+            tileGrid.applyNextProgram(0);
+        }
+
+
+        /*
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+            tileGrid.movePlayer(0, 0, -1);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+            tileGrid.movePlayer(0, 0, 1);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            tileGrid.movePlayer(0, 1, 0);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            tileGrid.movePlayer(0, -1, 0);
+        }
+        */
+
+        /*
+         * Todo:
+         * Implement phases with card turning.
+         */
+
+    }
+
 
     @Override
     public void resize(int i, int i1) {

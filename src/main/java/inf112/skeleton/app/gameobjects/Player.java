@@ -111,4 +111,8 @@ public class Player implements GameObject {
      * @return Program for round
      */
     public Stack<ProgramCard> getProgram() {return Program;}
+
+    public ProgramCard getNextProgram(){
+        return this.Program.pop();
+    }
 }

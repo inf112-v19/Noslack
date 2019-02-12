@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
+import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.ConveyorNorth;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
@@ -116,6 +118,29 @@ public class TileGrid{
         }catch(IOException ex) {
             System.out.println("Error reading file '" + fileName + "'");
         }
+    }
+
+    public void applyNextProgram(int playerNumber){
+        Player player = players[playerNumber];
+        ProgramCard nextProgramCard = player.getNextProgram();
+        Program move = nextProgramCard.getMove();
+
+        boolean moveIsRotation = (move==Program.LEFT) || (move==Program.RIGHT) || (move==Program.U);
+        if(moveIsRotation){
+            applyRotation(move, playerNumber);
+        }else{
+            applyMove(move, playerNumber);
+        }
+
+    }
+
+    public void applyRotation(Program move, int playerNumber){
+        Player player = players[playerNumber];
+        //Orientation currentOrientation = player.get
+    }
+
+    public void applyMove(Program move, int playerNumber){
+
     }
 
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){

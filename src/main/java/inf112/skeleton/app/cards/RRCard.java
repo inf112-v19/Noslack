@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public interface RRCard {
     void  evaluateSprite();
-    Sprite getSprite();
 
+    Sprite getSprite();
 
 }
 
