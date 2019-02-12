@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,7 +14,7 @@ import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.PriorityQueue;
 
-public class RoboRally extends Game {
+public class RoboRally extends Game implements InputProcessor {
     //private BitmapFont font;
 
     // Grid and tile specifications
@@ -21,9 +22,13 @@ public class RoboRally extends Game {
     private final int GRID_ROWS = 12;
     private final int GRID_COLUMNS = 12;
 
+
     // Dealt cards background texture and sprite.
     private Texture dealtCardsBackgroundTexture;
     private Sprite dealtCardsBackgroundSprite;
+
+    private Texture cardTestTexture;
+    private Sprite cardTestSprite;
 
     private int drawPositionX;
     private int drawPositionY;
@@ -41,6 +46,9 @@ public class RoboRally extends Game {
 
         this.dealtCardsBackgroundTexture = new Texture(Gdx.files.internal("./assets/cards/dealtCardsBackground.png"));
         this.dealtCardsBackgroundSprite = new Sprite(dealtCardsBackgroundTexture);
+
+        this.cardTestTexture = new Texture(Gdx.files.internal("./assets/cards/back-up.png"));
+        this.cardTestSprite = new Sprite(cardTestTexture);
 
         this.drawPositionX = 0;
         this.drawPositionY = 0;
@@ -123,6 +131,8 @@ public class RoboRally extends Game {
 
         dealtCardsBackgroundSprite.setPosition(drawPositionX, drawPositionY);
         dealtCardsBackgroundSprite.draw(batch);
+        cardTestSprite.setPosition(drawPositionX,drawPositionY);
+        cardTestSprite.draw(batch);
     }
 
     /**
@@ -192,5 +202,45 @@ public class RoboRally extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int i) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int i) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char c) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int i, int i1, int i2) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int i) {
+        return false;
     }
 }
