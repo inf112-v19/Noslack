@@ -6,5 +6,6 @@ public interface RRCard {
     void  evaluateSprite();
     Sprite getSprite();
 
+
 }
 

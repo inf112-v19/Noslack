@@ -114,11 +114,6 @@ public class AbilityCard implements RRCard {
         return ability;
     }
 
-    
-    public void render() {
-
-    }
-
     @Override
     public void evaluateSprite() {
         /*
