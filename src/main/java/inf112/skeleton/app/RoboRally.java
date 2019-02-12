@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Player;
@@ -23,9 +26,14 @@ public class RoboRally extends Game implements InputProcessor {
     private final int GRID_COLUMNS = 12;
 
 
+
     // Dealt cards background texture and sprite.
     private Texture dealtCardsBackgroundTexture;
     private Sprite dealtCardsBackgroundSprite;
+
+    private Texture selectedCardsBackgroundTexture;
+    private Sprite selectedCardsBackgroundSprite;
+
 
     private Texture cardTestTexture;
     private Sprite cardTestSprite;
@@ -43,9 +51,13 @@ public class RoboRally extends Game implements InputProcessor {
     public void create() {
         // Load Dealt cards background texture and sprite.
 
+        Gdx.input.setInputProcessor(this);
 
         this.dealtCardsBackgroundTexture = new Texture(Gdx.files.internal("./assets/cards/dealtCardsBackground.png"));
         this.dealtCardsBackgroundSprite = new Sprite(dealtCardsBackgroundTexture);
+
+        this.selectedCardsBackgroundTexture = new Texture(Gdx.files.internal("./assets/cards/KortBakgrunn.png"));
+        this.selectedCardsBackgroundSprite = new Sprite(selectedCardsBackgroundTexture);
 
         this.cardTestTexture = new Texture(Gdx.files.internal("./assets/cards/back-up.png"));
         this.cardTestSprite = new Sprite(cardTestTexture);
@@ -53,9 +65,16 @@ public class RoboRally extends Game implements InputProcessor {
         this.drawPositionX = 0;
         this.drawPositionY = 0;
 
+
+
+
         batch = new SpriteBatch();
         currentPhase = 0;
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS, 1);
+
+
+        cardTestSprite.setPosition(drawPositionX,drawPositionY);
+
     }
 
     @Override
@@ -64,9 +83,9 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        renderGrid();
         performPhase();
         activateTiles();
-        renderGrid();
         renderDealtCards();
         batch.end();
     }
@@ -89,6 +108,11 @@ public class RoboRally extends Game implements InputProcessor {
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
             tileGrid.movePlayer(0, -1, 0);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.J)){
+            System.out.println("leggo");
+            cardTestSprite.setPosition(Gdx.input.getX(),Gdx.input.getY());
         }
 
         /*
@@ -131,7 +155,9 @@ public class RoboRally extends Game implements InputProcessor {
 
         dealtCardsBackgroundSprite.setPosition(drawPositionX, drawPositionY);
         dealtCardsBackgroundSprite.draw(batch);
-        cardTestSprite.setPosition(drawPositionX,drawPositionY);
+
+        selectedCardsBackgroundSprite.draw(batch);
+
         cardTestSprite.draw(batch);
     }
 
@@ -206,7 +232,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean keyDown(int i) {
-        return false;
+        return true;
     }
 
     @Override
@@ -230,8 +256,20 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
-        return false;
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        float cardDeltaH = cardTestSprite.getHeight()/2;
+        float cardDeltaW = cardTestSprite.getWidth()/2;
+
+        if (screenX >= cardTestSprite.getX() && screenX < cardTestSprite.getX()+cardTestSprite.getWidth()){
+            if (Gdx.graphics.getHeight()-screenY >= cardTestSprite.getY() &&
+                    Gdx.graphics.getHeight()-screenY < cardTestSprite.getY()+cardTestSprite.getHeight()){
+                batch.begin();
+                cardTestSprite.setPosition(screenX-cardDeltaW, Gdx.graphics.getHeight()-screenY-cardDeltaH);
+                cardTestSprite.draw(batch);
+                batch.end();
+            }
+        }
+        return true;
     }
 
     @Override
