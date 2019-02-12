@@ -21,15 +21,11 @@ public class ProgramCard implements RRCard {
     /** Get priority int
      */
 
-    public int getPriority() {
-        return priority;
-    }
+    public int getPriority() {return priority;}
 
     /** Get Program enum for card.
       */
-    public Program getMove() {
-        return Move;
-    }
+    public Program getMove() {return Move;}
 
     /**
      * Translate string to Program
@@ -61,12 +57,6 @@ public class ProgramCard implements RRCard {
             default:
                 throw new IllegalArgumentException("Invalid move: " + s);
         }
-    }
-
-
-
-    public void render() {
-
     }
 
     @Override
