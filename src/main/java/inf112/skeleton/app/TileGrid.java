@@ -3,10 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
-import inf112.skeleton.app.gameobjects.ConveyorNorth;
-import inf112.skeleton.app.gameobjects.Coordinate;
-import inf112.skeleton.app.gameobjects.GameObjectType;
-import inf112.skeleton.app.gameobjects.Player;
+import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -136,11 +133,31 @@ public class TileGrid{
 
     public void applyRotation(Program move, int playerNumber){
         Player player = players[playerNumber];
-        //Orientation currentOrientation = player.get
+        Orientation currentOrientation = player.getOrientation();
+        player.updateOrientation(move);
+
     }
 
     public void applyMove(Program move, int playerNumber){
+        Player player = players[playerNumber];
+        int tilesToMove = 0;
+        switch(move){
+            case MOVE1: tilesToMove = 1; break;
+            case MOVE2: tilesToMove = 2; break;
+            case MOVE3: tilesToMove = 3; break;
+            case BACK: tilesToMove = -1; break;
+        }
 
+        int rowsToMove = 0;
+        int columnsToMove = 0;
+        switch(player.getOrientation()){
+            case FACING_NORTH: rowsToMove = tilesToMove; break;
+            case FACING_SOUTH: rowsToMove = -tilesToMove; break;
+            case FACING_WEST: columnsToMove = -tilesToMove; break;
+            case FACING_EAST: columnsToMove = tilesToMove; break;
+        }
+
+        movePlayer(playerNumber, rowsToMove, columnsToMove);
     }
 
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){

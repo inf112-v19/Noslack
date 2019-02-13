@@ -48,6 +48,11 @@ public class Player implements GameObject {
     public Sprite getSprite() {return sprite;}
     public int getHealth(){return health;}
     public void updateOrientation(Orientation orientation){this.orientation = orientation;}
+
+    public void updateOrientation(Program rotation){
+        this.orientation = Orientation.rotate(orientation, rotation);
+    }
+
     @Override
     public int compareTo(Object other) {return 1; }
     @Override
