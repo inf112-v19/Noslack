@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.PriorityQueue;
 
 public class TileGrid{
     private Tile[][] tileGrid;
@@ -65,6 +66,10 @@ public class TileGrid{
         return tileGrid[row][column];
     }
 
+    public Tile getTile(Coordinate coordinate){
+        return tileGrid[coordinate.getRow()][coordinate.getColumn()];
+    }
+
     /**
      * Initiates every tile in the grid
      * @param tileGrid
@@ -97,7 +102,7 @@ public class TileGrid{
                                 tileGrid[row][column].addObjectOnTile(new ConveyorNorth());
                                 break;
                             case PLAYER:
-                                Player newPlayer = new Player();
+                                Player newPlayer = new Player(playersInitiated);
                                 tileGrid[row][column].addObjectOnTile(newPlayer);
                                 players[playersInitiated] = newPlayer; // Add new player to list of players.
                                 coordinatesOfPlayers[playersInitiated] = new Coordinate(row, column);
@@ -119,6 +124,34 @@ public class TileGrid{
         }
     }
 
+    public void activateTiles(){
+        for(Tile[] tileRow : tileGrid){
+            for(Tile tile : tileRow){
+                for (Player player : players) {
+                    if (tile.hasPlayer(player)) {
+                        System.out.println("Has player");
+                        if(tile.hasConveyor()){
+                            System.out.println("Has Conveyor");
+                            ConveyorNorth conveyor = tile.getConveyor();
+                            moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveInDirectionOfConveyor(ConveyorNorth conveyor, int playerNumber){
+        switch(conveyor.getOrientation()){
+            case FACING_NORTH: movePlayer(playerNumber, 1, 0); break;
+            case FACING_WEST: movePlayer(playerNumber, 0, -1); break;
+            case FACING_SOUTH: movePlayer(playerNumber, -1, 0); break;
+            case FACING_EAST: movePlayer(playerNumber, 0, 1); break;
+            default: break;
+        }
+    }
+
     public void applyNextProgram(int playerNumber){
         Player player = players[playerNumber];
         ProgramCard nextProgramCard = player.getNextProgram();
@@ -127,6 +160,11 @@ public class TileGrid{
         player.setCurrentMove(move);
     }
 
+    /**
+     *
+     * @param move the rotation to be applied.
+     * @param playerNumber the identifier of the player whose move should be continued.
+     */
     public void applyRotation(Program move, int playerNumber){
         Player player = players[playerNumber];
         Orientation currentOrientation = player.getOrientation();
@@ -134,6 +172,11 @@ public class TileGrid{
 
     }
 
+    /**
+     * Method that makes a player perform a move.
+     * @param move the move to apply
+     * @param playerNumber the number of the player that the move should be applied to
+     */
     public void applyMove(Program move, int playerNumber){
         Player player = players[playerNumber];
 
@@ -174,6 +217,10 @@ public class TileGrid{
         movePlayer(playerNumber, rowsToMove, columnsToMove);
     }
 
+    /**
+     * Method that continues the move a player has in progress.
+     * @param playerNumber the identifier of the player whose move should be continued.
+     */
     public void continueMove(int playerNumber){
         Player player = players[playerNumber];
         Program currentMove = player.getCurrentMove();

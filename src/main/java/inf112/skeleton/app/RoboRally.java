@@ -12,6 +12,7 @@ import inf112.skeleton.app.cards.AbilityDeck;
 import inf112.skeleton.app.cards.IDeck;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramDeck;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Player;
 
@@ -68,7 +69,6 @@ public class RoboRally extends Game implements InputProcessor {
 
         batch.begin();
         tick();
-        activateTiles();
         renderGrid();
         renderDealtCards();
         batch.end();
@@ -78,14 +78,7 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void activateTiles(){
-
-        /*
-         * Todo:
-         * Implement activation of tiles and
-         * calculate the logic that should then
-         * be applied to the players
-         */
-
+        tileGrid.activateTiles();
     }
 
     /**
@@ -176,9 +169,12 @@ public class RoboRally extends Game implements InputProcessor {
             currentPhase++;
         }
         if(currentPhase <= 6) {
+            // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
                 tileGrid.applyNextProgram(0);
+                activateTiles();
                 currentPhase++;
+            // Runs mid phase
             } else {
                 tileGrid.continueMove(0);
             }

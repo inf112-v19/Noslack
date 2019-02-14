@@ -16,6 +16,7 @@ public class Player implements GameObject {
     private Sprite sprite;
     private int health;
     private Orientation orientation;
+    private int playerNumber;
 
     private Program currentMove;
     private int moveProgression;
@@ -26,14 +27,19 @@ public class Player implements GameObject {
      * Initialises orientation to FACING_NORTH
      * Evaluates sprite based on orientation.
      */
-    public Player(){
+    public Player(int playerNumber){
         this.health = 9;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programCards = new ArrayList<>();
         this.abilityCards = new ArrayList<>();
         this.currentMove = Program.NONE;
+        this.playerNumber = playerNumber;
         evaluateSprite();
+    }
+
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
     /**
@@ -41,13 +47,14 @@ public class Player implements GameObject {
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
-    public Player(Orientation orientation){
+    public Player(Orientation orientation, int playerNumber){
         this.health = 9;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programCards = new ArrayList<>();
         this.abilityCards = new ArrayList<>();
         this.currentMove = Program.NONE;
+        this.playerNumber = playerNumber;
         evaluateSprite();
     }
 

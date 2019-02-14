@@ -49,6 +49,10 @@ public class ConveyorNorth implements GameObject {
         this.sprite = new Sprite(texture);
     }
 
+    public Orientation getOrientation(){
+        return this.orientation;
+    }
+
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){
