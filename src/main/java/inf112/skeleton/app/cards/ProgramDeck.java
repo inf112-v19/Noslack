@@ -2,10 +2,7 @@ package inf112.skeleton.app.cards;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class ProgramDeck implements IDeck {
     private ArrayList<RRCard> deckList;
@@ -17,7 +14,7 @@ public class ProgramDeck implements IDeck {
      * @param fileName File needs to be placed in cardDocs directory
      */
     public ProgramDeck(String fileName){
-        fileName = ".\\src\\main\\java\\inf112\\skeleton\\app\\cards\\cardDocs\\"+fileName;
+        fileName = "./assets/cardDocs/"+fileName;
         file = new File(fileName);
         deck  = new Stack<>();
         deckList = new ArrayList<>();
@@ -48,6 +45,7 @@ public class ProgramDeck implements IDeck {
         }
 
         shuffle();
+
     }
 
     @Override
@@ -66,6 +64,7 @@ public class ProgramDeck implements IDeck {
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
         for (int i=0;i<health;i++) {
+
             playerDeck.add(deck.pop());
         }
         return playerDeck;

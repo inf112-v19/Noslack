@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Gdx;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -91,7 +92,7 @@ public class TileGrid{
                     if(nextTileTypeAsInt > 1){ // If tile type is not standardTile
                         switch(nextTileType){
                             case CONVEYOR_NORTH:
-                                tileGrid[row][column].addObjectOnTile(new Conveyor());
+                                tileGrid[row][column].addObjectOnTile(new ConveyorNorth());
                                 break;
                             case PLAYER:
                                 Player newPlayer = new Player();
