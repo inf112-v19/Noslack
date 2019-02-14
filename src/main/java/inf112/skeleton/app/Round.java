@@ -1,3 +1,4 @@
+
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.cards.*;
@@ -47,7 +48,7 @@ public class Round {
                 ProgramCard nextProgram = player.getNextProgram();
                 Program move = nextProgram.getMove();
                 int priority = nextProgram.getPriority();
-                tileGrid.applyProgram(move, player);
+                //tileGrid.applyNextProgram(0);
             }
 
         }
@@ -69,6 +70,7 @@ public class Round {
     protected void reset(){
         ProgramCards.reset();
         AbilityCards.reset();
-        for (Player player:Players) player.reset();
+        //for (Player player:Players) player.reset();
     }
+
 }

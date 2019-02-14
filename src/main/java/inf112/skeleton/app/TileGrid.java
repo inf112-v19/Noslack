@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -122,13 +124,7 @@ public class TileGrid{
         ProgramCard nextProgramCard = player.getNextProgram();
         Program move = nextProgramCard.getMove();
 
-        boolean moveIsRotation = (move==Program.LEFT) || (move==Program.RIGHT) || (move==Program.U);
-        if(moveIsRotation){
-            applyRotation(move, playerNumber);
-        }else{
-            applyMove(move, playerNumber);
-        }
-
+        player.setCurrentMove(move);
     }
 
     public void applyRotation(Program move, int playerNumber){
@@ -140,24 +136,61 @@ public class TileGrid{
 
     public void applyMove(Program move, int playerNumber){
         Player player = players[playerNumber];
-        int tilesToMove = 0;
-        switch(move){
-            case MOVE1: tilesToMove = 1; break;
-            case MOVE2: tilesToMove = 2; break;
-            case MOVE3: tilesToMove = 3; break;
-            case BACK: tilesToMove = -1; break;
-        }
 
         int rowsToMove = 0;
         int columnsToMove = 0;
-        switch(player.getOrientation()){
-            case FACING_NORTH: rowsToMove = tilesToMove; break;
-            case FACING_SOUTH: rowsToMove = -tilesToMove; break;
-            case FACING_WEST: columnsToMove = -tilesToMove; break;
-            case FACING_EAST: columnsToMove = tilesToMove; break;
+        if(move==Program.BACK){
+            switch (player.getOrientation()) {
+                case FACING_NORTH:
+                    rowsToMove = -1;
+                    break;
+                case FACING_SOUTH:
+                    rowsToMove = 1;
+                    break;
+                case FACING_WEST:
+                    columnsToMove = 1;
+                    break;
+                case FACING_EAST:
+                    columnsToMove = -1;
+                    break;
+            }
+        }else {
+            switch (player.getOrientation()) {
+                case FACING_NORTH:
+                    rowsToMove = 1;
+                    break;
+                case FACING_SOUTH:
+                    rowsToMove = -1;
+                    break;
+                case FACING_WEST:
+                    columnsToMove = -1;
+                    break;
+                case FACING_EAST:
+                    columnsToMove = 1;
+                    break;
+            }
         }
 
         movePlayer(playerNumber, rowsToMove, columnsToMove);
+    }
+
+    public void continueMove(int playerNumber){
+        Player player = players[playerNumber];
+        Program currentMove = player.getCurrentMove();
+        int moveProgression = player.getMoveProgression();
+        int totalMoves = currentMove.totalMoves();
+        if(moveProgression == totalMoves){
+            player.setCurrentMove(Program.NONE);
+            player.resetMoveProgress();
+        }else{
+            boolean moveIsRotation = (currentMove==Program.LEFT) || (currentMove==Program.RIGHT) || (currentMove==Program.U);
+            if(moveIsRotation){
+                applyRotation(currentMove, playerNumber);
+            }else{
+                applyMove(currentMove, playerNumber);
+            }
+            player.progressMove();
+        }
     }
 
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
@@ -171,7 +204,6 @@ public class TileGrid{
             return;
         }
 
-        player.getSprite().translate(rowsToMove * 32, columnsToMove * 32);
         tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
         tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(player);
         coordinatesOfPlayers[playerNumber] = new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove);

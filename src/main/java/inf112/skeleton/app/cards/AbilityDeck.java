@@ -18,7 +18,7 @@ public class AbilityDeck implements IDeck {
      */
     public AbilityDeck(String fileName){
 
-        fileName = ".\\src\\main\\java\\inf112\\skeleton\\app\\cards\\cardDocs\\"+fileName;
+        fileName = "./assets/cardDocs/"+fileName;
         file = new File(fileName);
         //file =new File(fileName);
         deck  = new Stack<>();

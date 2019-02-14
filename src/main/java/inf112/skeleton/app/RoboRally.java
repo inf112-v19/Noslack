@@ -9,8 +9,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.cards.AbilityDeck;
+import inf112.skeleton.app.cards.IDeck;
+import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramDeck;
 import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.PriorityQueue;
 
@@ -35,13 +38,12 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteBatch batch;
     public TileGrid tileGrid;
 
-    //public IDeck abilityDeck;
+    public IDeck programDeck;
+    public IDeck abilityDeck;
 
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
-
-
         this.dealtCardsBackgroundTexture = new Texture(Gdx.files.internal("./assets/cards/dealtCardsBackground.png"));
         this.dealtCardsBackgroundSprite = new Sprite(dealtCardsBackgroundTexture);
 
@@ -51,6 +53,12 @@ public class RoboRally extends Game implements InputProcessor {
         batch = new SpriteBatch();
         currentPhase = 0;
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS, 1);
+
+        this.programDeck = new ProgramDeck("ProgramCards.txt");
+        this.abilityDeck = new AbilityDeck("AbilityCards.txt");
+
+        int playerHealth = tileGrid.getPlayer(0).getHealth();
+        tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
     }
 
     @Override
@@ -59,21 +67,14 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        performPhase();
+        tick();
         activateTiles();
         renderGrid();
         renderDealtCards();
         batch.end();
-    }
 
-    private void performProgrammingPhase(){
-
-        /*
-         * Todo:
-         * Implement programming-phase where the
-         * player chooses which cards their robot
-         * should use.
-         */
+        // Limit fps
+        sleep(10);
     }
 
     private void activateTiles(){
@@ -150,41 +151,59 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
+    private long diff, start = System.currentTimeMillis();
+
+    public void sleep(int fps) {
+        if (fps > 0) {
+            diff = System.currentTimeMillis() - start;
+            long targetDelay = 1000 / fps;
+            if (diff < targetDelay) {
+                try {
+                    Thread.sleep(targetDelay - diff);
+                } catch (InterruptedException e) {
+                }
+            }
+            start = System.currentTimeMillis();
+        }
+    }
+
 
     //   ROUND LOGIC   //
 
-    private void performPhase(){
+    public void tick(){
         if(currentPhase == 0){
             performProgrammingPhase();
             currentPhase++;
-            return;
         }
+        if(currentPhase <= 6) {
+            if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
+                tileGrid.applyNextProgram(0);
+                currentPhase++;
+            } else {
+                tileGrid.continueMove(0);
+            }
+        }else{
+            dealNewCards();
+            this.currentPhase = 0;
+        }
+    }
 
-        for(int i = 0; i<PHASES; i++){
-            tileGrid.applyNextProgram(0);
-        }
-
-
-        /*
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
-            tileGrid.movePlayer(0, 0, -1);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
-            tileGrid.movePlayer(0, 0, 1);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            tileGrid.movePlayer(0, 1, 0);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            tileGrid.movePlayer(0, -1, 0);
-        }
-        */
+    private void performProgrammingPhase(){
 
         /*
          * Todo:
-         * Implement phases with card turning.
+         * Implement programming-phase where the
+         * player chooses which cards their robot
+         * should use.
          */
 
+    }
+
+    private void dealNewCards(){
+        this.programDeck.reset();
+        this.abilityDeck.reset();
+        int playerHealth = tileGrid.getPlayer(0).getHealth();
+        tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
     }
 
 
