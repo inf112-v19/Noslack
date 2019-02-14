@@ -22,7 +22,16 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority, String move) {
         this.priority = priority;
         this.move=translateMove(move);
-        // evaluateSprite();
+    }
+
+    /**
+     * Only used for testing
+     * @param priority priorty of card
+     * @param move move the card is to have
+     */
+    public ProgramCard(int priority,Program move){
+        this.priority = priority;
+        this.move=move;
     }
 
     /** Get priority int
@@ -107,7 +116,6 @@ public class ProgramCard implements RRCard {
      */
     @Override
     public int compareTo(Object o) {
-        int compare = Integer.compare(getPriority(), ((ProgramCard) o).getPriority());
-        return compare;
+        return Integer.compare(getPriority(), ((ProgramCard) o).getPriority());
     }
 }
