@@ -85,7 +85,7 @@ public class TileGrid{
                 for(int column = 0; column<columns; column++){
                     // Temporarily set to STANDARD_TILE
                     int nextTileTypeAsInt = nextTileTypeLine.charAt(column*2)-48; // *2 is to jump over spaces, -48 is to convert from ascii to int.
-                    GameObjectType nextTileType = stringToGameObjectType(nextTileTypeAsInt);
+                    GameObjectType nextTileType = intToGameObjectType(nextTileTypeAsInt);
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
 
                     // Adding objects on top of tile
@@ -219,7 +219,7 @@ public class TileGrid{
         return coordinatesOfPlayers[playerNumber];
     }
 
-    private GameObjectType stringToGameObjectType(int nextTileTypeAsInt){
+    private GameObjectType intToGameObjectType(int nextTileTypeAsInt){
         switch(nextTileTypeAsInt){
             case 1: return GameObjectType.STANDARD_TILE;
             case 2: return GameObjectType.CONVEYOR_NORTH;
