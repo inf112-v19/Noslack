@@ -92,7 +92,7 @@ public class TileGrid{
                     if(nextTileTypeAsInt > 1){ // If tile type is not standardTile
                         switch(nextTileType){
                             case CONVEYOR_NORTH:
-                                tileGrid[row][column].addObjectOnTile(new ConveyorNorth());
+                                tileGrid[row][column].addObjectOnTile(new Conveyor());
                                 break;
                             case PLAYER:
                                 Player newPlayer = new Player();
