@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import inf112.skeleton.app.cards.CardSpriteInteraction;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Player;
@@ -18,6 +19,10 @@ import inf112.skeleton.app.gameobjects.Player;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
+
+    private CardSpriteInteraction interact;
+
+
     //private BitmapFont font;
 
     // Grid and tile specifications
@@ -47,6 +52,11 @@ public class RoboRally extends Game implements InputProcessor {
 
     //public IDeck abilityDeck;
 
+
+
+    private boolean insideSprite;
+
+
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
@@ -73,7 +83,7 @@ public class RoboRally extends Game implements InputProcessor {
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS, 1);
 
 
-        cardTestSprite.setPosition(drawPositionX,drawPositionY);
+        cardTestSprite.setPosition(33,300);
 
     }
 
@@ -210,6 +220,13 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
+    private void moveSprite(Sprite sprite, float newX, float newY ){
+        batch.begin();
+        sprite.setPosition(newX, newY);
+        cardTestSprite.draw(batch);
+        batch.end();
+    }
+
     @Override
     public void resize(int i, int i1) {
 
@@ -246,27 +263,58 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
-    }
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-    @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
-        return false;
-    }
+        /*
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
         float cardDeltaH = cardTestSprite.getHeight()/2;
         float cardDeltaW = cardTestSprite.getWidth()/2;
 
         if (screenX >= cardTestSprite.getX() && screenX < cardTestSprite.getX()+cardTestSprite.getWidth()){
             if (Gdx.graphics.getHeight()-screenY >= cardTestSprite.getY() &&
                     Gdx.graphics.getHeight()-screenY < cardTestSprite.getY()+cardTestSprite.getHeight()){
+
+                moveSprite(cardTestSprite,screenX-cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
+
                 batch.begin();
                 cardTestSprite.setPosition(screenX-cardDeltaW, Gdx.graphics.getHeight()-screenY-cardDeltaH);
                 cardTestSprite.draw(batch);
                 batch.end();
+
+            }
+        }
+        */
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int i, int i1, int i2, int i3) {
+        float cardDeltaH = cardTestSprite.getHeight()/2;
+        float cardDeltaW = cardTestSprite.getWidth()/2;
+
+        float meme = Gdx.graphics.getHeight()-i1-cardDeltaH;
+
+        insideSprite = false;
+        System.out.println(i+cardDeltaW + " " + meme);
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+        float cardDeltaH = cardTestSprite.getHeight()/2;
+        float cardDeltaW = cardTestSprite.getWidth()/2;
+
+        if(insideSprite){
+            moveSprite(cardTestSprite,screenX-cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
+            return true;
+        }
+
+        if (screenX >= cardTestSprite.getX() && screenX < cardTestSprite.getX()+cardTestSprite.getWidth()){
+            if (Gdx.graphics.getHeight()-screenY >= cardTestSprite.getY() &&
+                    Gdx.graphics.getHeight()-screenY < cardTestSprite.getY()+cardTestSprite.getHeight()){
+                moveSprite(cardTestSprite,screenX-cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
+                insideSprite = true;
             }
         }
         return true;
