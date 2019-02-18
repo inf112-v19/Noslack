@@ -13,8 +13,9 @@ public class CardSpriteInteraction {
 
     private Vector2 cardOffset = new Vector2(74+intOffset,115+intOffset);
 
-    private CardSpriteInteraction(ArrayList<RRCard> chosenCards){
+    public CardSpriteInteraction(ArrayList<RRCard> chosenCards){
         this.chosenCards = chosenCards;
+        cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
         cardSlotPositions.add(new Vector2(187,44));
         cardSlotPositions.add(new Vector2(293,44));
@@ -23,7 +24,8 @@ public class CardSpriteInteraction {
 
     }
 
-    private CardSpriteInteraction() {
+    public CardSpriteInteraction() {
+        cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
         cardSlotPositions.add(new Vector2(187,44));
         cardSlotPositions.add(new Vector2(293,44));
@@ -46,6 +48,28 @@ public class CardSpriteInteraction {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * CHANGE THIS METHOD :)
+     * @param screenX
+     * @param screenY
+     * @return
+     */
+    public Vector2 cardSnapPosition(float screenX, float screenY){
+        for(int i = 0; i < cardSlotPositions.size(); i++){
+            float xDiff = screenX-cardSlotPositions.get(i).x;
+            float yDiff = screenY-cardSlotPositions.get(i).y;
+
+            if(Math.abs(xDiff) < 50){
+                if(Math.abs(yDiff) < 70){
+                    System.out.println("Selected slot: " + (i+1));
+                    return cardSlotPositions.get(i);
+                }
+            }
+        }
+        return new Vector2(100,300);
     }
 
     private boolean insideSlot(float screenX, float screenY, float slotX, float slotY){

@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import inf112.skeleton.app.cards.CardSpriteInteraction;
+import inf112.skeleton.app.cards.RRCard;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Player;
@@ -52,7 +53,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     //public IDeck abilityDeck;
 
-
+    private CardSpriteInteraction CSI;
 
     private boolean insideSprite;
 
@@ -76,7 +77,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.drawPositionY = 0;
 
 
-
+        CSI = new CardSpriteInteraction();
 
         batch = new SpriteBatch();
         currentPhase = 0;
@@ -220,10 +221,21 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
+    private boolean isInsideSprite(Sprite sprite, float screenX, float screenY){
+        if (screenX >= sprite.getX() && screenX < sprite.getX()+sprite.getWidth()){
+            if (Gdx.graphics.getHeight()-screenY >= sprite.getY() &&
+                    Gdx.graphics.getHeight()-screenY < sprite.getY()+sprite.getHeight()){
+                moveSprite(sprite,screenX-sprite.getWidth()/2,Gdx.graphics.getHeight()-screenY-sprite.getHeight()/2);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void moveSprite(Sprite sprite, float newX, float newY ){
         batch.begin();
         sprite.setPosition(newX, newY);
-        cardTestSprite.draw(batch);
+        sprite.draw(batch);
         batch.end();
     }
 
@@ -264,38 +276,20 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-        /*
-
-        float cardDeltaH = cardTestSprite.getHeight()/2;
-        float cardDeltaW = cardTestSprite.getWidth()/2;
-
-        if (screenX >= cardTestSprite.getX() && screenX < cardTestSprite.getX()+cardTestSprite.getWidth()){
-            if (Gdx.graphics.getHeight()-screenY >= cardTestSprite.getY() &&
-                    Gdx.graphics.getHeight()-screenY < cardTestSprite.getY()+cardTestSprite.getHeight()){
-
-                moveSprite(cardTestSprite,screenX-cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
-
-                batch.begin();
-                cardTestSprite.setPosition(screenX-cardDeltaW, Gdx.graphics.getHeight()-screenY-cardDeltaH);
-                cardTestSprite.draw(batch);
-                batch.end();
-
-            }
-        }
-        */
         return false;
     }
 
     @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         float cardDeltaH = cardTestSprite.getHeight()/2;
         float cardDeltaW = cardTestSprite.getWidth()/2;
 
-        float meme = Gdx.graphics.getHeight()-i1-cardDeltaH;
-
-        insideSprite = false;
-        System.out.println(i+cardDeltaW + " " + meme);
+        if (insideSprite){
+            Vector2 newPos = CSI.cardSnapPosition(screenX+cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
+            moveSprite(cardTestSprite,newPos.x-cardTestSprite.getWidth(),newPos.y);
+            insideSprite = false;
+            return true;
+        }
         return false;
     }
 
@@ -310,14 +304,11 @@ public class RoboRally extends Game implements InputProcessor {
             return true;
         }
 
-        if (screenX >= cardTestSprite.getX() && screenX < cardTestSprite.getX()+cardTestSprite.getWidth()){
-            if (Gdx.graphics.getHeight()-screenY >= cardTestSprite.getY() &&
-                    Gdx.graphics.getHeight()-screenY < cardTestSprite.getY()+cardTestSprite.getHeight()){
-                moveSprite(cardTestSprite,screenX-cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
-                insideSprite = true;
-            }
+        if (isInsideSprite(cardTestSprite, screenX, screenY)){
+            insideSprite = true;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
