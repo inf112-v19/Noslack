@@ -18,6 +18,7 @@ public class Player implements GameObject {
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
+    private Coordinate position;
 
     private Program currentMove;
     private int moveProgression;
@@ -176,6 +177,13 @@ public class Player implements GameObject {
 
     public Coordinate getBackUp() {
         return backUp;
+    }
+
+    public void setPosition(Coordinate position) {
+        this.position = position;
+    }
+    public Coordinate getPosition() {
+        return position;
     }
 
     @Override
