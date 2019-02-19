@@ -79,29 +79,35 @@ public class TileGrid{
 
             for(int row = 0; row<rows; row++){
                 String nextTileTypeLine = bufferedReader.readLine();
+                String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
                 for(int column = 0; column<columns; column++){
-                    // Temporarily set to STANDARD_TILE
-                    int nextTileTypeAsInt = nextTileTypeLine.charAt(column*2)-48; // *2 is to jump over spaces, -48 is to convert from ascii to int.
-                    GameObjectType nextTileType = intToGameObjectType(nextTileTypeAsInt);
+
+                    String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
 
-                    // Adding objects on top of tile
-                    if(nextTileTypeAsInt > 1){ // If tile type is not standardTile
-                        switch(nextTileType){
-                            case CONVEYOR_NORTH:
-                                tileGrid[row][column].addObjectOnTile(new Conveyor());
-                                break;
-                            case PLAYER:
-                                Player newPlayer = new Player(playersInitiated);
-                                tileGrid[row][column].addObjectOnTile(newPlayer);
-                                players[playersInitiated] = newPlayer; // Add new player to list of players.
-                                newPlayer.setPosition(new Coordinate(row, column));
-                                newPlayer.setBackUp(new Coordinate(row, column));
-                                playersInitiated++; // One more player has been initiated, move the index 1 up.
-                                break;
-                        }
+                    for(int charIndex = 0; charIndex<nextTileTypesOfColumn.length(); charIndex++) {
+                        char nextTileTypeAsChar = nextTileTypesOfColumn.charAt(charIndex);
+                        GameObjectType nextTileType = charToGameObjectType(nextTileTypeAsChar);
 
+                        // Adding objects on top of tile
+                        if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
+                            switch (nextTileType) {
+                                case CONVEYOR_NORTH:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor());
+                                    break;
+                                case PLAYER:
+                                    Player newPlayer = new Player(playersInitiated);
+                                    tileGrid[row][column].addObjectOnTile(newPlayer);
+                                    players[playersInitiated] = newPlayer; // Add new player to list of players.
+                                    newPlayer.setPosition(new Coordinate(row, column));
+                                    newPlayer.setBackUp(new Coordinate(row, column));
+                                    playersInitiated++; // One more player has been initiated, move the index 1 up.
+                                    break;
+                            }
+
+                        }
                     }
+
                 }
             }
 
@@ -256,6 +262,8 @@ public class TileGrid{
             return false;
         }
 
+
+
         return true;
     }
 
@@ -287,11 +295,11 @@ public class TileGrid{
         return players[playerNumber].getPosition();
     }
 
-    private GameObjectType intToGameObjectType(int nextTileTypeAsInt){
-        switch(nextTileTypeAsInt){
-            case 1: return GameObjectType.STANDARD_TILE;
-            case 2: return GameObjectType.CONVEYOR_NORTH;
-            case 3: return GameObjectType.PLAYER;
+    private GameObjectType charToGameObjectType(char nextTileType){
+        switch(nextTileType){
+            case '1': return GameObjectType.STANDARD_TILE;
+            case '2': return GameObjectType.CONVEYOR_NORTH;
+            case '3': return GameObjectType.PLAYER;
             default: return GameObjectType.STANDARD_TILE;
         }
     }
