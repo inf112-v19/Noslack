@@ -215,6 +215,8 @@ public class TileGrid{
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
 
+
+
     public Player getPlayer(int playerNumber){
         return players[playerNumber];
     }
