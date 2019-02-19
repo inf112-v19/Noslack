@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.PriorityQueue;
 
 public class TileGrid{
     private Tile[][] tileGrid;
@@ -129,9 +128,7 @@ public class TileGrid{
             for(Tile tile : tileRow){
                 for (Player player : players) {
                     if (tile.hasPlayer(player)) {
-                        System.out.println("Has player");
                         if(tile.hasConveyor()){
-                            System.out.println("Has Conveyor");
                             Conveyor conveyor = tile.getConveyor();
                             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
                         }
