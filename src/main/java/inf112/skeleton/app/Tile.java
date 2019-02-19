@@ -81,6 +81,15 @@ public class Tile implements GameObject{
         return new Conveyor();
     }
 
+    public Boolean hasRepairStation(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.REPAIR_STATION){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
         return gameObjectType;
