@@ -1,8 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -132,7 +129,6 @@ public class TileGrid{
                             Conveyor conveyor = tile.getConveyor();
                             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
                         }
-
                     }
                 }
             }
