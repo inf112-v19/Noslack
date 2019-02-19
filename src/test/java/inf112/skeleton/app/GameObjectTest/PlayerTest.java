@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private Player player = new Player(0);
+    private Player player = new Player(Orientation.FACING_NORTH,0 );
 
     /*
     @Before

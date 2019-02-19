@@ -245,6 +245,7 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             this.currentPhase = 0;
         }
+
     }
 
     private void performProgrammingPhase(){

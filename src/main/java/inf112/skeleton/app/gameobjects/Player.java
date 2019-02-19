@@ -101,11 +101,10 @@ public class Player implements GameObject {
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
-        cardsToStack();
     }
-
-    private void cardsToStack(){
-        program.addAll(programHand);
+    // TODO take selected program from user interface
+    private void pushProgram(ArrayList<ProgramCard> selectedCards){
+        program.addAll(selectedCards);
     }
 
     /**
