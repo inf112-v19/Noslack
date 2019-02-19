@@ -107,10 +107,8 @@ public class Player implements GameObject {
 
 
     // TODO take selected program from user interface
-    private void pushProgram(ProgramCard[] selectedCards){
-        for (int i =(selectedCards.length-1);i>=0;i--) {
-            program.push(selectedCards[i]);
-        }
+    private void pushProgram(ArrayList<ProgramCard> selectedCards){
+        program.addAll(selectedCards);
     }
 
     /**
