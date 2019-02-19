@@ -95,7 +95,11 @@ public class TileGrid{
                                 tileGrid[row][column].addObjectOnTile(new Conveyor());
                                 break;
                             case PLAYER:
-                                Player newPlayer = new Player();
+                                Player newPlayer = new Player(0);
+                                /*
+                                 TODO Find a way to introduce player nr
+                                 Probably do as a i++ function.
+                                  */
                                 tileGrid[row][column].addObjectOnTile(newPlayer);
                                 players[playersInitiated] = newPlayer; // Add new player to list of players.
                                 coordinatesOfPlayers[playersInitiated] = new Coordinate(row, column);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.gameobjects.ConveyorNorth;
+import inf112.skeleton.app.gameobjects.Conveyor;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Player;
@@ -73,13 +73,13 @@ public class Tile implements GameObject{
         return false;
     }
 
-    public ConveyorNorth getConveyor(){
+    public Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
-                return (ConveyorNorth) gameObject;
+                return (Conveyor) gameObject;
             }
         }
-        return new ConveyorNorth();
+        return new Conveyor();
     }
 
     @Override

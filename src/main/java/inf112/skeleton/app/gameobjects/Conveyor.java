@@ -31,10 +31,6 @@ public class Conveyor implements GameObject {
         return sprite;
     }
 
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
     @Override
     public void evaluateSprite() {
         if(this.orientation == Orientation.FACING_NORTH) {
