@@ -51,20 +51,35 @@ public class ProgramCard implements RRCard {
      * @param s description og movement to be translated.
      */
     private Program translateMove (String s){
+        Texture cardTexture;
         switch (s) {
             case "U Turn":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/u-turn.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.U;
             case "Rotate Left":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/r-left.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.LEFT;
             case "Rotate Right":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/r-right.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.RIGHT;
             case "Back Up":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/back-up2.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.BACK;
             case "Move 1":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-1.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.MOVE1;
             case "Move 2":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-2.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.MOVE2;
             case "Move 3":
+                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-3.png"));
+                this.sprite = new Sprite(cardTexture);
                 return Program.MOVE3;
             default:
                 throw new IllegalArgumentException("Invalid move: " + s);
