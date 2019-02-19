@@ -18,7 +18,7 @@ public class Player implements GameObject {
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
-    private Coordinate position;
+    private GameObjectType type;
 
     private Program currentMove;
     private int moveProgression;
@@ -37,6 +37,7 @@ public class Player implements GameObject {
         this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
+        this.type = GameObjectType.PLAYER;
         evaluateSprite();
     }
 
@@ -79,20 +80,26 @@ public class Player implements GameObject {
      * Method that evaluates the player's sprite based on the player's orientation.
      */
     public void evaluateSprite(){
-        if(this.orientation == Orientation.FACING_NORTH) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingNorth.png"));
-        }
-        if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingWest.png"));
-        }
-        if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingSouth.png"));
-        }
-        if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/playerFacingEast.png"));
-        }
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/player.png"));
 
         this.sprite = new Sprite(texture);
+        switch (orientation) {
+            default:
+                sprite.rotate(0);
+                break;
+            case FACING_NORTH:
+                sprite.rotate(0);
+                break;
+            case FACING_EAST:
+                sprite.rotate(90);
+                break;
+            case FACING_WEST:
+                sprite.rotate(270);
+                break;
+            case FACING_SOUTH:
+                sprite.rotate(180);
+                break;
+        }
     }
 
     /**
@@ -104,11 +111,11 @@ public class Player implements GameObject {
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
     }
-
-
     // TODO take selected program from user interface
-    private void pushProgram(ArrayList<ProgramCard> selectedCards){
-        program.addAll(selectedCards);
+    private void pushProgram(ProgramCard[] selectedCards){
+        for (int i =(selectedCards.length-1);i>=0;i--) {
+            program.push(selectedCards[i]);
+        }
     }
 
     /**
@@ -179,17 +186,10 @@ public class Player implements GameObject {
         return backUp;
     }
 
-    public void setPosition(Coordinate position) {
-        this.position = position;
-    }
-    public Coordinate getPosition() {
-        return position;
-    }
-
     @Override
     public int compareTo(Object o) {
 //        return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
-        return 1;
+        return 0;
     }
 }
 
