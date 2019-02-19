@@ -28,7 +28,7 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 9;
+        this.health = 6;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(Orientation orientation, int playerNumber){
-        this.health = 9;
+        this.health = 6;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -101,17 +101,20 @@ public class Player implements GameObject {
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
-        cardsToStack();
     }
-
-    private void cardsToStack(){
-        program.addAll(programHand);
+    // TODO take selected program from user interface
+    private void pushProgram(ProgramCard[] selectedCards){
+        for (int i =(selectedCards.length-1);i>=0;i--) {
+            program.push(selectedCards[i]);
+        }
     }
 
     /**
      * Removes one health from the player.
      */
-    public void recieveDamage(){this.health--;}
+    public void recieveDamage(){
+        this.health--;
+        }
 
     /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).

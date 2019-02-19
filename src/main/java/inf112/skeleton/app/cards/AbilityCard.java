@@ -12,6 +12,7 @@ public class AbilityCard implements RRCard {
     private Ability ability;
     private Texture texture;
     private Sprite sprite;
+    private String name;
 
 
     /**
@@ -19,7 +20,7 @@ public class AbilityCard implements RRCard {
      * @param ability Ability to be assigned to the card
      */
     public AbilityCard (String ability){
-        this.ability=setAbility(ability);
+        this.ability=setAbility(this.name=ability);
     }
 
     private Ability setAbility(String s){
@@ -137,5 +138,10 @@ public class AbilityCard implements RRCard {
     @Override
     public int compareTo(Object o) {
         return 0;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 }
