@@ -11,15 +11,15 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private Player player = new Player();
+    private Player player;
+    private ProgramDeck pDeck;
 
-    /*
     @Before
     public void setup() {
-        Player player = new Player();
-
+        this.player = new Player();
+        this.pDeck = new ProgramDeck("ProgramCards.txt");
     }
-    */
+
 
     @Test
     public void PlayerStartsNorth() {
