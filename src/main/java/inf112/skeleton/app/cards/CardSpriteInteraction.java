@@ -2,6 +2,7 @@ package inf112.skeleton.app.cards;
 
 import com.badlogic.gdx.math.Vector2;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.ArrayList;
 
 public class CardSpriteInteraction {
@@ -16,7 +17,13 @@ public class CardSpriteInteraction {
 
     private Vector2 cardOffset = new Vector2(74+intOffset,115+intOffset);
 
+    private ProgramCard empty;
+
+    private ProgramCard overlappingCard;
+
     public CardSpriteInteraction(ArrayList<ProgramCard> chosenCards){
+        empty = new ProgramCard(0,Program.NONE);
+
         this.chosenCards = chosenCards;
         cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
@@ -28,8 +35,17 @@ public class CardSpriteInteraction {
     }
 
     public CardSpriteInteraction() {
-        this.cardSequence = new ProgramCard[5];
+
+        empty = new ProgramCard(0,Program.NONE);
+
+        overlappingCard = empty;
+
         this.chosenCards = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++){
+            chosenCards.add(i,empty);
+        }
+
         cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
         cardSlotPositions.add(new Vector2(187,44));
@@ -56,8 +72,20 @@ public class CardSpriteInteraction {
     }
 
     public void setCardSlot(ProgramCard card, int slot){
-        cardSequence[slot] = card;
-        System.out.println("Card "+ card.toString() + " was added to slot "+ (slot+1));
+        if(chosenCards.contains(card)){
+            int oldSlot = chosenCards.indexOf(card);
+            removeCard(oldSlot);
+        }
+        if(chosenCards.get(slot) != empty){
+            chosenCards.get(slot).setPosition(chosenCards.get(slot).getPosition());
+        }
+        chosenCards.remove(slot);
+        chosenCards.add(slot,card);
+    }
+
+    public void removeCard(int slot){
+        chosenCards.remove(slot);
+        chosenCards.add(slot,empty);
     }
 
     /**
@@ -74,12 +102,20 @@ public class CardSpriteInteraction {
 
             if(Math.abs(xDiff) < 50){
                 if(Math.abs(yDiff) < 70){
+                    if(chosenCards.get(i) != empty){
+                        overlappingCard = chosenCards.get(i);
+                    }
                     setCardSlot(card, i);
-                    return cardSlotPositions.get(i);
+                    Vector2 pos = new Vector2(cardSlotPositions.get(i).x-74,cardSlotPositions.get(i).y);
+                    return pos;
                 }
             }
         }
-        return new Vector2(100,300);
+        if(chosenCards.contains(card)){
+            int slot = chosenCards.indexOf(card);
+            removeCard(slot);
+        }
+        return card.getPosition();
     }
 
     private boolean insideSlot(float screenX, float screenY, float slotX, float slotY){
@@ -93,5 +129,11 @@ public class CardSpriteInteraction {
 
     public ArrayList<ProgramCard> getChosenCards(){
         return chosenCards;
+    }
+
+    public ProgramCard getCardOverlap(){
+        ProgramCard card = overlappingCard;
+        overlappingCard = empty;
+        return card;
     }
 }
