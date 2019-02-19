@@ -1,8 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -11,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.PriorityQueue;
 
 public class TileGrid{
     private Tile[][] tileGrid;
@@ -129,13 +125,10 @@ public class TileGrid{
             for(Tile tile : tileRow){
                 for (Player player : players) {
                     if (tile.hasPlayer(player)) {
-                        System.out.println("Has player");
                         if(tile.hasConveyor()){
-                            System.out.println("Has Conveyor");
                             Conveyor conveyor = tile.getConveyor();
                             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
                         }
-
                     }
                 }
             }
