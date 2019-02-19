@@ -103,14 +103,18 @@ public class Player implements GameObject {
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
     }
     // TODO take selected program from user interface
-    private void pushProgram(ArrayList<ProgramCard> selectedCards){
-        program.addAll(selectedCards);
+    private void pushProgram(ProgramCard[] selectedCards){
+        for (int i =(selectedCards.length-1);i>=0;i--) {
+            program.push(selectedCards[i]);
+        }
     }
 
     /**
      * Removes one health from the player.
      */
-    public void recieveDamage(){this.health--;}
+    public void recieveDamage(){
+        this.health--;
+        }
 
     /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).

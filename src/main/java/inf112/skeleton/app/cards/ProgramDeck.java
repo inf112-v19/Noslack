@@ -63,10 +63,9 @@ public class ProgramDeck implements IDeck {
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
-        for (int i=0;i<health;i++) {
-
+        if(health<5) health=5;
+        for (int i=0;i<health;i++)
             playerDeck.add(deck.pop());
-        }
         return playerDeck;
     }
 }
