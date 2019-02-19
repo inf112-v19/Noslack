@@ -6,17 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 
-public class ConveyorNorth implements GameObject {
+public class Conveyor implements GameObject {
     private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
 
-    public ConveyorNorth(){
+    public Conveyor(){
         this.orientation = Orientation.FACING_NORTH;
         evaluateSprite();
     }
 
-    public ConveyorNorth(Orientation orientation){
+    public Conveyor(Orientation orientation){
         this.orientation = orientation;
         evaluateSprite();
     }
@@ -47,6 +47,10 @@ public class ConveyorNorth implements GameObject {
         }
 
         this.sprite = new Sprite(texture);
+    }
+
+    public Orientation getOrientation(){
+        return this.orientation;
     }
 
     @Override

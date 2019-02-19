@@ -24,4 +24,16 @@ public class ProgramCardTest {
         assertEquals(priority,card.getPriority());
         assertSame(card.getMove(), Program.MOVE3);
     }
+
+    @Test
+    public void compareTo() {
+        ProgramCard card1 = new ProgramCard(90,Program.MOVE3);
+        ProgramCard card2 = new ProgramCard(60,Program.U);
+        ProgramCard card3 = new ProgramCard(88,Program.RIGHT);
+        ProgramCard card4 = new ProgramCard(60,Program.BACK);
+
+        assertEquals(card1.compareTo(card2),1);
+        assertEquals(card4.compareTo(card3),-1);
+        assertEquals(card2.compareTo(card4),0);
+    }
 }

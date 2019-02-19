@@ -1,79 +1,46 @@
-package inf112.skeleton.app.cards;
+package inf112.skeleton.app.gameobjects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-/**
- * Program card lass that contains a priority and movement.
-  */
+public class Laser implements GameObject {
+    private Orientation orientation;
+    private GameObjectType gameObjectType;
+    // TODO decide wether laser should be on its own, or within each player.
 
-public class ProgramCard implements RRCard {
-    private int priority;
-    private Program move;
-    private Sprite sprite;
-    private Texture texture;
 
-    /**
-     *
-     * @param priority is the card priority for movement
-     * @param move is the directioon magnitude or change
-     */
-    public ProgramCard(int priority, String move) {
-        this.priority = priority;
-        this.move=translateMove(move);
+    public Laser(Orientation orientation) {
+        updateOrientation(orientation);
+
+
     }
 
-    /**
-     * Only used for testing
-     * @param priority priorty of card
-     * @param move move the card is to have
-     */
-    public ProgramCard(int priority,Program move){
-        this.priority = priority;
-        this.move=move;
-    }
-
-    /** Get priority int
-     */
-    public int getPriority() {
-        return this.priority;
-    }
-
-    /** Get Program enum for card.
-      */
-    public Program getMove() {
-        return this.move;
-    }
-
-    /**
-     * Translate string to Program
-     * @param s description og movement to be translated.
-     */
-    private Program translateMove (String s){
-        switch (s) {
-            case "U Turn":
-                return Program.U;
-            case "Rotate Left":
-                return Program.LEFT;
-            case "Rotate Right":
-                return Program.RIGHT;
-            case "Back Up":
-                return Program.BACK;
-            case "Move 1":
-                return Program.MOVE1;
-            case "Move 2":
-                return Program.MOVE2;
-            case "Move 3":
-                return Program.MOVE3;
-            default:
-                throw new IllegalArgumentException("Invalid move: " + s);
+    public void updateOrientation(Orientation orientation) {
+        this.orientation = orientation;
+        switch (orientation){
+            case FACING_NORTH: this.gameObjectType=GameObjectType.NORTH_LASER_OUTLET;
+            case FACING_SOUTH: this.gameObjectType=GameObjectType.SOUTH_LASER_OUTLET;
+            case FACING_EAST: this.gameObjectType=GameObjectType.EAST_LASER_OUTLET;
+            case FACING_WEST: this.gameObjectType=GameObjectType.WEST_LASER_OUTLET;
+            default:this.gameObjectType=GameObjectType.NORTH_LASER_OUTLET;
         }
     }
+    public Orientation getOrientation() {
+        return orientation;
+    }
+    @Override
+    public GameObjectType getGameObjectType() {
+        return gameObjectType;
+    }
+
 
     @Override
     public Sprite getSprite() {
-        return this.sprite;
+        return null;
+    }
+
+    @Override
+    public void evaluateSprite() {
+
     }
 
     /**
@@ -116,6 +83,6 @@ public class ProgramCard implements RRCard {
      */
     @Override
     public int compareTo(Object o) {
-        return Integer.compare(getPriority(), ((ProgramCard) o).getPriority());
+        return 0;
     }
 }

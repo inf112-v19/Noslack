@@ -1,11 +1,17 @@
 package inf112.skeleton.app.cards;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * Abillty cards for the game RoboRally.
  * Uses the interface RRCard
  */
 public class AbilityCard implements RRCard {
     private Ability ability;
+    private Texture texture;
+    private Sprite sprite;
 
 
     /**
@@ -13,88 +19,63 @@ public class AbilityCard implements RRCard {
      * @param ability Ability to be assigned to the card
      */
     public AbilityCard (String ability){
-        setAbility(ability);
+        this.ability=setAbility(ability);
     }
 
-    private void setAbility(String s){
+    private Ability setAbility(String s){
         switch (s) {
             case "Ablative Coat":
-                ability=Ability.AblativeCoat;
-                break;
+                return Ability.AblativeCoat;
             case "Abort Switch":
-                ability=Ability.AbortSwitch;
-                break;
+                return Ability.AbortSwitch;
             case "Brakes":
-                ability=Ability.Brakes;
-                break;
+                return Ability.Brakes;
             case "Circuit Breaker":
-                ability=Ability.CircuitBreaker;
-                break;
+                return Ability.CircuitBreaker;
             case "Conditional Program":
-                ability=Ability.ConditionalProgram;
-                break;
+                return Ability.ConditionalProgram;
             case "Crab Legs":
-                ability=Ability.CrabLegs;
-                break;
+                return Ability.CrabLegs;
             case "Double-Barreled Laser":
-                ability=Ability.DoubleBarreledLaser;
-                break;
+                return Ability.DoubleBarreledLaser;
             case "Dual Processor":
-                ability=Ability.DualProcessor;
-                break;
+                return Ability.DualProcessor;
             case "Extra Memory":
-                ability=Ability.ExtraMemory;
-                break;
+                return Ability.ExtraMemory;
             case "Fire Control":
-                ability=Ability.FireControl;
-                break;
+                return Ability.FireControl;
             case "Flywheel":
-                ability=Ability.Flywheel;
-                break;
+                return Ability.Flywheel;
             case "Fourth Gear":
-                ability=Ability.FourthGear;
-                break;
+                return Ability.FourthGear;
             case "Gyroscopic Stabilizer":
-                ability=Ability.GyroscopicStabilizer;
-                break;
+                return Ability.GyroscopicStabilizer;
             case "High-Powered Laser":
-                ability=Ability.HighPoweredLaser;
-                break;
+                return Ability.HighPoweredLaser;
             case "Mechanical Arm":
-                ability=Ability.MechanicalArm;
-                break;
+                return Ability.MechanicalArm;
             case "Mini Howitzer":
-                ability=Ability.MiniHowitzer;
-                break;
+                return Ability.MiniHowitzer;
             case "Power-Down Shield":
-                ability=Ability.PowerDownShield;
-                break;
+                return Ability.PowerDownShield;
             case "Pressor Beam":
-                ability=Ability.PressorBeam;
-                break;
+                return Ability.PressorBeam;
             case "Radio Control":
-                ability=Ability.RadioControl;
-                break;
+                return Ability.RadioControl;
             case "Ramming Gear":
-                ability=Ability.RammingGear;
-                break;
+                return Ability.RammingGear;
             case "Rear-Firing Laser":
-                ability=Ability.RearFiringLaser;
-                break;
+                return Ability.RearFiringLaser;
             case "Recompile":
-                ability=Ability.Recompile;
-                break;
+                return Ability.Recompile;
             case "Reverse Gear":
-                ability=Ability.ReverseGear;
-                break;
+                return Ability.ReverseGear;
             case "Scrambler":
-                ability= Ability.Scrambler;
+                return Ability.Scrambler;
             case "Superior Archive":
-                ability=Ability.SuperiorArchive;
-                break;
+                return Ability.SuperiorArchive;
             case "Tractor Beam":
-                ability=Ability.TractorBeam;
-                break;
+                return Ability.TractorBeam;
             default:
                 throw new IllegalArgumentException("Invalid ability: " + s);
 
@@ -108,13 +89,53 @@ public class AbilityCard implements RRCard {
         return ability;
     }
 
-    
-    public void render() {
 
-    }
 
     @Override
-    public void evaluateSprite() {
+    public Sprite getSprite() {
+        return this.sprite;
+    }
 
+    /**
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     *
+     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+     * <tt>y.compareTo(x)</tt> throws an exception.)
+     *
+     * <p>The implementor must also ensure that the relation is transitive:
+     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+     * <tt>x.compareTo(z)&gt;0</tt>.
+     *
+     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
+     * all <tt>z</tt>.
+     *
+     * <p>It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
+     *
+     * <p>In the foregoing description, the notation
+     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
+     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
+     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
+     * <i>expression</i> is negative, zero or positive.
+     *
+     * @param o the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object
+     * is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified object is null
+     * @throws ClassCastException   if the specified object's type prevents it
+     *                              from being compared to this object.
+     */
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }
