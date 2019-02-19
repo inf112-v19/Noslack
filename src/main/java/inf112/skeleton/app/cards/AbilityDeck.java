@@ -19,7 +19,7 @@ public class AbilityDeck implements IDeck {
     public AbilityDeck(String fileName){
 
         fileName = "./assets/cardDocs/"+fileName;
-        file = new File(fileName);
+        this.file = new File(fileName);
         //file =new File(fileName);
         deck  = new Stack<>();
         deckList = new ArrayList<>();
