@@ -38,9 +38,7 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
+
 
     /**
      * Constructor of Player class with orientation specified.
@@ -129,7 +127,9 @@ public class Player implements GameObject {
         programCards.clear();
         abilityCards.clear();
     }
-
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
     /**
      * @return Player AbilityDeck
      */
@@ -168,6 +168,8 @@ public class Player implements GameObject {
     }
 
     @Override
-    public int compareTo(Object other) {return 1; }
+    public int compareTo(Object o) {
+        return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
+    }
 }
 
