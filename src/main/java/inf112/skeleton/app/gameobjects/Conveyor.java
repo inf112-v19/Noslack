@@ -10,6 +10,7 @@ public class Conveyor implements GameObject {
     private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
+    private GameObjectType type;
 
     public Conveyor(){
         this.orientation = Orientation.FACING_NORTH;
@@ -33,20 +34,31 @@ public class Conveyor implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        if(this.orientation == Orientation.FACING_NORTH) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyorFacingNorth.png"));
-        }
-        if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyorFacingWest.png"));
-        }
-        if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyorFacingSouth.png"));
-        }
-        if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyorFacingEast.png"));
-        }
+
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyor.png"));
 
         this.sprite = new Sprite(texture);
+        switch (orientation) {
+            default:
+                sprite.rotate(0);
+                break;
+            case FACING_NORTH:
+                sprite.rotate(0);
+                this.type = GameObjectType.CONVEYOR_NORTH;
+                break;
+            case FACING_EAST:
+                sprite.rotate(90);
+                this.type = GameObjectType.CONVEYOR_EAST;
+                break;
+            case FACING_WEST:
+                sprite.rotate(270);
+                this.type = GameObjectType.CONVEYOR_WEST;
+                break;
+            case FACING_SOUTH:
+                sprite.rotate(180);
+                this.type = GameObjectType.CONVEYOR_SOUTH;
+                break;
+        }
     }
 
     public Orientation getOrientation(){

@@ -8,6 +8,7 @@ public class Wall implements GameObject {
     private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
+    private GameObjectType type;
 
     public Wall(Orientation orientation1) {
         this.orientation = orientation1;
@@ -25,20 +26,30 @@ public class Wall implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        if(this.orientation == Orientation.FACING_NORTH) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wallFacingNorth.png"));
-        }
-        if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wallFacingWest.png"));
-        }
-        if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wallFacingSouth.png"));
-        }
-        if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wallFacingEast.png"));
-        }
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wall.png"));
 
         this.sprite = new Sprite(texture);
+        switch (orientation) {
+            default:
+                sprite.rotate(0);
+                break;
+            case FACING_NORTH:
+                sprite.rotate(0);
+                this.type = GameObjectType.NORTH_WALL;
+                break;
+            case FACING_EAST:
+                sprite.rotate(90);
+                this.type = GameObjectType.EAST_WALL;
+                break;
+            case FACING_WEST:
+                sprite.rotate(270);
+                this.type = GameObjectType.WEST_WALL;
+                break;
+            case FACING_SOUTH:
+                sprite.rotate(180);
+                this.type = GameObjectType.SOUTH_WALL;
+                break;
+        }
     }
 
     @Override
