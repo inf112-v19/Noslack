@@ -104,6 +104,8 @@ public class Player implements GameObject {
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
     }
+
+
     // TODO take selected program from user interface
     private void pushProgram(ProgramCard[] selectedCards){
         for (int i =(selectedCards.length-1);i>=0;i--) {
@@ -189,7 +191,7 @@ public class Player implements GameObject {
     @Override
     public int compareTo(Object o) {
 //        return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
-        return 0;
+        return 1;
     }
 }
 

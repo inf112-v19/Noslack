@@ -117,7 +117,7 @@ public class RoboRally extends Game implements InputProcessor {
         renderGrid();
         performPhase();
         activateTiles();
-//        tick();
+        // tick();
         renderGrid();
         renderDealtCards();
         batch.end();
