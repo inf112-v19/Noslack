@@ -232,4 +232,9 @@ public class TileGrid{
         }
     }
 
+    public void activateTiles() {
+    }
+
+    public void continueMove(int i) {
+    }
 }
