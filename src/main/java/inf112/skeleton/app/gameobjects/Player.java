@@ -17,6 +17,7 @@ public class Player implements GameObject {
     private int health;
     private Orientation orientation;
     private int playerNumber;
+    private Coordinate backUp;
 
     private Program currentMove;
     private int moveProgression;
@@ -168,6 +169,13 @@ public class Player implements GameObject {
 
     public void resetMoveProgress(){
         this.moveProgression = 0;
+    }
+    public void setBackUp(Coordinate backUp){
+        this.backUp=backUp;
+    }
+
+    public Coordinate getBackUp() {
+        return backUp;
     }
 
     @Override
