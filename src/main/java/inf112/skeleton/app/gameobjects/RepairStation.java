@@ -29,7 +29,7 @@ public class RepairStation implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.REPAIR_STATION){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;
