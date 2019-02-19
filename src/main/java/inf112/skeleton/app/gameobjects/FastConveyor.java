@@ -9,6 +9,8 @@ public class FastConveyor implements GameObject {
     private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
+    private GameObjectType type;
+
 
     public FastConveyor() {
         this.orientation = Orientation.FACING_NORTH;
@@ -37,20 +39,30 @@ public class FastConveyor implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        if(this.orientation == Orientation.FACING_NORTH) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/fastConveyorFacingNorth.png"));
-        }
-        if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/fastConveyorFacingWest.png"));
-        }
-        if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/fastConveyorFacingSouth.png"));
-        }
-        if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/fastConveyorFacingEast.png"));
-        }
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/fastConveyor.png"));
 
         this.sprite = new Sprite(texture);
+        switch (orientation) {
+            default:
+                sprite.rotate(0);
+                break;
+            case FACING_NORTH:
+                sprite.rotate(0);
+                this.type = GameObjectType.FAST_CONVEYOR_NORTH;
+                break;
+            case FACING_EAST:
+                sprite.rotate(90);
+                this.type = GameObjectType.FAST_CONVEYOR_EAST;
+                break;
+            case FACING_WEST:
+                sprite.rotate(270);
+                this.type = GameObjectType.FAST_CONVEYOR_WEST;
+                break;
+            case FACING_SOUTH:
+                sprite.rotate(180);
+                this.type = GameObjectType.FAST_CONVEYOR_SOUTH;
+                break;
+        }
     }
 
     @Override
