@@ -11,7 +11,7 @@ import java.util.Stack;
 public class Player implements GameObject {
     private ArrayList<ProgramCard> programHand;
     private Stack<ProgramCard> program;
-    private ArrayList<AbilityCard> abilityCards;
+    private ArrayList<AbilityCard> abilityHand;
     private Texture texture;
     private Sprite sprite;
     private int health;
@@ -28,11 +28,11 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 9;
+        this.health = 6;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
-        this.abilityCards = new ArrayList<>();
+        this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         evaluateSprite();
@@ -46,11 +46,11 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(Orientation orientation, int playerNumber){
-        this.health = 9;
+        this.health = 6;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
-        this.abilityCards = new ArrayList<>();
+        this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         evaluateSprite();
@@ -100,12 +100,11 @@ public class Player implements GameObject {
      */
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
-        for (RRCard card:AbilityCards) this.abilityCards.add((AbilityCard) card);
-        cardsToStack();
+        for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
     }
-
-    private void cardsToStack(){
-        program.addAll(programHand);
+    // TODO take selected program from user interface
+    private void pushProgram(ArrayList<ProgramCard> selectedCards){
+        program.addAll(selectedCards);
     }
 
     /**
@@ -125,7 +124,7 @@ public class Player implements GameObject {
      */
     public void reset(){
         programHand.clear();
-        abilityCards.clear();
+        abilityHand.clear();
     }
     public int getPlayerNumber() {
         return playerNumber;
@@ -133,7 +132,7 @@ public class Player implements GameObject {
     /**
      * @return Player AbilityDeck
      */
-    public ArrayList<AbilityCard> getAbilityCards() {return abilityCards;}
+    public ArrayList<AbilityCard> getAbilityHand() {return abilityHand;}
     /**
      * @return Players ProgramDeck
      */

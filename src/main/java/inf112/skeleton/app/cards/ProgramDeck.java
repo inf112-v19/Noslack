@@ -15,28 +15,28 @@ public class ProgramDeck implements IDeck {
      */
     public ProgramDeck(String fileName){
         fileName = "./assets/cardDocs/"+fileName;
-        file = new File(fileName);
-        deck  = new Stack<>();
-        deckList = new ArrayList<>();
+        this.file = new File(fileName);
+        this.deck  = new Stack<>();
+        this.deckList = new ArrayList<>();
         createDeck();
     }
 
 
     @Override
     public void reset() {
-        deck.clear();
+        this.deck.clear();
         createDeck();
     }
 
     @Override
     public void createDeck() {
         try{
-            Scanner reader = new Scanner(file);
+            Scanner reader = new Scanner(this.file);
             while (reader.hasNext()) {
                 int priority=reader.nextInt();
                 reader.skip(" ");
                 String movement=reader.nextLine();
-                deckList.add(new ProgramCard(priority, movement));
+                this.deckList.add(new ProgramCard(priority, movement));
             }
             reader.close();
         }

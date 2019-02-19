@@ -3,6 +3,7 @@ package inf112.skeleton.app.cards;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Program card lass that contains a priority and movement.
@@ -13,6 +14,8 @@ public class ProgramCard implements RRCard {
     private Program move;
     private Sprite sprite;
     private Texture texture;
+    private String name;
+    private Vector2 position;
 
     /**
      *
@@ -21,7 +24,7 @@ public class ProgramCard implements RRCard {
      */
     public ProgramCard(int priority, String move) {
         this.priority = priority;
-        this.move=translateMove(move);
+        this.move=translateMove(this.name=move);
     }
 
     /**
@@ -32,6 +35,10 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority,Program move){
         this.priority = priority;
         this.move=move;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position = position;
     }
 
     /** Get priority int
@@ -51,44 +58,45 @@ public class ProgramCard implements RRCard {
      * @param s description og movement to be translated.
      */
     private Program translateMove (String s){
-        Texture cardTexture;
         switch (s) {
             case "U Turn":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/u-turn.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/u-turn.png");
                 return Program.U;
             case "Rotate Left":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/r-left.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/r-left.png");
                 return Program.LEFT;
             case "Rotate Right":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/r-right.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/r-right.png");
                 return Program.RIGHT;
             case "Back Up":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/back-up2.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/back-up2.png");
                 return Program.BACK;
             case "Move 1":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-1.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/move-1.png");
                 return Program.MOVE1;
             case "Move 2":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-2.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/move-2.png");
                 return Program.MOVE2;
             case "Move 3":
-                cardTexture = new Texture(Gdx.files.internal("./assets/cards/move-3.png"));
-                this.sprite = new Sprite(cardTexture);
+                setSprite("./assets/cards/move-3.png");
                 return Program.MOVE3;
             default:
                 throw new IllegalArgumentException("Invalid move: " + s);
         }
     }
 
+    private void setSprite(String filepath){
+        Texture cardTexture = new Texture(Gdx.files.internal(filepath));
+        this.sprite = new Sprite(cardTexture);
+    }
+
     @Override
     public Sprite getSprite() {
         return this.sprite;
+    }
+
+    public Vector2 getPosition() {
+        return this.position;
     }
 
     /**
@@ -132,5 +140,9 @@ public class ProgramCard implements RRCard {
     @Override
     public int compareTo(Object o) {
         return Integer.compare(getPriority(), ((ProgramCard) o).getPriority());
+    }
+
+    public String toString(){
+        return this.name;
     }
 }

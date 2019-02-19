@@ -6,5 +6,6 @@ public interface RRCard extends Comparable{
 
     Sprite getSprite();
 
+    String toString();
 }
 

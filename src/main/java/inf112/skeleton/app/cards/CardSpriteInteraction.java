@@ -5,7 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 public class CardSpriteInteraction {
-    private ArrayList<RRCard> chosenCards;
+
+    private ProgramCard[] cardSequence;
+
+    private ArrayList<ProgramCard> chosenCards;
 
     private ArrayList<Vector2> cardSlotPositions;
 
@@ -13,7 +16,7 @@ public class CardSpriteInteraction {
 
     private Vector2 cardOffset = new Vector2(74+intOffset,115+intOffset);
 
-    public CardSpriteInteraction(ArrayList<RRCard> chosenCards){
+    public CardSpriteInteraction(ArrayList<ProgramCard> chosenCards){
         this.chosenCards = chosenCards;
         cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
@@ -25,6 +28,8 @@ public class CardSpriteInteraction {
     }
 
     public CardSpriteInteraction() {
+        this.cardSequence = new ProgramCard[5];
+        this.chosenCards = new ArrayList<>();
         cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
         cardSlotPositions.add(new Vector2(187,44));
@@ -40,7 +45,7 @@ public class CardSpriteInteraction {
      * @param screenY must be flipped! (Gdx.graphics.getHeight()-screenY)
      * @return whether or not the card is inside a slot
      */
-    public boolean cardPositionValidation(RRCard card, float screenX, float screenY){
+    public boolean cardPositionValidation(ProgramCard card, float screenX, float screenY){
         for(int i = 0; i < cardSlotPositions.size(); i++){
             if (insideSlot(screenX,screenY,cardSlotPositions.get(i).x,cardSlotPositions.get(i).y)){
                 chosenCards.add(i,card);
@@ -50,6 +55,11 @@ public class CardSpriteInteraction {
         return false;
     }
 
+    public void setCardSlot(ProgramCard card, int slot){
+        cardSequence[slot] = card;
+        System.out.println("Card "+ card.toString() + " was added to slot "+ (slot+1));
+    }
+
     /**
      *
      * CHANGE THIS METHOD :)
@@ -57,14 +67,14 @@ public class CardSpriteInteraction {
      * @param screenY
      * @return
      */
-    public Vector2 cardSnapPosition(float screenX, float screenY){
+    public Vector2 cardSnapPosition(ProgramCard card, float screenX, float screenY){
         for(int i = 0; i < cardSlotPositions.size(); i++){
             float xDiff = screenX-cardSlotPositions.get(i).x;
             float yDiff = screenY-cardSlotPositions.get(i).y;
 
             if(Math.abs(xDiff) < 50){
                 if(Math.abs(yDiff) < 70){
-                    System.out.println("Selected slot: " + (i+1));
+                    setCardSlot(card, i);
                     return cardSlotPositions.get(i);
                 }
             }
@@ -81,7 +91,7 @@ public class CardSpriteInteraction {
         return false;
     }
 
-    public ArrayList<RRCard> getChosenCards(){
+    public ArrayList<ProgramCard> getChosenCards(){
         return chosenCards;
     }
 }
