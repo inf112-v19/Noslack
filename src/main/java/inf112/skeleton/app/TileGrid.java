@@ -16,8 +16,6 @@ public class TileGrid{
     private final String fileName = "./assets/maplayout.txt";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
-    private Coordinate[] respawnPositions;
-    private Coordinate[] coordinatesOfPlayers;
 
     /**
      * Default constructor.
@@ -27,8 +25,6 @@ public class TileGrid{
         this.columns = 12;
         tileGrid = new Tile[rows][columns];
         this.players = new Player[1];
-        this.respawnPositions = new Coordinate[1];
-        this.coordinatesOfPlayers = new Coordinate[1];
         this.playersInitiated = 0;
 
         initiateTiles(tileGrid);
@@ -45,8 +41,6 @@ public class TileGrid{
         this.columns = columns;
         tileGrid = new Tile[rows][columns];
         this.players = new Player[players];
-        this.respawnPositions = new Coordinate[players];
-        this.coordinatesOfPlayers = new Coordinate[players];
         this.playersInitiated = 0;
 
         initiateTiles(tileGrid);
@@ -85,30 +79,35 @@ public class TileGrid{
 
             for(int row = 0; row<rows; row++){
                 String nextTileTypeLine = bufferedReader.readLine();
+                String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
                 for(int column = 0; column<columns; column++){
-                    // Temporarily set to STANDARD_TILE
-                    int nextTileTypeAsInt = nextTileTypeLine.charAt(column*2)-48; // *2 is to jump over spaces, -48 is to convert from ascii to int.
-                    GameObjectType nextTileType = intToGameObjectType(nextTileTypeAsInt);
+
+                    String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
 
-                    // Adding objects on top of tile
-                    if(nextTileTypeAsInt > 1){ // If tile type is not standardTile
-                        switch(nextTileType){
-                            case CONVEYOR_NORTH:
-                                tileGrid[row][column].addObjectOnTile(new Conveyor());
-                                break;
-                            case PLAYER:
-                                Player newPlayer = new Player(playersInitiated);
-                                tileGrid[row][column].addObjectOnTile(newPlayer);
-                                players[playersInitiated] = newPlayer; // Add new player to list of players.
-                                coordinatesOfPlayers[playersInitiated] = new Coordinate(row, column);
-                                respawnPositions[playersInitiated] = new Coordinate(row, column);
-                                playersInitiated++; // One more player has been initiated, move the index 1 up.
-                                break;
+                    for(int charIndex = 0; charIndex<nextTileTypesOfColumn.length(); charIndex++) {
+                        char nextTileTypeAsChar = nextTileTypesOfColumn.charAt(charIndex);
+                        GameObjectType nextTileType = charToGameObjectType(nextTileTypeAsChar);
+
+                        // Adding objects on top of tile
+                        if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
+                            switch (nextTileType) {
+                                case CONVEYOR_NORTH:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor());
+                                    break;
+                                case PLAYER:
+                                    Player newPlayer = new Player(playersInitiated);
+                                    tileGrid[row][column].addObjectOnTile(newPlayer);
+                                    players[playersInitiated] = newPlayer; // Add new player to list of players.
+                                    newPlayer.setPosition(new Coordinate(row, column));
+                                    newPlayer.setBackUp(new Coordinate(row, column));
+                                    playersInitiated++; // One more player has been initiated, move the index 1 up.
+                                    break;
+                            }
 
                         }
-
                     }
+
                 }
             }
 
@@ -125,9 +124,13 @@ public class TileGrid{
             for(Tile tile : tileRow){
                 for (Player player : players) {
                     if (tile.hasPlayer(player)) {
-                        if(tile.hasConveyor()){
+                        if(tile.hasConveyor()) {
                             Conveyor conveyor = tile.getConveyor();
                             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
+                        }
+                        if(tile.hasRepairStation()){
+                            player.repair();
+                            player.setBackUp(player.getPosition());
                         }
                     }
                 }
@@ -160,7 +163,6 @@ public class TileGrid{
      */
     public void applyRotation(Program move, int playerNumber){
         Player player = players[playerNumber];
-        Orientation currentOrientation = player.getOrientation();
         player.updateOrientation(move);
 
     }
@@ -236,7 +238,7 @@ public class TileGrid{
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
 
         Player player = players[playerNumber];
-        Coordinate coordinatesOfPlayer = coordinatesOfPlayers[playerNumber];
+        Coordinate coordinatesOfPlayer = player.getPosition();
         int rowOfPlayer = coordinatesOfPlayer.getRow();
         int columnOfPlayer = coordinatesOfPlayer.getColumn();
 
@@ -246,7 +248,7 @@ public class TileGrid{
 
         tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
         tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(player);
-        coordinatesOfPlayers[playerNumber] = new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove);
+        player.setPosition(new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove));
     }
 
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove, int rowOfPlayer, int columnOfPlayer){
@@ -260,6 +262,8 @@ public class TileGrid{
             return false;
         }
 
+
+
         return true;
     }
 
@@ -271,14 +275,14 @@ public class TileGrid{
     private void respawnPlayer(int playerNumber){
         Player player = players[playerNumber];
 
-        int rowOfPlayer = coordinatesOfPlayers[playerNumber].getRow();
-        int columnOfPlayer = coordinatesOfPlayers[playerNumber].getColumn();
+        int rowOfPlayer = player.getPosition().getRow();
+        int columnOfPlayer = player.getPosition().getColumn();
         tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
 
-        int respawnRow = respawnPositions[playerNumber].getRow();
-        int respawnColumn = respawnPositions[playerNumber].getColumn();
+        int respawnRow = player.getBackUp().getRow();
+        int respawnColumn = player.getBackUp().getColumn();
         tileGrid[respawnRow][respawnColumn].addObjectOnTile(player);
-        coordinatesOfPlayers[playerNumber] = new Coordinate(respawnRow, respawnColumn);
+        player.setPosition(new Coordinate(respawnRow, respawnColumn));
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
@@ -288,14 +292,14 @@ public class TileGrid{
     }
 
     public Coordinate getCoordinatesOfPlayer(int playerNumber){
-        return coordinatesOfPlayers[playerNumber];
+        return players[playerNumber].getPosition();
     }
 
-    private GameObjectType intToGameObjectType(int nextTileTypeAsInt){
-        switch(nextTileTypeAsInt){
-            case 1: return GameObjectType.STANDARD_TILE;
-            case 2: return GameObjectType.CONVEYOR_NORTH;
-            case 3: return GameObjectType.PLAYER;
+    private GameObjectType charToGameObjectType(char nextTileType){
+        switch(nextTileType){
+            case '1': return GameObjectType.STANDARD_TILE;
+            case '2': return GameObjectType.CONVEYOR_NORTH;
+            case '3': return GameObjectType.PLAYER;
             default: return GameObjectType.STANDARD_TILE;
         }
     }
