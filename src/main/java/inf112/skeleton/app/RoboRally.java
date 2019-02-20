@@ -34,14 +34,11 @@ public class RoboRally extends Game implements InputProcessor {
     private final int GRID_COLUMNS = 12;
 
     // Dealt cards background texture and sprite.
-    private Texture dealtCardsBackgroundTexture;
+
     private Sprite dealtCardsBackgroundSprite;
 
-    private Texture selectedCardsBackgroundTexture;
     private Sprite selectedCardsBackgroundSprite;
 
-
-    private Texture cardTestTexture;
     private Sprite cardTestSprite;
 
     private int drawPositionX;
@@ -65,6 +62,8 @@ public class RoboRally extends Game implements InputProcessor {
     private Sprite goButton;
 
     private ProgramCard empty;
+
+    private boolean sequenceReady;
 
     @Override
     public void create() {
@@ -119,7 +118,9 @@ public class RoboRally extends Game implements InputProcessor {
         renderGrid();
         performPhase();
         activateTiles();
-//        tick();
+        if(sequenceReady){
+            tick();
+        }
         renderGrid();
         renderDealtCards();
         goButton.draw(batch);
@@ -236,7 +237,7 @@ public class RoboRally extends Game implements InputProcessor {
             performProgrammingPhase();
             currentPhase++;
         }
-        if(currentPhase <= 6) {
+        if(currentPhase <= 5) {
             // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
                 tileGrid.applyNextProgram(0);
@@ -247,7 +248,8 @@ public class RoboRally extends Game implements InputProcessor {
                 tileGrid.continueMove(0);
             }
         }else{
-            dealNewCards();
+            System.out.println("ferdig");
+            sequenceReady = false;
             this.currentPhase = 0;
         }
     }
@@ -358,11 +360,19 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        int nulls = 0;
         if (isInsideSprite(screenX,screenY,goButton)){
             ArrayList<ProgramCard> lego = CSI.getChosenCards();
             System.out.println(" ");
             for(int i = 0; i < lego.size(); i++){
+                if (lego.get(i).getPriority() == 0){
+                    nulls++;
+                }
                 System.out.println(lego.get(i));
+            }
+            if (nulls == 0){
+                tileGrid.getPlayer(0).pushProgram(lego);
+                sequenceReady = true;
             }
         }
         return false;
