@@ -1,38 +1,34 @@
 package inf112.skeleton.app.gameobjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class RepairStation implements GameObject {
+public class Flag implements GameObject {
     private Texture texture;
     private Sprite sprite;
 
-    public RepairStation() {
+
+    public Flag() {
         evaluateSprite();
     }
 
     @Override
     public GameObjectType getGameObjectType() {
-        return GameObjectType.REPAIR_STATION;
+        return null;
     }
 
     @Override
     public Sprite getSprite() {
-        return sprite;
+        return null;
     }
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/repairStation.png"));
+
     }
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
-            return -1;
-        } else {
-            return 1;
-        }
+        return 0;
     }
 }

@@ -248,7 +248,6 @@ public class RoboRally extends Game implements InputProcessor {
                 tileGrid.continueMove(0);
             }
         }else{
-            System.out.println("ferdig");
             sequenceReady = false;
             this.currentPhase = 0;
         }
@@ -363,12 +362,10 @@ public class RoboRally extends Game implements InputProcessor {
         int nulls = 0;
         if (isInsideSprite(screenX,screenY,goButton)){
             ArrayList<ProgramCard> lego = CSI.getChosenCards();
-            System.out.println(" ");
             for(int i = 0; i < lego.size(); i++){
                 if (lego.get(i).getPriority() == 0){
                     nulls++;
                 }
-                System.out.println(lego.get(i));
             }
             if (nulls == 0){
                 tileGrid.getPlayer(0).pushProgram(lego);
@@ -388,7 +385,6 @@ public class RoboRally extends Game implements InputProcessor {
             Vector2 newPos = CSI.cardSnapPosition(currentCard,screenX+cardDeltaW,Gdx.graphics.getHeight()-screenY-cardDeltaH);
             ProgramCard overlap = CSI.getCardOverlap();
             if (overlap.getPriority() != empty.getPriority()){
-                System.out.println("overlap!" + empty.getPriority() + " " + overlap.getPriority());
                 moveSprite(overlap.getSprite(),overlap.getPosition().x,overlap.getPosition().y);
             }
             moveSprite(currentSprite,newPos.x,newPos.y);
