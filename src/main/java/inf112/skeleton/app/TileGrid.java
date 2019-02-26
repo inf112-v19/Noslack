@@ -139,12 +139,25 @@ public class TileGrid{
     }
 
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        switch(conveyor.getOrientation()){
-            case FACING_NORTH: movePlayer(playerNumber, 1, 0); break;
-            case FACING_WEST: movePlayer(playerNumber, 0, -1); break;
-            case FACING_SOUTH: movePlayer(playerNumber, -1, 0); break;
-            case FACING_EAST: movePlayer(playerNumber, 0, 1); break;
-            default: break;
+
+        Player playerToMove = players[playerNumber];
+        if(playerToMove.getCurrentMove() == Program.NONE) {
+            switch (conveyor.getOrientation()) {
+                case FACING_NORTH:
+                    movePlayer(playerNumber, 1, 0);
+                    break;
+                case FACING_WEST:
+                    movePlayer(playerNumber, 0, -1);
+                    break;
+                case FACING_SOUTH:
+                    movePlayer(playerNumber, -1, 0);
+                    break;
+                case FACING_EAST:
+                    movePlayer(playerNumber, 0, 1);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
