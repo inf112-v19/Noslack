@@ -114,9 +114,12 @@ public class Player implements GameObject {
     }
     // TODO take selected program from user interface
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
-        program.clear();
-        program.addAll(selectedCards);
-        System.out.println(program);
+        this.program.clear();
+
+        for (int i = (selectedCards.size()-1); i >=0; i--) {
+            this.program.push(selectedCards.get(i));
+        }
+        //this.program.addAll(selectedCards);
     }
 
     /**
@@ -139,6 +142,7 @@ public class Player implements GameObject {
     public void reset(){
         programHand.clear();
         abilityHand.clear();
+        program.clear();
     }
     public int getPlayerNumber() {
         return playerNumber;
