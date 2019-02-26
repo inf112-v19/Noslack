@@ -198,12 +198,13 @@ public class TileGrid{
             case FACING_SOUTH:
                 rowsToMove = -1;
                 break;
-            case FACING_WEST:
+            case FACING_EAST:
                 columnsToMove = 1;
                 break;
-            case FACING_EAST:
+            case FACING_WEST:
                 columnsToMove = -1;
                 break;
+
         }
         if(move==Program.BACK){
             rowsToMove *= -1;
