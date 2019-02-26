@@ -21,26 +21,31 @@ public class PlayerTest {
     }
     @Test
     public void PlayerInitialized(){
-        assertNotEquals(player,null);
+        assertNotEquals(null,player);
     }
 
     @Test
     public void PlayerStartsNorth() {
         //Player player = new Player();
-        assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
+        assertEquals(Orientation.FACING_NORTH,player.getOrientation());
+    }
+    @Test
+    public void PlayerRotatesRight() {
+        //Player player = new Player();
+        assertEquals(Orientation.FACING_NORTH,player.getOrientation());
     }
 
     @Test
     public void PlayerStartsNineHP() {
         //Player player = new Player();
-        assertEquals(player.getHealth(), 9);
+        assertEquals(5, player.getHealth());
     }
 
     @Test
     public void PlayerTakesDamage() {
         int oldHP = player.getHealth();
         player.recieveDamage();
-        assertEquals(player.getHealth(), oldHP - 1);
+        assertEquals(oldHP - 1,player.getHealth() );
     }
 
     @Test
