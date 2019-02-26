@@ -49,7 +49,7 @@ public class Player implements GameObject {
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
-    public Player(Orientation orientation, int playerNumber){
+    public Player(int playerNumber,Orientation orientation){
         this.health = 6;
         this.orientation = orientation;
         this.program = new Stack<>();
@@ -80,26 +80,31 @@ public class Player implements GameObject {
     /**
      * Method that evaluates the player's sprite based on the player's orientation.
      */
-    public void evaluateSprite(){
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player.png"));
+    public void evaluateSprite() {
+        try {
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
 
-        this.sprite = new Sprite(texture);
-        switch (orientation) {
-            default:
-                sprite.rotate(0);
-                break;
-            case FACING_NORTH:
-                sprite.rotate(0);
-                break;
-            case FACING_EAST:
-                sprite.rotate(90);
-                break;
-            case FACING_WEST:
-                sprite.rotate(270);
-                break;
-            case FACING_SOUTH:
-                sprite.rotate(180);
-                break;
+            this.sprite = new Sprite(texture);
+            switch (orientation) {
+                default:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_NORTH:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_EAST:
+                    sprite.setRotation(90);
+                    break;
+                case FACING_WEST:
+                    sprite.setRotation(270);
+                    break;
+                case FACING_SOUTH:
+                    sprite.setRotation(180);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in players evaluateSprite");
         }
     }
 
@@ -116,6 +121,7 @@ public class Player implements GameObject {
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
         program.clear();
         program.addAll(selectedCards);
+        System.out.println(program);
     }
 
     /**

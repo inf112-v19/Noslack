@@ -77,10 +77,10 @@ public class TileGrid{
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            for(int row = 0; row<rows; row++){
+            for(int row = rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
-                for(int column = 0; column<columns; column++){
+                for(int column = columns-1; column>=0; column--){
 
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
@@ -190,36 +190,25 @@ public class TileGrid{
 
         int rowsToMove = 0;
         int columnsToMove = 0;
+
+        switch (player.getOrientation()) {
+            case FACING_NORTH:
+                rowsToMove = 1;
+                break;
+            case FACING_SOUTH:
+                rowsToMove = -1;
+                break;
+            case FACING_EAST:
+                columnsToMove = 1;
+                break;
+            case FACING_WEST:
+                columnsToMove = -1;
+                break;
+
+        }
         if(move==Program.BACK){
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = 1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = -1;
-                    break;
-            }
-        }else {
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = -1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = 1;
-                    break;
-            }
+            rowsToMove *= -1;
+            columnsToMove *= -1;
         }
 
         movePlayer(playerNumber, rowsToMove, columnsToMove);

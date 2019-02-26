@@ -2,24 +2,17 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.Player;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import java.util.Scanner;
 
 public class RoboRally extends Game implements InputProcessor {
 
@@ -65,6 +58,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     private boolean sequenceReady;
 
+    private int roboTick;
+
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
@@ -100,6 +95,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         empty = new ProgramCard(0, Program.NONE);
 
+        roboTick = 0;
 
         for (int i = 0; i < programHand.size(); i++) {
             Vector2 pos = new Vector2(33 + i * 75, 300);
@@ -118,13 +114,14 @@ public class RoboRally extends Game implements InputProcessor {
         renderGrid();
         performPhase();
         activateTiles();
-        if (sequenceReady) {
+        if (sequenceReady && (roboTick % 10 == 0)) {
             tick();
         }
         renderGrid();
         renderDealtCards();
         goButton.draw(batch);
         batch.end();
+        roboTick++;
     }
 
     private void performPhase() {
@@ -232,6 +229,10 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
         if (currentPhase == 0) {
             performProgrammingPhase();
             currentPhase++;
