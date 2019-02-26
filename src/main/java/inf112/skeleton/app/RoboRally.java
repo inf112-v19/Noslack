@@ -236,6 +236,10 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+        }
         if (currentPhase == 0) {
             performProgrammingPhase();
             currentPhase++;
