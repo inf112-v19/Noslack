@@ -190,36 +190,24 @@ public class TileGrid{
 
         int rowsToMove = 0;
         int columnsToMove = 0;
+
+        switch (player.getOrientation()) {
+            case FACING_NORTH:
+                rowsToMove = -1;
+                break;
+            case FACING_SOUTH:
+                rowsToMove = 1;
+                break;
+            case FACING_WEST:
+                columnsToMove = 1;
+                break;
+            case FACING_EAST:
+                columnsToMove = -1;
+                break;
+        }
         if(move==Program.BACK){
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = 1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = -1;
-                    break;
-            }
-        }else {
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = -1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = 1;
-                    break;
-            }
+            rowsToMove *= -1;
+            columnsToMove *= -1;
         }
 
         movePlayer(playerNumber, rowsToMove, columnsToMove);
