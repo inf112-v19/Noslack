@@ -35,7 +35,7 @@ public class Conveyor implements GameObject {
     @Override
     public void evaluateSprite() {
 
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/conveyor.png"));
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {

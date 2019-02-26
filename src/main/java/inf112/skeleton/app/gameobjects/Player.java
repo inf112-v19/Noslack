@@ -116,6 +116,7 @@ public class Player implements GameObject {
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
         program.clear();
         program.addAll(selectedCards);
+        System.out.println(program);
     }
 
     /**
