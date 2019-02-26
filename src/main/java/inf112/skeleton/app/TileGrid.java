@@ -193,10 +193,10 @@ public class TileGrid{
 
         switch (player.getOrientation()) {
             case FACING_NORTH:
-                rowsToMove = -1;
+                rowsToMove = 1;
                 break;
             case FACING_SOUTH:
-                rowsToMove = 1;
+                rowsToMove = -1;
                 break;
             case FACING_WEST:
                 columnsToMove = 1;
