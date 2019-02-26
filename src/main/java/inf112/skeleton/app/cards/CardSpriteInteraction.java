@@ -35,16 +35,13 @@ public class CardSpriteInteraction {
     }
 
     public CardSpriteInteraction() {
-
         empty = new ProgramCard(0,Program.NONE);
 
-        overlappingCard = empty;
+        this.overlappingCard = empty;
 
         this.chosenCards = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++){
-            chosenCards.add(i,empty);
-        }
+        reset();
 
         cardSlotPositions = new ArrayList<>();
         cardSlotPositions.add(new Vector2(80,44));
@@ -133,7 +130,14 @@ public class CardSpriteInteraction {
 
     public ProgramCard getCardOverlap(){
         ProgramCard card = overlappingCard;
-        overlappingCard = empty;
+        this.overlappingCard = empty;
         return card;
+    }
+
+    public void reset(){
+        this.chosenCards.clear();
+        for (int i = 0; i < 5; i++){
+            this.chosenCards.add(i,empty);
+        }
     }
 }
