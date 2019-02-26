@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.graphics.Color;
 
 
 public class Main {
@@ -17,6 +18,7 @@ public class Main {
         */
         cfg.width = 32*20;
         cfg.height = 32*20;
+        cfg.initialBackgroundColor = Color.BLACK;
 
         RoboRally roborally = new RoboRally();
 

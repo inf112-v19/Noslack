@@ -97,11 +97,14 @@ public class RoboRally extends Game implements InputProcessor {
 
         roboTick = 0;
 
+        dealNewCards();
+        /*
         for (int i = 0; i < programHand.size(); i++) {
             Vector2 pos = new Vector2(33 + i * 75, 300);
             programHand.get(i).setPosition(pos);
             programHand.get(i).getSprite().setPosition(pos.x, pos.y);
         }
+        */
 
     }
 
@@ -158,7 +161,7 @@ public class RoboRally extends Game implements InputProcessor {
             card.getSprite().draw(batch);
         }
 
-        cardTestSprite.draw(batch);
+        //cardTestSprite.draw(batch);
     }
 
     /**
@@ -229,14 +232,17 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+        /*
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
         }
+        /*
         if (currentPhase == 0) {
             performProgrammingPhase();
             currentPhase++;
         }
+        */
         if (currentPhase <= 5) {
             // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
@@ -248,8 +254,13 @@ public class RoboRally extends Game implements InputProcessor {
                 tileGrid.continueMove(0);
             }
         } else {
+            tileGrid.continueMove(0);
+            activateTiles();
+
+            dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
+
         }
     }
 
@@ -265,10 +276,18 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void dealNewCards() {
+        tileGrid.getPlayer(0).reset();
         this.programDeck.reset();
         this.abilityDeck.reset();
         int playerHealth = tileGrid.getPlayer(0).getHealth();
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
+        //FIX THIS
+
+        for (int i = 0; i < programHand.size(); i++) {
+            Vector2 pos = new Vector2(33 + i * 75, 500);
+            programHand.get(i).setPosition(pos);
+            programHand.get(i).getSprite().setPosition(pos.x, pos.y);
+        }
     }
 
 
@@ -370,6 +389,7 @@ public class RoboRally extends Game implements InputProcessor {
             }
             if (nulls == 0) {
                 tileGrid.getPlayer(0).pushProgram(chosenCards);
+                CSI.reset();
                 sequenceReady = true;
             }
         }
