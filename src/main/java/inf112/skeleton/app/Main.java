@@ -7,7 +7,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "RoboRally";
+        cfg.title = "RoboHally";
 
         /*
         * The width is composed of 12 tile-sizes to
@@ -15,8 +15,8 @@ public class Main {
         * cards the player has been dealt and may choose
         * from
         */
-        cfg.width = 32*16;
-        cfg.height = 32*16;
+        cfg.width = 32*20;
+        cfg.height = 32*20;
 
         RoboRally roborally = new RoboRally();
 
