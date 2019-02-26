@@ -81,12 +81,12 @@ public class Player implements GameObject {
      * Method that evaluates the player's sprite based on the player's orientation.
      */
     public void evaluateSprite(){
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player.png"));
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
             default:
-                sprite.rotate(0);
+                sprite.setRotation(0);
                 break;
             case FACING_NORTH:
                 sprite.setRotation(0);
