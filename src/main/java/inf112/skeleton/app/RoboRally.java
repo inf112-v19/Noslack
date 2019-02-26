@@ -2,24 +2,17 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.Player;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import java.util.Scanner;
 
 public class RoboRally extends Game implements InputProcessor {
 
