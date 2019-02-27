@@ -67,7 +67,7 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
-        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn.png");
+        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
 
         this.goButton = setSprite("./assets/cards/dontpress.png");
@@ -287,7 +287,7 @@ public class RoboRally extends Game implements InputProcessor {
         //FIX THIS
 
         for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(33 + i * 75, 500);
+            Vector2 pos = new Vector2(33 + i * 75, 520);
             programHand.get(i).setPosition(pos);
             programHand.get(i).getSprite().setPosition(pos.x, pos.y);
         }
