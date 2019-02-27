@@ -67,7 +67,7 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
-        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn.png");
+        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
 
         this.goButton = setSprite("./assets/cards/dontpress.png");
@@ -87,7 +87,7 @@ public class RoboRally extends Game implements InputProcessor {
         int playerHealth = tileGrid.getPlayer(0).getHealth();
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
 
-        programHand = tileGrid.getPlayer(0).getProgramHand();
+        this.programHand = tileGrid.getPlayer(0).getProgramHand();
 
         cardTestSprite = tileGrid.getPlayer(0).getProgramHand().get(0).getSprite();
 
@@ -98,14 +98,6 @@ public class RoboRally extends Game implements InputProcessor {
         roboTick = 0;
 
         dealNewCards();
-        /*
-        for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(33 + i * 75, 300);
-            programHand.get(i).setPosition(pos);
-            programHand.get(i).getSprite().setPosition(pos.x, pos.y);
-        }
-        */
-
     }
 
 
@@ -287,7 +279,8 @@ public class RoboRally extends Game implements InputProcessor {
         //FIX THIS
 
         for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(33 + i * 75, 500);
+            Vector2 pos = new Vector2(5 + i * 75, 520);
+
             programHand.get(i).setPosition(pos);
             programHand.get(i).getSprite().setPosition(pos.x, pos.y);
         }

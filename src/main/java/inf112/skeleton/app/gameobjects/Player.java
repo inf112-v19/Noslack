@@ -34,7 +34,7 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 6;
+        this.health = 9;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Player implements GameObject {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber,Orientation orientation){
-        this.health = 6;
+        this.health = 9;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
