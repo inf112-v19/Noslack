@@ -2,8 +2,7 @@ package inf112.skeleton.app.cards;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-
-public interface RRCard extends Comparable{
+public interface RRCard  extends Comparable {
     /**
      * This function returns the Cards Sprite.
      * @return the cards Sprite
@@ -23,6 +22,8 @@ public interface RRCard extends Comparable{
      * @return Position Of card
      */
     Vector2 getPosition();
+
+
 
 
 }

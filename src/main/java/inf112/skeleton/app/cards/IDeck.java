@@ -33,4 +33,19 @@ public interface IDeck {
      */
     RRCard dealOne();
 
+    /**
+     * Find size of deck
+     * @return the size of the deck
+     */
+    int getSize();
+
+    /**
+     * Find out if the deck contains a Card.
+     * @param card the card you are looking for.
+     * @return If the card is there.
+     */
+    boolean contains(RRCard card);
+
+
+
 }

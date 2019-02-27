@@ -147,7 +147,10 @@ public class AbilityCard implements RRCard {
      */
     @Override
     public int compareTo(Object o) {
-        return 0;
+        if(getAbility().equals(((AbilityCard)o).getAbility()))
+            return 0;
+        else
+            return -1;
     }
 
     @Override

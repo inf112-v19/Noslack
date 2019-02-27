@@ -60,12 +60,30 @@ public class ProgramDeck implements IDeck {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
         if(health<5) health=5;
         for (int i=0;i<health;i++)
-            playerDeck.add(this.deck.pop());
+            if(deck.size()==0) {
+                System.out.println("Deck is empty, so playerDeck only contains " + i + " card(s).");
+                return playerDeck;
+            }
+            else
+                playerDeck.add(this.deck.pop());
         return playerDeck;
     }
 
     @Override
     public RRCard dealOne() {
-        return deck.pop();
+        return this.deck.pop();
+    }
+
+    @Override
+    public int getSize() {
+        return this.deck.size();
+    }
+
+    @Override
+    public boolean contains(RRCard card) {
+        for (RRCard c :deck)
+            if(c.compareTo(card)==0)
+                return true;
+        return false;
     }
 }
