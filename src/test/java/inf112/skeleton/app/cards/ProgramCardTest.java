@@ -15,6 +15,19 @@ public class ProgramCardTest {
         assertSame(card.getMove(), Program.U);
 
     }
+    @Test
+    public void TestToString() {
+        int priority=60;
+        String move ="U Turn";
+        String test = move + " " +priority;
+        boolean result = false;
+        ProgramCard card = new ProgramCard(priority,move);
+
+        if(test.equals(card.toString()))
+            result = true;
+        assertTrue(result);
+
+    }
 
     @Test
     public void TestMove3() {

@@ -68,4 +68,22 @@ public class AbilityDeck implements IDeck {
         return playerDeck;
     }
 
+    @Override
+    public RRCard dealOne() {
+        return deck.pop();
+    }
+
+    @Override
+    public int getSize() {
+        return this.deck.size();
+    }
+
+    @Override
+    public boolean contains(RRCard card) {
+        for(RRCard c : deck)
+            if(c.compareTo(card)==0)
+                return true;
+        return false;
+    }
+
 }

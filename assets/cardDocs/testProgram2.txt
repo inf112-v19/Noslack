@@ -1,0 +1,17 @@
+820 Move 3
+960 Move 2
+340 Rotate Right
+70 Rotate Left
+80 Rotate Right
+310 Rotate Left
+320 Rotate Right
+330 Rotate Left
+340 Rotate Right
+350 Rotate Left
+360 Rotate Right
+370 Rotate Left
+380 Rotate Right
+390 Rotate Left
+400 Rotate Right
+410 Rotate Left
+420 Rotate Right
