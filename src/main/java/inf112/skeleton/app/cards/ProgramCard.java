@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import java.io.FileNotFoundException;
+
 /**
  * Program card lass that contains a priority and movement.
   */
@@ -86,8 +88,13 @@ public class ProgramCard implements RRCard {
     }
 
     private void setSprite(String filepath){
-        Texture cardTexture = new Texture(Gdx.files.internal(filepath));
-        this.sprite = new Sprite(cardTexture);
+        try {
+            Texture cardTexture = new Texture(Gdx.files.internal(filepath));
+            this.sprite = new Sprite(cardTexture);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

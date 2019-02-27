@@ -11,15 +11,18 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private Player player = new Player(Orientation.FACING_NORTH,1);
+    private Player player = new Player(0);
 
-    /*
+
     @Before
     public void setup() {
-        Player player = new Player();
+        player = new Player(1);
 
     }
-    */
+    @Test
+    public void PlayerInitialized(){
+        assertNotEquals(player,null);
+    }
 
     @Test
     public void PlayerStartsNorth() {

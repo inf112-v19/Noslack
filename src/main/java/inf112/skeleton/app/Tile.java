@@ -32,7 +32,7 @@ public class Tile implements GameObject{
     public void evaluateSprite(){
         switch(gameObjectType){
             case STANDARD_TILE:
-                texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile.png"));
+                texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
                 sprite = new Sprite(texture);
                 break;
             default:
@@ -61,6 +61,15 @@ public class Tile implements GameObject{
 
     public Boolean hasPlayer(Player player){
         return objectsOnTile.contains(player);
+    }
+
+    public Boolean hasFlag(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Boolean hasConveyor(){

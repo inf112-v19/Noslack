@@ -77,10 +77,10 @@ public class TileGrid{
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            for(int row = 0; row<rows; row++){
+            for(int row = rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
-                for(int column = 0; column<columns; column++){
+                for(int column = columns-1; column>=0; column--){
 
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
@@ -92,6 +92,9 @@ public class TileGrid{
                         // Adding objects on top of tile
                         if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
                             switch (nextTileType) {
+                                case FLAG:
+                                    tileGrid[row][column].addObjectOnTile(new Flag());
+                                    break;
                                 case CONVEYOR_NORTH:
                                     tileGrid[row][column].addObjectOnTile(new Conveyor());
                                     break;
@@ -132,6 +135,11 @@ public class TileGrid{
                             player.repair();
                             player.setBackUp(player.getPosition());
                         }
+                        if(tile.hasFlag()){
+                            if(player.isFinished()){
+                                player.win();
+                            }
+                        }
                     }
                 }
             }
@@ -139,12 +147,25 @@ public class TileGrid{
     }
 
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        switch(conveyor.getOrientation()){
-            case FACING_NORTH: movePlayer(playerNumber, 1, 0); break;
-            case FACING_WEST: movePlayer(playerNumber, 0, -1); break;
-            case FACING_SOUTH: movePlayer(playerNumber, -1, 0); break;
-            case FACING_EAST: movePlayer(playerNumber, 0, 1); break;
-            default: break;
+
+        Player playerToMove = players[playerNumber];
+        if(playerToMove.getCurrentMove() == Program.NONE) {
+            switch (conveyor.getOrientation()) {
+                case FACING_NORTH:
+                    movePlayer(playerNumber, 1, 0);
+                    break;
+                case FACING_WEST:
+                    movePlayer(playerNumber, 0, -1);
+                    break;
+                case FACING_SOUTH:
+                    movePlayer(playerNumber, -1, 0);
+                    break;
+                case FACING_EAST:
+                    movePlayer(playerNumber, 0, 1);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -177,36 +198,25 @@ public class TileGrid{
 
         int rowsToMove = 0;
         int columnsToMove = 0;
+
+        switch (player.getOrientation()) {
+            case FACING_NORTH:
+                rowsToMove = 1;
+                break;
+            case FACING_SOUTH:
+                rowsToMove = -1;
+                break;
+            case FACING_EAST:
+                columnsToMove = 1;
+                break;
+            case FACING_WEST:
+                columnsToMove = -1;
+                break;
+
+        }
         if(move==Program.BACK){
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = 1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = -1;
-                    break;
-            }
-        }else {
-            switch (player.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_WEST:
-                    columnsToMove = -1;
-                    break;
-                case FACING_EAST:
-                    columnsToMove = 1;
-                    break;
-            }
+            rowsToMove *= -1;
+            columnsToMove *= -1;
         }
 
         movePlayer(playerNumber, rowsToMove, columnsToMove);
@@ -300,6 +310,7 @@ public class TileGrid{
             case '1': return GameObjectType.STANDARD_TILE;
             case '2': return GameObjectType.CONVEYOR_NORTH;
             case '3': return GameObjectType.PLAYER;
+            case '4': return GameObjectType.FLAG;
             default: return GameObjectType.STANDARD_TILE;
         }
     }
