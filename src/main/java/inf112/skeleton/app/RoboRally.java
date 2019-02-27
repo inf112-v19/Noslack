@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.GameObject;
 
@@ -108,7 +109,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
-    
+
 
     @Override
     public void render() {
@@ -235,6 +236,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+
         /*
         try {
             Thread.sleep(500);
@@ -253,17 +255,17 @@ public class RoboRally extends Game implements InputProcessor {
                 activateTiles();
                 currentPhase++;
                 // Runs mid phase
-            } else {
-                tileGrid.continueMove(0);
             }
-        } else {
+        }
+
+        if (!(tileGrid.getPlayer(0).getCurrentMove() == Program.NONE)) {
             tileGrid.continueMove(0);
             activateTiles();
 
+        } else if (currentPhase > 5){
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-
         }
     }
 
