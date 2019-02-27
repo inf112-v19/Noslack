@@ -108,6 +108,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
+
+
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -117,7 +119,7 @@ public class RoboRally extends Game implements InputProcessor {
         renderGrid();
         performPhase();
         activateTiles();
-        if (sequenceReady && (roboTick % 10 == 0)) {
+        if (sequenceReady && (roboTick % 20 == 0)) {
             tick();
         }
         renderGrid();
@@ -126,6 +128,7 @@ public class RoboRally extends Game implements InputProcessor {
         batch.end();
         roboTick++;
     }
+
 
     private void performPhase() {
         if (currentPhase == 0) {
@@ -232,6 +235,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+
         /*
         try {
             Thread.sleep(500);
@@ -246,21 +250,20 @@ public class RoboRally extends Game implements InputProcessor {
         if (currentPhase <= 5) {
             // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
-                tileGrid.applyNextProgram(0);
                 activateTiles();
+                tileGrid.applyNextProgram(0);
                 currentPhase++;
                 // Runs mid phase
-            } else {
-                tileGrid.continueMove(0);
             }
-        } else {
-            tileGrid.continueMove(0);
-            activateTiles();
+        }
 
+        if (!(tileGrid.getPlayer(0).getCurrentMove() == Program.NONE)) {
+            tileGrid.continueMove(0);
+        } else if (currentPhase > 5){
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-
+            activateTiles();
         }
     }
 
