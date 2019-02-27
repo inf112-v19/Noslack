@@ -108,6 +108,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     }
 
+    
+
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -126,6 +128,7 @@ public class RoboRally extends Game implements InputProcessor {
         batch.end();
         roboTick++;
     }
+
 
     private void performPhase() {
         if (currentPhase == 0) {
