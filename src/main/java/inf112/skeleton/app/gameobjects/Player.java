@@ -93,10 +93,10 @@ public class Player implements GameObject {
                     sprite.setRotation(0);
                     break;
                 case FACING_EAST:
-                    sprite.setRotation(90);
+                    sprite.setRotation(270);
                     break;
                 case FACING_WEST:
-                    sprite.setRotation(270);
+                    sprite.setRotation(90);
                     break;
                 case FACING_SOUTH:
                     sprite.setRotation(180);
