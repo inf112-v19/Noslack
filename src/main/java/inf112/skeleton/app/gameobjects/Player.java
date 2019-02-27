@@ -24,6 +24,9 @@ public class Player implements GameObject {
     private Program currentMove;
     private int moveProgression;
 
+    private boolean hasWon;
+    private String name;
+
     /**
      * Constructor of Player class.
      * Initialises health to 9.
@@ -39,6 +42,8 @@ public class Player implements GameObject {
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         this.type = GameObjectType.PLAYER;
+        this.hasWon = false;
+        this.name = "RoboHally";
         evaluateSprite();
     }
 
@@ -57,6 +62,8 @@ public class Player implements GameObject {
         this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
+        this.hasWon = false;
+        this.name = "RoboHally";
         evaluateSprite();
     }
 
@@ -200,11 +207,18 @@ public class Player implements GameObject {
         this.position = position;
     }
     public Coordinate getPosition() {
-        return position;
+        return this.position;
+    }
+
+    public boolean isFinished(){
+        return this.program.isEmpty();
     }
 
     public void win(){
-        System.out.println("YOU WON!");
+        if(!this.hasWon){
+            System.out.println(this.name + " HAS WON!");
+            this.hasWon = true;
+        }
     }
 
     @Override

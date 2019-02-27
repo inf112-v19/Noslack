@@ -136,8 +136,9 @@ public class TileGrid{
                             player.setBackUp(player.getPosition());
                         }
                         if(tile.hasFlag()){
-                            System.out.println("wth");
-                            player.win();
+                            if(player.isFinished()){
+                                player.win();
+                            }
                         }
                     }
                 }

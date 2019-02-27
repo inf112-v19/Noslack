@@ -17,7 +17,7 @@ public class Flag implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
-        return null;
+        return GameObjectType.FLAG;
     }
 
     @Override
