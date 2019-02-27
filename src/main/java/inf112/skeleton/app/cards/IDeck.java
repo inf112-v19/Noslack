@@ -5,12 +5,16 @@ import java.util.Stack;
 import java.util.Scanner;
 
 public interface IDeck {
+    /**
+     * Creates a new deck of cards.
+     */
     void createDeck();
 
     /**
      * Shuffles a list of elements
      */
     void shuffle();
+
     /**
      * Resets the deck
      */
@@ -22,5 +26,11 @@ public interface IDeck {
      * @return A small deck of cards.
      */
     ArrayList<RRCard> deal(int health);
+
+    /**
+     * Deal a single card to player
+     * @return An RRCard
+     */
+    RRCard dealOne();
 
 }

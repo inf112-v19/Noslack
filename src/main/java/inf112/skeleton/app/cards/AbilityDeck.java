@@ -68,4 +68,9 @@ public class AbilityDeck implements IDeck {
         return playerDeck;
     }
 
+    @Override
+    public RRCard dealOne() {
+        return deck.pop();
+    }
+
 }

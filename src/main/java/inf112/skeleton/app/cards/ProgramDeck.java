@@ -50,22 +50,22 @@ public class ProgramDeck implements IDeck {
 
     @Override
     public void shuffle() {
-        Collections.shuffle(deckList);
-        deck.addAll(deckList);
-        deckList.clear();
+        Collections.shuffle(this.deckList);
+        this.deck.addAll(this.deckList);
+        this.deckList.clear();
     }
 
-    /**
-     *
-     * @param health Player health.
-     * @return ArrayList og ProgramCards
-     */
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
         if(health<5) health=5;
         for (int i=0;i<health;i++)
-            playerDeck.add(deck.pop());
+            playerDeck.add(this.deck.pop());
         return playerDeck;
+    }
+
+    @Override
+    public RRCard dealOne() {
+        return deck.pop();
     }
 }
