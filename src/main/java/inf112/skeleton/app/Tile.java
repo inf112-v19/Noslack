@@ -63,6 +63,15 @@ public class Tile implements GameObject{
         return objectsOnTile.contains(player);
     }
 
+    public Boolean hasFlag(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){

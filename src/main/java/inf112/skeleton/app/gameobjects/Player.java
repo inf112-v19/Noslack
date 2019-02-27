@@ -203,6 +203,10 @@ public class Player implements GameObject {
         return position;
     }
 
+    public void win(){
+        System.out.println("YOU WON!");
+    }
+
     @Override
     public int compareTo(Object o) {
 //        return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
