@@ -114,8 +114,7 @@ public class AbilityCard implements RRCard {
 
     private void setSprite(String filepath){
         try {
-            Texture cardTexture = new Texture(Gdx.files.internal(filepath));
-            this.sprite = new Sprite(cardTexture);
+            this.sprite = new Sprite(new Texture(Gdx.files.internal(filepath)));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -131,15 +130,7 @@ public class AbilityCard implements RRCard {
     }
 
 
-    private void setSprite(String filepath){
-        try {
-            this.texture = new Texture(Gdx.files.internal(filepath));
-            this.sprite = new Sprite(this.texture);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
     @Override
     public Sprite getSprite() {
         return this.sprite;
