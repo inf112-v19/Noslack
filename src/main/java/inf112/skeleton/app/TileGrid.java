@@ -92,6 +92,9 @@ public class TileGrid{
                         // Adding objects on top of tile
                         if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
                             switch (nextTileType) {
+                                case FLAG:
+                                    tileGrid[row][column].addObjectOnTile(new Flag());
+                                    break;
                                 case CONVEYOR_NORTH:
                                     tileGrid[row][column].addObjectOnTile(new Conveyor());
                                     break;
@@ -131,6 +134,11 @@ public class TileGrid{
                         if(tile.hasRepairStation()){
                             player.repair();
                             player.setBackUp(player.getPosition());
+                        }
+                        if(tile.hasFlag()){
+                            if(player.isFinished()){
+                                player.win();
+                            }
                         }
                     }
                 }
@@ -198,12 +206,13 @@ public class TileGrid{
             case FACING_SOUTH:
                 rowsToMove = -1;
                 break;
-            case FACING_WEST:
-                columnsToMove = -1;
-                break;
             case FACING_EAST:
                 columnsToMove = 1;
                 break;
+            case FACING_WEST:
+                columnsToMove = -1;
+                break;
+
         }
         if(move==Program.BACK){
             rowsToMove *= -1;
@@ -301,6 +310,7 @@ public class TileGrid{
             case '1': return GameObjectType.STANDARD_TILE;
             case '2': return GameObjectType.CONVEYOR_NORTH;
             case '3': return GameObjectType.PLAYER;
+            case '4': return GameObjectType.FLAG;
             default: return GameObjectType.STANDARD_TILE;
         }
     }

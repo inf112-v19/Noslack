@@ -50,22 +50,40 @@ public class ProgramDeck implements IDeck {
 
     @Override
     public void shuffle() {
-        Collections.shuffle(deckList);
-        deck.addAll(deckList);
-        deckList.clear();
+        Collections.shuffle(this.deckList);
+        this.deck.addAll(this.deckList);
+        this.deckList.clear();
     }
 
-    /**
-     *
-     * @param health Player health.
-     * @return ArrayList og ProgramCards
-     */
     @Override
     public ArrayList<RRCard> deal(int health) {
         ArrayList<RRCard> playerDeck = new ArrayList<>();
         if(health<5) health=5;
         for (int i=0;i<health;i++)
-            playerDeck.add(deck.pop());
+            if(deck.size()==0) {
+                System.out.println("Deck is empty, so playerDeck only contains " + i + " card(s).");
+                return playerDeck;
+            }
+            else
+                playerDeck.add(this.deck.pop());
         return playerDeck;
+    }
+
+    @Override
+    public RRCard dealOne() {
+        return this.deck.pop();
+    }
+
+    @Override
+    public int getSize() {
+        return this.deck.size();
+    }
+
+    @Override
+    public boolean contains(RRCard card) {
+        for (RRCard c :deck)
+            if(c.compareTo(card)==0)
+                return true;
+        return false;
     }
 }
