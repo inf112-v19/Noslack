@@ -34,7 +34,7 @@ public class AbilityCard implements RRCard {
                 setSprite("./assets/abilityCards/AbortSwitch.png");
                 return Ability.AbortSwitch;
             case "Brakes":
-                setSprite("./assets/abilityCards/BacksideOfCards.png");
+                setSprite("./assets/abilityCards/Brakes.png");
                 return Ability.Brakes;
             case "Circuit Breaker":
                 setSprite("./assets/abilityCards/CircuitBreaker.png");
