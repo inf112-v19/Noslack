@@ -39,25 +39,33 @@ public class PlayerTest {
     }
 
     @Test
-    public void updateOrientation() {
+    public void updateOrientationLeft() {
         Orientation o;
         Program p1 = Program.LEFT;
-        Program p2 = Program.U;
-        Program p3 = Program.RIGHT;
-        Program p4 = Program.MOVE3;
-
         o=player.getOrientation();
         player.updateOrientation(p1);
         assertEquals(o.rotate(p1),player.getOrientation());
-
+    }
+    @Test
+    public void updateOrientationRight() {
+        Orientation o;
+        Program p2 = Program.U;
         o=player.getOrientation();
         player.updateOrientation(p2);
         assertEquals(o.rotate(p2),player.getOrientation());
-
+    }
+    @Test
+    public void updateOrientationU() {
+        Orientation o;
+        Program p3 = Program.RIGHT;
         o=player.getOrientation();
         player.updateOrientation(p3);
         assertEquals(o.rotate(p3),player.getOrientation());
-
+    }
+    @Test
+    public void updateOrientationMove() {
+        Orientation o;
+        Program p4 = Program.MOVE3;
         o=player.getOrientation();
         player.updateOrientation(p4);
         assertEquals(o,player.getOrientation());

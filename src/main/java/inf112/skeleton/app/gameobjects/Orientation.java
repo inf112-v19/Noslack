@@ -10,53 +10,18 @@ public enum Orientation {
     FACING_EAST,
     NONE;
 
-    public static Orientation rotate(Orientation orientation, Program rotation){
-        if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
-                ||rotation.equals(Program.BACK))
-            return orientation;
-
-        switch(orientation){
-            case FACING_NORTH:
-                switch(rotation){
-                    case LEFT: return FACING_WEST;
-                    case RIGHT: return FACING_EAST;
-                    case U: return FACING_SOUTH;
-                }
-            case FACING_WEST:
-                switch(rotation){
-                    case LEFT: return FACING_SOUTH;
-                    case RIGHT: return FACING_NORTH;
-                    case U: return FACING_EAST;
-                }
-            case FACING_SOUTH:
-                switch (rotation){
-                    case LEFT: return FACING_EAST;
-                    case RIGHT: return FACING_WEST;
-                    case U: return FACING_NORTH;
-                }
-            case FACING_EAST:
-                switch (rotation){
-                    case LEFT: return FACING_NORTH;
-                    case RIGHT: return FACING_SOUTH;
-                    case U: return FACING_WEST;
-                }
-            default:
-                return orientation;
-        }
-
-    }
-
     /**
      * Rotates the orientation from the rartionen given from ProgramCard.
-     * @param r Program with orientation wanted.
+     * @param rotation Program with orientation wanted.
      * @return New orientation after rotation
      */
-    public Orientation rotate(Program r){
-        if(r.equals(Program.MOVE3)||r.equals(Program.MOVE2)||r.equals(Program.MOVE1)||r.equals(Program.BACK))
+    public Orientation rotate(Program rotation){
+        if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
+                ||rotation.equals(Program.BACK))
             return this;
         switch (this) {
             case FACING_NORTH:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_EAST;
                     case LEFT:
@@ -65,7 +30,7 @@ public enum Orientation {
                         return FACING_SOUTH;
                 }
             case FACING_SOUTH:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_WEST;
                     case LEFT:
@@ -74,7 +39,7 @@ public enum Orientation {
                         return FACING_NORTH;
                 }
             case FACING_EAST:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_SOUTH;
                     case LEFT:
@@ -83,7 +48,7 @@ public enum Orientation {
                         return FACING_WEST;
                 }
             case FACING_WEST:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_NORTH;
                     case LEFT:
