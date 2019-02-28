@@ -4,16 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-
-/**
- * Declared in map as one of 'w' / 'a' / 's' / 'd'
- */
 public class Wall implements GameObject {
     private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
 
+    public Wall() {
+        this.orientation = Orientation.FACING_NORTH;
+        evaluateSprite();
+    }
     public Wall(Orientation orientation1) {
         this.orientation = orientation1;
         evaluateSprite();
@@ -30,9 +30,16 @@ public class Wall implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/oneWall32x32.png"));
+        try{
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/oneWall32x32.png"));
+            this.sprite = new Sprite(texture);
+        } catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Did not find wall file");
+        }
 
-        this.sprite = new Sprite(texture);
+
+
         switch (orientation) {
             default:
                 sprite.setRotation(0);
@@ -58,7 +65,7 @@ public class Wall implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
-        return this.type;
+        return null;
     }
 
     @Override
