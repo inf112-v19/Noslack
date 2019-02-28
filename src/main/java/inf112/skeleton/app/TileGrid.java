@@ -87,48 +87,88 @@ public class TileGrid{
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
                     for(int index = 0; index<typesOnTile.length; index++) {
-
-
-                        GameObjectType nextTileType = stringToGameObjectType(typesOnTile[index]);
-
                         // Adding objects on top of tile
                         if (typesOnTile[index] != " ") { // If tile type is not standardTile
-                            switch (nextTileType) {
-                                case FLAG:
-                                    tileGrid[row][column].addObjectOnTile(new Flag());
+                            switch (typesOnTile[index]) {
+                                case "W1":
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
                                     break;
-                                case CONVEYOR_NORTH:
+                                case "W2":
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                                    break;
+                                case "W3":
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                                    break;
+                                case "W4":
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                                    break;
+                                case "W":
+                                    tileGrid[row][column].addObjectOnTile(new Wall());
+                                    break;
+                                case "C1":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor());
                                     break;
-                                case CONVEYOR_EAST:
+                                case "C2":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
                                     break;
-                                case CONVEYOR_WEST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
-                                    break;
-                                case CONVEYOR_SOUTH:
+                                case "C3":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
                                     break;
-                                case FAST_CONVEYOR_NORTH:
+                                case "C4":
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                                    break;
+                                case "CC1":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(true));
                                     break;
-                                case FAST_CONVEYOR_EAST:
+                                case "CC2":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
                                     break;
-                                case FAST_CONVEYOR_WEST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true));
-                                    break;
-                                case FAST_CONVEYOR_SOUTH:
+                                case "CC3":
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true));
                                     break;
-                                case PLAYER_NORTH:
-                                    Player newPlayer = new Player(playersInitiated);
+                                case "CC4":
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true));
+                                    break;
+                                case "F1":
+                                    tileGrid[row][column].addObjectOnTile(new Flag(1));
+                                    break;
+                                case "F2":
+                                    tileGrid[row][column].addObjectOnTile(new Flag(2));
+                                    break;
+                                case "F":
+                                    tileGrid[row][column].addObjectOnTile(new Flag());
+                                    break;
+                                case "C":
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor());
+                                    break;
+                                case "CC":
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                                    break;
+                                case "P":
+                                    Player newPlayer;
+                                    if(typesOnTile[index].equals("P1")){
+                                        newPlayer = new Player(playersInitiated, Orientation.FACING_NORTH);
+                                    }
+                                    else if(typesOnTile[index].equals("P2")){
+                                        newPlayer = new Player(playersInitiated,Orientation.FACING_EAST);
+                                    }
+                                    else if(typesOnTile[index].equals("P3")){
+                                        newPlayer = new Player(playersInitiated,Orientation.FACING_SOUTH);
+                                    }
+                                    else if(typesOnTile[index].equals("P4")){
+                                        newPlayer = new Player(playersInitiated,Orientation.FACING_WEST);
+                                    }
+                                    else{
+                                        newPlayer = new Player(playersInitiated);
+                                    }
                                     tileGrid[row][column].addObjectOnTile(newPlayer);
                                     players[playersInitiated] = newPlayer; // Add new player to list of players.
                                     newPlayer.setPosition(new Coordinate(row, column));
                                     newPlayer.setBackUp(new Coordinate(row, column));
                                     playersInitiated++; // One more player has been initiated, move the index 1 up.
                                     break;
+
+
                             }
 
                         }
@@ -144,6 +184,8 @@ public class TileGrid{
             System.out.println("Error reading file '" + fileName + "'");
         }
     }
+
+
 
     public void activateTiles(){
         for(Tile[] tileRow : tileGrid){
@@ -345,34 +387,4 @@ public class TileGrid{
     public Coordinate getCoordinatesOfPlayer(int playerNumber){
         return players[playerNumber].getPosition();
     }
-
-    private GameObjectType stringToGameObjectType(String nextTileType){
-        switch(nextTileType){
-            case "1": return GameObjectType.STANDARD_TILE;
-            case "C1": return GameObjectType.CONVEYOR_NORTH;
-            case "C2": return GameObjectType.CONVEYOR_EAST;
-            case "C3": return GameObjectType.CONVEYOR_SOUTH;
-            case "C4": return GameObjectType.CONVEYOR_WEST;
-            case "CC1": return GameObjectType.FAST_CONVEYOR_NORTH;
-            case "CC2": return GameObjectType.FAST_CONVEYOR_EAST;
-            case "CC3": return GameObjectType.FAST_CONVEYOR_SOUTH;
-            case "CC4": return GameObjectType.FAST_CONVEYOR_WEST;
-
-            //Player
-            case "P1": return GameObjectType.PLAYER_NORTH;
-            case "P2": return GameObjectType.PLAYER_EAST;
-            case "P3": return GameObjectType.PLAYER_SOUTH;
-            case "P4": return GameObjectType.PLAYER_WEST;
-
-
-            //Default(non orientation spesific) objects needs to be down here so they don't trigger before
-            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
-            case "C": return GameObjectType.CONVEYOR_NORTH;
-            case "F": return GameObjectType.FLAG;
-            case "P": return GameObjectType.PLAYER_NORTH;
-
-            default: return GameObjectType.STANDARD_TILE;
-        }
-    }
-
 }
