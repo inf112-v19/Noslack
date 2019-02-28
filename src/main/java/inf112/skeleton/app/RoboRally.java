@@ -67,7 +67,7 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
-        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn.png");
+        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
 
         this.goButton = setSprite("./assets/cards/dontpress.png");
@@ -87,7 +87,7 @@ public class RoboRally extends Game implements InputProcessor {
         int playerHealth = tileGrid.getPlayer(0).getHealth();
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
 
-        programHand = tileGrid.getPlayer(0).getProgramHand();
+        this.programHand = tileGrid.getPlayer(0).getProgramHand();
 
         cardTestSprite = tileGrid.getPlayer(0).getProgramHand().get(0).getSprite();
 
@@ -98,15 +98,9 @@ public class RoboRally extends Game implements InputProcessor {
         roboTick = 0;
 
         dealNewCards();
-        /*
-        for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(33 + i * 75, 300);
-            programHand.get(i).setPosition(pos);
-            programHand.get(i).getSprite().setPosition(pos.x, pos.y);
-        }
-        */
-
     }
+
+
 
     @Override
     public void render() {
@@ -117,7 +111,7 @@ public class RoboRally extends Game implements InputProcessor {
         renderGrid();
         performPhase();
         activateTiles();
-        if (sequenceReady && (roboTick % 10 == 0)) {
+        if (sequenceReady && (roboTick % 30 == 0)) {
             tick();
         }
         renderGrid();
@@ -126,6 +120,7 @@ public class RoboRally extends Game implements InputProcessor {
         batch.end();
         roboTick++;
     }
+
 
     private void performPhase() {
         if (currentPhase == 0) {
@@ -232,6 +227,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     public void tick() {
+
         /*
         try {
             Thread.sleep(500);
@@ -246,21 +242,20 @@ public class RoboRally extends Game implements InputProcessor {
         if (currentPhase <= 5) {
             // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
-                tileGrid.applyNextProgram(0);
                 activateTiles();
+                tileGrid.applyNextProgram(0);
                 currentPhase++;
                 // Runs mid phase
-            } else {
-                tileGrid.continueMove(0);
             }
-        } else {
-            tileGrid.continueMove(0);
-            activateTiles();
+        }
 
+        if (!(tileGrid.getPlayer(0).getCurrentMove() == Program.NONE)) {
+            tileGrid.continueMove(0);
+        } else if (currentPhase > 5){
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-
+            activateTiles();
         }
     }
 
@@ -284,7 +279,8 @@ public class RoboRally extends Game implements InputProcessor {
         //FIX THIS
 
         for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(33 + i * 75, 500);
+            Vector2 pos = new Vector2(5 + i * 75, 520);
+
             programHand.get(i).setPosition(pos);
             programHand.get(i).getSprite().setPosition(pos.x, pos.y);
         }
