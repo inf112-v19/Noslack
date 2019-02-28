@@ -15,8 +15,8 @@ public class ProgramCard implements RRCard {
     private int priority;
     private Program move;
     private Sprite sprite;
-    private Texture texture;
     private String name;
+    private Texture texture;
     private Vector2 position;
 
     /**
@@ -94,8 +94,7 @@ public class ProgramCard implements RRCard {
      */
     private void setSprite(String filepath){
         try {
-            this.texture = new Texture(Gdx.files.internal(filepath));
-            this.sprite = new Sprite(this.texture);
+            this.sprite = new Sprite(new Texture(Gdx.files.internal(filepath)));
         }
         catch (Exception e){
             e.printStackTrace();

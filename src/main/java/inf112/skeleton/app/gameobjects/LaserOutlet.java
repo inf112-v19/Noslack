@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class LaserOutlet implements GameObject {
-    private Texture texture;
-    private Sprite sprite;
+        private Texture texture;
+        private Sprite sprite;
     private Orientation orientation;
 
     public LaserOutlet(Orientation orientation1) {

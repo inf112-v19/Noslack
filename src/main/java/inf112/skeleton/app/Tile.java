@@ -115,6 +115,15 @@ public class Tile implements GameObject{
         return false;
     }
 
+    public Boolean hasHole() {
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.HOLE){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
         return gameObjectType;

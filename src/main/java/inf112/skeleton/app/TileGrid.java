@@ -13,7 +13,7 @@ public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private String fileName = "./assets/maplayout.txt";
+    private String fileName = "./assets/maps";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -95,7 +95,7 @@ public class TileGrid{
         try {
             // FileReader reads text files in the default encoding.
             FileReader fileReader =
-                    new FileReader(fileName);
+                    new FileReader(this.fileName);
             String space =" ";
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
@@ -103,15 +103,16 @@ public class TileGrid{
             for(int row = rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
-                for(int column = columns-1; column>=0; column--){
+                for(int column = columns-1; column>=0; column--) {
 
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
-                    for(int index = 0; index<typesOnTile.length; index++) {
+                    for (int index = 0; index < typesOnTile.length; index++) {
                         // Adding objects on top of tile
-                        if (typesOnTile[index] != space) { // If tile type is not standardTile
+
+                        if (typesOnTile[index] != space)  // If tile type is not standardTile
                             switch (typesOnTile[index]) {
                                 case "W1":
                                     tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
@@ -147,10 +148,10 @@ public class TileGrid{
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
                                     break;
                                 case "CC3":
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true));
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, true));
                                     break;
                                 case "CC4":
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true));
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, true));
                                     break;
                                 case "F1":
                                     tileGrid[row][column].addObjectOnTile(new Flag(1));
@@ -169,19 +170,15 @@ public class TileGrid{
                                     break;
                                 case "P":
                                     Player newPlayer;
-                                    if(typesOnTile[index].equals("P1")){
+                                    if (typesOnTile[index].equals("P1")) {
                                         newPlayer = new Player(playersInitiated, Orientation.FACING_NORTH);
-                                    }
-                                    else if(typesOnTile[index].equals("P2")){
-                                        newPlayer = new Player(playersInitiated,Orientation.FACING_EAST);
-                                    }
-                                    else if(typesOnTile[index].equals("P3")){
-                                        newPlayer = new Player(playersInitiated,Orientation.FACING_SOUTH);
-                                    }
-                                    else if(typesOnTile[index].equals("P4")){
-                                        newPlayer = new Player(playersInitiated,Orientation.FACING_WEST);
-                                    }
-                                    else{
+                                    } else if (typesOnTile[index].equals("P2")) {
+                                        newPlayer = new Player(playersInitiated, Orientation.FACING_EAST);
+                                    } else if (typesOnTile[index].equals("P3")) {
+                                        newPlayer = new Player(playersInitiated, Orientation.FACING_SOUTH);
+                                    } else if (typesOnTile[index].equals("P4")) {
+                                        newPlayer = new Player(playersInitiated, Orientation.FACING_WEST);
+                                    } else {
                                         newPlayer = new Player(playersInitiated);
                                     }
                                     tileGrid[row][column].addObjectOnTile(newPlayer);
@@ -194,17 +191,15 @@ public class TileGrid{
 
                             }
 
-                        }
                     }
-
                 }
             }
 
             bufferedReader.close();
-        }catch(FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + this.fileName + "'");
-        }catch(IOException ex) {
-            System.out.println("Error reading file '" + this.fileName + "'");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -215,40 +210,51 @@ public class TileGrid{
      * Then avtivates a function to find out what kind of tile the player is standing on.
      */
     public void activateTiles(){
-        for(Tile[] tileRow : this.tileGrid)
-            for(Tile tile : tileRow)
-                for (Player player : this.players)
-                    if (tile.hasPlayer(player))
-                        playerOnTile(tile,player);
+        for(Tile[] tileRow : tileGrid){
+            for(Tile tile : tileRow){
+                for (Player player : players) {
+                    if (tile.hasPlayer(player)) {
+                        playerOnTile(tile, player);
+                    }
+                }
+            }
+        }
     }
-
     /**
      * Finds out what kind of tile the player is standing on and
      * if it has a function which effects the player.
      * @param tile The active file
      * @param player The active player
      */
-    private void playerOnTile(Tile tile, Player player){
+    private void playerOnTile(Tile tile, Player player) {
         if(tile.hasConveyor()) {
             Conveyor conveyor = tile.getConveyor();
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
         }
         if(tile.hasRepairStation()){
-            player.repair();
-            player.setBackUp(player.getPosition());
+            if (player.isFinished()) {
+                player.repair();
+                player.setBackUp(player.getPosition());
+            }
         }
-        if(tile.hasFlag()) {
-            if (player.isFinished())
+        if(tile.hasFlag()){
+            if(player.isFinished()){
+                player.setBackUp(player.getPosition());
                 player.win();
+            }
+        }
+        if(tile.hasHole()){
+            respawnPlayer(player.getPlayerNumber());
         }
     }
+
+
 
     /**
      * Moves player on conveyor
      * @param conveyor Conveyor the player is on
      * @param playerNumber Players number
      */
-
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
             if(conveyor.isFast()){
@@ -334,7 +340,6 @@ public class TileGrid{
             case FACING_WEST:
                 columnsToMove = -1;
                 break;
-
         }
         if(move==Program.BACK){
             rowsToMove *= -1;
@@ -450,5 +455,39 @@ public class TileGrid{
      */
     public Coordinate getPlayerPosition(int playerNumber){
         return this.players[playerNumber].getPosition();
+    }
+    public Coordinate getCoordinatesOfPlayer(int playerNumber){
+        return players[playerNumber].getPosition();
+    }
+
+    private GameObjectType stringToGameObjectType(String nextTileType){
+        switch(nextTileType){
+            case "1": return GameObjectType.STANDARD_TILE;
+            case "C1": return GameObjectType.CONVEYOR_NORTH;
+            case "C2": return GameObjectType.CONVEYOR_EAST;
+            case "C3": return GameObjectType.CONVEYOR_SOUTH;
+            case "C4": return GameObjectType.CONVEYOR_WEST;
+            case "CC1": return GameObjectType.FAST_CONVEYOR_NORTH;
+            case "CC2": return GameObjectType.FAST_CONVEYOR_EAST;
+            case "CC3": return GameObjectType.FAST_CONVEYOR_SOUTH;
+            case "CC4": return GameObjectType.FAST_CONVEYOR_WEST;
+
+            //Player
+            case "P1": return GameObjectType.PLAYER_NORTH;
+            case "P2": return GameObjectType.PLAYER_EAST;
+            case "P3": return GameObjectType.PLAYER_SOUTH;
+            case "P4": return GameObjectType.PLAYER_WEST;
+
+
+            //Default(non orientation spesific) objects needs to be down here so they don't trigger before
+            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
+            case "C": return GameObjectType.CONVEYOR_NORTH;
+            case "F": return GameObjectType.FLAG;
+            case "P": return GameObjectType.PLAYER_NORTH;
+
+            case "H": return GameObjectType.HOLE;
+            case "R": return GameObjectType.REPAIR_STATION;
+            default: return GameObjectType.STANDARD_TILE;
+        }
     }
 }
