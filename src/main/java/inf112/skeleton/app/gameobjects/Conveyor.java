@@ -52,7 +52,7 @@ public class Conveyor implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        System.out.println(fast);
+
         if(fast){
             texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
         }
@@ -72,7 +72,7 @@ public class Conveyor implements GameObject {
                     this.type = GameObjectType.FAST_CONVEYOR_NORTH;
                     break;
                 case FACING_EAST:
-                    sprite.setRotation(90);
+                    sprite.setRotation(270);
                     this.type = GameObjectType.FAST_CONVEYOR_EAST;
                     break;
                 case FACING_SOUTH:
@@ -80,7 +80,7 @@ public class Conveyor implements GameObject {
                     this.type = GameObjectType.FAST_CONVEYOR_SOUTH;
                     break;
                 case FACING_WEST:
-                    sprite.setRotation(270);
+                    sprite.setRotation(90);
                     this.type = GameObjectType.FAST_CONVEYOR_WEST;
                     break;
             }
@@ -95,7 +95,7 @@ public class Conveyor implements GameObject {
                 this.type = GameObjectType.CONVEYOR_NORTH;
                 break;
             case FACING_EAST:
-                sprite.setRotation(90);
+                sprite.setRotation(270);
                 this.type = GameObjectType.CONVEYOR_EAST;
                 break;
             case FACING_SOUTH:
@@ -103,7 +103,7 @@ public class Conveyor implements GameObject {
                 this.type = GameObjectType.CONVEYOR_SOUTH;
                 break;
             case FACING_WEST:
-                sprite.setRotation(270);
+                sprite.setRotation(90);
                 this.type = GameObjectType.CONVEYOR_WEST;
                 break;
         }
