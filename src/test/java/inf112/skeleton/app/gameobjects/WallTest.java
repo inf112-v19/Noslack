@@ -1,6 +1,5 @@
 package inf112.skeleton.app.gameobjects;
 
-import inf112.skeleton.app.RoboRally;
 import inf112.skeleton.app.TileGrid;
 import org.junit.Before;
 import org.junit.Test;

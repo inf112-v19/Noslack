@@ -1,7 +1,6 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
@@ -68,7 +67,7 @@ public class TileGrid{
     }
 
     /**
-     * Get Til
+     * Get Tile based on row and column
      * @param row: row of the requested tile
      * @param column: column of the requested tile
      * @return Tile at specified coordinate
@@ -77,6 +76,11 @@ public class TileGrid{
         return tileGrid[row][column];
     }
 
+    /**
+     * Get Tile based on coordinate
+     * @param coordinate Coordinate of the requested Tile
+     * @return Tile at specified coordinate
+     */
     public Tile getTile(Coordinate coordinate){
         return tileGrid[coordinate.getRow()][coordinate.getColumn()];
     }
@@ -225,6 +229,12 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Moves player on conveyor
+     * @param conveyor Conveyor the player is on
+     * @param playerNumber Players number
+     */
+
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
             if(conveyor.isFast()){
@@ -264,6 +274,10 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Apply the next program in the players queue.
+     * @param playerNumber Player number
+     */
     public void applyNextProgram(int playerNumber){
         /*
         Player player = this.players[playerNumber];
@@ -381,41 +395,47 @@ public class TileGrid{
             return false;
         }
 
-        if(playerFacingWall(playerNumber, coordinateOfPlayer.getRow(), coordinateOfPlayer.getColumn())){
+        if(playerFacingWall(playerNumber)){
             return false;
         }
 
         return true;
     }
 
-    private boolean playerFacingWall(int playerNumber, int rowOfPlayer, int columnOfPlayer){
+    /**
+     * Find out if player is facing wall.
+     * @param playerNumber Player number
+     * @return True if Player is facing wall, Fale if not
+     */
+    private boolean playerFacingWall(int playerNumber){
+        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
+        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
+
         switch(getPlayer(playerNumber).getOrientation()){
             case FACING_NORTH:
                 Tile tileNorthOfPlayer = tileGrid[rowOfPlayer-1][columnOfPlayer];
-                if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_SOUTH)){
+                if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_SOUTH))
                     return true;
-                }
                 break;
+
             case FACING_WEST:
                 Tile tileWestOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer-1];
-                if(tileWestOfPlayer.hasWallWithOrientation(Orientation.FACING_EAST)){
+                if(tileWestOfPlayer.hasWallWithOrientation(Orientation.FACING_EAST))
                     return true;
-                }
                 break;
+
             case FACING_SOUTH:
                 Tile tileSouthOfPlayer = tileGrid[rowOfPlayer+1][columnOfPlayer];
-                if(tileSouthOfPlayer.hasWallWithOrientation(Orientation.FACING_NORTH)){
+                if(tileSouthOfPlayer.hasWallWithOrientation(Orientation.FACING_NORTH))
                     return true;
-                }
                 break;
+
             case FACING_EAST:
                 Tile tileEastOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer+1];
-                if(tileEastOfPlayer.hasWallWithOrientation(Orientation.FACING_WEST)){
+                if(tileEastOfPlayer.hasWallWithOrientation(Orientation.FACING_WEST))
                     return true;
-                }
                 break;
         }
-
         return false;
     }
 
@@ -433,18 +453,28 @@ public class TileGrid{
         int respawnRow = getPlayer(playerNumber).getBackUp().getRow();
         int respawnColumn = getPlayer(playerNumber).getBackUp().getColumn();
 
-        tileGrid[respawnRow][respawnColumn].addObjectOnTile(getPlayer(playerNumber));
+        this.tileGrid[respawnRow][respawnColumn].addObjectOnTile(getPlayer(playerNumber));
         getPlayer(playerNumber).setPosition(new Coordinate(respawnRow, respawnColumn));
         getPlayer(playerNumber).recieveDamage(3);
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
 
+    /**
+     * Get Player
+     * @param playerNumber Player number
+     * @return Wanted Player
+     */
     public Player getPlayer(int playerNumber){
         return this.players[playerNumber];
     }
 
-    public Coordinate getCoordinatesOfPlayer(int playerNumber){
+    /**
+     * Get Players Coordinates
+     * @param playerNumber Player number
+     * @return Players current position
+     */
+    public Coordinate getPlayerPosition(int playerNumber){
         return this.players[playerNumber].getPosition();
     }
 
