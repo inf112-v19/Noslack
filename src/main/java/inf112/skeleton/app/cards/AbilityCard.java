@@ -13,6 +13,7 @@ public class AbilityCard implements RRCard {
     private Ability ability;
     private Sprite sprite;
     private String name;
+    private Texture texture;
     private Vector2 position;
 
 
