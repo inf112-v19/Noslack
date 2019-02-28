@@ -2,6 +2,11 @@ package inf112.skeleton.app.gameobjects;
 
 public enum GameObjectType {
     PLAYER,
+    PLAYER_NORTH,
+    PLAYER_EAST,
+    PLAYER_SOUTH,
+    PLAYER_WEST,
+
     REPAIR_STATION,
     FLAG,
     STANDARD_TILE,

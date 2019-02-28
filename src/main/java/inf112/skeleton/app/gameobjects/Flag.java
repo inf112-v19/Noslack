@@ -9,10 +9,19 @@ import java.io.FileNotFoundException;
 public class Flag implements GameObject {
     private Texture texture;
     private Sprite sprite;
+    private int flagNumber;
 
 
     public Flag() {
+        this.flagNumber = 1;
         evaluateSprite();
+    }
+    public Flag(int flagNumber){
+        this.flagNumber = flagNumber;
+    }
+
+    public int getFlagNumber(){
+        return flagNumber;
     }
 
     @Override
