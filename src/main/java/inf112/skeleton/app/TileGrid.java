@@ -27,7 +27,7 @@ public class TileGrid{
         this.players = new Player[1];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
     }
 
     /**
@@ -43,7 +43,17 @@ public class TileGrid{
         this.players = new Player[players];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
+    }
+
+    public TileGrid(int rows, int columns, int players, String file) {
+        this.rows = rows;
+        this.columns = columns;
+        tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
+        this.playersInitiated = 0;
+
+        initiateTiles(tileGrid, file);
     }
 
     /**
@@ -67,7 +77,7 @@ public class TileGrid{
      * Todo:
      * Implement reading tile-layout from file, or randomisation.
      */
-    private void initiateTiles(Tile[][] tileGrid){
+    private void initiateTiles(Tile[][] tileGrid, String fileName){
 
         try {
             // FileReader reads text files in the default encoding.
@@ -129,6 +139,19 @@ public class TileGrid{
                                     newPlayer.setBackUp(new Coordinate(row, column));
                                     playersInitiated++; // One more player has been initiated, move the index 1 up.
                                     break;
+                                case NORTH_WALL:
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                                    break;
+                                case WEST_WALL:
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_WEST));
+                                    break;
+                                case SOUTH_WALL:
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_SOUTH));
+                                    break;
+                                case EAST_WALL:
+                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
+                                    break;
+                                case PLAYER:
                             }
 
                         }
@@ -142,6 +165,22 @@ public class TileGrid{
             System.out.println("Unable to open file '" + fileName + "'");
         }catch(IOException ex) {
             System.out.println("Error reading file '" + fileName + "'");
+        }
+    }
+
+    private GameObjectType charToGameObjectType(char nextTileType){
+        switch(nextTileType){
+            case '1': return GameObjectType.STANDARD_TILE;
+            case '2': return GameObjectType.CONVEYOR_NORTH;
+            case '3': return GameObjectType.PLAYER;
+            case '4': return GameObjectType.FLAG;
+
+            case 'w': return GameObjectType.NORTH_WALL;
+            case 'a': return GameObjectType.WEST_WALL;
+            case 's': return GameObjectType.SOUTH_WALL;
+            case 'd': return GameObjectType.EAST_WALL;
+
+            default: return GameObjectType.STANDARD_TILE;
         }
     }
 
@@ -313,9 +352,45 @@ public class TileGrid{
             return false;
         }
 
-
+        if(playerFacingWall(playerNumber, rowOfPlayer, columnOfPlayer)){
+            return false;
+        }
 
         return true;
+    }
+
+    private boolean playerFacingWall(int playerNumber, int rowOfPlayer, int columnOfPlayer){
+        Player player = players[playerNumber];
+        Orientation orientationOfPlayer = player.getOrientation();
+
+        switch(orientationOfPlayer){
+            case FACING_NORTH:
+                Tile tileNorthOfPlayer = tileGrid[rowOfPlayer-1][columnOfPlayer];
+                if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_SOUTH)){
+                    return true;
+                }
+                break;
+            case FACING_WEST:
+                Tile tileWestOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer-1];
+                if(tileWestOfPlayer.hasWallWithOrientation(Orientation.FACING_EAST)){
+                    return true;
+                }
+                break;
+            case FACING_SOUTH:
+                Tile tileSouthOfPlayer = tileGrid[rowOfPlayer+1][columnOfPlayer];
+                if(tileSouthOfPlayer.hasWallWithOrientation(Orientation.FACING_NORTH)){
+                    return true;
+                }
+                break;
+            case FACING_EAST:
+                Tile tileEastOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer+1];
+                if(tileEastOfPlayer.hasWallWithOrientation(Orientation.FACING_WEST)){
+                    return true;
+                }
+                break;
+        }
+
+        return false;
     }
 
     private void playerOutOfBounds(int playerNumber){
@@ -332,8 +407,10 @@ public class TileGrid{
 
         int respawnRow = player.getBackUp().getRow();
         int respawnColumn = player.getBackUp().getColumn();
+
         tileGrid[respawnRow][respawnColumn].addObjectOnTile(player);
         player.setPosition(new Coordinate(respawnRow, respawnColumn));
+        player.recieveDamage(3);
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
