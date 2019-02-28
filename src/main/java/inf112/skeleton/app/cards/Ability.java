@@ -5,7 +5,7 @@ public enum Ability {
     CrabLegs,DoubleBarreledLaser,DualProcessor, ExtraMemory, FireControl, Flywheel,
     FourthGear, GyroscopicStabilizer, HighPoweredLaser, MechanicalArm, MiniHowitzer,
     PowerDownShield, PressorBeam, RadioControl, RammingGear, RearFiringLaser,
-    Recompile, ReverseGear, Scrambler, SuperiorArchive, TractorBeam;
+    Recompile, ReverseGear, Scrambler, SuperiorArchive, TractorBeam, Empty;
 
 
     public String toString() {

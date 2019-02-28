@@ -31,6 +31,8 @@ public enum GameObjectType {
     EAST_PUSHER,
     SOUTH_PUSHER,
 
+    HOLE,
+
     WEST_LASER_OUTLET,
     NORTH_LASER_OUTLET,
     EAST_LASER_OUTLET,

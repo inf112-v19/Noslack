@@ -203,7 +203,7 @@ public class Player implements GameObject {
     }
 
     public Coordinate getBackUp() {
-        return backUp;
+        return this.backUp;
     }
 
     public void setPosition(Coordinate position) {

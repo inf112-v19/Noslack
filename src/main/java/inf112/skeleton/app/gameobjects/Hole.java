@@ -4,17 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class RepairStation implements GameObject {
+public class Hole implements GameObject  {
     private Texture texture;
     private Sprite sprite;
 
-    public RepairStation() {
-        evaluateSprite();
-    }
+    public Hole() {evaluateSprite();}
 
     @Override
     public GameObjectType getGameObjectType() {
-        return GameObjectType.REPAIR_STATION;
+        return GameObjectType.HOLE;
     }
 
     @Override
@@ -25,11 +23,11 @@ public class RepairStation implements GameObject {
     @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/RepairPlaceholder.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in RepairStation evaluateSprite");
+            System.out.println("Error in Hole evaluateSprite");
         }
     }
 

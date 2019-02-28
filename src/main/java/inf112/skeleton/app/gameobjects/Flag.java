@@ -35,7 +35,18 @@ public class Flag implements GameObject {
     @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
+            //add more, at this point of time we only have 2 flags.
+            if(flagNumber == 1){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
+            }
+            else if(flagNumber == 2){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/twoFlag32x32.png"));
+            }
+            else{
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
+            }
+
+
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
             e.printStackTrace();
