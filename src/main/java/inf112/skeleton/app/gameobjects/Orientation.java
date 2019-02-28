@@ -10,42 +10,6 @@ public enum Orientation {
     FACING_EAST,
     NONE;
 
-    public static Orientation rotate(Orientation orientation, Program rotation){
-        if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
-                ||rotation.equals(Program.BACK))
-            return orientation;
-
-        switch(orientation){
-            case FACING_NORTH:
-                switch(rotation){
-                    case LEFT: return FACING_WEST;
-                    case RIGHT: return FACING_EAST;
-                    case U: return FACING_SOUTH;
-                }
-            case FACING_WEST:
-                switch(rotation){
-                    case LEFT: return FACING_SOUTH;
-                    case RIGHT: return FACING_NORTH;
-                    case U: return FACING_EAST;
-                }
-            case FACING_SOUTH:
-                switch (rotation){
-                    case LEFT: return FACING_EAST;
-                    case RIGHT: return FACING_WEST;
-                    case U: return FACING_NORTH;
-                }
-            case FACING_EAST:
-                switch (rotation){
-                    case LEFT: return FACING_NORTH;
-                    case RIGHT: return FACING_SOUTH;
-                    case U: return FACING_WEST;
-                }
-            default:
-                return orientation;
-        }
-
-    }
-
     /**
      * Rotates the orientation from the rartionen given from ProgramCard.
      * @param r Program with orientation wanted.

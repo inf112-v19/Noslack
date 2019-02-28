@@ -135,7 +135,15 @@ public class Player implements GameObject {
      */
     public void recieveDamage(){
         this.health--;
-        }
+    }
+
+    /**
+     * Remove given amount of health from player
+     * @param damage amount of health to be deducted
+     */
+    public void recieveDamage(int damage){
+        this.health -= damage;
+    }
 
     /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).

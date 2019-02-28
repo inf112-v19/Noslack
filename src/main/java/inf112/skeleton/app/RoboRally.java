@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -60,9 +61,14 @@ public class RoboRally extends Game implements InputProcessor {
 
     private int roboTick;
 
+    Sound gameMusic;
+
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
+
+        gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
+        gameMusic.loop();
 
         Gdx.input.setInputProcessor(this);
 
