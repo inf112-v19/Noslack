@@ -27,7 +27,7 @@ public class TileGrid{
         this.players = new Player[1];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
     }
 
     /**
@@ -43,7 +43,17 @@ public class TileGrid{
         this.players = new Player[players];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
+    }
+
+    public TileGrid(int rows, int columns, int players, String file) {
+        this.rows = rows;
+        this.columns = columns;
+        tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
+        this.playersInitiated = 0;
+
+        initiateTiles(tileGrid, file);
     }
 
     /**
@@ -67,7 +77,7 @@ public class TileGrid{
      * Todo:
      * Implement reading tile-layout from file, or randomisation.
      */
-    private void initiateTiles(Tile[][] tileGrid){
+    private void initiateTiles(Tile[][] tileGrid, String fileName){
 
         try {
             // FileReader reads text files in the default encoding.
