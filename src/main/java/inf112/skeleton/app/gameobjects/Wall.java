@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+
+/**
+ * Declared in map as one of 'w' / 'a' / 's' / 'd'
+ */
 public class Wall implements GameObject {
     private Texture texture;
     private Sprite sprite;
@@ -26,27 +30,27 @@ public class Wall implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/wall.png"));
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/oneWall32x32.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
             default:
-                sprite.rotate(0);
+                sprite.setRotation(0);
                 break;
             case FACING_NORTH:
-                sprite.rotate(0);
+                sprite.setRotation(0);
                 this.type = GameObjectType.NORTH_WALL;
                 break;
             case FACING_EAST:
-                sprite.rotate(90);
+                sprite.setRotation(90);
                 this.type = GameObjectType.EAST_WALL;
                 break;
             case FACING_WEST:
-                sprite.rotate(270);
+                sprite.setRotation(270);
                 this.type = GameObjectType.WEST_WALL;
                 break;
             case FACING_SOUTH:
-                sprite.rotate(180);
+                sprite.setRotation(180);
                 this.type = GameObjectType.SOUTH_WALL;
                 break;
         }
@@ -54,7 +58,7 @@ public class Wall implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
-        return null;
+        return this.type;
     }
 
     @Override

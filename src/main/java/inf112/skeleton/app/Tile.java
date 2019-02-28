@@ -3,10 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.gameobjects.Conveyor;
-import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.GameObjectType;
-import inf112.skeleton.app.gameobjects.Player;
+import inf112.skeleton.app.gameobjects.*;
 
 import java.util.PriorityQueue;
 
@@ -66,6 +63,25 @@ public class Tile implements GameObject{
     public Boolean hasFlag(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasWallWithOrientation(Orientation orientation){
+        GameObjectType wallType;
+        switch(orientation){
+            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; System.out.println("SouthWallAhead");break;
+            case FACING_WEST: wallType = GameObjectType.EAST_WALL; break;
+            case FACING_SOUTH: wallType = GameObjectType.NORTH_WALL; break;
+            case FACING_EAST: wallType = GameObjectType.WEST_WALL; break;
+            default: wallType = GameObjectType.NORTH_WALL; break;
+        }
+
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == wallType){
+                System.out.println("Hit Wall!");
                 return true;
             }
         }
