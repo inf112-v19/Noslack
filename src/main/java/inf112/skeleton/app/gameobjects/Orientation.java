@@ -7,7 +7,8 @@ public enum Orientation {
     FACING_NORTH,
     FACING_WEST,
     FACING_SOUTH,
-    FACING_EAST;
+    FACING_EAST,
+    NONE;
 
     public static Orientation rotate(Orientation orientation, Program rotation){
         if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
@@ -47,11 +48,10 @@ public enum Orientation {
 
     /**
      * Rotates the orientation from the rartionen given from ProgramCard.
-     * @param c ProgramCard with move wanted.
+     * @param r Program with orientation wanted.
      * @return New orientation after rotation
      */
-    public Orientation rotate(ProgramCard c){
-        Program r = c.getMove();
+    public Orientation rotate(Program r){
         if(r.equals(Program.MOVE3)||r.equals(Program.MOVE2)||r.equals(Program.MOVE1)||r.equals(Program.BACK))
             return this;
         switch (this) {

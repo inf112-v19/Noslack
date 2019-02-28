@@ -34,6 +34,12 @@ public interface IDeck {
     RRCard dealOne();
 
     /**
+     * Returns a card to the bottom of the deck
+     * @param c Card to be returned
+     */
+    void returnCard(RRCard c);
+
+    /**
      * Find size of deck
      * @return the size of the deck
      */

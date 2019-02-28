@@ -16,9 +16,9 @@ public class OrientationTest {
         Orientation o2 = Orientation.FACING_SOUTH;
         Orientation o3 = Orientation.FACING_EAST;
 
-        o1 = o1.rotate(new ProgramCard( 320, Program.U));
-        o2 = o2.rotate(new ProgramCard( 213, Program.RIGHT));
-        o3 = o3.rotate(new ProgramCard( 213, Program.MOVE3));
+        o1 = o1.rotate(Program.U);
+        o2 = o2.rotate(Program.RIGHT);
+        o3 = o3.rotate(Program.MOVE3);
 
         assertEquals(Orientation.FACING_SOUTH,o1);
         assertEquals(Orientation.FACING_WEST,o2);
