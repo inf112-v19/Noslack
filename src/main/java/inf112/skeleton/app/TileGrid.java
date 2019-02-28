@@ -92,6 +92,12 @@ public class TileGrid{
                         // Adding objects on top of tile
                         if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
                             switch (nextTileType) {
+                                case HOLE:
+                                    tileGrid[row][column].addObjectOnTile(new Hole());
+                                    break;
+                                case REPAIR_STATION:
+                                    tileGrid[row][column].addObjectOnTile(new RepairStation());
+                                    break;
                                 case FLAG:
                                     tileGrid[row][column].addObjectOnTile(new Flag());
                                     break;
@@ -139,6 +145,9 @@ public class TileGrid{
                             if(player.isFinished()){
                                 player.win();
                             }
+                        }
+                        if(tile.hasHole()){
+                            respawnPlayer(player.getPlayerNumber());
                         }
                     }
                 }
@@ -307,10 +316,12 @@ public class TileGrid{
 
     private GameObjectType charToGameObjectType(char nextTileType){
         switch(nextTileType){
+            case '0': return GameObjectType.HOLE;
             case '1': return GameObjectType.STANDARD_TILE;
             case '2': return GameObjectType.CONVEYOR_NORTH;
             case '3': return GameObjectType.PLAYER;
             case '4': return GameObjectType.FLAG;
+            case '5': return GameObjectType.REPAIR_STATION;
             default: return GameObjectType.STANDARD_TILE;
         }
     }
