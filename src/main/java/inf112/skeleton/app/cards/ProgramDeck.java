@@ -75,6 +75,11 @@ public class ProgramDeck implements IDeck {
     }
 
     @Override
+    public void returnCard(RRCard c) {
+        this.deck.insertElementAt(c,(this.deck.size()-1));
+    }
+
+    @Override
     public int getSize() {
         return this.deck.size();
     }
