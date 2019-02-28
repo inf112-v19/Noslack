@@ -21,6 +21,11 @@ public enum GameObjectType {
     EAST_WALL,
     SOUTH_WALL,
 
+    WEST_PUSHER,
+    NORTH_PUSHER,
+    EAST_PUSHER,
+    SOUTH_PUSHER,
+
     WEST_LASER_OUTLET,
     NORTH_LASER_OUTLET,
     EAST_LASER_OUTLET,
