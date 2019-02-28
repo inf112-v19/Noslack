@@ -27,7 +27,7 @@ public class TileGrid{
         this.players = new Player[1];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
     }
 
     /**
@@ -43,7 +43,17 @@ public class TileGrid{
         this.players = new Player[players];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid);
+        initiateTiles(tileGrid, fileName);
+    }
+
+    public TileGrid(int rows, int columns, int players, String file) {
+        this.rows = rows;
+        this.columns = columns;
+        tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
+        this.playersInitiated = 0;
+
+        initiateTiles(tileGrid, file);
     }
 
     /**
@@ -67,7 +77,7 @@ public class TileGrid{
      * Todo:
      * Implement reading tile-layout from file, or randomisation.
      */
-    private void initiateTiles(Tile[][] tileGrid){
+    private void initiateTiles(Tile[][] tileGrid, String fileName){
 
         try {
             // FileReader reads text files in the default encoding.
@@ -84,13 +94,15 @@ public class TileGrid{
 
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
+                    String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
-                    for(int charIndex = 0; charIndex<nextTileTypesOfColumn.length(); charIndex++) {
-                        char nextTileTypeAsChar = nextTileTypesOfColumn.charAt(charIndex);
-                        GameObjectType nextTileType = charToGameObjectType(nextTileTypeAsChar);
+                    for(int index = 0; index<typesOnTile.length; index++) {
+
+
+                        GameObjectType nextTileType = stringToGameObjectType(typesOnTile[index]);
 
                         // Adding objects on top of tile
-                        if (nextTileTypeAsChar != ' ') { // If tile type is not standardTile
+                        if (typesOnTile[index] != " ") { // If tile type is not standardTile
                             switch (nextTileType) {
                                 case HOLE:
                                     tileGrid[row][column].addObjectOnTile(new Hole());
@@ -104,7 +116,28 @@ public class TileGrid{
                                 case CONVEYOR_NORTH:
                                     tileGrid[row][column].addObjectOnTile(new Conveyor());
                                     break;
-                                case PLAYER:
+                                case CONVEYOR_EAST:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
+                                    break;
+                                case CONVEYOR_WEST:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                                    break;
+                                case CONVEYOR_SOUTH:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
+                                    break;
+                                case FAST_CONVEYOR_NORTH:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                                    break;
+                                case FAST_CONVEYOR_EAST:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
+                                    break;
+                                case FAST_CONVEYOR_WEST:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true));
+                                    break;
+                                case FAST_CONVEYOR_SOUTH:
+                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true));
+                                    break;
+                                case PLAYER_NORTH:
                                     Player newPlayer = new Player(playersInitiated);
                                     tileGrid[row][column].addObjectOnTile(newPlayer);
                                     players[playersInitiated] = newPlayer; // Add new player to list of players.
@@ -162,6 +195,24 @@ public class TileGrid{
 
         Player playerToMove = players[playerNumber];
         if(playerToMove.getCurrentMove() == Program.NONE) {
+            if(conveyor.isFast()){
+                switch (conveyor.getOrientation()) {
+                    case FACING_NORTH:
+                        movePlayer(playerNumber, 2, 0);
+                        break;
+                    case FACING_WEST:
+                        movePlayer(playerNumber, 0, -2);
+                        break;
+                    case FACING_SOUTH:
+                        movePlayer(playerNumber, -2, 0);
+                        break;
+                    case FACING_EAST:
+                        movePlayer(playerNumber, 0, 2);
+                        break;
+                    default:
+                        break;
+                }
+            }
             switch (conveyor.getOrientation()) {
                 case FACING_NORTH:
                     movePlayer(playerNumber, 1, 0);
@@ -317,14 +368,33 @@ public class TileGrid{
         return players[playerNumber].getPosition();
     }
 
-    private GameObjectType charToGameObjectType(char nextTileType){
+    private GameObjectType stringToGameObjectType(String nextTileType){
         switch(nextTileType){
-            case '0': return GameObjectType.HOLE;
-            case '1': return GameObjectType.STANDARD_TILE;
-            case '2': return GameObjectType.CONVEYOR_NORTH;
-            case '3': return GameObjectType.PLAYER;
-            case '4': return GameObjectType.FLAG;
-            case '5': return GameObjectType.REPAIR_STATION;
+            case "1": return GameObjectType.STANDARD_TILE;
+            case "C1": return GameObjectType.CONVEYOR_NORTH;
+            case "C2": return GameObjectType.CONVEYOR_EAST;
+            case "C3": return GameObjectType.CONVEYOR_SOUTH;
+            case "C4": return GameObjectType.CONVEYOR_WEST;
+            case "CC1": return GameObjectType.FAST_CONVEYOR_NORTH;
+            case "CC2": return GameObjectType.FAST_CONVEYOR_EAST;
+            case "CC3": return GameObjectType.FAST_CONVEYOR_SOUTH;
+            case "CC4": return GameObjectType.FAST_CONVEYOR_WEST;
+
+            //Player
+            case "P1": return GameObjectType.PLAYER_NORTH;
+            case "P2": return GameObjectType.PLAYER_EAST;
+            case "P3": return GameObjectType.PLAYER_SOUTH;
+            case "P4": return GameObjectType.PLAYER_WEST;
+
+
+            //Default(non orientation spesific) objects needs to be down here so they don't trigger before
+            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
+            case "C": return GameObjectType.CONVEYOR_NORTH;
+            case "F": return GameObjectType.FLAG;
+            case "P": return GameObjectType.PLAYER_NORTH;
+
+            case "H": return GameObjectType.HOLE;
+            case "R": return GameObjectType.REPAIR_STATION;
             default: return GameObjectType.STANDARD_TILE;
         }
     }
