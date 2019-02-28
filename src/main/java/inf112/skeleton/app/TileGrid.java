@@ -132,6 +132,13 @@ public class TileGrid{
                                     tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true));
                                     break;
                                 case PLAYER_NORTH:
+                                    Player newPlayer = new Player(playersInitiated);
+                                    tileGrid[row][column].addObjectOnTile(newPlayer);
+                                    players[playersInitiated] = newPlayer; // Add new player to list of players.
+                                    newPlayer.setPosition(new Coordinate(row, column));
+                                    newPlayer.setBackUp(new Coordinate(row, column));
+                                    playersInitiated++; // One more player has been initiated, move the index 1 up.
+                                    break;
                                 case NORTH_WALL:
                                     tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
                                     break;
@@ -145,13 +152,6 @@ public class TileGrid{
                                     tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
                                     break;
                                 case PLAYER:
-                                    Player newPlayer = new Player(playersInitiated);
-                                    tileGrid[row][column].addObjectOnTile(newPlayer);
-                                    players[playersInitiated] = newPlayer; // Add new player to list of players.
-                                    newPlayer.setPosition(new Coordinate(row, column));
-                                    newPlayer.setBackUp(new Coordinate(row, column));
-                                    playersInitiated++; // One more player has been initiated, move the index 1 up.
-                                    break;
                             }
 
                         }
