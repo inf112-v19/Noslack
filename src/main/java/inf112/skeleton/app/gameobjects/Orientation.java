@@ -48,15 +48,16 @@ public enum Orientation {
 
     /**
      * Rotates the orientation from the rartionen given from ProgramCard.
-     * @param r Program with orientation wanted.
+     * @param rotation Program with orientation wanted.
      * @return New orientation after rotation
      */
-    public Orientation rotate(Program r){
-        if(r.equals(Program.MOVE3)||r.equals(Program.MOVE2)||r.equals(Program.MOVE1)||r.equals(Program.BACK))
+    public Orientation rotate(Program rotation){
+        if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
+                ||rotation.equals(Program.BACK))
             return this;
         switch (this) {
             case FACING_NORTH:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_EAST;
                     case LEFT:
@@ -65,7 +66,7 @@ public enum Orientation {
                         return FACING_SOUTH;
                 }
             case FACING_SOUTH:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_WEST;
                     case LEFT:
@@ -74,7 +75,7 @@ public enum Orientation {
                         return FACING_NORTH;
                 }
             case FACING_EAST:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_SOUTH;
                     case LEFT:
@@ -83,7 +84,7 @@ public enum Orientation {
                         return FACING_WEST;
                 }
             case FACING_WEST:
-                switch (r) {
+                switch (rotation) {
                     case RIGHT:
                         return FACING_NORTH;
                     case LEFT:

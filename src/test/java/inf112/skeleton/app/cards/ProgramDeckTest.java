@@ -72,6 +72,7 @@ public class ProgramDeckTest {
     public void returnCard() {
         IDeck deck = new ProgramDeck(this.filename2);
         RRCard card = deck.dealOne();
+        assertFalse(deck.contains(card));
         deck.returnCard(card);
         assertTrue(deck.contains(card));
     }
