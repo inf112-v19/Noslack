@@ -5,12 +5,16 @@ import java.util.Stack;
 import java.util.Scanner;
 
 public interface IDeck {
+    /**
+     * Creates a new deck of cards.
+     */
     void createDeck();
 
     /**
      * Shuffles a list of elements
      */
     void shuffle();
+
     /**
      * Resets the deck
      */
@@ -22,5 +26,32 @@ public interface IDeck {
      * @return A small deck of cards.
      */
     ArrayList<RRCard> deal(int health);
+
+    /**
+     * Deal a single card to player
+     * @return An RRCard
+     */
+    RRCard dealOne();
+
+    /**
+     * Returns a card to the bottom of the deck
+     * @param c Card to be returned
+     */
+    void returnCard(RRCard c);
+
+    /**
+     * Find size of deck
+     * @return the size of the deck
+     */
+    int getSize();
+
+    /**
+     * Find out if the deck contains a Card.
+     * @param card the card you are looking for.
+     * @return If the card is there.
+     */
+    boolean contains(RRCard card);
+
+
 
 }

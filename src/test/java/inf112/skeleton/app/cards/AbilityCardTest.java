@@ -19,4 +19,12 @@ public class AbilityCardTest {
         AbilityCard card = new AbilityCard(ability);
         assertSame(card.getAbility(),Ability.CrabLegs);
     }
+
+    @Test
+    public void TestToString() {
+        String ability = "Crab Legs";
+        AbilityCard card = new AbilityCard(ability);
+        String s = Ability.CrabLegs.toString();
+        assertSame(card.toString(),s);
+    }
 }

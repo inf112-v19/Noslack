@@ -69,14 +69,10 @@ public class Player implements GameObject {
     @Override
     public Sprite getSprite() {return sprite;}
     public int getHealth(){return health;}
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-    public void updateOrientation(Orientation orientation){this.orientation = orientation;}
+    public Orientation getOrientation() {return orientation;}
 
     public void updateOrientation(Program rotation){
-        this.orientation = Orientation.rotate(orientation, rotation);
+        this.orientation = orientation.rotate(rotation);
         evaluateSprite();
     }
 

@@ -17,38 +17,34 @@ public class CardSpriteInteraction {
 
     private Vector2 cardOffset = new Vector2(74+intOffset,115+intOffset);
 
-    private ProgramCard empty;
+    private ProgramCard empty= new ProgramCard(0,Program.NONE);
 
     private ProgramCard overlappingCard;
 
     public CardSpriteInteraction(ArrayList<ProgramCard> chosenCards){
-        empty = new ProgramCard(0,Program.NONE);
 
         this.chosenCards = chosenCards;
-        cardSlotPositions = new ArrayList<>();
-        cardSlotPositions.add(new Vector2(80,44));
-        cardSlotPositions.add(new Vector2(187,44));
-        cardSlotPositions.add(new Vector2(293,44));
-        cardSlotPositions.add(new Vector2(400,44));
-        cardSlotPositions.add(new Vector2(508,44));
+        this.cardSlotPositions = new ArrayList<>();
+        this.cardSlotPositions.add(new Vector2(80,44));
+        this.cardSlotPositions.add(new Vector2(187,44));
+        this.cardSlotPositions.add(new Vector2(293,44));
+        this.cardSlotPositions.add(new Vector2(400,44));
+        this.cardSlotPositions.add(new Vector2(508,44));
 
     }
 
     public CardSpriteInteraction() {
-        empty = new ProgramCard(0,Program.NONE);
-
-        this.overlappingCard = empty;
-
+        this.overlappingCard = this.empty;
         this.chosenCards = new ArrayList<>();
 
         reset();
 
-        cardSlotPositions = new ArrayList<>();
-        cardSlotPositions.add(new Vector2(80,44));
-        cardSlotPositions.add(new Vector2(187,44));
-        cardSlotPositions.add(new Vector2(293,44));
-        cardSlotPositions.add(new Vector2(400,44));
-        cardSlotPositions.add(new Vector2(508,44));
+        this.cardSlotPositions = new ArrayList<>();
+        this.cardSlotPositions.add(new Vector2(80,44));
+        this.cardSlotPositions.add(new Vector2(187,44));
+        this.cardSlotPositions.add(new Vector2(293,44));
+        this.cardSlotPositions.add(new Vector2(400,44));
+        this.cardSlotPositions.add(new Vector2(508,44));
     }
 
     /**
@@ -59,9 +55,9 @@ public class CardSpriteInteraction {
      * @return whether or not the card is inside a slot
      */
     public boolean cardPositionValidation(ProgramCard card, float screenX, float screenY){
-        for(int i = 0; i < cardSlotPositions.size(); i++){
-            if (insideSlot(screenX,screenY,cardSlotPositions.get(i).x,cardSlotPositions.get(i).y)){
-                chosenCards.add(i,card);
+        for(int i = 0; i < this.cardSlotPositions.size(); i++){
+            if (insideSlot(screenX,screenY,this.cardSlotPositions.get(i).x,this.cardSlotPositions.get(i).y)){
+                this.chosenCards.add(i,card);
                 return true;
             }
         }
@@ -69,20 +65,20 @@ public class CardSpriteInteraction {
     }
 
     public void setCardSlot(ProgramCard card, int slot){
-        if(chosenCards.contains(card)){
-            int oldSlot = chosenCards.indexOf(card);
+        if(this.chosenCards.contains(card)){
+            int oldSlot = this.chosenCards.indexOf(card);
             removeCard(oldSlot);
         }
-        if(chosenCards.get(slot) != empty){
-            chosenCards.get(slot).setPosition(chosenCards.get(slot).getPosition());
+        if(this.chosenCards.get(slot) != this.empty){
+            this.chosenCards.get(slot).setPosition(this.chosenCards.get(slot).getPosition());
         }
-        chosenCards.remove(slot);
-        chosenCards.add(slot,card);
+        this.chosenCards.remove(slot);
+        this.chosenCards.add(slot,card);
     }
 
     public void removeCard(int slot){
-        chosenCards.remove(slot);
-        chosenCards.add(slot,empty);
+        this.chosenCards.remove(slot);
+        this.chosenCards.add(slot,this.empty);
     }
 
     /**
@@ -93,23 +89,23 @@ public class CardSpriteInteraction {
      * @return
      */
     public Vector2 cardSnapPosition(ProgramCard card, float screenX, float screenY){
-        for(int i = 0; i < cardSlotPositions.size(); i++){
-            float xDiff = screenX-cardSlotPositions.get(i).x;
-            float yDiff = screenY-cardSlotPositions.get(i).y;
+        for(int i = 0; i < this.cardSlotPositions.size(); i++){
+            float xDiff = screenX-this.cardSlotPositions.get(i).x;
+            float yDiff = screenY-this.cardSlotPositions.get(i).y;
 
             if(Math.abs(xDiff) < 50){
                 if(Math.abs(yDiff) < 70){
-                    if(chosenCards.get(i) != empty){
-                        overlappingCard = chosenCards.get(i);
+                    if(this.chosenCards.get(i) != this.empty){
+                        this.overlappingCard = this.chosenCards.get(i);
                     }
                     setCardSlot(card, i);
-                    Vector2 pos = new Vector2(cardSlotPositions.get(i).x-74,cardSlotPositions.get(i).y);
+                    Vector2 pos = new Vector2(this.cardSlotPositions.get(i).x-74,this.cardSlotPositions.get(i).y);
                     return pos;
                 }
             }
         }
-        if(chosenCards.contains(card)){
-            int slot = chosenCards.indexOf(card);
+        if(this.chosenCards.contains(card)){
+            int slot = this.chosenCards.indexOf(card);
             removeCard(slot);
         }
         return card.getPosition();
@@ -125,19 +121,19 @@ public class CardSpriteInteraction {
     }
 
     public ArrayList<ProgramCard> getChosenCards(){
-        return chosenCards;
+        return this.chosenCards;
     }
 
     public ProgramCard getCardOverlap(){
-        ProgramCard card = overlappingCard;
-        this.overlappingCard = empty;
+        ProgramCard card = this.overlappingCard;
+        this.overlappingCard = this.empty;
         return card;
     }
 
     public void reset(){
         this.chosenCards.clear();
         for (int i = 0; i < 5; i++){
-            this.chosenCards.add(i,empty);
+            this.chosenCards.add(i,this.empty);
         }
     }
 }
