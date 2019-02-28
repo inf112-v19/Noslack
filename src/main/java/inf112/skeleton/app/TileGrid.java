@@ -357,14 +357,20 @@ public class TileGrid{
             case "CC2": return GameObjectType.FAST_CONVEYOR_EAST;
             case "CC3": return GameObjectType.FAST_CONVEYOR_SOUTH;
             case "CC4": return GameObjectType.FAST_CONVEYOR_WEST;
-            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
-            case "C": return GameObjectType.CONVEYOR_NORTH;
-            case "P": return GameObjectType.PLAYER_NORTH;
+
+            //Player
             case "P1": return GameObjectType.PLAYER_NORTH;
             case "P2": return GameObjectType.PLAYER_EAST;
             case "P3": return GameObjectType.PLAYER_SOUTH;
             case "P4": return GameObjectType.PLAYER_WEST;
+
+
+            //Default(non orientation spesific) objects needs to be down here so they don't trigger before
+            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
+            case "C": return GameObjectType.CONVEYOR_NORTH;
             case "F": return GameObjectType.FLAG;
+            case "P": return GameObjectType.PLAYER_NORTH;
+
             default: return GameObjectType.STANDARD_TILE;
         }
     }
