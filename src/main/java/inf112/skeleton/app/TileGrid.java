@@ -138,11 +138,14 @@ public class TileGrid{
                             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
                         }
                         if(tile.hasRepairStation()){
-                            player.repair();
-                            player.setBackUp(player.getPosition());
+                            if (player.isFinished()) {
+                                player.repair();
+                                player.setBackUp(player.getPosition());
+                            }
                         }
                         if(tile.hasFlag()){
                             if(player.isFinished()){
+                                player.setBackUp(player.getPosition());
                                 player.win();
                             }
                         }

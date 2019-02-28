@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -48,13 +49,19 @@ public class RoboRally extends Game implements InputProcessor {
 
     private ArrayList<ProgramCard> programHand;
 
+    private AbilityCard currentAbility;
     private ProgramCard currentCard;
+
+    private String abilityText;
+    private BitmapFont font;
+
     private boolean insideSprite;
     private Sprite currentSprite;
 
     private Sprite goButton;
 
-    private ProgramCard empty;
+    private ProgramCard emptyProgram;
+    private AbilityCard emptyAbility;
 
     private boolean sequenceReady;
 
@@ -65,6 +72,8 @@ public class RoboRally extends Game implements InputProcessor {
         // Load Dealt cards background texture and sprite.
 
         Gdx.input.setInputProcessor(this);
+
+        font = new BitmapFont();
 
         this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
         this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
@@ -78,6 +87,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.CSI = new CardSpriteInteraction();
 
         batch = new SpriteBatch();
+
         currentPhase = 0;
         tileGrid = new TileGrid(GRID_ROWS, GRID_COLUMNS, 1);
 
@@ -93,7 +103,11 @@ public class RoboRally extends Game implements InputProcessor {
 
         goButton.setPosition(33, 220);
 
-        empty = new ProgramCard(0, Program.NONE);
+        emptyProgram = new ProgramCard(0, Program.NONE);
+        emptyAbility = new AbilityCard(" ");
+
+        currentAbility = emptyAbility;
+        abilityText = "";
 
         roboTick = 0;
 
@@ -110,13 +124,13 @@ public class RoboRally extends Game implements InputProcessor {
         batch.begin();
         renderGrid();
         performPhase();
-        activateTiles();
+        //activateTiles();
         if (sequenceReady && (roboTick % 20 == 0)) {
             tick();
         }
-        renderGrid();
         renderDealtCards();
         goButton.draw(batch);
+        font.draw(batch,abilityText,20,50);
         batch.end();
         roboTick++;
     }
@@ -152,10 +166,12 @@ public class RoboRally extends Game implements InputProcessor {
 
         selectedCardsBackgroundSprite.draw(batch);
 
+        currentAbility.getSprite().draw(batch);
+
         for (ProgramCard card : programHand) {
             card.getSprite().draw(batch);
         }
-        tileGrid.getPlayer(0).getAbilityHand().get(0).getSprite().draw(batch);
+
 
         //cardTestSprite.draw(batch);
     }
@@ -272,15 +288,18 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void dealNewCards() {
+
         tileGrid.getPlayer(0).reset();
         this.programDeck.reset();
         this.abilityDeck.reset();
         int playerHealth = tileGrid.getPlayer(0).getHealth();
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
-        //FIX THIS
 
+        if(currentAbility.getAbility() == emptyAbility.getAbility()){
+            currentAbility = tileGrid.getPlayer(0).getAbilityHand().get(0);
+            currentAbility.getSprite().setPosition(550,20);
+        }
 
-        //tileGrid.getPlayer(0).getAbilityHand().get(0).getSprite()
         for (int i = 0; i < programHand.size(); i++) {
             Vector2 pos = new Vector2(5 + i * 75, 520);
 
@@ -310,7 +329,7 @@ public class RoboRally extends Game implements InputProcessor {
      * @param screenY coordinate of cursor
      * @return boolean true if inside given sprite
      */
-    private boolean isInsideCard(float screenX, float screenY, ProgramCard card) {
+    private boolean isInsideCard(float screenX, float screenY, RRCard card) {
 
         Sprite sprite = card.getSprite();
         // Boolean to see if the coordinates is inside given sprite in the x-axis
@@ -319,9 +338,18 @@ public class RoboRally extends Game implements InputProcessor {
             if (Gdx.graphics.getHeight() - screenY >= sprite.getY() &&
                     Gdx.graphics.getHeight() - screenY < sprite.getY() + sprite.getHeight()) {
                 // Moves the given sprite
-                moveSprite(sprite, screenX - sprite.getWidth() / 2, Gdx.graphics.getHeight() - screenY - sprite.getHeight() / 2);
-                currentCard = card;
-                currentSprite = sprite;
+                if (card instanceof ProgramCard){
+                    moveSprite(sprite, screenX - sprite.getWidth() / 2, Gdx.graphics.getHeight() - screenY - sprite.getHeight() / 2);
+                    currentCard = (ProgramCard) card;
+                    currentSprite = sprite;
+                }
+                if (card instanceof AbilityCard){
+                    if(abilityText == ""){
+                        abilityText = ((AbilityCard) card).getAbility().toString();
+                    } else {
+                        abilityText = "";
+                    }
+                }
                 return true;
             }
         }
@@ -392,6 +420,8 @@ public class RoboRally extends Game implements InputProcessor {
                 sequenceReady = true;
             }
         }
+        isInsideCard(screenX,screenY,currentAbility);
+
         return false;
     }
 
@@ -404,7 +434,7 @@ public class RoboRally extends Game implements InputProcessor {
         if (insideSprite) {
             Vector2 newPos = CSI.cardSnapPosition(currentCard, screenX + cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
             ProgramCard overlap = CSI.getCardOverlap();
-            if (overlap.getPriority() != empty.getPriority()) {
+            if (overlap.getPriority() != emptyProgram.getPriority()) {
                 moveSprite(overlap.getSprite(), overlap.getPosition().x, overlap.getPosition().y);
             }
             moveSprite(currentSprite, newPos.x, newPos.y);
