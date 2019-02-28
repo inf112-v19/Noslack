@@ -26,6 +26,7 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority, String move) {
         this.priority = priority;
         this.move=translateMove(this.name=move);
+        this.name = this.name+" "+this.priority;
     }
 
     /**
@@ -86,10 +87,14 @@ public class ProgramCard implements RRCard {
         }
     }
 
+    /**
+     * Sets the sprite for the the card.
+     * @param filepath Filepath for Sprite
+     */
     private void setSprite(String filepath){
         try {
-            Texture cardTexture = new Texture(Gdx.files.internal(filepath));
-            this.sprite = new Sprite(cardTexture);
+            this.texture = new Texture(Gdx.files.internal(filepath));
+            this.sprite = new Sprite(this.texture);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -101,6 +106,7 @@ public class ProgramCard implements RRCard {
         return this.sprite;
     }
 
+    @Override
     public Vector2 getPosition() {
         return this.position;
     }
@@ -151,4 +157,5 @@ public class ProgramCard implements RRCard {
     public String toString(){
         return this.name;
     }
+
 }

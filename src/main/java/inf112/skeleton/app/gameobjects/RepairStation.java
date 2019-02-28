@@ -24,7 +24,13 @@ public class RepairStation implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/repairStation.png"));
+        try {
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/RepairPlaceholder.png"));
+            this.sprite = new Sprite(texture);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in RepairStation evaluateSprite");
+        }
     }
 
     @Override

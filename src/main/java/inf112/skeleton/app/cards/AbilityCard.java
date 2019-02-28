@@ -3,6 +3,7 @@ package inf112.skeleton.app.cards;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Abillty cards for the game RoboRally.
@@ -12,6 +13,7 @@ public class AbilityCard implements RRCard {
     private Ability ability;
     private Sprite sprite;
     private String name;
+    private Vector2 position;
 
 
     /**
@@ -124,11 +126,19 @@ public class AbilityCard implements RRCard {
      * @return The ability of the card, as an Ability enum.
      */
     public Ability getAbility() {
-        return ability;
+        return this.ability;
     }
 
 
-
+    private void setSprite(String filepath){
+        try {
+            this.texture = new Texture(Gdx.files.internal(filepath));
+            this.sprite = new Sprite(this.texture);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     @Override
     public Sprite getSprite() {
         return this.sprite;
@@ -174,11 +184,19 @@ public class AbilityCard implements RRCard {
      */
     @Override
     public int compareTo(Object o) {
-        return 0;
+        if(getAbility().equals(((AbilityCard)o).getAbility()))
+            return 0;
+        else
+            return -1;
     }
 
     @Override
     public String toString(){
-        return this.name;
+        return getAbility().toString();
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return this.position;
     }
 }
