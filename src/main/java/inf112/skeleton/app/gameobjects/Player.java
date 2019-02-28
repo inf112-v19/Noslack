@@ -20,12 +20,11 @@ public class Player implements GameObject {
     private Coordinate backUp;
     private GameObjectType type;
     private Coordinate position;
+    private String name;
+    private boolean hasWon;
 
     private Program currentMove;
     private int moveProgression;
-
-    private boolean hasWon;
-    private String name;
 
     /**
      * Constructor of Player class.
