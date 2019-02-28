@@ -199,10 +199,10 @@ public class TileGrid{
                 rowsToMove = -1;
                 break;
             case FACING_WEST:
-                columnsToMove = 1;
+                columnsToMove = -1;
                 break;
             case FACING_EAST:
-                columnsToMove = -1;
+                columnsToMove = 1;
                 break;
         }
         if(move==Program.BACK){

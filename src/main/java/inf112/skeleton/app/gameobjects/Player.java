@@ -42,8 +42,6 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
-
-
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
@@ -92,13 +90,13 @@ public class Player implements GameObject {
                 sprite.setRotation(0);
                 break;
             case FACING_EAST:
-                sprite.setRotation(90);
+                sprite.setRotation(-90);
                 break;
             case FACING_WEST:
-                sprite.setRotation(270);
+                sprite.setRotation(-270);
                 break;
             case FACING_SOUTH:
-                sprite.setRotation(180);
+                sprite.setRotation(-180);
                 break;
         }
     }

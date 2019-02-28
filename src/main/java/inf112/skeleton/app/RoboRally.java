@@ -368,6 +368,7 @@ public class RoboRally extends Game implements InputProcessor {
                     nulls++;
                 }
             }
+            System.out.println(chosenCards.size());
             if (nulls == 0) {
                 tileGrid.getPlayer(0).pushProgram(chosenCards);
                 sequenceReady = true;
