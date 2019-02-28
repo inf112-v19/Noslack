@@ -38,7 +38,7 @@ public class PlayerTest {
     @Test
     public void PlayerStartsNineHP() {
         //Player player = new Player();
-        assertEquals(5, player.getHealth());
+        assertEquals(9, player.getHealth());
     }
 
     @Test

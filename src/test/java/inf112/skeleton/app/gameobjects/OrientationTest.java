@@ -28,6 +28,11 @@ public class OrientationTest {
         o2 = o2.rotate(Program.LEFT);
         assertEquals(Orientation.FACING_EAST,o2);
     }
+
+    /**
+     * We want to see that there is no change in orientation,
+     * because MOVE3 is not a valid orientation change.
+     */
     @Test
     public void rotateMove3() {
         Orientation o3 = Orientation.FACING_EAST;

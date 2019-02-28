@@ -16,9 +16,6 @@ public enum Orientation {
      * @return New orientation after rotation
      */
     public Orientation rotate(Program rotation){
-        if(rotation.equals(Program.MOVE3)||rotation.equals(Program.MOVE2)||rotation.equals(Program.MOVE1)
-                ||rotation.equals(Program.BACK))
-            return this;
         switch (this) {
             case FACING_NORTH:
                 switch (rotation) {
@@ -28,6 +25,7 @@ public enum Orientation {
                         return FACING_WEST;
                     case U:
                         return FACING_SOUTH;
+                    default: return this;
                 }
             case FACING_SOUTH:
                 switch (rotation) {
@@ -37,6 +35,7 @@ public enum Orientation {
                         return FACING_EAST;
                     case U:
                         return FACING_NORTH;
+                    default: return this;
                 }
             case FACING_EAST:
                 switch (rotation) {
@@ -46,6 +45,7 @@ public enum Orientation {
                         return FACING_NORTH;
                     case U:
                         return FACING_WEST;
+                    default: return this;
                 }
             case FACING_WEST:
                 switch (rotation) {
@@ -55,6 +55,7 @@ public enum Orientation {
                         return FACING_SOUTH;
                     case U:
                         return FACING_EAST;
+                    default: return this;
                 }
             default: return this;
         }
