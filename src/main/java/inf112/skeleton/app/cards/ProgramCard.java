@@ -15,7 +15,6 @@ public class ProgramCard implements RRCard {
     private int priority;
     private Program move;
     private Sprite sprite;
-    private Texture texture;
     private String name;
     private Vector2 position;
 
