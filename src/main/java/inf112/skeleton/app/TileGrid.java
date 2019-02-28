@@ -78,10 +78,8 @@ public class TileGrid{
                     new BufferedReader(fileReader);
 
             for(int row = rows-1; row>=0; row--){
-
                 String nextTileTypeLine = bufferedReader.readLine();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
-
                 for(int column = columns-1; column>=0; column--){
 
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
@@ -157,6 +155,22 @@ public class TileGrid{
             System.out.println("Unable to open file '" + fileName + "'");
         }catch(IOException ex) {
             System.out.println("Error reading file '" + fileName + "'");
+        }
+    }
+
+    private GameObjectType charToGameObjectType(char nextTileType){
+        switch(nextTileType){
+            case '1': return GameObjectType.STANDARD_TILE;
+            case '2': return GameObjectType.CONVEYOR_NORTH;
+            case '3': return GameObjectType.PLAYER;
+            case '4': return GameObjectType.FLAG;
+
+            case 'w': return GameObjectType.NORTH_WALL;
+            case 'a': return GameObjectType.WEST_WALL;
+            case 's': return GameObjectType.SOUTH_WALL;
+            case 'd': return GameObjectType.EAST_WALL;
+
+            default: return GameObjectType.STANDARD_TILE;
         }
     }
 

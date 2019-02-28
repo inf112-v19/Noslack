@@ -72,7 +72,7 @@ public class Tile implements GameObject{
     public Boolean hasWallWithOrientation(Orientation orientation){
         GameObjectType wallType;
         switch(orientation){
-            case FACING_NORTH: wallType = GameObjectType.SOUTH_WALL; System.out.println("SouthWallAhead");break;
+            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; System.out.println("SouthWallAhead");break;
             case FACING_WEST: wallType = GameObjectType.EAST_WALL; break;
             case FACING_SOUTH: wallType = GameObjectType.NORTH_WALL; break;
             case FACING_EAST: wallType = GameObjectType.WEST_WALL; break;
