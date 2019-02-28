@@ -155,6 +155,7 @@ public class RoboRally extends Game implements InputProcessor {
         for (ProgramCard card : programHand) {
             card.getSprite().draw(batch);
         }
+        tileGrid.getPlayer(0).getAbilityHand().get(0).getSprite().draw(batch);
 
         //cardTestSprite.draw(batch);
     }
@@ -278,6 +279,8 @@ public class RoboRally extends Game implements InputProcessor {
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
         //FIX THIS
 
+
+        //tileGrid.getPlayer(0).getAbilityHand().get(0).getSprite()
         for (int i = 0; i < programHand.size(); i++) {
             Vector2 pos = new Vector2(5 + i * 75, 520);
 
