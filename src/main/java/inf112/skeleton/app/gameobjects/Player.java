@@ -20,12 +20,11 @@ public class Player implements GameObject {
     private Coordinate backUp;
     private GameObjectType type;
     private Coordinate position;
+    private String name;
+    private boolean hasWon;
 
     private Program currentMove;
     private int moveProgression;
-
-    private boolean hasWon;
-    private String name;
 
     /**
      * Constructor of Player class.
@@ -70,14 +69,10 @@ public class Player implements GameObject {
     @Override
     public Sprite getSprite() {return sprite;}
     public int getHealth(){return health;}
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-    public void updateOrientation(Orientation orientation){this.orientation = orientation;}
+    public Orientation getOrientation() {return orientation;}
 
     public void updateOrientation(Program rotation){
-        this.orientation = Orientation.rotate(orientation, rotation);
+        this.orientation = orientation.rotate(rotation);
         evaluateSprite();
     }
 
@@ -139,7 +134,15 @@ public class Player implements GameObject {
      */
     public void recieveDamage(){
         this.health--;
-        }
+    }
+
+    /**
+     * Remove given amount of health from player
+     * @param damage amount of health to be deducted
+     */
+    public void recieveDamage(int damage){
+        this.health -= damage;
+    }
 
     /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).
