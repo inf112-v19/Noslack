@@ -13,7 +13,7 @@ public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private String fileName = "./assets/maps";
+    private String fileName = "./assets/maps/";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -22,6 +22,7 @@ public class TileGrid{
      */
     public TileGrid(){
         this.fileName=this.fileName + "mapLayout.txt";
+
         this.rows = 12;
         this.columns = 12;
         this.tileGrid = new Tile[rows][columns];
