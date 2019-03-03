@@ -159,8 +159,10 @@ public class Player implements GameObject {
         abilityHand.clear();
         program.clear();
     }
+    public String getName() {return this.name;}
+
     public int getPlayerNumber() {
-        return playerNumber;
+        return this.playerNumber;
     }
     /**
      * @return Player AbilityDeck

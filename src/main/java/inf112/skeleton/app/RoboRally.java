@@ -36,6 +36,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     private Sprite cardTestSprite;
 
+    private ArrayList<Sprite> cardSlots;
+
     private int drawPositionX;
     private int drawPositionY;
     private int currentPhase;
@@ -52,6 +54,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     private AbilityCard currentAbility;
     private ProgramCard currentCard;
+
+    private Vector2 previousPos;
 
     private String abilityText;
     private BitmapFont font;
@@ -118,6 +122,9 @@ public class RoboRally extends Game implements InputProcessor {
         roboTick = 0;
 
         dealNewCards();
+
+        cardSlots = new ArrayList<>();
+        setCardSlotSprites();
     }
 
 
@@ -133,6 +140,7 @@ public class RoboRally extends Game implements InputProcessor {
         //activateTiles();
         if (sequenceReady && (roboTick % 20 == 0)) {
             tick();
+            activateTiles();
         }
         renderDealtCards();
         goButton.draw(batch);
@@ -167,18 +175,20 @@ public class RoboRally extends Game implements InputProcessor {
 
         // Draw background for dealt cards.
 
-        dealtCardsBackgroundSprite.setPosition(drawPositionX, drawPositionY);
+        dealtCardsBackgroundSprite.setPosition(drawPositionX, drawPositionY + 40);
         dealtCardsBackgroundSprite.draw(batch);
 
         selectedCardsBackgroundSprite.draw(batch);
 
         currentAbility.getSprite().draw(batch);
 
+        for (Sprite sprite : cardSlots) {
+            sprite.draw(batch);
+        }
+
         for (ProgramCard card : programHand) {
             card.getSprite().draw(batch);
         }
-
-        //cardTestSprite.draw(batch);
     }
 
     /**
@@ -199,7 +209,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
-        this.drawPositionY = TILE_SIZE * 4;
+        this.drawPositionY = 40 + TILE_SIZE * 4;
         for (int row = 0; row < GRID_ROWS; row++) {
             for (int column = 0; column < GRID_COLUMNS; column++) {
 
@@ -264,7 +274,7 @@ public class RoboRally extends Game implements InputProcessor {
         if (currentPhase <= 5) {
             // Runs per phase
             if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
-                activateTiles();
+                //activateTiles();
                 tileGrid.applyNextProgram(0);
                 currentPhase++;
                 // Runs mid phase
@@ -277,7 +287,7 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-            activateTiles();
+            //activateTiles();
         }
     }
 
@@ -306,13 +316,16 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         for (int i = 0; i < programHand.size(); i++) {
-            Vector2 pos = new Vector2(5 + i * 75, 520);
+            Vector2 pos = new Vector2(5 + i * 75, 560);
 
             programHand.get(i).setPosition(pos);
             programHand.get(i).getSprite().setPosition(pos.x, pos.y);
         }
     }
 
+    private boolean isInsideSlot(Sprite sprite){
+        return isInsideSprite(currentCard.getSprite().getX(),currentCard.getSprite().getY(), sprite);
+    }
 
     private boolean isInsideSprite(float screenX, float screenY, Sprite sprite) {
         // Boolean to see if the coordinates is inside given sprite in the x-axis
@@ -347,6 +360,11 @@ public class RoboRally extends Game implements InputProcessor {
                     moveSprite(sprite, screenX - sprite.getWidth() / 2, Gdx.graphics.getHeight() - screenY - sprite.getHeight() / 2);
                     currentCard = (ProgramCard) card;
                     currentSprite = sprite;
+                    for (Sprite cardSlot : cardSlots) {
+                        if (isInsideSlot(cardSlot)) {
+                            previousPos = new Vector2(cardSlot.getX(),cardSlot.getY());
+                        }
+                    }
                 }
                 if (card instanceof AbilityCard){
                     if(abilityText == ""){
@@ -371,6 +389,14 @@ public class RoboRally extends Game implements InputProcessor {
     private Sprite setSprite(String texturePath) {
         Texture texture = new Texture(Gdx.files.internal(texturePath));
         return new Sprite(texture);
+    }
+
+    private void setCardSlotSprites() {
+        for (int i = 0; i < 5; i++) {
+            String path = "./assets/cards/cardSlot"+(i+1)+".png";
+            cardSlots.add(setSprite(path));
+            cardSlots.get(i).setPosition(5+i*106, 37);
+        }
     }
 
 
@@ -419,7 +445,6 @@ public class RoboRally extends Game implements InputProcessor {
                     nulls++;
                 }
             }
-            System.out.println(chosenCards.size());
             if (nulls == 0) {
                 tileGrid.getPlayer(0).pushProgram(chosenCards);
                 CSI.reset();
@@ -438,14 +463,29 @@ public class RoboRally extends Game implements InputProcessor {
 
 
         if (insideSprite) {
-            Vector2 newPos = CSI.cardSnapPosition(currentCard, screenX + cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
-            ProgramCard overlap = CSI.getCardOverlap();
-            if (overlap.getPriority() != emptyProgram.getPriority()) {
-                moveSprite(overlap.getSprite(), overlap.getPosition().x, overlap.getPosition().y);
+            int i = 0;
+            for (Sprite cardSlot : cardSlots){
+                if(isInsideSprite(screenX,screenY,cardSlot)) {
+                    CSI.cardSnapPosition(currentCard, screenX + cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
+                    ProgramCard overlap = CSI.getCardOverlap();
+                    if (overlap.getPriority() != emptyProgram.getPriority()) {
+                        if(!currentCard.getPosition().equals(previousPos)){
+                            Vector2 oldPos = CSI.cardSnapPosition(overlap, previousPos.x +cardDeltaW, previousPos.y);
+                            System.out.println("");
+                            moveSprite(overlap.getSprite(), previousPos.x, previousPos.y);
+                        } else {
+                            moveSprite(overlap.getSprite(), overlap.getPosition().x, overlap.getPosition().y);
+                        }
+                    }
+                    moveSprite(currentSprite, cardSlot.getX(), cardSlot.getY());
+                    insideSprite = false;
+                    return true;
+                }
+                i++;
             }
-            moveSprite(currentSprite, newPos.x, newPos.y);
+
+            moveSprite(currentSprite, currentCard.getPosition().x, currentCard.getPosition().y);
             insideSprite = false;
-            return true;
         }
         return false;
     }

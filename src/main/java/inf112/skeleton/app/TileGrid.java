@@ -203,6 +203,7 @@ public class TileGrid{
                             if (player.isFinished()) {
                                 player.repair();
                                 player.setBackUp(player.getPosition());
+                                System.out.println(player.getName() + " has repaired and set backup point");
                             }
                         }
                         if(tile.hasFlag()){
