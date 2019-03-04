@@ -103,9 +103,9 @@ public class RoboRally extends Game implements InputProcessor {
         int playerHealth = tileGrid.getPlayerHealth(0);
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
 
-        this.programHand = tileGrid.getPlayer(0).getProgramHand();
+        this.programHand = tileGrid.getPlayerProgramHand(0);
 
-        cardTestSprite = tileGrid.getPlayer(0).getProgramHand().get(0).getSprite();
+        cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
 
         goButton.setPosition(33, 220);
 
@@ -263,7 +263,7 @@ public class RoboRally extends Game implements InputProcessor {
         */
         if (currentPhase <= 5) {
             // Runs per phase
-            if (tileGrid.getPlayer(0).getCurrentMove() == Program.NONE) {
+            if (tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 activateTiles();
                 tileGrid.applyNextProgram(0);
                 currentPhase++;
@@ -271,7 +271,7 @@ public class RoboRally extends Game implements InputProcessor {
             }
         }
 
-        if (!(tileGrid.getPlayer(0).getCurrentMove() == Program.NONE)) {
+        if (!(tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             tileGrid.continueMove(0);
         } else if (currentPhase > 5){
             dealNewCards();
@@ -294,10 +294,10 @@ public class RoboRally extends Game implements InputProcessor {
 
     private void dealNewCards() {
 
-        tileGrid.getPlayer(0).reset();
+        tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        int playerHealth = tileGrid.getPlayer(0).getHealth();
+        int playerHealth = tileGrid.getPlayerHealth(0);
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
 
         if(currentAbility.getAbility() == emptyAbility.getAbility()){

@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TileGrid{
     private Tile[][] tileGrid;
@@ -446,8 +447,40 @@ public class TileGrid{
     public Coordinate getPlayerPosition(int playerNumber){
         return this.players[playerNumber].getPosition();
     }
+
+    /**
+     * Get Players health
+     * @param playerNumber The player number
+     * @return Players Heath
+     */
     public int getPlayerHealth(int playerNumber){
         return this.players[playerNumber].getHealth();
+    }
+
+    /**
+     * Get Players ProgramHand
+     * @param playerNumber Players number
+     * @return Player ProgramHand
+     */
+    public ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
+        return this.players[playerNumber].getProgramHand();
+    }
+
+    /**
+     * Get players current move
+     * @param playerNumber Player Number
+     * @return Program of current move
+     */
+    public Program getPlayerCurrentMove (int playerNumber){
+        return this.players[playerNumber].getCurrentMove();
+    }
+
+    /**
+     * Reset a player
+     * @param playerNumber Player number
+     */
+    public void resetPlayer(int playerNumber){
+        this.players[playerNumber].reset();
     }
 
 
