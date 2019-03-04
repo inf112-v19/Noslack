@@ -100,7 +100,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
 
-        int playerHealth = tileGrid.getPlayer(0).getHealth();
+        int playerHealth = tileGrid.getPlayerHealth(0);
         tileGrid.getPlayer(0).drawCards(programDeck.deal(playerHealth), abilityDeck.deal(playerHealth));
 
         this.programHand = tileGrid.getPlayer(0).getProgramHand();

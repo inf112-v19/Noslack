@@ -446,6 +446,9 @@ public class TileGrid{
     public Coordinate getPlayerPosition(int playerNumber){
         return this.players[playerNumber].getPosition();
     }
+    public int getPlayerHealth(int playerNumber){
+        return this.players[playerNumber].getHealth();
+    }
 
 
 }
