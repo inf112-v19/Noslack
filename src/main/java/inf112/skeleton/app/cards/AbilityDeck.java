@@ -86,7 +86,7 @@ public class AbilityDeck implements IDeck {
     @Override
     public boolean contains(RRCard card) {
         for(RRCard c : deck)
-            if(c.compareTo(card)==0)
+            if(((AbilityCard)c).getAbility().equals(((AbilityCard)card).getAbility()))
                 return true;
         return false;
     }

@@ -26,20 +26,30 @@ public class LaserOutlet implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        if(this.orientation == Orientation.FACING_NORTH) {
+        try {
             texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/laserOutletFacingNorth.png"));
+            this.sprite = new Sprite(texture);
+            switch (orientation) {
+                default:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_NORTH:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_EAST:
+                    sprite.setRotation(270);
+                    break;
+                case FACING_WEST:
+                    sprite.setRotation(90);
+                    break;
+                case FACING_SOUTH:
+                    sprite.setRotation(180);
+                    break;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in LaserOutlets evaluateSprite");
         }
-        if(this.orientation == Orientation.FACING_WEST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/laserOutletFacingWest.png"));
-        }
-        if(this.orientation == Orientation.FACING_SOUTH){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/laserOutletFacingSouth.png"));
-        }
-        if(this.orientation == Orientation.FACING_EAST){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/laserOutletFacingEast.png"));
-        }
-
-        this.sprite = new Sprite(texture);
     }
 
     @Override
