@@ -44,7 +44,7 @@
 
 - To run the program, pull the master branch from the Git repo. Import as a maven project and run the class &quot;main&quot; start the game.
 - The tests can be found in the &quot;test&quot; folder where each test can be run by right clicking.
-- The class diagram file can be opened in IntelliJ as it is a uml file
+- The class diagram file can be opened in IntelliJ as it is a uml file, remember use the "Show depedencies" button
 
 
 
