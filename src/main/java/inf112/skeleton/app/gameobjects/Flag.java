@@ -15,6 +15,7 @@ public class Flag implements GameObject {
         this.flagNumber = 1;
         evaluateSprite();
     }
+
     public Flag(int flagNumber){
         this.flagNumber = flagNumber;
     }
@@ -31,6 +32,9 @@ public class Flag implements GameObject {
     @Override
     public Sprite getSprite() {return sprite;}
 
+    /**
+     * Evaluates flagNumber.
+     */
     @Override
     public void evaluateSprite() {
         try {

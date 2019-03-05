@@ -11,6 +11,8 @@ public class Pusher implements GameObject {
     private Orientation orientation;
     private GameObjectType type;
 
+
+
     public Pusher(Orientation orientation, GameObjectType type) {
         this.orientation = orientation;
         this.type = type;
@@ -19,12 +21,12 @@ public class Pusher implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
-        return null;
+        return type;
     }
 
     @Override
     public Sprite getSprite() {
-        return null;
+        return sprite;
     }
 
     @Override

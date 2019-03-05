@@ -26,12 +26,18 @@ public class AbilityDeck implements IDeck {
         createDeck();
     }
 
+    /**
+     * Removes all cards in deck and creates a new one
+     */
     @Override
     public void reset() {
         deck.clear();
         createDeck();
     }
 
+    /**
+     * Creates deck from file, adds them to deckList and shuffles
+     */
     @Override
     public void createDeck() {
         try{
@@ -48,6 +54,9 @@ public class AbilityDeck implements IDeck {
         shuffle();
     }
 
+    /**
+     * Shuffles deckList and adds them to deck
+     */
     @Override
     public void shuffle() {
         Collections.shuffle(deckList);
@@ -57,7 +66,7 @@ public class AbilityDeck implements IDeck {
 
 
     /**
-     *
+     * Returns cards relative to the remaining health of a player
      * @param health Player health.
      * @return ArrayList of AbilityCards
      */
@@ -68,21 +77,37 @@ public class AbilityDeck implements IDeck {
         return playerDeck;
     }
 
+    /**
+     * Pops one card of the deck and returns it
+     * @return RRCard
+     */
     @Override
     public RRCard dealOne() {
         return deck.pop();
     }
 
+    /**
+     * @param c Card to be returned
+     */
     @Override
     public void returnCard(RRCard c) {
         this.deck.insertElementAt(c,(this.deck.size()-1));
     }
 
+    /**
+     * Returns size of deck
+     * @return Decks size
+     */
     @Override
     public int getSize() {
         return this.deck.size();
     }
 
+    /**
+     * Returns true if card is in deck
+     * @param card the card you are looking for.
+     * @return Boolean
+     */
     @Override
     public boolean contains(RRCard card) {
         for(RRCard c : deck)

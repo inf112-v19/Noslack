@@ -18,6 +18,7 @@ public class Conveyor implements GameObject {
         this.fast = false;
         evaluateSprite();
     }
+
     public Conveyor(boolean fast){
         this.orientation = Orientation.FACING_NORTH;
         this.fast = fast;
@@ -35,6 +36,11 @@ public class Conveyor implements GameObject {
         this.fast = fast;
         evaluateSprite();
     }
+
+    /**
+     * Boolean check for fast conveyor
+     * @return Conveyors Boolean
+     */
     public boolean isFast(){
         return fast;
     }
@@ -49,6 +55,9 @@ public class Conveyor implements GameObject {
         return sprite;
     }
 
+    /**
+     * Evaluates if conveyor is fast.
+     */
     @Override
     public void evaluateSprite() {
 
@@ -110,6 +119,10 @@ public class Conveyor implements GameObject {
         }
     }
 
+    /**
+     * Get method for orientation
+     * @return Conveyors Orientation
+     */
     public Orientation getOrientation(){
         return this.orientation;
     }
