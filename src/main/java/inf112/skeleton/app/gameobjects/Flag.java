@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.io.FileNotFoundException;
 
 public class Flag implements GameObject {
-    private Texture texture;
     private Sprite sprite;
     private int flagNumber;
 
@@ -36,6 +35,7 @@ public class Flag implements GameObject {
     public void evaluateSprite() {
         try {
             //add more, at this point of time we only have 2 flags.
+            Texture texture;
             if(flagNumber == 1){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
             }

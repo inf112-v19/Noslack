@@ -1,7 +1,5 @@
 package inf112.skeleton.app.GameObjectTest;
 
-import inf112.skeleton.app.cards.ProgramCard;
-import inf112.skeleton.app.cards.ProgramDeck;
 import inf112.skeleton.app.gameobjects.Orientation;
 import inf112.skeleton.app.gameobjects.Player;
 import org.junit.Before;
@@ -44,7 +42,7 @@ public class PlayerTest {
     @Test
     public void PlayerTakesDamage() {
         int oldHP = player.getHealth();
-        player.recieveDamage();
+        player.receiveDamage();
         assertEquals(oldHP - 1,player.getHealth() );
     }
 

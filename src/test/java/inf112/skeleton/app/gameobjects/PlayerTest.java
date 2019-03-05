@@ -28,7 +28,7 @@ public class PlayerTest {
     @Test
     public void PlayerTakesDamage() {
         int oldHP = player.getHealth();
-        player.recieveDamage();
+        player.receiveDamage();
         assertEquals(player.getHealth(), oldHP - 1);
     }
 

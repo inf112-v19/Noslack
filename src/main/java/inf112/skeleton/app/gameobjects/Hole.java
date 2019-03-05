@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Hole implements GameObject  {
-    private Texture texture;
     private Sprite sprite;
 
     public Hole() {evaluateSprite();}
@@ -23,7 +22,7 @@ public class Hole implements GameObject  {
     @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
             e.printStackTrace();
