@@ -184,6 +184,12 @@ public class TileGrid{
             case "CC":
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
                 break;
+            case "H":
+                this.tileGrid[row][column].addObjectOnTile(new Hole());
+                break;
+            case "R":
+                this.tileGrid[row][column].addObjectOnTile(new RepairStation());
+                break;
             case "P":
                 Player newPlayer;
                 switch (nextTileType) {
