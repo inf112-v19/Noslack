@@ -8,12 +8,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private final String fileName = "./assets/maplayout.txt";
+    private String fileName = "./assets/maps/";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -21,43 +22,55 @@ public class TileGrid{
      * Default constructor.
      */
     public TileGrid(){
+        this.fileName=this.fileName + "mapLayout.txt";
+
         this.rows = 12;
         this.columns = 12;
-        tileGrid = new Tile[rows][columns];
+        this.tileGrid = new Tile[rows][columns];
         this.players = new Player[1];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid, fileName);
+        initiateTiles();
     }
 
     /**
      * Constructor with specifications.
+     * Uses standard map.
      * @param rows The amount of rows in the grid.
      * @param columns The amount of columns in the grid.
      * @param players The amount of players in the game.
      */
     public TileGrid(int rows, int columns, int players){
+        this.fileName = this.fileName + "mapLayout.txt";
         this.rows = rows;
         this.columns = columns;
-        tileGrid = new Tile[rows][columns];
+        this.tileGrid = new Tile[rows][columns];
         this.players = new Player[players];
         this.playersInitiated = 0;
 
-        initiateTiles(tileGrid, fileName);
-    }
-
-    public TileGrid(int rows, int columns, int players, String file) {
-        this.rows = rows;
-        this.columns = columns;
-        tileGrid = new Tile[rows][columns];
-        this.players = new Player[players];
-        this.playersInitiated = 0;
-
-        initiateTiles(tileGrid, file);
+        initiateTiles();
     }
 
     /**
-     *
+     * Make sure the map to be used is filed under assets/maps/
+     * @param rows The amount of rows in the grid.
+     * @param columns The amount of columns in the grid.
+     * @param players The amount of players in the game.
+     * @param file The file name, the program fixes directory.
+     */
+    public TileGrid(int rows, int columns, int players, String file) {
+        this.fileName = this.fileName + file;
+        this.rows = rows;
+        this.columns = columns;
+        this.tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
+        this.playersInitiated = 0;
+
+        initiateTiles();
+    }
+
+    /**
+     * Get Tile based on row and column
      * @param row: row of the requested tile
      * @param column: column of the requested tile
      * @return Tile at specified coordinate
@@ -66,164 +79,190 @@ public class TileGrid{
         return tileGrid[row][column];
     }
 
+    /**
+     * Get Tile based on coordinate
+     * @param coordinate Coordinate of the requested Tile
+     * @return Tile at specified coordinate
+     */
     public Tile getTile(Coordinate coordinate){
         return tileGrid[coordinate.getRow()][coordinate.getColumn()];
     }
 
     /**
      * Initiates every tile in the grid
-     * @param tileGrid
-     *
-     * Todo:
-     * Implement reading tile-layout from file, or randomisation.
+     * Todo: Implement reading tile-layout from file, or randomisation.
      */
-    private void initiateTiles(Tile[][] tileGrid, String fileName){
+    private void initiateTiles(){
 
         try {
             // FileReader reads text files in the default encoding.
-            FileReader fileReader =
-                    new FileReader(fileName);
-
-            BufferedReader bufferedReader =
-                    new BufferedReader(fileReader);
+            FileReader fileReader = new FileReader(this.fileName);
+            // Designate the space used in the file between tiles
+            String space =" ";
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             for(int row = rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
-                String[] nextTileTypeLineArray = nextTileTypeLine.split(" ");
-                for(int column = columns-1; column>=0; column--){
-
+                String[] nextTileTypeLineArray = nextTileTypeLine.split(space);
+                for(int column = columns-1; column>=0; column--) {
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
-                    for(int index = 0; index<typesOnTile.length; index++) {
-
-
-                        GameObjectType nextTileType = stringToGameObjectType(typesOnTile[index]);
-
+                    for (int index = 0; index < typesOnTile.length; index++) {
                         // Adding objects on top of tile
-                        if (typesOnTile[index] != " ") { // If tile type is not standardTile
-                            switch (nextTileType) {
-                                case HOLE:
-                                    tileGrid[row][column].addObjectOnTile(new Hole());
-                                    break;
-                                case REPAIR_STATION:
-                                    tileGrid[row][column].addObjectOnTile(new RepairStation());
-                                    break;
-                                case FLAG:
-                                    tileGrid[row][column].addObjectOnTile(new Flag());
-                                    break;
-                                case CONVEYOR_NORTH:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor());
-                                    break;
-                                case CONVEYOR_EAST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
-                                    break;
-                                case CONVEYOR_WEST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
-                                    break;
-                                case CONVEYOR_SOUTH:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
-                                    break;
-                                case FAST_CONVEYOR_NORTH:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(true));
-                                    break;
-                                case FAST_CONVEYOR_EAST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
-                                    break;
-                                case FAST_CONVEYOR_WEST:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true));
-                                    break;
-                                case FAST_CONVEYOR_SOUTH:
-                                    tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true));
-                                    break;
-                                case PLAYER_NORTH:
-                                    Player newPlayer = new Player(playersInitiated);
-                                    tileGrid[row][column].addObjectOnTile(newPlayer);
-                                    players[playersInitiated] = newPlayer; // Add new player to list of players.
-                                    newPlayer.setPosition(new Coordinate(row, column));
-                                    newPlayer.setBackUp(new Coordinate(row, column));
-                                    playersInitiated++; // One more player has been initiated, move the index 1 up.
-                                    break;
-                                case NORTH_WALL:
-                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
-                                    break;
-                                case WEST_WALL:
-                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_WEST));
-                                    break;
-                                case SOUTH_WALL:
-                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_SOUTH));
-                                    break;
-                                case EAST_WALL:
-                                    tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
-                                    break;
-                                case PLAYER:
-                            }
-
-                        }
+                        if (typesOnTile[index] != space)  // If tile type is not standardTile
+                            stringToGameObjectType(typesOnTile[index],row,column);
                     }
-
                 }
             }
-
             bufferedReader.close();
-        }catch(FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");
-        }catch(IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     *
+     * @param nextTileType String which contains the delegation of new type
+     * @param row The row placement of the new tile
+     * @param column The column of the new tile
+     */
+    private void stringToGameObjectType(String nextTileType, int row, int column){
+        switch (nextTileType) {
+            case "W1":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W2":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W3":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W4":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W":
+                this.tileGrid[row][column].addObjectOnTile(new Wall());
+                break;
+            case "C1":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+                break;
+            case "C2":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
+                break;
+            case "C3":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
+                break;
+            case "C4":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                break;
+            case "CC1":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                break;
+            case "CC2":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
+                break;
+            case "CC3":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, true));
+                break;
+            case "CC4":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, true));
+                break;
+            case "F1":
+                this.tileGrid[row][column].addObjectOnTile(new Flag(1));
+                break;
+            case "F2":
+                this.tileGrid[row][column].addObjectOnTile(new Flag(2));
+                break;
+            case "F":
+                this.tileGrid[row][column].addObjectOnTile(new Flag());
+                break;
+            case "C":
+                tileGrid[row][column].addObjectOnTile(new Conveyor());
+                break;
+            case "CC":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                break;
+            case "P":
+                Player newPlayer;
+                if (nextTileType.equals("P1")) {
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_NORTH);
+                }
+                else if (nextTileType.equals("P2")) {
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
+                }
+                else if (nextTileType.equals("P3")) {
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
+                }
+                else if (nextTileType.equals("P4")) {
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
+                }
+                else {
+                    newPlayer = new Player(this.playersInitiated);
+                }
+                this.tileGrid[row][column].addObjectOnTile(newPlayer);
+                this.players[playersInitiated] = newPlayer; // Add new player to list of players.
+                newPlayer.setPosition(new Coordinate(row, column));
+                newPlayer.setBackUp(new Coordinate(row, column));
+                this.playersInitiated++; // One more player has been initiated, move the index 1 up.
+                break;
         }
     }
 
-    private GameObjectType charToGameObjectType(char nextTileType){
-        switch(nextTileType){
-            case '1': return GameObjectType.STANDARD_TILE;
-            case '2': return GameObjectType.CONVEYOR_NORTH;
-            case '3': return GameObjectType.PLAYER;
-            case '4': return GameObjectType.FLAG;
-
-            case 'w': return GameObjectType.NORTH_WALL;
-            case 'a': return GameObjectType.WEST_WALL;
-            case 's': return GameObjectType.SOUTH_WALL;
-            case 'd': return GameObjectType.EAST_WALL;
-
-            default: return GameObjectType.STANDARD_TILE;
-        }
-    }
-
+    /**
+     * Runs trough the grid to find the players.
+     * Then activates a function to find out what kind of tile the player is standing on.
+     */
     public void activateTiles(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
                     if (tile.hasPlayer(player)) {
-                        if(tile.hasConveyor()) {
-                            Conveyor conveyor = tile.getConveyor();
-                            moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
-                        }
-                        if(tile.hasRepairStation()){
-                            if (player.isFinished()) {
-                                player.repair();
-                                player.setBackUp(player.getPosition());
-                            }
-                        }
-                        if(tile.hasFlag()){
-                            if(player.isFinished()){
-                                player.setBackUp(player.getPosition());
-                                player.win();
-                            }
-                        }
-                        if(tile.hasHole()){
-                            respawnPlayer(player.getPlayerNumber());
-                        }
+                        playerOnTile(tile, player);
                     }
                 }
             }
         }
     }
+    /**
+     * Finds out what kind of tile the player is standing on and
+     * if it has a function which effects the player.
+     * @param tile The active file
+     * @param player The active player
+     */
+    private void playerOnTile(Tile tile, Player player) {
+        if(tile.hasConveyor()) {
+            Conveyor conveyor = tile.getConveyor();
+            moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
+        }
+        if(tile.hasRepairStation()){
+            if (player.isFinished()) {
+                player.repair();
+                player.setBackUp(player.getPosition());
+            }
+        }
+        if(tile.hasFlag()){
+            if(player.isFinished()){
+                player.setBackUp(player.getPosition());
+                player.win();
+            }
+        }
+        if(tile.hasHole()){
+            respawnPlayer(player.getPlayerNumber());
+        }
+    }
 
+
+
+    /**
+     * Moves player on conveyor
+     * @param conveyor Conveyor the player is on
+     * @param playerNumber Players number
+     */
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-
-        Player playerToMove = players[playerNumber];
-        if(playerToMove.getCurrentMove() == Program.NONE) {
+        if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
             if(conveyor.isFast()){
                 switch (conveyor.getOrientation()) {
                     case FACING_NORTH:
@@ -261,23 +300,21 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Apply the next program in the players queue.
+     * @param playerNumber Player number
+     */
     public void applyNextProgram(int playerNumber){
-        Player player = players[playerNumber];
-        ProgramCard nextProgramCard = player.getNextProgram();
-        Program move = nextProgramCard.getMove();
-
-        player.setCurrentMove(move);
+        getPlayer(playerNumber).setCurrentMove(getPlayer(playerNumber).getNextProgram().getMove());
     }
 
     /**
-     *
+     *Apply rotation to a player
      * @param move the rotation to be applied.
      * @param playerNumber the identifier of the player whose move should be continued.
      */
     public void applyRotation(Program move, int playerNumber){
-        Player player = players[playerNumber];
-        player.updateOrientation(move);
-
+        getPlayer(playerNumber).updateOrientation(move);
     }
 
     /**
@@ -286,12 +323,10 @@ public class TileGrid{
      * @param playerNumber the number of the player that the move should be applied to
      */
     public void applyMove(Program move, int playerNumber){
-        Player player = players[playerNumber];
-
         int rowsToMove = 0;
         int columnsToMove = 0;
 
-        switch (player.getOrientation()) {
+        switch (this.players[playerNumber].getOrientation()) {
             case FACING_NORTH:
                 rowsToMove = 1;
                 break;
@@ -304,13 +339,11 @@ public class TileGrid{
             case FACING_WEST:
                 columnsToMove = -1;
                 break;
-
         }
         if(move==Program.BACK){
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
-
         movePlayer(playerNumber, rowsToMove, columnsToMove);
     }
 
@@ -319,13 +352,13 @@ public class TileGrid{
      * @param playerNumber the identifier of the player whose move should be continued.
      */
     public void continueMove(int playerNumber){
-        Player player = players[playerNumber];
-        Program currentMove = player.getCurrentMove();
-        int moveProgression = player.getMoveProgression();
+        Program currentMove = getPlayer(playerNumber).getCurrentMove();
+        int moveProgression = getPlayer(playerNumber).getMoveProgression();
         int totalMoves = currentMove.totalMoves();
+
         if(moveProgression == totalMoves){
-            player.setCurrentMove(Program.NONE);
-            player.resetMoveProgress();
+            getPlayer(playerNumber).setCurrentMove(Program.NONE);
+            getPlayer(playerNumber).resetMoveProgress();
         }else{
             boolean moveIsRotation = (currentMove==Program.LEFT) || (currentMove==Program.RIGHT) || (currentMove==Program.U);
             if(moveIsRotation){
@@ -333,137 +366,122 @@ public class TileGrid{
             }else{
                 applyMove(currentMove, playerNumber);
             }
-            player.progressMove();
+            getPlayer(playerNumber).progressMove();
         }
     }
 
+    /**
+     * Move the player
+     * @param playerNumber Player number
+     * @param rowsToMove Rows the Player is to move
+     * @param columnsToMove Columns the Player is to move
+     */
     public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
+        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
+        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
 
-        Player player = players[playerNumber];
-        Coordinate coordinatesOfPlayer = player.getPosition();
-        int rowOfPlayer = coordinatesOfPlayer.getRow();
-        int columnOfPlayer = coordinatesOfPlayer.getColumn();
+        if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove)) return;
 
-        if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove, rowOfPlayer, columnOfPlayer)){
-            return;
-        }
-
-        tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
-        tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(player);
-        player.setPosition(new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove));
+        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
+        this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getPlayer(playerNumber));
+        getPlayer(playerNumber).setPosition(new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove));
     }
 
-    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove, int rowOfPlayer, int columnOfPlayer){
-
-        if((rowOfPlayer+rowsToMove > rows-1) || (rowOfPlayer+rowsToMove < 0)){
-            playerOutOfBounds(playerNumber);
+    /**
+     * TODO Simplify the if statements
+     * Checks if the player can move.
+     * @param playerNumber Players number
+     * @param rowsToMove How many rows the player needs to move
+     * @param columnsToMove How many columns player needs to move
+     * @return Boolean for if the player can move.
+     */
+    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
+        Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
+        if((coordinateOfPlayer.getRow()+rowsToMove > this.rows-1) || (coordinateOfPlayer.getRow()+rowsToMove < 0)){
+            //Player out of bounds
+            respawnPlayer(playerNumber);
             return false;
         }
-        if((columnOfPlayer+columnsToMove > columns-1) || (columnOfPlayer+columnsToMove < 0)){
-            playerOutOfBounds(playerNumber);
+        if((coordinateOfPlayer.getColumn()+columnsToMove > this.columns-1) ||
+                (coordinateOfPlayer.getColumn()+columnsToMove < 0)){
+            //Player out of bounds
+            respawnPlayer(playerNumber);
             return false;
         }
-
-        if(playerFacingWall(playerNumber, rowOfPlayer, columnOfPlayer)){
-            return false;
-        }
-
         return true;
     }
 
-    private boolean playerFacingWall(int playerNumber, int rowOfPlayer, int columnOfPlayer){
-        Player player = players[playerNumber];
-        Orientation orientationOfPlayer = player.getOrientation();
-
-        switch(orientationOfPlayer){
-            case FACING_NORTH:
-                Tile tileNorthOfPlayer = tileGrid[rowOfPlayer-1][columnOfPlayer];
-                if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_SOUTH)){
-                    return true;
-                }
-                break;
-            case FACING_WEST:
-                Tile tileWestOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer-1];
-                if(tileWestOfPlayer.hasWallWithOrientation(Orientation.FACING_EAST)){
-                    return true;
-                }
-                break;
-            case FACING_SOUTH:
-                Tile tileSouthOfPlayer = tileGrid[rowOfPlayer+1][columnOfPlayer];
-                if(tileSouthOfPlayer.hasWallWithOrientation(Orientation.FACING_NORTH)){
-                    return true;
-                }
-                break;
-            case FACING_EAST:
-                Tile tileEastOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer+1];
-                if(tileEastOfPlayer.hasWallWithOrientation(Orientation.FACING_WEST)){
-                    return true;
-                }
-                break;
-        }
-
-        return false;
-    }
-
-    private void playerOutOfBounds(int playerNumber){
-        // Respawn player
-        respawnPlayer(playerNumber);
-    }
-
+    /**
+     * Respawns the player after it has fallen out of grid, with health=6.
+     * @param playerNumber Players number
+     */
     private void respawnPlayer(int playerNumber){
-        Player player = players[playerNumber];
 
-        int rowOfPlayer = player.getPosition().getRow();
-        int columnOfPlayer = player.getPosition().getColumn();
-        tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
+        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
+        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
+        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
 
-        int respawnRow = player.getBackUp().getRow();
-        int respawnColumn = player.getBackUp().getColumn();
+        int respawnRow = getPlayer(playerNumber).getBackUp().getRow();
+        int respawnColumn = getPlayer(playerNumber).getBackUp().getColumn();
 
-        tileGrid[respawnRow][respawnColumn].addObjectOnTile(player);
-        player.setPosition(new Coordinate(respawnRow, respawnColumn));
-        player.recieveDamage(3);
+        this.tileGrid[respawnRow][respawnColumn].addObjectOnTile(getPlayer(playerNumber));
+        getPlayer(playerNumber).setPosition(new Coordinate(respawnRow, respawnColumn));
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
 
+    /**
+     * Get Player
+     * @param playerNumber Player number
+     * @return Wanted Player
+     */
     public Player getPlayer(int playerNumber){
-        return players[playerNumber];
+        return this.players[playerNumber];
     }
 
-    public Coordinate getCoordinatesOfPlayer(int playerNumber){
-        return players[playerNumber].getPosition();
+    /**
+     * Get Players Coordinates
+     * @param playerNumber Player number
+     * @return Players current position
+     */
+    public Coordinate getPlayerPosition(int playerNumber){
+        return this.players[playerNumber].getPosition();
     }
 
-    private GameObjectType stringToGameObjectType(String nextTileType){
-        switch(nextTileType){
-            case "1": return GameObjectType.STANDARD_TILE;
-            case "C1": return GameObjectType.CONVEYOR_NORTH;
-            case "C2": return GameObjectType.CONVEYOR_EAST;
-            case "C3": return GameObjectType.CONVEYOR_SOUTH;
-            case "C4": return GameObjectType.CONVEYOR_WEST;
-            case "CC1": return GameObjectType.FAST_CONVEYOR_NORTH;
-            case "CC2": return GameObjectType.FAST_CONVEYOR_EAST;
-            case "CC3": return GameObjectType.FAST_CONVEYOR_SOUTH;
-            case "CC4": return GameObjectType.FAST_CONVEYOR_WEST;
-
-            //Player
-            case "P1": return GameObjectType.PLAYER_NORTH;
-            case "P2": return GameObjectType.PLAYER_EAST;
-            case "P3": return GameObjectType.PLAYER_SOUTH;
-            case "P4": return GameObjectType.PLAYER_WEST;
-
-
-            //Default(non orientation spesific) objects needs to be down here so they don't trigger before
-            case "CC": return GameObjectType.FAST_CONVEYOR_NORTH;
-            case "C": return GameObjectType.CONVEYOR_NORTH;
-            case "F": return GameObjectType.FLAG;
-            case "P": return GameObjectType.PLAYER_NORTH;
-
-            case "H": return GameObjectType.HOLE;
-            case "R": return GameObjectType.REPAIR_STATION;
-            default: return GameObjectType.STANDARD_TILE;
-        }
+    /**
+     * Get Players health
+     * @param playerNumber The player number
+     * @return Players Heath
+     */
+    public int getPlayerHealth(int playerNumber){
+        return this.players[playerNumber].getHealth();
     }
+
+    /**
+     * Get Players ProgramHand
+     * @param playerNumber Players number
+     * @return Player ProgramHand
+     */
+    public ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
+        return this.players[playerNumber].getProgramHand();
+    }
+
+    /**
+     * Get players current move
+     * @param playerNumber Player Number
+     * @return Program of current move
+     */
+    public Program getPlayerCurrentMove (int playerNumber){
+        return this.players[playerNumber].getCurrentMove();
+    }
+
+    /**
+     * Reset a player
+     * @param playerNumber Player number
+     */
+    public void resetPlayer(int playerNumber){
+        this.players[playerNumber].reset();
+    }
+
 
 }
