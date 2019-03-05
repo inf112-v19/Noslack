@@ -7,7 +7,6 @@ import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 
 public class Conveyor implements GameObject {
-    private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
@@ -53,7 +52,8 @@ public class Conveyor implements GameObject {
     @Override
     public void evaluateSprite() {
 
-        if(fast){
+        Texture texture;
+        if(this.fast){
             texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
         }
         else{
@@ -85,27 +85,28 @@ public class Conveyor implements GameObject {
                     break;
             }
         }
-
-        switch (orientation) {
-            default:
-                sprite.setRotation(0);
-                break;
-            case FACING_NORTH:
-                sprite.setRotation(0);
-                this.type = GameObjectType.CONVEYOR_NORTH;
-                break;
-            case FACING_EAST:
-                sprite.setRotation(270);
-                this.type = GameObjectType.CONVEYOR_EAST;
-                break;
-            case FACING_SOUTH:
-                sprite.setRotation(180);
-                this.type = GameObjectType.CONVEYOR_SOUTH;
-                break;
-            case FACING_WEST:
-                sprite.setRotation(90);
-                this.type = GameObjectType.CONVEYOR_WEST;
-                break;
+        else {
+            switch (orientation) {
+                default:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_NORTH:
+                    sprite.setRotation(0);
+                    this.type = GameObjectType.CONVEYOR_NORTH;
+                    break;
+                case FACING_EAST:
+                    sprite.setRotation(270);
+                    this.type = GameObjectType.CONVEYOR_EAST;
+                    break;
+                case FACING_SOUTH:
+                    sprite.setRotation(180);
+                    this.type = GameObjectType.CONVEYOR_SOUTH;
+                    break;
+                case FACING_WEST:
+                    sprite.setRotation(90);
+                    this.type = GameObjectType.CONVEYOR_WEST;
+                    break;
+            }
         }
     }
 

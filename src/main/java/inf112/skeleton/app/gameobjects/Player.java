@@ -12,7 +12,6 @@ public class Player implements GameObject {
     private ArrayList<ProgramCard> programHand;
     private Stack<ProgramCard> program;
     private ArrayList<AbilityCard> abilityHand;
-    private Texture texture;
     private Sprite sprite;
     private int health;
     private Orientation orientation;
@@ -40,7 +39,6 @@ public class Player implements GameObject {
         this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
-        this.type = GameObjectType.PLAYER;
         this.hasWon = false;
         this.name = "RoboHally";
         evaluateSprite();
@@ -82,9 +80,10 @@ public class Player implements GameObject {
     /**
      * Method that evaluates the player's sprite based on the player's orientation.
      */
+    @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
 
             this.sprite = new Sprite(texture);
             switch (orientation) {
@@ -132,7 +131,7 @@ public class Player implements GameObject {
     /**
      * Removes one health from the player.
      */
-    public void recieveDamage(){
+    public void receiveDamage(){
         this.health--;
     }
 
@@ -140,7 +139,7 @@ public class Player implements GameObject {
      * Remove given amount of health from player
      * @param damage amount of health to be deducted
      */
-    public void recieveDamage(int damage){
+    public void receiveDamage(int damage){
         this.health -= damage;
     }
 

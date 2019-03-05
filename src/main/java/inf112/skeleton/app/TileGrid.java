@@ -21,7 +21,7 @@ public class TileGrid{
     /**
      * Default constructor.
      */
-    public TileGrid(){
+   /* public TileGrid(){
         this.fileName=this.fileName + "mapLayout.txt";
 
         this.rows = 12;
@@ -32,6 +32,7 @@ public class TileGrid{
 
         initiateTiles();
     }
+    */
 
     /**
      * Constructor with specifications.
@@ -109,16 +110,14 @@ public class TileGrid{
                     tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
-                    for (int index = 0; index < typesOnTile.length; index++) {
+                    for (String s : typesOnTile) {
                         // Adding objects on top of tile
-                        if (typesOnTile[index] != space)  // If tile type is not standardTile
-                            stringToGameObjectType(typesOnTile[index],row,column);
+                        if (!s.equals(space))  // If tile type is not standardTile
+                            stringToGameObjectType(s, row, column);
                     }
                 }
             }
             bufferedReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -187,20 +186,22 @@ public class TileGrid{
                 break;
             case "P":
                 Player newPlayer;
-                if (nextTileType.equals("P1")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_NORTH);
-                }
-                else if (nextTileType.equals("P2")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
-                }
-                else if (nextTileType.equals("P3")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
-                }
-                else if (nextTileType.equals("P4")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
-                }
-                else {
-                    newPlayer = new Player(this.playersInitiated);
+                switch (nextTileType) {
+                    case "P1":
+                        newPlayer = new Player(this.playersInitiated, Orientation.FACING_NORTH);
+                        break;
+                    case "P2":
+                        newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
+                        break;
+                    case "P3":
+                        newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
+                        break;
+                    case "P4":
+                        newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
+                        break;
+                    default:
+                        newPlayer = new Player(this.playersInitiated);
+                        break;
                 }
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
                 this.players[playersInitiated] = newPlayer; // Add new player to list of players.
