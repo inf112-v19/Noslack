@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Pusher implements GameObject {
 
-    private Texture texture;
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
@@ -31,7 +30,7 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/pusher.png"));
+        Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/pusher.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
