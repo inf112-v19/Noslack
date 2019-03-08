@@ -39,28 +39,32 @@ public class Wall implements GameObject {
         }
 
 
-
-        switch (orientation) {
-            default:
-                sprite.setRotation(0);
-                break;
-            case FACING_NORTH:
-                sprite.setRotation(0);
-                this.type = GameObjectType.NORTH_WALL;
-                break;
-            case FACING_EAST:
-                sprite.setRotation(90);
-                this.type = GameObjectType.EAST_WALL;
-                break;
-            case FACING_WEST:
-                sprite.setRotation(270);
-                this.type = GameObjectType.WEST_WALL;
-                break;
-            case FACING_SOUTH:
-                sprite.setRotation(180);
-                this.type = GameObjectType.SOUTH_WALL;
-                break;
+        try {
+            switch (orientation) {
+                default:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_NORTH:
+                    sprite.setRotation(0);
+                    this.type = GameObjectType.NORTH_WALL;
+                    break;
+                case FACING_EAST:
+                    sprite.setRotation(90);
+                    this.type = GameObjectType.EAST_WALL;
+                    break;
+                case FACING_WEST:
+                    sprite.setRotation(270);
+                    this.type = GameObjectType.WEST_WALL;
+                    break;
+                case FACING_SOUTH:
+                    sprite.setRotation(180);
+                    this.type = GameObjectType.SOUTH_WALL;
+                    break;
+            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
+
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.util.PriorityQueue;
 public class Tile implements GameObject{
 
     private GameObjectType gameObjectType;
-    private Texture texture;
     private Sprite sprite;
     private PriorityQueue<GameObject> objectsOnTile;
 
@@ -27,23 +26,26 @@ public class Tile implements GameObject{
      * GameObjectType is.
      */
     public void evaluateSprite(){
-        switch(gameObjectType){
-            case STANDARD_TILE:
-                texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
-                sprite = new Sprite(texture);
-                break;
-            default:
-                texture = new Texture(Gdx.files.internal("./assets/error.png"));
-                sprite = new Sprite(texture);
-                break;
+        if (gameObjectType == GameObjectType.STANDARD_TILE) {
+            try {
+                sprite = new Sprite(new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                sprite = new Sprite(new Texture(Gdx.files.internal("./assets/error.png")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void addObjectOnTile(GameObject newObjectOnTile){
+    void addObjectOnTile(GameObject newObjectOnTile){
         objectsOnTile.add(newObjectOnTile);
     }
 
-    public void removeObjectFromTile(GameObject objectToRemove){
+    void removeObjectFromTile(GameObject objectToRemove){
         objectsOnTile.remove(objectToRemove);
     }
 
@@ -52,15 +54,15 @@ public class Tile implements GameObject{
      * the GameObjects on the tile.
      * @return  PriorityQueue of every GameObject on the tile
      */
-    public PriorityQueue<GameObject> getObjectsOnTile(){
+    PriorityQueue<GameObject> getObjectsOnTile(){
         return objectsOnTile;
     }
 
-    public Boolean hasPlayer(Player player){
+    Boolean hasPlayer(Player player){
         return objectsOnTile.contains(player);
     }
 
-    public Boolean hasFlag(){
+    Boolean hasFlag(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.FLAG){
                 return true;
@@ -88,7 +90,7 @@ public class Tile implements GameObject{
         return false;
     }
 
-    public Boolean hasConveyor(){
+    Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
                 return true;
@@ -97,7 +99,7 @@ public class Tile implements GameObject{
         return false;
     }
 
-    public Conveyor getConveyor(){
+    Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
                 return (Conveyor) gameObject;
@@ -106,7 +108,7 @@ public class Tile implements GameObject{
         return new Conveyor();
     }
 
-    public Boolean hasRepairStation(){
+    Boolean hasRepairStation(){
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.REPAIR_STATION){
                 return true;
@@ -115,7 +117,7 @@ public class Tile implements GameObject{
         return false;
     }
 
-    public Boolean hasHole() {
+    Boolean hasHole() {
         for(GameObject gameObject : objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.HOLE){
                 return true;
