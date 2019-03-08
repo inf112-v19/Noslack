@@ -7,7 +7,10 @@ public enum Ability {
     PowerDownShield, PressorBeam, RadioControl, RammingGear, RearFiringLaser,
     Recompile, ReverseGear, Scrambler, SuperiorArchive, TractorBeam, Empty;
 
-
+    /**
+     * Returns an Abilities description
+     * @return String with ability description
+     */
     public String toString() {
         switch (this) {
             case AblativeCoat:
