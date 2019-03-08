@@ -21,6 +21,7 @@ public class TileGrid{
     /**
      * Constructor with specifications.
      * Uses standard map.
+     * Make sure files first row contains the maps number of rows, columns and players
      */
     public TileGrid(){
         this.fileName = this.fileName + "mapLayout.txt";
@@ -31,6 +32,7 @@ public class TileGrid{
 
     /**
      * Make sure the map to be used is filed under assets/maps/
+     * Make sure files first row contains the maps number of rows, columns and players
      * @param file The file name, the program fixes directory.
      */
     public TileGrid(String file) {
@@ -232,10 +234,18 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Get the number of columns in the tileGrid
+     * @return The number of Columns
+     */
     int getColumns() {
         return columns;
     }
 
+    /**
+     * Get the number of rows in the tileGrid
+     * @return The number of Rows
+     */
     int getRows() {
         return rows;
     }
