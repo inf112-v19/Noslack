@@ -49,7 +49,7 @@ public class TileGrid{
      * @return Tile at specified coordinate
      */
     public Tile getTile(int row, int column){
-        return tileGrid[row][column];
+        return this.tileGrid[row][column];
     }
 
     /**
@@ -58,7 +58,7 @@ public class TileGrid{
      * @return Tile at specified coordinate
      */
     public Tile getTile(Coordinate coordinate){
-        return tileGrid[coordinate.getRow()][coordinate.getColumn()];
+        return this.tileGrid[coordinate.getRow()][coordinate.getColumn()];
     }
 
     /**
@@ -71,16 +71,18 @@ public class TileGrid{
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(this.fileName);
             // Designate the space used in the file between tiles
-            String space =" ";
+            String space = " ";
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            //  Set the map parameters
             getMapInfo(bufferedReader.readLine());
 
-            for(int row = rows-1; row>=0; row--){
+            for(int row = this.rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(space);
-                for(int column = columns-1; column>=0; column--) {
+                for(int column = this.columns-1; column>=0; column--) {
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
-                    tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
+                    this.tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
                     for (String s : typesOnTile) {
@@ -223,9 +225,9 @@ public class TileGrid{
      * Then activates a function to find out what kind of tile the player is standing on.
      */
     void activateTiles(){
-        for(Tile[] tileRow : tileGrid){
+        for(Tile[] tileRow : this.tileGrid){
             for(Tile tile : tileRow){
-                for (Player player : players) {
+                for (Player player : this.players) {
                     if (tile.hasPlayer(player)) {
                         playerOnTile(tile, player);
                     }
@@ -239,7 +241,7 @@ public class TileGrid{
      * @return The number of Columns
      */
     int getColumns() {
-        return columns;
+        return this.columns;
     }
 
     /**
@@ -247,7 +249,7 @@ public class TileGrid{
      * @return The number of Rows
      */
     int getRows() {
-        return rows;
+        return this.rows;
     }
 
     /**
@@ -468,7 +470,7 @@ public class TileGrid{
      * @return List of players
      */
     Player[] getPlayers() {
-        return players;
+        return this.players;
     }
 
     /**
