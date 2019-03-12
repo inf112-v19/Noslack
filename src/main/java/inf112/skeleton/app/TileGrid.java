@@ -129,83 +129,68 @@ public class TileGrid{
      * @param column The column of the new tile
      */
     private void stringToGameObjectType(String nextTileType, int row, int column){
-        switch (nextTileType.charAt(0)) {
-            // Case of wall
-            case 'W':
-                switch (nextTileType){
-                    case "W1":
-                        this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
-                        break;
-                    case "W2":
-                        this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
-                        break;
-                    case "W3":
-                        this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
-                        break;
-                    case "W4":
-                        this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
-                        break;
-                    default:
-                        this.tileGrid[row][column].addObjectOnTile(new Wall());
-                        break;
-                }
-            // Case of Conveyor
-            case 'C':
-                switch (nextTileType){
-                    case "C1":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor());
-                        break;
-                    case "C2":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
-                        break;
-                    case "C3":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
-                        break;
-                    case "C4":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
-                        break;
-                    case "CC1":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
-                        break;
-                    case "CC2":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
-                        break;
-                    case "CC3":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, true));
-                        break;
-                    case "CC4":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, true));
-                        break;
-                    case "CC":
-                        this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
-                        break;
-                    default:
-                        tileGrid[row][column].addObjectOnTile(new Conveyor());
-                        break;
-                }
-            // Case of Flag
-            case 'F':
-                switch (nextTileType){
-                    case "F1":
-                        this.tileGrid[row][column].addObjectOnTile(new Flag(1));
-                        break;
-                    case "F2":
-                        this.tileGrid[row][column].addObjectOnTile(new Flag(2));
-                        break;
-                    default:
-                        this.tileGrid[row][column].addObjectOnTile(new Flag());
-                        break;
-                }
-            // Case of Hole
-            case 'H':
+        switch (nextTileType) {
+            case "W1":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W2":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W3":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W4":
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                break;
+            case "W":
+                this.tileGrid[row][column].addObjectOnTile(new Wall());
+                break;
+            case "C1":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+                break;
+            case "C2":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
+                break;
+            case "C3":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
+                break;
+            case "C4":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                break;
+            case "CC1":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                break;
+            case "CC2":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
+                break;
+            case "CC3":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, true));
+                break;
+            case "CC4":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, true));
+                break;
+            case "F1":
+                this.tileGrid[row][column].addObjectOnTile(new Flag(1));
+                break;
+            case "F2":
+                this.tileGrid[row][column].addObjectOnTile(new Flag(2));
+                break;
+            case "F":
+                this.tileGrid[row][column].addObjectOnTile(new Flag());
+                break;
+            case "C":
+                tileGrid[row][column].addObjectOnTile(new Conveyor());
+                break;
+            case "CC":
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                break;
+            case "H":
                 this.tileGrid[row][column].addObjectOnTile(new Hole());
                 break;
-            // Case of RepairStation
-            case 'R':
+            case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
-            // Case of Player
-            case 'P':
+            case "P":
                 Player newPlayer;
                 switch (nextTileType) {
                     case "P1":
