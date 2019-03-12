@@ -5,6 +5,7 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,22 @@ public class TileGrid{
     private String fileName = "./assets/maps/";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
+
+    /**
+     * Default constructor.
+     */
+   /* public TileGrid(){
+        this.fileName=this.fileName + "mapLayout.txt";
+
+        this.rows = 12;
+        this.columns = 12;
+        this.tileGrid = new Tile[rows][columns];
+        this.players = new Player[1];
+        this.playersInitiated = 0;
+
+        initiateTiles();
+    }
+    */
 
     /**
      * Constructor with specifications.
@@ -220,7 +237,7 @@ public class TileGrid{
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
-    void activateTiles(){
+    public void activateTiles(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
@@ -266,7 +283,7 @@ public class TileGrid{
      * @param conveyor Conveyor the player is on
      * @param playerNumber Players number
      */
-    private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
+    public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
             if(conveyor.isFast()){
                 switch (conveyor.getOrientation()) {
@@ -309,7 +326,7 @@ public class TileGrid{
      * Apply the next program in the players queue.
      * @param playerNumber Player number
      */
-    void applyNextProgram(int playerNumber){
+    public void applyNextProgram(int playerNumber){
         getPlayer(playerNumber).setCurrentMove(getPlayer(playerNumber).getNextProgram().getMove());
     }
 
@@ -318,7 +335,7 @@ public class TileGrid{
      * @param move the rotation to be applied.
      * @param playerNumber the identifier of the player whose move should be continued.
      */
-    private void applyRotation(Program move, int playerNumber){
+    public void applyRotation(Program move, int playerNumber){
         getPlayer(playerNumber).updateOrientation(move);
     }
 
@@ -327,7 +344,7 @@ public class TileGrid{
      * @param move the move to apply
      * @param playerNumber the number of the player that the move should be applied to
      */
-    private void applyMove(Program move, int playerNumber){
+    public void applyMove(Program move, int playerNumber){
         int rowsToMove = 0;
         int columnsToMove = 0;
 
@@ -356,7 +373,7 @@ public class TileGrid{
      * Method that continues the move a player has in progress.
      * @param playerNumber the identifier of the player whose move should be continued.
      */
-    void continueMove(int playerNumber){
+    public void continueMove(int playerNumber){
         Program currentMove = getPlayer(playerNumber).getCurrentMove();
         int moveProgression = getPlayer(playerNumber).getMoveProgression();
         int totalMoves = currentMove.totalMoves();
@@ -389,7 +406,7 @@ public class TileGrid{
 
         this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
         this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getPlayer(playerNumber));
-        setPlayerPosition(playerNumber, (rowOfPlayer+rowsToMove), (columnOfPlayer+columnsToMove));
+        getPlayer(playerNumber).setPosition(new Coordinate(rowOfPlayer+rowsToMove, columnOfPlayer+columnsToMove));
     }
 
     /**
@@ -458,7 +475,7 @@ public class TileGrid{
      * @param playerNumber The player number
      * @return Players Heath
      */
-    int getPlayerHealth(int playerNumber){
+    public int getPlayerHealth(int playerNumber){
         return this.players[playerNumber].getHealth();
     }
 
@@ -467,7 +484,7 @@ public class TileGrid{
      * @param playerNumber Players number
      * @return Player ProgramHand
      */
-    ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
+    public ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
         return this.players[playerNumber].getProgramHand();
     }
 
@@ -476,26 +493,17 @@ public class TileGrid{
      * @param playerNumber Player Number
      * @return Program of current move
      */
-    Program getPlayerCurrentMove(int playerNumber){
+    public Program getPlayerCurrentMove (int playerNumber){
         return this.players[playerNumber].getCurrentMove();
-    }
-
-    /**
-     * Set new position of player
-     * @param playerNumber playerNumber
-     * @param row New row
-     * @param column New column
-     */
-    private void setPlayerPosition(int playerNumber, int row, int column){
-     getPlayer(playerNumber).setPosition(new Coordinate(row, column));
     }
 
     /**
      * Reset a player
      * @param playerNumber Player number
      */
-    void resetPlayer(int playerNumber){
+    public void resetPlayer(int playerNumber){
         this.players[playerNumber].reset();
     }
+
 
 }
