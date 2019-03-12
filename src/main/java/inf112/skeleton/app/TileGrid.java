@@ -329,6 +329,12 @@ public class TileGrid{
      */
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
+            if(conveyor.getRotating() > 0){
+                applyRotation(Program.RIGHT,playerNumber);
+            }
+            if(conveyor.getRotating() < 0){
+                applyRotation(Program.LEFT,playerNumber);
+            }
             if(conveyor.isFast()){
                 switch (conveyor.getOrientation()) {
                     case FACING_NORTH:

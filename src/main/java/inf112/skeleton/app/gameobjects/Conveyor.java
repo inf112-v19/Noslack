@@ -35,6 +35,10 @@ public class Conveyor implements GameObject {
         return fast;
     }
 
+    public int getRotating(){
+        return rotating;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
         return GameObjectType.CONVEYOR;
