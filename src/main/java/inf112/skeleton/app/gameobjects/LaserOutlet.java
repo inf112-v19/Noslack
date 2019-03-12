@@ -10,6 +10,10 @@ public class LaserOutlet implements GameObject {
 
     private Orientation orientation;
 
+    public LaserOutlet() {
+        this.orientation = Orientation.FACING_NORTH;
+        evaluateSprite();
+    }
     public LaserOutlet(Orientation orientation1) {
         this.orientation = orientation1;
         evaluateSprite();
@@ -28,7 +32,7 @@ public class LaserOutlet implements GameObject {
     @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/laserOutletFacingNorth.png"));
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
             this.sprite = new Sprite(texture);
             switch (orientation) {
                 default:
