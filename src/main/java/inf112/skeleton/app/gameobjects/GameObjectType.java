@@ -14,6 +14,12 @@ public enum GameObjectType {
     FLAG,
     STANDARD_TILE,
 
+    /*
+        ToDo: Any way we can ditch the orientation its facing?
+     */
+    CONVEYOR,
+    // ToDo: And just have conveyor (like above, but maybe even fast conveyor, conveyor turn, fast conveyor turn)
+
     CONVEYOR_WEST,
     CONVEYOR_NORTH,
     CONVEYOR_EAST,

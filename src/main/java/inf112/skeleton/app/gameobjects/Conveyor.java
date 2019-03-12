@@ -37,6 +37,8 @@ public class Conveyor implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
+        return GameObjectType.CONVEYOR;
+        /*
         if(fast){
             if(rotating > 0){
                 switch(orientation){
@@ -125,7 +127,7 @@ public class Conveyor implements GameObject {
                         return GameObjectType.CONVEYOR_NORTH;
                 }
             }
-        }
+        }*/
 
 
     }
