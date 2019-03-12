@@ -146,19 +146,19 @@ public class TileGrid{
                 this.tileGrid[row][column].addObjectOnTile(new Wall());
                 break;
             case "C1":
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH, false));
                 break;
             case "C2":
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, false));
                 break;
             case "C3":
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, false));
                 break;
             case "C4":
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, false));
                 break;
             case "CC1":
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH, true));
                 break;
             case "CC2":
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
