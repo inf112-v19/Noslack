@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TileGrid{
     private Tile[][] tileGrid;
@@ -21,9 +20,16 @@ public class TileGrid{
     /**
      * Constructor with specifications.
      * Uses standard map.
+     * @param rows The amount of rows in the grid.
+     * @param columns The amount of columns in the grid.
+     * @param players The amount of players in the game.
      */
-    public TileGrid(){
+    public TileGrid(int rows, int columns, int players){
         this.fileName = this.fileName + "mapLayout.txt";
+        this.rows = rows;
+        this.columns = columns;
+        this.tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
         this.playersInitiated = 0;
 
         initiateTiles();
@@ -31,10 +37,17 @@ public class TileGrid{
 
     /**
      * Make sure the map to be used is filed under assets/maps/
+     * @param rows The amount of rows in the grid.
+     * @param columns The amount of columns in the grid.
+     * @param players The amount of players in the game.
      * @param file The file name, the program fixes directory.
      */
-    public TileGrid(String file) {
+    public TileGrid(int rows, int columns, int players, String file) {
         this.fileName = this.fileName + file;
+        this.rows = rows;
+        this.columns = columns;
+        this.tileGrid = new Tile[rows][columns];
+        this.players = new Player[players];
         this.playersInitiated = 0;
 
         initiateTiles();
@@ -71,7 +84,6 @@ public class TileGrid{
             // Designate the space used in the file between tiles
             String space =" ";
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            getMapInfo(bufferedReader.readLine());
 
             for(int row = rows-1; row>=0; row--){
                 String nextTileTypeLine = bufferedReader.readLine();
@@ -205,18 +217,6 @@ public class TileGrid{
     }
 
     /**
-     * Takes a String from the buffered reader and gets the map information
-     * @param mapInfo String containing map info
-     */
-    private void getMapInfo(String mapInfo){
-        Scanner s = new Scanner(mapInfo);
-        this.rows =s.nextInt();
-        this.columns = s.nextInt();
-        this.players = new Player[s.nextInt()];
-        this.tileGrid = new Tile[this.rows][this.columns];
-        s.close();
-    }
-    /**
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
@@ -231,15 +231,6 @@ public class TileGrid{
             }
         }
     }
-
-    int getColumns() {
-        return columns;
-    }
-
-    int getRows() {
-        return rows;
-    }
-
     /**
      * Finds out what kind of tile the player is standing on and
      * if it has a function which effects the player.
@@ -451,14 +442,6 @@ public class TileGrid{
      */
     public Player getPlayer(int playerNumber){
         return this.players[playerNumber];
-    }
-
-    /**
-     * Get all players
-     * @return List of players
-     */
-    Player[] getPlayers() {
-        return players;
     }
 
     /**

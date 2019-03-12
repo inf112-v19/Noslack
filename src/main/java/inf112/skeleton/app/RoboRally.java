@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -26,8 +25,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     // Grid and tile specifications
     private final int TILE_SIZE = 32;
-    private int GRID_ROWS;
-    private int GRID_COLUMNS;
+    private final int GRID_ROWS = 12;
+    private final int GRID_COLUMNS = 12;
 
     // Dealt cards background texture and sprite.
 
@@ -96,17 +95,13 @@ public class RoboRally extends Game implements InputProcessor {
         this.batch = new SpriteBatch();
 
         this.currentPhase = 0;
-        this.tileGrid = new TileGrid();
-        this.GRID_COLUMNS = tileGrid.getColumns();
-        this.GRID_ROWS = tileGrid.getRows();
+        this.tileGrid = new TileGrid(this.GRID_ROWS, this.GRID_COLUMNS, 1);
 
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
 
-        for(Player player : this.tileGrid.getPlayers()){
-            int playerHealth = player.getHealth();
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
-        }
+        int playerHealth = this.tileGrid.getPlayerHealth(0);
+        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
 
         this.programHand = tileGrid.getPlayerProgramHand(0);
 
@@ -245,7 +240,6 @@ public class RoboRally extends Game implements InputProcessor {
                 try {
                     Thread.sleep(targetDelay - this.diff);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
             this.start = System.currentTimeMillis();
@@ -303,10 +297,8 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        for(Player player : this.tileGrid.getPlayers()){
-            int playerHealth = player.getHealth();
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
-        }
+        int playerHealth = this.tileGrid.getPlayerHealth(0);
+        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
 
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
@@ -351,7 +343,7 @@ public class RoboRally extends Game implements InputProcessor {
                 this.currentSprite = sprite;
             }
             if (card instanceof AbilityCard){
-                if(this.abilityText.equals("")){
+                if(this.abilityText == ""){
                     this.abilityText = ((AbilityCard) card).getAbility().toString();
                 } else {
                     this.abilityText = "";
