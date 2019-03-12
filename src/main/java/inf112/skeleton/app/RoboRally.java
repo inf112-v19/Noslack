@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.GameObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
@@ -55,6 +57,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private String abilityText;
     private BitmapFont font;
+    private TextField abilityTextField;
 
     private boolean insideSprite;
     private Sprite currentSprite;
@@ -135,10 +138,27 @@ public class RoboRally extends Game implements InputProcessor {
             tick();
         }
         renderDealtCards();
+        drawTextBox(abilityText,50);
         this.goButton.draw(batch);
-        this.font.draw(batch,abilityText,20,50);
         this.batch.end();
         this.roboTick++;
+    }
+
+    private void drawTextBox(String text, int lenght){
+
+        String sentence = "";
+        int i = 0;
+        for (String words : text.split(" ")){
+            if ((sentence+words).length() > lenght){
+                this.font.draw(batch,sentence,20,100 - i*20);
+                i++;
+                sentence = "";
+            }
+            sentence += words + " ";
+        }
+        if (sentence.length() > 0){
+            this.font.draw(batch,sentence,20,100 - i*20);
+        }
     }
 
 
@@ -249,18 +269,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     private void tick() {
-
-        /*
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-        }
-        /*
-        if (currentPhase == 0) {
-            performProgrammingPhase();
-            currentPhase++;
-        }
-        */
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
