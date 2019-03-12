@@ -239,7 +239,7 @@ public class TileGrid{
                     this.tileGrid[row][column].addObjectOnTile(new Flag(1));
                 }
                 else if(nextTileType.equals("F2")){
-                    this.tileGrid[row][column].addObjectOnTile(new Flag(1));
+                    this.tileGrid[row][column].addObjectOnTile(new Flag(2));
                 }
                 else{
                     this.tileGrid[row][column].addObjectOnTile(new Flag());
@@ -261,9 +261,9 @@ public class TileGrid{
                     newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
                 }
                 else if(nextTileType.equals("P3")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
                 }else if(nextTileType.equals("P4")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
+                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
                 }
                 else{
                     newPlayer = new Player(this.playersInitiated);
@@ -347,21 +347,23 @@ public class TileGrid{
                         break;
                 }
             }
-            switch (conveyor.getOrientation()) {
-                case FACING_NORTH:
-                    movePlayer(playerNumber, 1, 0);
-                    break;
-                case FACING_WEST:
-                    movePlayer(playerNumber, 0, -1);
-                    break;
-                case FACING_SOUTH:
-                    movePlayer(playerNumber, -1, 0);
-                    break;
-                case FACING_EAST:
-                    movePlayer(playerNumber, 0, 1);
-                    break;
-                default:
-                    break;
+            else{
+                switch (conveyor.getOrientation()) {
+                    case FACING_NORTH:
+                        movePlayer(playerNumber, 1, 0);
+                        break;
+                    case FACING_WEST:
+                        movePlayer(playerNumber, 0, -1);
+                        break;
+                    case FACING_SOUTH:
+                        movePlayer(playerNumber, -1, 0);
+                        break;
+                    case FACING_EAST:
+                        movePlayer(playerNumber, 0, 1);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
