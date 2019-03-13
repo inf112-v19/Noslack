@@ -107,7 +107,7 @@ public class TileGrid{
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(space);
                 for(int column = columns-1; column>=0; column--) {
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
-                    tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
+                    this. tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
                     String[] typesOnTile = nextTileTypesOfColumn.split(",");
 
                     for (String s : typesOnTile) {
