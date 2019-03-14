@@ -90,9 +90,12 @@ public class Tile implements GameObject{
 
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR ||
+                    gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR ){
                 return true;
             }
+
+
         }
         return false;
     }

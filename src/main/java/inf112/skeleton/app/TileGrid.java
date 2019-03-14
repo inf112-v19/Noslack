@@ -5,7 +5,6 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,121 +128,64 @@ public class TileGrid{
      * @param column The column of the new tile
      */
 
-    private void stringToGameObjectType(String nextTileType, int row, int column){
-        switch(nextTileType.substring(0,1)){
+    private void stringToGameObjectType(String nextTileType, int row, int column) {
+        Orientation orientation;
+        switch (nextTileType.substring(0, 1)) {
             case "W":
-                if(nextTileType.equals("W1")){
-                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                switch (nextTileType.charAt(nextTileType.length() - 1)) {
+                    case '1':
+                        orientation = Orientation.FACING_NORTH;
+                        break;
+                    case '2':
+                        orientation = Orientation.FACING_EAST;
+                        break;
+                    case '3':
+                        orientation = Orientation.FACING_SOUTH;
+                        break;
+                    case '4':
+                        orientation = Orientation.FACING_WEST;
+                        break;
+                    default:
+                        orientation = Orientation.FACING_NORTH;
+                        break;
                 }
-                else if(nextTileType.equals("W2")){
-                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
-                }
-                else if(nextTileType.equals("W3")){
-                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_SOUTH));
-                }
-                else if(nextTileType.equals("W4")){
-                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_WEST));
-                }
-                else{
-                    this.tileGrid[row][column].addObjectOnTile(new Wall());
-                }
+                this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
                 break;
-            case "C":
-                //One speed conveyors
-                if(nextTileType.equals("C1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,false,0));
-                }
-                else if(nextTileType.equals("C2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,false,0));
-                }
-                else if(nextTileType.equals("C3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,false,0));
-                }
-                else if(nextTileType.equals("C4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,false,0));
-                }
-                //Two speed conveyors
-                else if(nextTileType.equals("CC1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,true,0));
-                }
-                else if(nextTileType.equals("CC2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,true,0));
-                }
-                else if(nextTileType.equals("CC3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true,0));
-                }
-                else if(nextTileType.equals("CC4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true,0));
-                }
-                //One speed conveyors turning clockwise
-                else if(nextTileType.equals("CR1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,false,1));
-                }
-                else if(nextTileType.equals("CR2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,false,1));
-                }
-                else if(nextTileType.equals("CR3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,false,1));
-                }
-                else if(nextTileType.equals("CR4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,false,1));
-                }
-                //One speed conveyors turning anti-clockwise
-                else if(nextTileType.equals("CL1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,false,-1));
-                }
-                else if(nextTileType.equals("CL2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,false,-1));
-                }
-                else if(nextTileType.equals("CL3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,false,-1));
-                }
-                else if(nextTileType.equals("CL4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,false,-1));
-                }
-                //Two speed conveyors turning clockwise
-                else if(nextTileType.equals("CCR1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,true,1));
-                }
-                else if(nextTileType.equals("CCR2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,true,1));
-                }
-                else if(nextTileType.equals("CCR3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true,1));
-                }
-                else if(nextTileType.equals("CCR4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true,1));
-                }
-                //Two speed conveyors turning anti-clockwise
-                else if(nextTileType.equals("CCL1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH,true,-1));
-                }
-                else if(nextTileType.equals("CCL2")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST,true,-1));
-                }
-                else if(nextTileType.equals("CCL3")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH,true,0-1));
-                }
-                else if(nextTileType.equals("CCL4")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST,true,-1));
-                }
 
-                else{
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+            case "C":
+                boolean fast = nextTileType.contains("CC");
+                int rotating;
+                if (nextTileType.contains("R"))
+                    rotating = 1;
+                else if (nextTileType.contains("L"))
+                    rotating = -1;
+                else
+                    rotating = 0;
+                switch (nextTileType.charAt(nextTileType.length() - 1)) {
+                    case '1':
+                        orientation = Orientation.FACING_NORTH;
+                        break;
+                    case '2':
+                        orientation = Orientation.FACING_EAST;
+                        break;
+                    case '3':
+                        orientation = Orientation.FACING_SOUTH;
+                        break;
+                    case '4':
+                        orientation = Orientation.FACING_WEST;
+                        break;
+                    default:
+                        orientation = Orientation.FACING_NORTH;
+                        break;
                 }
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation, fast, rotating));
+
                 break;
 
 
             case "F":
-                if(nextTileType.equals("F1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Flag(1));
-                }
-                else if(nextTileType.equals("F2")){
-                    this.tileGrid[row][column].addObjectOnTile(new Flag(2));
-                }
-                else{
-                    this.tileGrid[row][column].addObjectOnTile(new Flag());
-                }
+                int n =(int) nextTileType.charAt(nextTileType.length()-1);
+                this.tileGrid[row][column].addObjectOnTile(new Flag(n));
                 break;
 
             case "H":
@@ -254,27 +196,35 @@ public class TileGrid{
                 break;
             case "P":
                 Player newPlayer;
-                if(nextTileType.equals("P1")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_NORTH);
+
+                switch (nextTileType.charAt(nextTileType.length() - 1)) {
+                    case '1':
+                        orientation = Orientation.FACING_NORTH;
+                        break;
+                    case '2':
+                        orientation = Orientation.FACING_EAST;
+                        break;
+                    case '3':
+                        orientation = Orientation.FACING_SOUTH;
+                        break;
+                    case '4':
+                        orientation = Orientation.FACING_WEST;
+                        break;
+
+                    default:
+                        orientation = Orientation.FACING_NORTH;
+                        break;
                 }
-                else if(nextTileType.equals("P2")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
-                }
-                else if(nextTileType.equals("P3")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
-                }else if(nextTileType.equals("P4")) {
-                    newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
-                }
-                else{
-                    newPlayer = new Player(this.playersInitiated);
-                }
+
+
+                newPlayer = new Player(playersInitiated, orientation);
+                this.players[playersInitiated++] = newPlayer; // Add new player to list of players.
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
-                this.players[playersInitiated] = newPlayer; // Add new player to list of players.
-                newPlayer.setPosition(new Coordinate(row, column));
-                newPlayer.setBackUp(new Coordinate(row, column));
-                this.playersInitiated++; // One more player has been initiated, move the index 1 up.
+                newPlayer.initiate(new Coordinate(row, column));
                 break;
+
         }
+
     }
 
     /**
@@ -329,10 +279,10 @@ public class TileGrid{
      */
     public void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
-            if(conveyor.getRotating() > 0){
+            if(conveyor.getTurn() > 0){
                 applyRotation(Program.RIGHT,playerNumber);
             }
-            if(conveyor.getRotating() < 0){
+            if(conveyor.getTurn() < 0){
                 applyRotation(Program.LEFT,playerNumber);
             }
             if(conveyor.isFast()){
@@ -498,8 +448,12 @@ public class TileGrid{
         int respawnRow = getPlayer(playerNumber).getBackUp().getRow();
         int respawnColumn = getPlayer(playerNumber).getBackUp().getColumn();
 
-        this.tileGrid[respawnRow][respawnColumn].addObjectOnTile(getPlayer(playerNumber));
-        getPlayer(playerNumber).setPosition(new Coordinate(respawnRow, respawnColumn));
+        Player p = getPlayer(playerNumber);
+        this.tileGrid[respawnRow][respawnColumn].addObjectOnTile(p);
+        p.reset();
+        p.setPosition(new Coordinate(respawnRow, respawnColumn));
+
+
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
