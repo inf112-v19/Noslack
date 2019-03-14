@@ -60,15 +60,6 @@ public class Tile implements GameObject{
         return objectsOnTile.contains(player);
     }
 
-    public Boolean hasFlag(){
-        for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Boolean hasWallWithOrientation(Orientation orientation){
         GameObjectType wallType;
         switch(orientation){
@@ -86,6 +77,23 @@ public class Tile implements GameObject{
             }
         }
         return false;
+    }
+    public Boolean hasFlag(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Flag getFlag(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return (Flag) gameObject;
+            }
+        }
+        return new Flag();
     }
 
     public Boolean hasConveyor(){
@@ -107,6 +115,7 @@ public class Tile implements GameObject{
             }
         }
         return new Conveyor();
+
     }
 
     public Boolean hasRepairStation(){

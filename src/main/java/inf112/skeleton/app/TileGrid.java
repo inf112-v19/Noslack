@@ -17,6 +17,7 @@ public class TileGrid{
     private int columns;
     private String fileName = "./assets/maps/";
     private Player[] players;
+    private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
     /**
@@ -40,8 +41,9 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "ConveyorLoops.txt";
+        this.fileName = this.fileName + "mapLayout.txt";
         this.playersInitiated = 0;
+        this.flagsInitiated = 0;
 
         initiateTiles();
     }
@@ -53,6 +55,7 @@ public class TileGrid{
     public TileGrid(String file) {
         this.fileName = this.fileName + file;
         this.playersInitiated = 0;
+        this.flagsInitiated = 0;
 
         initiateTiles();
     }
@@ -100,8 +103,9 @@ public class TileGrid{
 
                     for (String s : typesOnTile) {
                         // Adding objects on top of tile
-                        if (!s.equals(space))  // If tile type is not standardTile
+                        if (!s.equals(space)) {  // If tile type is not standardTile
                             stringToGameObjectType(s, row, column);
+                        }
                     }
                 }
             }
@@ -172,8 +176,17 @@ public class TileGrid{
 
 
             case "F":
+                /*
+                * If there was no number after F, it cast "F" to ascii int 70.
+                * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
+                * */
+
                 int n =(int) nextTileType.charAt(nextTileType.length()-1);
+                if(n < 1 || n > 9){
+                    n = flagsInitiated+1;
+                }
                 this.tileGrid[row][column].addObjectOnTile(new Flag(n));
+                flagsInitiated += 1;
                 break;
 
             case "H":
@@ -260,13 +273,32 @@ public class TileGrid{
         if(tile.hasRepairStation()){
             if (player.isFinished()) {
                 player.repair();
-                player.setBackUp(player.getPosition());
+                player.setBackUp();
             }
         }
         if(tile.hasFlag()){
             if(player.isFinished()){
-                player.setBackUp(player.getPosition());
-                player.win();
+                player.setBackUp();
+
+                int n = tile.getFlag().getFlagNumber();
+
+
+
+                //Adds flag to flagsVisited only if it has visited all previous flags.
+                if(n == 1){
+                    player.getFlagsVisited().set(0,1);
+                }
+                if(!player.getFlagsVisited().subList(0,n-1).contains(0)){
+                    player.getFlagsVisited().set(n-1,1);
+                    System.out.println(player.getFlagsVisited());
+
+                    //if you are on the last flag, and visited all previous, you win.
+                    if(n >= flagsInitiated){
+                        player.win();
+                    }
+                }
+
+
             }
         }
         if(tile.hasHole()){
@@ -434,18 +466,25 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
-
-        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
-        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
-        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
-
         Player player = getPlayer(playerNumber);
+        //int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
+        //int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
 
-        Coordinate coordinate = player.getBackUp();
+        int rowOfPlayer = player.getPosition().getRow();
+        int columnOfPlayer = player.getPosition().getColumn();
 
-        this.tileGrid[coordinate.getRow()][coordinate.getColumn()].addObjectOnTile(player);
-        player.setPosition(coordinate);
+        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
+
+        Coordinate backUp = player.getBackUp();
+
+
+        this.tileGrid[backUp.getRow()][backUp.getColumn()].addObjectOnTile(player);
+
+        player.setPosition(backUp);
+
         player.reset();
+
+        player.receiveDamage();
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
