@@ -142,11 +142,6 @@ public class Player implements GameObject {
         //this.program.addAll(selectedCards);
     }
 
-    public void initiate(Coordinate cor){
-        setPosition(cor);
-        setBackUp(cor);
-    }
-
     /**
      * Removes one health from the player.
      */
@@ -189,6 +184,10 @@ public class Player implements GameObject {
      * @return Players ProgramDeck
      */
     public ArrayList<ProgramCard> getProgramHand() {return programHand;}
+    public void initiate (Coordinate cor){
+        setPosition(cor);
+        setBackUp(cor);
+    }
     /**
      * @return Program for round
      */

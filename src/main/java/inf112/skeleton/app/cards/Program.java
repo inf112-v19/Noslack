@@ -11,6 +11,7 @@ public enum Program {
      * @return number of moves.
      */
     public int totalMoves(){
+
         if(this.equals(Program.MOVE1)) return 1;
         if(this.equals(Program.MOVE2)) return 2;
         if(this.equals(Program.MOVE3)) return 3;
