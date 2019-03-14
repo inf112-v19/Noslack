@@ -315,7 +315,6 @@ public class TileGrid{
             }
             movePlayer(playerNumber,rowsToMove,colsToMove);
 
-            }
         }
     }
 
