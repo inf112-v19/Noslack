@@ -16,6 +16,7 @@ import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import inf112.skeleton.app.gameobjects.Player;
 
 public class RoboRally extends Game implements InputProcessor {
 
@@ -108,7 +109,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         for(Player player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+            player.drawCards(this.programDeck.deal(playerHealth),this.abilityDeck.deal(playerHealth));
         }
 
         this.programHand = tileGrid.getPlayerProgramHand(0);
