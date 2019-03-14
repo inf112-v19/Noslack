@@ -142,11 +142,6 @@ public class Player implements GameObject {
         //this.program.addAll(selectedCards);
     }
 
-    public void initiate(Coordinate cor){
-        setPosition(cor);
-        setBackUp(cor);
-    }
-
     /**
      * Removes one health from the player.
      */
