@@ -48,7 +48,7 @@ public class Flag implements GameObject {
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/twoFlag32x32.png"));
             }
             else{
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/flag32x32.png"));
             }
 
 

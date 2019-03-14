@@ -270,7 +270,7 @@ public class RoboRally extends Game implements InputProcessor {
         }
         */
 
-        if(this.tileGrid.getPlayer(0).getProgram().isEmpty()){
+        if(this.tileGrid.getPlayer(0).isFinished()){
             this.currentPhase = 100;
         }
         if (this.currentPhase <= 5) {
