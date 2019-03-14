@@ -285,41 +285,32 @@ public class TileGrid{
             if(conveyor.getTurn() < 0){
                 applyRotation(Program.LEFT,playerNumber);
             }
-            if(conveyor.isFast()){
-                switch (conveyor.getOrientation()) {
-                    case FACING_NORTH:
-                        movePlayer(playerNumber, 2, 0);
-                        break;
-                    case FACING_WEST:
-                        movePlayer(playerNumber, 0, -2);
-                        break;
-                    case FACING_SOUTH:
-                        movePlayer(playerNumber, -2, 0);
-                        break;
-                    case FACING_EAST:
-                        movePlayer(playerNumber, 0, 2);
-                        break;
-                    default:
-                        break;
-                }
+            int rowsToMove = 0;
+            int colsToMove = 0;
+
+            switch (conveyor.getOrientation()) {
+                case FACING_NORTH:
+                    rowsToMove = 1;
+                    break;
+                case FACING_WEST:
+                    colsToMove = -1;
+                    break;
+                case FACING_SOUTH:
+                    rowsToMove = -1;
+                    break;
+                case FACING_EAST:
+                    colsToMove = 1;
+                    break;
+                default:
+                    break;
             }
-            else{
-                switch (conveyor.getOrientation()) {
-                    case FACING_NORTH:
-                        movePlayer(playerNumber, 1, 0);
-                        break;
-                    case FACING_WEST:
-                        movePlayer(playerNumber, 0, -1);
-                        break;
-                    case FACING_SOUTH:
-                        movePlayer(playerNumber, -1, 0);
-                        break;
-                    case FACING_EAST:
-                        movePlayer(playerNumber, 0, 1);
-                        break;
-                    default:
-                        break;
-                }
+            if(conveyor.isFast()){
+                rowsToMove *= 2;
+                colsToMove *= 2;
+
+            }
+            movePlayer(playerNumber,rowsToMove,colsToMove);
+
             }
         }
     }
@@ -364,6 +355,7 @@ public class TileGrid{
                 columnsToMove = -1;
                 break;
         }
+
         if(move==Program.BACK){
             rowsToMove *= -1;
             columnsToMove *= -1;
