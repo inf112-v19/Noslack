@@ -142,6 +142,11 @@ public class Player implements GameObject {
         //this.program.addAll(selectedCards);
     }
 
+    public void initiate(Coordinate cor){
+        setPosition(cor);
+        setBackUp(cor);
+    }
+
     /**
      * Removes one health from the player.
      */
@@ -168,9 +173,10 @@ public class Player implements GameObject {
      * Reset player for new round
      */
     public void reset(){
-        programHand.clear();
-        abilityHand.clear();
-        program.clear();
+        this.programHand.clear();
+        this.abilityHand.clear();
+        this.program.clear();
+        this.currentMove=Program.NONE;
     }
     public int getPlayerNumber() {
         return playerNumber;

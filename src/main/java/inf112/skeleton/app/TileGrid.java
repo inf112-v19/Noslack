@@ -5,6 +5,7 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,22 @@ public class TileGrid{
     private String fileName = "./assets/maps/";
     private Player[] players;
     private int playersInitiated; // How many players have been initiated so far.
+
+    /**
+     * Default constructor.
+     */
+   /* public TileGrid(){
+        this.fileName=this.fileName + "mapLayout.txt";
+
+        this.rows = 12;
+        this.columns = 12;
+        this.tileGrid = new Tile[rows][columns];
+        this.players = new Player[1];
+        this.playersInitiated = 0;
+
+        initiateTiles();
+    }
+    */
 
     /**
      * Constructor with specifications.
@@ -155,15 +172,8 @@ public class TileGrid{
 
 
             case "F":
-                if(nextTileType.equals("F1")) {
-                    this.tileGrid[row][column].addObjectOnTile(new Flag(1));
-                }
-                else if(nextTileType.equals("F2")){
-                    this.tileGrid[row][column].addObjectOnTile(new Flag(2));
-                }
-                else{
-                    this.tileGrid[row][column].addObjectOnTile(new Flag());
-                }
+                int n =(int) nextTileType.charAt(nextTileType.length()-1);
+                this.tileGrid[row][column].addObjectOnTile(new Flag(n));
                 break;
 
             case "H":
@@ -190,6 +200,7 @@ public class TileGrid{
                     default:
                         orientation = Orientation.FACING_NORTH;
                         break;
+
                 }
                 newPlayer = new Player(this.playersInitiated, orientation);
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
@@ -272,10 +283,10 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
-            if(conveyor.getRotating() > 0){
+            if(conveyor.getTurn() > 0){
                 applyRotation(Program.RIGHT,playerNumber);
             }
-            if(conveyor.getRotating() < 0){
+            if(conveyor.getTurn() < 0){
                 applyRotation(Program.LEFT,playerNumber);
             }
             if(conveyor.isFast()){

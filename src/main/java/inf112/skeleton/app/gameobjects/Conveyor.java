@@ -3,26 +3,24 @@ package inf112.skeleton.app.gameobjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.GameObjectType;
 
 public class Conveyor implements GameObject {
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
     private boolean fast;
-    private int rotating;
+    private int turn;
 
     public Conveyor(){
         this.orientation = Orientation.FACING_NORTH;
-        this.rotating = 0;
+        this.turn = 0;
         this.fast = false;
         evaluateSprite();
     }
 
-    public Conveyor(Orientation orientation, boolean fast, int rotating){
+    public Conveyor(Orientation orientation, boolean fast, int turn){
         this.orientation = orientation;
-        this.rotating = rotating;
+        this.turn = turn;
         this.fast = fast;
         evaluateSprite();
     }
@@ -35,8 +33,8 @@ public class Conveyor implements GameObject {
         return fast;
     }
 
-    public int getRotating(){
-        return rotating;
+    public int getTurn(){
+        return turn;
     }
 
     @Override
@@ -57,68 +55,50 @@ public class Conveyor implements GameObject {
 
         Texture texture;
         if(this.fast){
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
-            if(rotating != 0){
+
+            if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
+            }
+            else{
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
             }
         }
         else{
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
-            if(rotating != 0){
+            if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
+            }
+            else{
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
             }
         }
 
         this.sprite = new Sprite(texture);
-        if(rotating < 0){
+        if(turn < 0){
             sprite.flip(true,false);
         }
 
-        if(fast){
-            switch (orientation) {
-                default:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_NORTH:
-                    sprite.setRotation(0);
-                    this.type = GameObjectType.FAST_CONVEYOR_NORTH;
-                    break;
-                case FACING_EAST:
-                    sprite.setRotation(270);
-                    this.type = GameObjectType.FAST_CONVEYOR_EAST;
-                    break;
-                case FACING_SOUTH:
-                    sprite.setRotation(180);
-                    this.type = GameObjectType.FAST_CONVEYOR_SOUTH;
-                    break;
-                case FACING_WEST:
-                    sprite.setRotation(90);
-                    this.type = GameObjectType.FAST_CONVEYOR_WEST;
-                    break;
-            }
+        switch (orientation) {
+            default:
+                sprite.setRotation(0);
+                break;
+            case FACING_NORTH:
+                sprite.setRotation(0);
+                break;
+            case FACING_EAST:
+                sprite.setRotation(270);
+                break;
+            case FACING_SOUTH:
+                sprite.setRotation(180);
+                break;
+            case FACING_WEST:
+                sprite.setRotation(90);
+                break;
         }
-        else {
-            switch (orientation) {
-                default:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_NORTH:
-                    sprite.setRotation(0);
-                    this.type = GameObjectType.CONVEYOR_NORTH;
-                    break;
-                case FACING_EAST:
-                    sprite.setRotation(270);
-                    this.type = GameObjectType.CONVEYOR_EAST;
-                    break;
-                case FACING_SOUTH:
-                    sprite.setRotation(180);
-                    this.type = GameObjectType.CONVEYOR_SOUTH;
-                    break;
-                case FACING_WEST:
-                    sprite.setRotation(90);
-                    this.type = GameObjectType.CONVEYOR_WEST;
-                    break;
-            }
+        if(fast){
+            this.type = GameObjectType.F_CONVEYOR;
+        }
+        else{
+            this.type = GameObjectType.CONVEYOR;
         }
     }
 
