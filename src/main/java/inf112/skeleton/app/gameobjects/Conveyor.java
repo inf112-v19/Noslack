@@ -13,13 +13,12 @@ public class Conveyor implements GameObject {
     private boolean fast;
     private int rotating;
 
-    public Conveyor(){
-        this.orientation = Orientation.FACING_NORTH;
-        this.rotating = 0;
-        this.fast = false;
-        evaluateSprite();
-    }
-
+    /**
+     * Constructor for Conveyor creates a Conveyor gameobject with respect to the parameters
+     * @param orientation Checks orientation
+     * @param fast Checks if fast
+     * @param rotating Checks if rotating
+     */
     public Conveyor(Orientation orientation, boolean fast, int rotating){
         this.orientation = orientation;
         this.rotating = rotating;
@@ -35,6 +34,10 @@ public class Conveyor implements GameObject {
         return fast;
     }
 
+    /**
+     * Gives an integer based on if the conveyor rotates.
+     * @return rotating
+     */
     public int getRotating(){
         return rotating;
     }

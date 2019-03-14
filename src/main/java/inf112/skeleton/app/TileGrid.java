@@ -229,7 +229,7 @@ public class TileGrid{
                 }
 
                 else{
-                    this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_NORTH, false, 0));
                 }
                 break;
 

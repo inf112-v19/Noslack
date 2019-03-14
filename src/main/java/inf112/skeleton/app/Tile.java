@@ -22,7 +22,7 @@ public class Tile implements GameObject{
 
 
     /**
-     * Evalautes what sprite should be loaded for
+     * Evaluates what sprite should be loaded for
      * this tile, based on what the tile's
      * GameObjectType is.
      */
@@ -103,7 +103,7 @@ public class Tile implements GameObject{
                 return (Conveyor) gameObject;
             }
         }
-        return new Conveyor();
+        return new Conveyor(Orientation.FACING_NORTH, false, 0);
     }
 
     public Boolean hasRepairStation(){
