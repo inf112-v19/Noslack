@@ -314,7 +314,6 @@ public class TileGrid{
 
             }
             movePlayer(playerNumber,rowsToMove,colsToMove);
-
         }
     }
 
@@ -440,10 +439,13 @@ public class TileGrid{
         int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
         this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
 
-        Coordinate coordinate = getPlayer(playerNumber).getBackUp();
+        Player player = getPlayer(playerNumber);
 
-        this.tileGrid[coordinate.getRow()][coordinate.getColumn()].addObjectOnTile(getPlayer(playerNumber));
-        getPlayer(playerNumber).setPosition(coordinate);
+        Coordinate coordinate = player.getBackUp();
+
+        this.tileGrid[coordinate.getRow()][coordinate.getColumn()].addObjectOnTile(player);
+        player.setPosition(coordinate);
+        player.reset();
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
