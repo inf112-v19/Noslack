@@ -181,7 +181,10 @@ public class TileGrid{
                 * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
                 * */
 
-                int n =(int) nextTileType.charAt(nextTileType.length()-1);
+                char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
+                int n = Character.getNumericValue(ch);
+
+
                 if(n < 1 || n > 9){
                     n = flagsInitiated+1;
                 }
@@ -278,24 +281,26 @@ public class TileGrid{
         }
         if(tile.hasFlag()){
             if(player.isFinished()){
-                player.setBackUp();
 
                 int n = tile.getFlag().getFlagNumber();
 
 
-
                 //Adds flag to flagsVisited only if it has visited all previous flags.
-                if(n == 1){
-                    player.getFlagsVisited().set(0,1);
-                }
-                if(!player.getFlagsVisited().subList(0,n-1).contains(0)){
-                    player.getFlagsVisited().set(n-1,1);
+                if(!player.getFlagsVisited().subList(n-1,player.getFlagsVisited().size()-1).contains(1)
+                        && (!player.getFlagsVisited().subList(0,n-1).contains(0)
+                        || (n == 1 && !player.getFlagsVisited().subList(1,n-1).contains(0)))){
+
+                    //Creates a backUp
+                    player.setBackUp();
+
+                    player.getFlagsVisited().set(n - 1, 1);
                     System.out.println(player.getFlagsVisited());
 
                     //if you are on the last flag, and visited all previous, you win.
-                    if(n >= flagsInitiated){
+                    if (n >= flagsInitiated) {
                         player.win();
                     }
+
                 }
 
 
