@@ -63,10 +63,13 @@ public class RoboRally extends Game implements InputProcessor {
 
     private ProgramCard emptyProgram;
     private AbilityCard emptyAbility;
+    private CardSpriteAnimation animator;
 
     private boolean sequenceReady;
 
     private int roboTick;
+    private int animateCounter;
+    private boolean animation;
 
     private Sound gameMusic;
 
@@ -104,6 +107,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
 
         this.programHand = tileGrid.getPlayerProgramHand(0);
+        this.animator = new CardSpriteAnimation(programHand);
 
         this.cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
 
@@ -116,6 +120,8 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
 
         this.roboTick = 0;
+        this.animateCounter = 0;
+        this.animation = false;
 
         dealNewCards();
     }
@@ -134,6 +140,14 @@ public class RoboRally extends Game implements InputProcessor {
         if (sequenceReady && (roboTick % 20 == 0)) {
             tick();
         }
+
+
+
+        if (animation){
+            programHand = animator.updatePositions();
+        }
+
+
         renderDealtCards();
         this.goButton.draw(batch);
         this.font.draw(batch,abilityText,20,50);
@@ -305,12 +319,25 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentAbility.getSprite().setPosition(550,20);
         }
 
-        for (int i = 0; i < this.programHand.size(); i++) {
-            Vector2 pos = new Vector2(5 + i * 75, 560);
+        animator = new CardSpriteAnimation(programHand);
+        animation = true;
 
-            this.programHand.get(i).setPosition(pos);
-            this.programHand.get(i).getSprite().setPosition(pos.x, pos.y);
+    }
+
+    private void animateCards(ProgramCard card, int i){
+        i %= 700;
+        i = 700 - i;
+
+        Vector2 startPos = new Vector2(0, 560);
+        Vector2 newPos = new Vector2(i,560);
+
+        if(i == 5){
+            animation = false;
         }
+        card.getSprite().setPosition(newPos.x,newPos.y);
+        card.setPosition(newPos);
+
+
     }
 
 
