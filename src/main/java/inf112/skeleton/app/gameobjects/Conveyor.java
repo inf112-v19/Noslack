@@ -11,28 +11,18 @@ public class Conveyor implements GameObject {
     private Orientation orientation;
     private GameObjectType type;
     private boolean fast;
-
+    private int rotating;
 
     public Conveyor(){
         this.orientation = Orientation.FACING_NORTH;
+        this.rotating = 0;
         this.fast = false;
         evaluateSprite();
     }
 
-    public Conveyor(boolean fast){
-        this.orientation = Orientation.FACING_NORTH;
-        this.fast = fast;
-        evaluateSprite();
-
-    }
-    public Conveyor(Orientation orientation){
+    public Conveyor(Orientation orientation, boolean fast, int rotating){
         this.orientation = orientation;
-        this.fast = false;
-        evaluateSprite();
-    }
-
-    public Conveyor(Orientation orientation, boolean fast){
-        this.orientation = orientation;
+        this.rotating = rotating;
         this.fast = fast;
         evaluateSprite();
     }
@@ -45,9 +35,105 @@ public class Conveyor implements GameObject {
         return fast;
     }
 
+    public int getRotating(){
+        return rotating;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
-        return GameObjectType.CONVEYOR_NORTH;
+        return GameObjectType.CONVEYOR;
+        /*
+        if(fast){
+            if(rotating > 0){
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.FAST_RTURN_CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.FAST_RTURN_CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.FAST_RTURN_CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.FAST_RTURN_CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.FAST_RTURN_CONVEYOR_NORTH;
+                }
+            }
+            else if(rotating < 0){
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.FAST_LTURN_CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.FAST_LTURN_CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.FAST_LTURN_CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.FAST_LTURN_CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.FAST_LTURN_CONVEYOR_NORTH;
+                }
+            }
+            else{
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.FAST_CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.FAST_CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.FAST_CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.FAST_CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.FAST_CONVEYOR_NORTH;
+                }
+            }
+
+        }
+        else{
+            if(rotating > 0){
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.RTURN_CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.RTURN_CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.RTURN_CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.RTURN_CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.RTURN_CONVEYOR_NORTH;
+                }
+            }
+            else if(rotating < 0){
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.LTURN_CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.LTURN_CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.LTURN_CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.LTURN_CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.LTURN_CONVEYOR_NORTH;
+                }
+            }
+            else{
+                switch(orientation){
+                    case FACING_NORTH:
+                        return GameObjectType.CONVEYOR_NORTH;
+                    case FACING_EAST:
+                        return GameObjectType.CONVEYOR_EAST;
+                    case FACING_SOUTH:
+                        return GameObjectType.CONVEYOR_SOUTH;
+                    case FACING_WEST:
+                        return GameObjectType.CONVEYOR_WEST;
+                    default:
+                        return GameObjectType.CONVEYOR_NORTH;
+                }
+            }
+        }*/
+
+
     }
 
     @Override
@@ -64,12 +150,21 @@ public class Conveyor implements GameObject {
         Texture texture;
         if(this.fast){
             texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
+            if(rotating != 0){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
+            }
         }
         else{
             texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
+            if(rotating != 0){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
+            }
         }
 
         this.sprite = new Sprite(texture);
+        if(rotating < 0){
+            sprite.flip(true,false);
+        }
 
         if(fast){
             switch (orientation) {

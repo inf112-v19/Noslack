@@ -90,7 +90,7 @@ public class Tile implements GameObject{
 
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return true;
             }
         }
@@ -99,7 +99,7 @@ public class Tile implements GameObject{
 
     public Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return (Conveyor) gameObject;
             }
         }
