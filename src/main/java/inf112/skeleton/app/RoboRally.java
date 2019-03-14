@@ -70,6 +70,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     private Sound gameMusic;
 
+    /**
+     * Creates the game
+     */
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
