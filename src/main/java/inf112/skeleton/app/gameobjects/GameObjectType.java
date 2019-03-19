@@ -8,6 +8,7 @@ public enum GameObjectType {
     PLAYER_EAST,
     PLAYER_SOUTH,
     PLAYER_WEST,
+    PUSHER,
 
 
     REPAIR_STATION,

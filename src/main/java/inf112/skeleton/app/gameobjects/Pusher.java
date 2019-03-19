@@ -10,12 +10,14 @@ public class Pusher implements GameObject {
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
+    private Boolean isOdd;
 
 
 
-    public Pusher(Orientation orientation, GameObjectType type) {
+    public Pusher(Orientation orientation, Boolean isOdd) {
         this.orientation = orientation;
-        this.type = type;
+        this.type = GameObjectType.PUSHER;
+        this.isOdd = isOdd;
     }
 
 
@@ -55,6 +57,14 @@ public class Pusher implements GameObject {
                 this.type = GameObjectType.SOUTH_PUSHER;
                 break;
         }
+    }
+
+    public Orientation getOrientation(){
+        return this.orientation;
+    }
+
+    public Boolean getIsOdd() {
+        return this.isOdd;
     }
 
     @Override

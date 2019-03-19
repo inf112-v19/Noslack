@@ -5,7 +5,6 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -148,6 +147,7 @@ public class TileGrid{
                     this.tileGrid[row][column].addObjectOnTile(new Wall());
                 }
                 break;
+
             case "C":
                 //One speed conveyors
                 if(nextTileType.equals("C1")) {
@@ -252,6 +252,36 @@ public class TileGrid{
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
+
+            case "PO":
+                if(nextTileType.equals("PO1")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_NORTH,true));
+                }
+                else if(nextTileType.equals("PO2")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_EAST, true));
+                }
+                else if(nextTileType.equals("PO3")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_SOUTH, true));
+                }
+                else if(nextTileType.equals("PO4")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_WEST, true));
+                }
+                break;
+
+            case "PE":
+                if(nextTileType.equals("PE1")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_NORTH, false));
+                }
+                else if(nextTileType.equals("PE2")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_EAST, false));
+                }
+                else if(nextTileType.equals("PE3")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_SOUTH, false));
+                }
+                else if(nextTileType.equals("PE4")){
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_WEST, false));
+                }
+                break;
             case "P":
                 Player newPlayer;
                 if(nextTileType.equals("P1")) {
@@ -318,9 +348,42 @@ public class TileGrid{
         if(tile.hasHole()){
             respawnPlayer(player.getPlayerNumber());
         }
+        if(tile.hasPusher()){
+            /*if ()
+            if ((player.getProgram().size() % 2 == 1)) {
+                if ()
+            } else {
+
+            }
+            if (player.programIsOdd()) {
+
+            }
+            */
+        }
     }
 
+    public void pushedByPusher(Pusher pusher, int playerNumber) {
+        if (pusher.getIsOdd()) {
 
+            switch (pusher.getOrientation()) {
+                case FACING_NORTH:
+                    movePlayer(playerNumber, 1, 0);
+                    break;
+                case FACING_WEST:
+                    movePlayer(playerNumber, 0, -1);
+                    break;
+                case FACING_SOUTH:
+                    movePlayer(playerNumber, -1, 0);
+                    break;
+                case FACING_EAST:
+                    movePlayer(playerNumber, 0, 1);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
 
     /**
      * Moves player on conveyor
