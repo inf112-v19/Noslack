@@ -56,24 +56,6 @@ public class CardSpriteAnimation {
 
 
 
-        /*
-        ProgramCard currentCard = hand.get(i);
-        int x = j;
-        x = 700 - j;
-
-        Vector2 newPos = new Vector2(x,560);
-
-
-        currentCard.getSprite().setPosition(newPos.x,newPos.y);
-        currentCard.setPosition(newPos);
-        hand.set(i,currentCard);
-
-        if(x == 25+(i*75)){
-            i++;
-            j=0;
-        }
-        */
-
 
     }
 

@@ -122,7 +122,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.roboTick = 0;
         this.animateCounter = 0;
         this.animation = false;
-
         dealNewCards();
     }
 
@@ -130,6 +129,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public void render() {
+
+
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
