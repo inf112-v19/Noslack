@@ -7,6 +7,7 @@ import inf112.skeleton.app.cards.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Collections;
 
 public class Player implements GameObject {
     private ArrayList<ProgramCard> programHand;
@@ -21,6 +22,7 @@ public class Player implements GameObject {
     private Coordinate position;
     private String name;
     private boolean hasWon;
+    private ArrayList<Integer> flagsVisited;
 
     private Program currentMove;
     private int moveProgression;
@@ -41,6 +43,7 @@ public class Player implements GameObject {
         this.playerNumber = playerNumber;
         this.hasWon = false;
         this.name = "RoboHally";
+        this.flagsVisited = new ArrayList<Integer>(9);
         evaluateSprite();
     }
 
@@ -86,6 +89,14 @@ public class Player implements GameObject {
     public void updateOrientation(Program rotation){
         this.orientation = orientation.rotate(rotation);
         evaluateSprite();
+    }
+    public void setOrientation(Orientation orientation){
+        this.orientation = orientation;
+        evaluateSprite();
+    }
+
+    public void setFlagsVisited(int n){
+        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
     }
 
     @Override
@@ -166,11 +177,18 @@ public class Player implements GameObject {
     /**
      * Reset player for new round
      */
+
+    public ArrayList<Integer> getFlagsVisited(){
+        return flagsVisited;
+    }
+
+
     public void reset(){
         this.programHand.clear();
         this.abilityHand.clear();
         this.program.clear();
         this.currentMove=Program.NONE;
+        resetMoveProgress();
     }
     public int getPlayerNumber() {
         return playerNumber;
@@ -183,9 +201,10 @@ public class Player implements GameObject {
      * @return Players ProgramDeck
      */
     public ArrayList<ProgramCard> getProgramHand() {return programHand;}
+
     public void initiate (Coordinate cor){
         setPosition(cor);
-        setBackUp(cor);
+        setBackUp();
     }
     /**
      * @return Program for round
@@ -215,12 +234,13 @@ public class Player implements GameObject {
     public void resetMoveProgress(){
         this.moveProgression = 0;
     }
-    public void setBackUp(Coordinate backUp){
-        this.backUp=backUp;
-    }
 
-    public Coordinate getBackUp() {
-        return this.backUp;
+    public void setBackUp(){
+        this.backUp = this.getPosition();
+        this.backUp.setOrientation(getOrientation());
+    }
+    public Coordinate getBackUp(){
+        return backUp;
     }
 
     public void setPosition(Coordinate position) {

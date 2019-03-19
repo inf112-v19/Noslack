@@ -16,6 +16,7 @@ public class TileGrid{
     private int columns;
     private String fileName = "./assets/maps/";
     private Player[] players;
+    private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
     /**
@@ -39,8 +40,9 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "ConveyorLoops.txt";
+        this.fileName = this.fileName + "mapLayout.txt";
         this.playersInitiated = 0;
+        this.flagsInitiated = 0;
 
         initiateTiles();
     }
@@ -52,6 +54,7 @@ public class TileGrid{
     public TileGrid(String file) {
         this.fileName = this.fileName + file;
         this.playersInitiated = 0;
+        this.flagsInitiated = 0;
 
         initiateTiles();
     }
@@ -99,16 +102,45 @@ public class TileGrid{
 
                     for (String s : typesOnTile) {
                         // Adding objects on top of tile
-                        if (!s.equals(space))  // If tile type is not standardTile
+                        if (!s.equals(space)) {  // If tile type is not standardTile
                             stringToGameObjectType(s, row, column);
+                        }
                     }
                 }
             }
+            for(Player p : getPlayers()){
+                p.setFlagsVisited(getFlagsInitiated());
+            }
+
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    private Orientation stringToOrientation(String nextTileType, int row, int columns){
+        Orientation orientation;
+        switch (nextTileType.charAt(nextTileType.length() - 1)){
+            case '1':
+                orientation = Orientation.FACING_NORTH;
+                break;
+            case '2':
+                orientation = Orientation.FACING_EAST;
+                break;
+            case '3':
+                orientation = Orientation.FACING_SOUTH;
+                break;
+            case '4':
+                orientation = Orientation.FACING_WEST;
+                break;
+            default:
+                orientation = Orientation.FACING_NORTH;
+                break;
+        }
+        return orientation;
+
+    }
+
+
     /**
      *
      * @param nextTileType String which contains the delegation of new type
@@ -119,23 +151,7 @@ public class TileGrid{
         Orientation orientation;
         switch(nextTileType.substring(0,1)){
             case "W":
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                        break;
-                    default:
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
                 break;
             case "C":
@@ -148,31 +164,27 @@ public class TileGrid{
                     rotating = -1;
                 else
                     rotating = 0;
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                         break;
-                     default:
-                         orientation = Orientation.FACING_NORTH;
-                         break;
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
 
                 break;
 
 
             case "F":
-                int n =(int) nextTileType.charAt(nextTileType.length()-1);
+                /*
+                * If there was no number after F, it cast "F" to ascii int 70.
+                * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
+                * */
+
+                char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
+                int n = Character.getNumericValue(ch);
+
+
+                if(n < 1 || n > 9){
+                    n = flagsInitiated+1;
+                }
                 this.tileGrid[row][column].addObjectOnTile(new Flag(n));
+                flagsInitiated += 1;
                 break;
 
             case "H":
@@ -183,24 +195,7 @@ public class TileGrid{
                 break;
             case "P":
                 Player newPlayer;
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                        break;
-                    default:
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 newPlayer = new Player(this.playersInitiated, orientation);
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
                 this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
@@ -244,6 +239,12 @@ public class TileGrid{
     int getRows() {
         return rows;
     }
+    int getFlagsInitiated(){
+        return flagsInitiated;
+    }
+    int getPlayersInitiated(){
+        return playersInitiated;
+    }
 
     /**
      * Finds out what kind of tile the player is standing on and
@@ -259,13 +260,34 @@ public class TileGrid{
         if(tile.hasRepairStation()){
             if (player.isFinished()) {
                 player.repair();
-                player.setBackUp(player.getPosition());
+                player.setBackUp();
             }
         }
         if(tile.hasFlag()){
             if(player.isFinished()){
-                player.setBackUp(player.getPosition());
-                player.win();
+
+                int n = tile.getFlag().getFlagNumber();
+
+
+                //Adds flag to flagsVisited only if it has visited all previous flags.
+                if(!player.getFlagsVisited().subList(n-1,player.getFlagsVisited().size()-1).contains(1)
+                        && (!player.getFlagsVisited().subList(0,n-1).contains(0)
+                        || (n == 1 && !player.getFlagsVisited().subList(1,n-1).contains(0)))){
+
+                    //Creates a backUp
+                    player.setBackUp();
+
+                    player.getFlagsVisited().set(n - 1, 1);
+                    System.out.println("Visited: " + player.getFlagsVisited());
+
+                    //if you are on the last flag, and visited all previous, you win.
+                    if (n >= flagsInitiated) {
+                        player.win();
+                    }
+
+                }
+
+
             }
         }
         if(tile.hasHole()){
@@ -303,42 +325,31 @@ public class TileGrid{
             if(conveyor.getTurn() < 0){
                 applyRotation(Program.LEFT,playerNumber);
             }
+            int rowsToMove = 0;
+            int colsToMove = 0;
+
+            switch (conveyor.getOrientation()) {
+                case FACING_NORTH:
+                    rowsToMove = 1;
+                    break;
+                case FACING_WEST:
+                    colsToMove = -1;
+                    break;
+                case FACING_SOUTH:
+                    rowsToMove = -1;
+                    break;
+                case FACING_EAST:
+                    colsToMove = 1;
+                    break;
+                default:
+                    break;
+            }
             if(conveyor.isFast()){
-                switch (conveyor.getOrientation()) {
-                    case FACING_NORTH:
-                        movePlayer(playerNumber, 2, 0);
-                        break;
-                    case FACING_WEST:
-                        movePlayer(playerNumber, 0, -2);
-                        break;
-                    case FACING_SOUTH:
-                        movePlayer(playerNumber, -2, 0);
-                        break;
-                    case FACING_EAST:
-                        movePlayer(playerNumber, 0, 2);
-                        break;
-                    default:
-                        break;
-                }
+                rowsToMove *= 2;
+                colsToMove *= 2;
+
             }
-            else{
-                switch (conveyor.getOrientation()) {
-                    case FACING_NORTH:
-                        movePlayer(playerNumber, 1, 0);
-                        break;
-                    case FACING_WEST:
-                        movePlayer(playerNumber, 0, -1);
-                        break;
-                    case FACING_SOUTH:
-                        movePlayer(playerNumber, -1, 0);
-                        break;
-                    case FACING_EAST:
-                        movePlayer(playerNumber, 0, 1);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            movePlayer(playerNumber,rowsToMove,colsToMove);
         }
     }
 
@@ -382,6 +393,7 @@ public class TileGrid{
                 columnsToMove = -1;
                 break;
         }
+
         if(move==Program.BACK){
             rowsToMove *= -1;
             columnsToMove *= -1;
@@ -463,14 +475,25 @@ public class TileGrid{
      */
     private void respawnPlayer(int playerNumber){
 
-        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
-        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
-        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
+        Player player = getPlayer(playerNumber);
+        //int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
+        //int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
 
-        Coordinate coordinate = getPlayer(playerNumber).getBackUp();
+        int rowOfPlayer = player.getPosition().getRow();
+        int columnOfPlayer = player.getPosition().getColumn();
 
-        this.tileGrid[coordinate.getRow()][coordinate.getColumn()].addObjectOnTile(getPlayer(playerNumber));
-        getPlayer(playerNumber).setPosition(coordinate);
+        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
+
+        Coordinate backUp = player.getBackUp();
+
+        this.tileGrid[backUp.getRow()][backUp.getColumn()].addObjectOnTile(player);
+
+        player.setPosition(backUp);
+        player.setOrientation(backUp.getOrientation());
+
+        player.reset();
+
+        player.receiveDamage();
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
