@@ -49,11 +49,11 @@ public class Wall implements GameObject {
                 this.type = GameObjectType.NORTH_WALL;
                 break;
             case FACING_EAST:
-                sprite.setRotation(90);
+                sprite.setRotation(270);
                 this.type = GameObjectType.EAST_WALL;
                 break;
             case FACING_WEST:
-                sprite.setRotation(270);
+                sprite.setRotation(90);
                 this.type = GameObjectType.WEST_WALL;
                 break;
             case FACING_SOUTH:
