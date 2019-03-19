@@ -20,27 +20,11 @@ public class TileGrid{
     private int playersInitiated; // How many players have been initiated so far.
 
     /**
-     * Default constructor.
-     */
-   /* public TileGrid(){
-        this.fileName=this.fileName + "mapLayout.txt";
-
-        this.rows = 12;
-        this.columns = 12;
-        this.tileGrid = new Tile[rows][columns];
-        this.players = new Player[1];
-        this.playersInitiated = 0;
-
-        initiateTiles();
-    }
-    */
-
-    /**
      * Constructor with specifications.
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "mapLayout.txt";
+        this.fileName = this.fileName + "ConveyorLoops.txt";
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
 

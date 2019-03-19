@@ -80,8 +80,7 @@ public class Wall implements GameObject {
         return (orientation.equals(this.orientation)||orientation.equals(this.orientation.opposite()));
     }
     public void playerHitWallOnTile(Player player){
-        if(!possibleEffectPlayer(player.getOrientation()) || player.getCurrentMove().isMove()) return;
-
+        if(!possibleEffectPlayer(player.getOrientation()) && !player.getCurrentMove().isMove()) return;
         if(player.getCurrentMove().equals(Program.BACK) &&
                     this.orientation.equals(player.getOrientation().opposite())) {
                 player.stopMove();
@@ -89,7 +88,6 @@ public class Wall implements GameObject {
         }
         if(!player.getCurrentMove().equals(Program.BACK) && this.orientation.equals(player.getOrientation())) {
                 player.stopMove();
-                return;
         }
     }
     public boolean playerHitWallOnNextTile(Player player){

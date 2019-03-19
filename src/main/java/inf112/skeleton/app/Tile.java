@@ -28,15 +28,12 @@ public class Tile implements GameObject{
      */
     public void evaluateSprite(){
         try {
-            switch (gameObjectType) {
-                case STANDARD_TILE:
-                    texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
-                    sprite = new Sprite(texture);
-                    break;
-                default:
-                    texture = new Texture(Gdx.files.internal("./assets/error.png"));
-                    sprite = new Sprite(texture);
-                    break;
+            if (gameObjectType == GameObjectType.STANDARD_TILE) {
+                texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
+                sprite = new Sprite(texture);
+            } else {
+                texture = new Texture(Gdx.files.internal("./assets/error.png"));
+                sprite = new Sprite(texture);
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +68,14 @@ public class Tile implements GameObject{
             }
         }
         return false;
+    }
+    public Flag getFlag(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return (Flag) gameObject;
+            }
+        }
+        return null;
     }
     public Boolean hasWall(){
         for(GameObject gameObject : objectsOnTile){

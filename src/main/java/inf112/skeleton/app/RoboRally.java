@@ -16,7 +16,6 @@ import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import inf112.skeleton.app.gameobjects.Player;
 
 public class RoboRally extends Game implements InputProcessor {
 

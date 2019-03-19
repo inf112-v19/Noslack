@@ -30,22 +30,22 @@ public class WallTest {
     @Test
     public void getOrientationNorth() {
         Wall wall = new Wall(Orientation.FACING_NORTH);
-        assertTrue(wall.getOrientation().equals(Orientation.FACING_NORTH));
+        assertEquals(wall.getOrientation(), Orientation.FACING_NORTH);
     }
     @Test
     public void getOrientationSouth() {
         Wall wall = new Wall(Orientation.FACING_SOUTH);
-        assertTrue(wall.getOrientation().equals(Orientation.FACING_SOUTH));
+        assertEquals(wall.getOrientation(), Orientation.FACING_SOUTH);
     }
     @Test
     public void getOrientationEast() {
         Wall wall = new Wall(Orientation.FACING_EAST);
-        assertTrue(wall.getOrientation().equals(Orientation.FACING_EAST));
+        assertEquals(wall.getOrientation(), Orientation.FACING_EAST);
     }
     @Test
     public void getOrientationWest() {
         Wall wall = new Wall(Orientation.FACING_WEST);
-        assertTrue(wall.getOrientation().equals(Orientation.FACING_WEST));
+        assertEquals(wall.getOrientation(), Orientation.FACING_WEST);
     }
 
     @Test
@@ -68,13 +68,16 @@ public class WallTest {
 
     @Test
     public void playerHitWallOnTile() {
-        TileGrid tileGrid = new TileGrid("wallTestMap.txt");
-        Coordinate cor = tileGrid.getPlayerPosition(0);
+        Player player = new Player(0,Orientation.FACING_NORTH);
+        player.setCurrentMove(Program.BACK);
+        Wall wall = new Wall(Orientation.FACING_SOUTH);
+        wall.playerHitWallOnTile(player);
+        assertEquals(player.getCurrentMove(), Program.NONE);
     }
 
     @Test
     public void playerHitWallOnNextTile() {
-        TileGrid tileGrid = new TileGrid("wallTestMap.txt");
+        TileGrid tileGrid = new TileGrid("wallTestMap2.txt");
         Coordinate cor = tileGrid.getPlayerPosition(0);
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE3);
         tileGrid.getPlayer(0).updateOrientation(Program.LEFT);
@@ -82,11 +85,23 @@ public class WallTest {
         tileGrid.movePlayer(0, 0,1);
         tileGrid.movePlayer(0, 0,1);
         tileGrid.movePlayer(0, 0,1);
-        System.out.println(tileGrid.getPlayer(0).getCurrentMove());
+
+
+        assertEquals(tileGrid.getPlayer(0).getCurrentMove(), Program.NONE);
+    }
+    @Test
+    public void wallStopsPlayer(){
+        TileGrid tileGrid = new TileGrid("wallTestMap2.txt");
+        Coordinate cor = tileGrid.getPlayerPosition(0);
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE3);
+        tileGrid.getPlayer(0).updateOrientation(Program.LEFT);
+        System.out.println(cor.getRow()+" "+cor.getColumn());
+        tileGrid.movePlayer(0, 0,1);
+        tileGrid.movePlayer(0, 0,1);
+        tileGrid.movePlayer(0, 0,1);
 
         Coordinate cor2 = tileGrid.getPlayerPosition(0);
-        System.out.println(cor2.getRow()+" "+cor2.getColumn());
-        assertTrue(cor.equals(tileGrid.getPlayerPosition(0)));
-        assertTrue(tileGrid.getPlayer(0).getCurrentMove().equals(Program.NONE));
+
+        assertEquals(cor, cor2);
     }
 }
