@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import inf112.skeleton.app.cards.*;
+import inf112.skeleton.app.gameobjects.Flag;
 import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +24,6 @@ import java.util.PriorityQueue;
 public class RoboRally extends Game implements InputProcessor {
 
     private CardSpriteInteraction interact;
-
-
-    //private BitmapFont font;
 
     // Grid and tile specifications
     private final int TILE_SIZE = 32;
@@ -83,8 +83,9 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         this.font = new BitmapFont();
+        this.font.setColor(0,0,0,1);
 
-        this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
+        this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground2.png");
         this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
 
@@ -150,14 +151,14 @@ public class RoboRally extends Game implements InputProcessor {
         int i = 0;
         for (String words : text.split(" ")){
             if ((sentence+words).length() > lenght){
-                this.font.draw(batch,sentence,20,100 - i*20);
+                this.font.draw(batch,sentence,540,270 - i*20);
                 i++;
                 sentence = "";
             }
             sentence += words + " ";
         }
         if (sentence.length() > 0){
-            this.font.draw(batch,sentence,20,100 - i*20);
+            this.font.draw(batch,sentence,540,270 - i*20);
         }
     }
 
@@ -187,7 +188,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         // Draw background for dealt cards.
 
-        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, this.drawPositionY);
+        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, Gdx.graphics.getHeight()-dealtCardsBackgroundSprite.getHeight()-1);
         this.dealtCardsBackgroundSprite.draw(this.batch);
 
         this.selectedCardsBackgroundSprite.draw(this.batch);
@@ -196,6 +197,8 @@ public class RoboRally extends Game implements InputProcessor {
 
         for (ProgramCard card : this.programHand) {
             card.getSprite().draw(this.batch);
+            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
+            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
         }
 
         //cardTestSprite.draw(batch);
@@ -238,6 +241,9 @@ public class RoboRally extends Game implements InputProcessor {
                     Sprite spriteOfGameObject = gameObject.getSprite();
                     spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
                     spriteOfGameObject.draw(this.batch);
+                    if (gameObject.getGameObjectType() == GameObjectType.FLAG){
+                        this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
+                    }
                 }
 
                 this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
@@ -269,6 +275,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     private void tick() {
+
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
@@ -280,6 +287,7 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
+
             this.tileGrid.continueMove(0);
         } else if (this.currentPhase > 5){
             dealNewCards();
