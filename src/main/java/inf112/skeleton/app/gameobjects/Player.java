@@ -119,7 +119,6 @@ public class Player implements GameObject {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in players evaluateSprite");
         }
     }
 
@@ -240,6 +239,9 @@ public class Player implements GameObject {
             System.out.println(this.name + " HAS WON!");
             this.hasWon = true;
         }
+    }
+    public void stopMove(){
+        this.currentMove = Program.NONE;
     }
 
     @Override

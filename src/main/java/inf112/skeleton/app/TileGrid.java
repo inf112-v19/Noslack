@@ -5,7 +5,6 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -272,6 +271,21 @@ public class TileGrid{
         if(tile.hasHole()){
             respawnPlayer(player.getPlayerNumber());
         }
+        if(tile.hasWall()){
+            tile.getWall().playerHitWallOnTile(player);
+        }
+    }
+    private boolean wallOnNextTile(Player player,int rowsToMove, int columnsToMove){
+        System.out.println("wallOnNextTile gets called");
+        int row =player.getPosition().getRow()+rowsToMove;
+        int column =player.getPosition().getColumn()+columnsToMove;
+        Coordinate coordinate = new Coordinate(row,column);
+
+        Tile tile = getTile(coordinate);
+        if(tile.hasWall()){
+            return tile.getWall().playerHitWallOnNextTile(player);
+        }
+        return false;
     }
 
 
@@ -436,6 +450,10 @@ public class TileGrid{
             respawnPlayer(playerNumber);
             return false;
         }
+        if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+            stopPlayer(playerNumber);
+            return false;
+        }
         return true;
     }
 
@@ -455,6 +473,9 @@ public class TileGrid{
         getPlayer(playerNumber).setPosition(coordinate);
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
+    }
+    private void stopPlayer(int playersNumber){
+        getPlayer(playersNumber).stopMove();
     }
 
     /**
