@@ -64,7 +64,6 @@ public class Player implements GameObject {
         this.playerNumber = playerNumber;
         this.hasWon = false;
         this.name = "RoboHally";
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(9,0));
         evaluateSprite();
     }
 
@@ -90,6 +89,14 @@ public class Player implements GameObject {
     public void updateOrientation(Program rotation){
         this.orientation = orientation.rotate(rotation);
         evaluateSprite();
+    }
+    public void setOrientation(Orientation orientation){
+        this.orientation = orientation;
+        evaluateSprite();
+    }
+
+    public void setFlagsVisited(int n){
+        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
     }
 
     @Override
@@ -230,17 +237,15 @@ public class Player implements GameObject {
     }
 
     public void setBackUp(){
-        Coordinate pos = this.getPosition();
-        this.backUp = new Coordinate(pos.getRow(),pos.getColumn(),pos.getOrientation());
+        this.backUp = this.getPosition();
+        this.backUp.setOrientation(getOrientation());
     }
-
     public Coordinate getBackUp(){
         return backUp;
     }
 
     public void setPosition(Coordinate position) {
         this.position = position;
-
     }
     public Coordinate getPosition() {
         return this.position;

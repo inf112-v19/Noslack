@@ -109,6 +109,10 @@ public class TileGrid{
                     }
                 }
             }
+            for(Player p : getPlayers()){
+                p.setFlagsVisited(getFlagsInitiated());
+            }
+
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -275,7 +279,7 @@ public class TileGrid{
                     player.setBackUp();
 
                     player.getFlagsVisited().set(n - 1, 1);
-                    System.out.println(player.getFlagsVisited());
+                    System.out.println("Visited: " + player.getFlagsVisited());
 
                     //if you are on the last flag, and visited all previous, you win.
                     if (n >= flagsInitiated) {
@@ -452,6 +456,7 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
+
         Player player = getPlayer(playerNumber);
         //int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
         //int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
@@ -463,10 +468,10 @@ public class TileGrid{
 
         Coordinate backUp = player.getBackUp();
 
-
         this.tileGrid[backUp.getRow()][backUp.getColumn()].addObjectOnTile(player);
 
         player.setPosition(backUp);
+        player.setOrientation(backUp.getOrientation());
 
         player.reset();
 
