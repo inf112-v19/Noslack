@@ -114,6 +114,30 @@ public class TileGrid{
             e.printStackTrace();
         }
     }
+    private Orientation stringToOrientation(String nextTileType, int row, int columns){
+        Orientation orientation;
+        switch (nextTileType.charAt(nextTileType.length() - 1)){
+            case '1':
+                orientation = Orientation.FACING_NORTH;
+                break;
+            case '2':
+                orientation = Orientation.FACING_EAST;
+                break;
+            case '3':
+                orientation = Orientation.FACING_SOUTH;
+                break;
+            case '4':
+                orientation = Orientation.FACING_WEST;
+                break;
+            default:
+                orientation = Orientation.FACING_NORTH;
+                break;
+        }
+        return orientation;
+
+    }
+
+
     /**
      *
      * @param nextTileType String which contains the delegation of new type
@@ -124,23 +148,7 @@ public class TileGrid{
         Orientation orientation;
         switch(nextTileType.substring(0,1)){
             case "W":
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                        break;
-                    default:
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
                 break;
             case "C":
@@ -153,23 +161,7 @@ public class TileGrid{
                     rotating = -1;
                 else
                     rotating = 0;
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                         break;
-                     default:
-                         orientation = Orientation.FACING_NORTH;
-                         break;
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
 
                 break;
@@ -200,24 +192,7 @@ public class TileGrid{
                 break;
             case "P":
                 Player newPlayer;
-                switch (nextTileType.charAt(nextTileType.length() - 1)){
-                    case '1':
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-                    case '2':
-                        orientation = Orientation.FACING_EAST;
-                        break;
-                    case '3':
-                        orientation = Orientation.FACING_SOUTH;
-                        break;
-                    case '4':
-                        orientation = Orientation.FACING_WEST;
-                        break;
-                    default:
-                        orientation = Orientation.FACING_NORTH;
-                        break;
-
-                }
+                orientation = stringToOrientation(nextTileType,row,column);
                 newPlayer = new Player(this.playersInitiated, orientation);
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
                 this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
@@ -260,6 +235,12 @@ public class TileGrid{
 
     int getRows() {
         return rows;
+    }
+    int getFlagsInitiated(){
+        return flagsInitiated;
+    }
+    int getPlayersInitiated(){
+        return playersInitiated;
     }
 
     /**
