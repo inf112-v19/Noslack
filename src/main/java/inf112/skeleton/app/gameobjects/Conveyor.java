@@ -30,16 +30,20 @@ public class Conveyor implements GameObject {
      * @return Conveyors Boolean
      */
     public boolean isFast(){
-        return fast;
+        return this.fast;
     }
 
+    /**
+     * Get value of the turn of this conveyor
+     * @return integer value of turn
+     */
     public int getTurn(){
-        return turn;
+        return this.turn;
     }
 
     @Override
     public GameObjectType getGameObjectType() {
-        return GameObjectType.CONVEYOR;
+        return type;
     }
 
     @Override
@@ -47,15 +51,12 @@ public class Conveyor implements GameObject {
         return sprite;
     }
 
-    /**
-     * Evaluates if conveyor is fast.
-     */
     @Override
     public void evaluateSprite() {
 
         Texture texture;
         if(this.fast){
-
+            this.type = GameObjectType.F_CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
             }
@@ -64,6 +65,7 @@ public class Conveyor implements GameObject {
             }
         }
         else{
+            this.type = GameObjectType.CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
             }
@@ -71,12 +73,10 @@ public class Conveyor implements GameObject {
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
             }
         }
-
         this.sprite = new Sprite(texture);
         if(turn < 0){
             sprite.flip(true,false);
         }
-
         switch (orientation) {
             default:
                 sprite.setRotation(0);
@@ -93,12 +93,6 @@ public class Conveyor implements GameObject {
             case FACING_WEST:
                 sprite.setRotation(90);
                 break;
-        }
-        if(fast){
-            this.type = GameObjectType.F_CONVEYOR;
-        }
-        else{
-            this.type = GameObjectType.CONVEYOR;
         }
     }
 

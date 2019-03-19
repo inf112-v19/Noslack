@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import java.io.FileNotFoundException;
-
 public class Flag implements GameObject {
     private Sprite sprite;
     private int flagNumber;

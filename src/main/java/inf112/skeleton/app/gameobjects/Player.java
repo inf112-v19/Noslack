@@ -18,7 +18,6 @@ public class Player implements GameObject {
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
-    private GameObjectType type;
     private Coordinate position;
     private String name;
     private boolean hasWon;
@@ -174,20 +173,27 @@ public class Player implements GameObject {
         if(health < 9)this.health++;
     }
 
-    /**
-     * Reset player for new round
-     */
+
 
     public ArrayList<Integer> getFlagsVisited(){
         return flagsVisited;
     }
 
-
+    /**
+     * Reset player for new round
+     */
     public void reset(){
         this.programHand.clear();
         this.abilityHand.clear();
         this.program.clear();
         this.currentMove=Program.NONE;
+        resetMoveProgress();
+    }
+    /**
+     * Stop a players move
+     */
+    public void stopMove(){
+        this.currentMove = Program.NONE;
         resetMoveProgress();
     }
     public int getPlayerNumber() {
@@ -259,9 +265,6 @@ public class Player implements GameObject {
             System.out.println(this.name + " HAS WON!");
             this.hasWon = true;
         }
-    }
-    public void stopMove(){
-        this.currentMove = Program.NONE;
     }
 
     @Override
