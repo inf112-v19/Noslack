@@ -22,7 +22,7 @@ public class Tile implements GameObject{
 
 
     /**
-     * Evalautes what sprite should be loaded for
+     * Evaluates what sprite should be loaded for
      * this tile, based on what the tile's
      * GameObjectType is.
      */
@@ -90,7 +90,7 @@ public class Tile implements GameObject{
 
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return true;
             }
         }
@@ -99,11 +99,11 @@ public class Tile implements GameObject{
 
     public Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return (Conveyor) gameObject;
             }
         }
-        return new Conveyor();
+        return new Conveyor(Orientation.FACING_NORTH, false, 0);
     }
 
     public Boolean hasRepairStation(){

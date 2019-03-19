@@ -1,25 +1,54 @@
 package inf112.skeleton.app.gameobjects;
 
 public enum GameObjectType {
+    ERROR,
+
     PLAYER,
     PLAYER_NORTH,
     PLAYER_EAST,
     PLAYER_SOUTH,
     PLAYER_WEST,
 
+
     REPAIR_STATION,
     FLAG,
     STANDARD_TILE,
+
+    /*
+        ToDo: Any way we can ditch the orientation its facing?
+     */
+    CONVEYOR,
+    // ToDo: And just have conveyor (like above, but maybe even fast conveyor, conveyor turn, fast conveyor turn)
 
     CONVEYOR_WEST,
     CONVEYOR_NORTH,
     CONVEYOR_EAST,
     CONVEYOR_SOUTH,
 
+    RTURN_CONVEYOR_WEST,
+    RTURN_CONVEYOR_NORTH,
+    RTURN_CONVEYOR_EAST,
+    RTURN_CONVEYOR_SOUTH,
+
+    LTURN_CONVEYOR_WEST,
+    LTURN_CONVEYOR_NORTH,
+    LTURN_CONVEYOR_EAST,
+    LTURN_CONVEYOR_SOUTH,
+
     FAST_CONVEYOR_WEST,
     FAST_CONVEYOR_NORTH,
     FAST_CONVEYOR_EAST,
     FAST_CONVEYOR_SOUTH,
+
+    FAST_RTURN_CONVEYOR_WEST,
+    FAST_RTURN_CONVEYOR_NORTH,
+    FAST_RTURN_CONVEYOR_EAST,
+    FAST_RTURN_CONVEYOR_SOUTH,
+
+    FAST_LTURN_CONVEYOR_WEST,
+    FAST_LTURN_CONVEYOR_NORTH,
+    FAST_LTURN_CONVEYOR_EAST,
+    FAST_LTURN_CONVEYOR_SOUTH,
 
     WEST_WALL,
     NORTH_WALL,

@@ -18,6 +18,7 @@ public class Flag implements GameObject {
 
     public Flag(int flagNumber){
         this.flagNumber = flagNumber;
+        evaluateSprite();
     }
 
     public int getFlagNumber(){
