@@ -50,7 +50,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private CardSpriteInteraction CSI;
 
-    private ArrayList<ProgramCard> programHand;
+    public ArrayList<ProgramCard> programHand;
 
     private AbilityCard currentAbility;
     private ProgramCard currentCard;
@@ -73,6 +73,7 @@ public class RoboRally extends Game implements InputProcessor {
     private int roboTick;
     private int animateCounter;
     private boolean animation;
+    private SpriteContainer spriteContainer;
 
     private Sound gameMusic;
 
@@ -100,6 +101,12 @@ public class RoboRally extends Game implements InputProcessor {
         this.CSI = new CardSpriteInteraction();
 
         this.batch = new SpriteBatch();
+
+
+        //NEW SPRITECONTAINER
+        this.spriteContainer = new SpriteContainer(batch);
+
+
 
         this.currentPhase = 0;
         this.tileGrid = new TileGrid(this.GRID_ROWS, this.GRID_COLUMNS, 1);
@@ -154,7 +161,9 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
 
-        renderDealtCards();
+        spriteContainer.renderDealtCards(programHand);
+
+
         drawTextBox(abilityText,50);
         this.goButton.draw(batch);
         this.batch.end();
@@ -194,31 +203,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.activateTiles();
     }
 
-    /**
-     * This method renders the cards the player has
-     * been dealt.
-     */
-    private void renderDealtCards() {
-        this.drawPositionX = 0;
-        this.drawPositionY = 40 + TILE_SIZE * 4;
-
-        // Draw background for dealt cards.
-
-        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, Gdx.graphics.getHeight()-dealtCardsBackgroundSprite.getHeight()-1);
-        this.dealtCardsBackgroundSprite.draw(this.batch);
-
-        this.selectedCardsBackgroundSprite.draw(this.batch);
-
-        this.currentAbility.getSprite().draw(this.batch);
-
-        for (ProgramCard card : this.programHand) {
-            card.getSprite().draw(this.batch);
-            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
-        }
-
-        //cardTestSprite.draw(batch);
-    }
 
     /**
      * This method Renders the grid by looping through
@@ -335,28 +319,15 @@ public class RoboRally extends Game implements InputProcessor {
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
             this.currentAbility.getSprite().setPosition(550,20);
+            spriteContainer.getCardSprite(currentAbility);
         }
+
 
         animator = new CardSpriteAnimation(programHand);
         animation = true;
 
     }
 
-    private void animateCards(ProgramCard card, int i){
-        i %= 700;
-        i = 700 - i;
-
-        Vector2 startPos = new Vector2(0, 560);
-        Vector2 newPos = new Vector2(i,560);
-
-        if(i == 5){
-            animation = false;
-        }
-        card.getSprite().setPosition(newPos.x,newPos.y);
-        card.setPosition(newPos);
-
-
-    }
 
 
     private boolean isInsideSprite(float screenX, float screenY, Sprite sprite) {

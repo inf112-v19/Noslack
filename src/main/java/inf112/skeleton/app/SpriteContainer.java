@@ -2,10 +2,12 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.cards.AbilityCard;
 import inf112.skeleton.app.cards.ProgramCard;
+import inf112.skeleton.app.cards.RRCard;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,8 @@ public class SpriteContainer {
     private Sprite selectedCardsBackgroundSprite;
     private Sprite cardTestSprite;
     private Sprite currentSprite;
+    private ProgramCard currentCard;
+    private String abilityText;
     private Sprite goButton;
     private SpriteBatch batch;
     private int drawPositionX;
@@ -22,6 +26,8 @@ public class SpriteContainer {
     private final int TILE_SIZE = 32;
     private AbilityCard currentAbility;
     private AbilityCard emptyAbility;
+    private BitmapFont font;
+
 
 
 
@@ -37,45 +43,48 @@ public class SpriteContainer {
         this.goButton.setPosition(33, 220);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
-
-
-
+        this.abilityText = "";
+        this.font = new BitmapFont();
+        this.font.setColor(0,0,0,1);
 
 
     }
 
-    private void renderDealtCards() {
+
+
+    public void renderDealtCards(ArrayList<ProgramCard> programHand) {
         this.drawPositionX = 0;
         this.drawPositionY = 40 + TILE_SIZE * 4;
 
         // Draw background for dealt cards.
 
-        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, this.drawPositionY);
+        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, Gdx.graphics.getHeight()-dealtCardsBackgroundSprite.getHeight()-1);
         this.dealtCardsBackgroundSprite.draw(this.batch);
 
         this.selectedCardsBackgroundSprite.draw(this.batch);
-
 
 
         this.currentAbility.getSprite().draw(this.batch);
 
 
 
-
-
-
-        //cardTestSprite.draw(batch);
-    }
-
-    private void renderProgramCards(ArrayList<ProgramCard> programHand){
-
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
+            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
+            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
         }
+
+    }
+
+    public void getCardSprite(AbilityCard abilityCard){
+        this.currentAbility=abilityCard;
+
     }
 
     private Sprite setSprite(String texturePath) {
         Texture texture = new Texture(Gdx.files.internal(texturePath));
         return new Sprite(texture);
     }
+
+
 }
