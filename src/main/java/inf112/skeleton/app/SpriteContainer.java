@@ -8,8 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.cards.AbilityCard;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.cards.RRCard;
+import inf112.skeleton.app.gameobjects.Flag;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class SpriteContainer {
 
@@ -27,6 +31,8 @@ public class SpriteContainer {
     private AbilityCard currentAbility;
     private AbilityCard emptyAbility;
     private BitmapFont font;
+    private final int GRID_ROWS = 12;
+    private final int GRID_COLUMNS = 12;
 
 
 
@@ -86,5 +92,51 @@ public class SpriteContainer {
         return new Sprite(texture);
     }
 
+
+    public void renderGrid(TileGrid tileGrid) {
+
+        /*
+         * Todo:
+         * Render the grid and all the objects residing
+         * on it.
+         */
+
+        // Work in progress
+
+        // Start draw position after the dealt cards.
+        this.drawPositionX = TILE_SIZE * 4;
+        this.drawPositionY = 40 + TILE_SIZE * 4;
+        for (int row = 0; row < this.GRID_ROWS; row++) {
+            for (int column = 0; column < this.GRID_COLUMNS; column++) {
+
+                // Retrieve current tile from grid
+                Tile tileBeingDrawn = tileGrid.getTile(row, column);
+                // Retrieve PriorityQueue of GameObjects on current tile
+                PriorityQueue<GameObject> objectsOnTile = tileBeingDrawn.getObjectsOnTile();
+
+                // Draw the tile
+                Sprite spriteOfTile = tileBeingDrawn.getSprite();
+                spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
+                spriteOfTile.draw(this.batch);
+
+                // Draw GameObjects on tile
+                for (GameObject gameObject : objectsOnTile) {
+                    Sprite spriteOfGameObject = gameObject.getSprite();
+                    spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
+                    spriteOfGameObject.draw(this.batch);
+                    if (gameObject.getGameObjectType() == GameObjectType.FLAG){
+                        this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
+                    }
+                }
+
+                this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
+            }
+            this.drawPositionX = this.TILE_SIZE * 4; // Resetting the horizontal drawPosition.
+            this.drawPositionY += this.TILE_SIZE;    // Moving the vertical drawPosition, one tile up.
+        }
+        // Resetting the vertical drawPosition.
+        this.drawPositionY = 0;
+
+    }
 
 }

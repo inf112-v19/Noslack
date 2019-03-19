@@ -32,14 +32,11 @@ public class RoboRally extends Game implements InputProcessor {
 
     // Dealt cards background texture and sprite.
 
-    private Sprite dealtCardsBackgroundSprite;
 
-    private Sprite selectedCardsBackgroundSprite;
 
     private Sprite cardTestSprite;
 
-    private int drawPositionX;
-    private int drawPositionY;
+
     private int currentPhase;
 
     private SpriteBatch batch;
@@ -57,7 +54,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     private String abilityText;
     private BitmapFont font;
-    private TextField abilityTextField;
 
     private boolean insideSprite;
     private Sprite currentSprite;
@@ -71,7 +67,6 @@ public class RoboRally extends Game implements InputProcessor {
     private boolean sequenceReady;
 
     private int roboTick;
-    private int animateCounter;
     private boolean animation;
     private SpriteContainer spriteContainer;
 
@@ -89,14 +84,12 @@ public class RoboRally extends Game implements InputProcessor {
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
 
-        this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground2.png");
-        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
+
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
 
         this.goButton = setSprite("./assets/cards/dontpress.png");
 
-        this.drawPositionX = 0;
-        this.drawPositionY = 0;
+
 
         this.CSI = new CardSpriteInteraction();
 
@@ -131,7 +124,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
 
         this.roboTick = 0;
-        this.animateCounter = 0;
         this.animation = false;
         dealNewCards();
     }
@@ -141,13 +133,11 @@ public class RoboRally extends Game implements InputProcessor {
     @Override
     public void render() {
 
-
-
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.batch.begin();
-        renderGrid();
+        spriteContainer.renderGrid(tileGrid);
         performPhase();
         //activateTiles();
         if (sequenceReady && (roboTick % 20 == 0)) {
@@ -204,57 +194,6 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
 
-    /**
-     * This method Renders the grid by looping through
-     * all the tiles and drawing each one, whilst
-     * keeping track of- and updating the
-     * drawposition.
-     */
-    private void renderGrid() {
-
-        /*
-         * Todo:
-         * Render the grid and all the objects residing
-         * on it.
-         */
-
-        // Work in progress
-
-        // Start draw position after the dealt cards.
-        this.drawPositionX = TILE_SIZE * 4;
-        this.drawPositionY = 40 + TILE_SIZE * 4;
-        for (int row = 0; row < this.GRID_ROWS; row++) {
-            for (int column = 0; column < this.GRID_COLUMNS; column++) {
-
-                // Retrieve current tile from grid
-                Tile tileBeingDrawn = this.tileGrid.getTile(row, column);
-                // Retrieve PriorityQueue of GameObjects on current tile
-                PriorityQueue<GameObject> objectsOnTile = tileBeingDrawn.getObjectsOnTile();
-
-                // Draw the tile
-                Sprite spriteOfTile = tileBeingDrawn.getSprite();
-                spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
-                spriteOfTile.draw(this.batch);
-
-                // Draw GameObjects on tile
-                for (GameObject gameObject : objectsOnTile) {
-                    Sprite spriteOfGameObject = gameObject.getSprite();
-                    spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
-                    spriteOfGameObject.draw(this.batch);
-                    if (gameObject.getGameObjectType() == GameObjectType.FLAG){
-                        this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
-                    }
-                }
-
-                this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
-            }
-            this.drawPositionX = this.TILE_SIZE * 4; // Resetting the horizontal drawPosition.
-            this.drawPositionY += this.TILE_SIZE;    // Moving the vertical drawPosition, one tile up.
-        }
-        // Resetting the vertical drawPosition.
-        this.drawPositionY = 0;
-
-    }
 
     private long diff, start = System.currentTimeMillis();
 
