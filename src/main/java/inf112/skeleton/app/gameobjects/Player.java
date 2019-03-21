@@ -230,13 +230,6 @@ public class Player implements GameObject {
         return this.program.isEmpty();
     }
 
-    public boolean programIsOdd() {
-        if (this.program.size() % 2 == 1) {
-            return true;
-        }
-        return false;
-    }
-
     public void win(){
         if(!this.hasWon){
             System.out.println(this.name + " HAS WON!");

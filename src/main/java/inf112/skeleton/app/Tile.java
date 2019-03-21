@@ -124,24 +124,6 @@ public class Tile implements GameObject{
         return false;
     }
 
-    public Boolean hasPusher(){
-        for(GameObject gameObject : objectsOnTile){
-            if (gameObject.getGameObjectType() == gameObjectType.PUSHER) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Pusher getPusher() {
-        for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.PUSHER){
-                return (Pusher) gameObject;
-            }
-        }
-        return new Pusher(Orientation.FACING_NORTH, true);
-    }
-
     @Override
     public GameObjectType getGameObjectType() {
         return gameObjectType;
