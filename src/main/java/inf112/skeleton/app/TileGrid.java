@@ -477,7 +477,6 @@ public class TileGrid{
             respawnPlayer(playerNumber);
             return false;
         }
-
         return true;
     }
 

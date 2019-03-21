@@ -120,7 +120,8 @@ public class Tile implements GameObject{
 
     public Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR
+                    || gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR){
                 return (Conveyor) gameObject;
             }
         }
