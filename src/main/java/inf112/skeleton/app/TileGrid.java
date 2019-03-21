@@ -285,7 +285,7 @@ public class TileGrid{
             respawnPlayer(player.getPlayerNumber());
         }
         if(tile.hasWall()){
-            tile.getWall().playerHitWallOnTile(player);
+            tile.getWall().playerHitWall(player, true);
         }
     }
 
@@ -303,7 +303,7 @@ public class TileGrid{
 
         Tile tile = getTile(coordinate);
         if(tile.hasWall()){
-            return tile.getWall().playerHitWallOnNextTile(player);
+            return tile.getWall().playerHitWall(player, false);
         }
         return false;
     }

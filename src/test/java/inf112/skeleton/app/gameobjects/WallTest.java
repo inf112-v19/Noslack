@@ -71,7 +71,7 @@ public class WallTest {
         Player player = new Player(0,Orientation.FACING_NORTH);
         player.setCurrentMove(Program.BACK);
         Wall wall = new Wall(Orientation.FACING_SOUTH);
-        wall.playerHitWallOnTile(player);
+        wall.playerHitWall(player, true);
         assertEquals(player.getCurrentMove(), Program.NONE);
     }
 

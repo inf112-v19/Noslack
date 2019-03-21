@@ -69,46 +69,6 @@ public class Wall implements GameObject {
     /**
      * Checks if the player will hit the wall, and resets the players current move.
      * @param player Player on the tile
-     * @return does the player hit the wall with current move.
-     */
-    public boolean playerHitWallOnTile(Player player){
-        if(!possibleEffectPlayer(player.getOrientation()) && !player.getCurrentMove().isMove())
-            return false;
-
-        if(player.getCurrentMove().equals(Program.BACK) &&
-                    this.orientation.equals(player.getOrientation().opposite())) {
-                player.stopMove();
-                return true;
-        }
-        if(!player.getCurrentMove().equals(Program.BACK) &&
-                this.orientation.equals(player.getOrientation())) {
-                player.stopMove();
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the player will hit the wall, and resets the players current move.
-     * @param player The player who is about to move.
-     * @return Does player hit the wall on the border on the next tile with the current move
-     */
-    public boolean playerHitWallOnNextTile(Player player){
-        if(!possibleEffectPlayer(player.getOrientation()) || player.getCurrentMove().isMove())
-            return false;
-        if(player.getCurrentMove().equals(Program.BACK) &&
-                this.orientation.equals(player.getOrientation())){
-            return true;
-        }
-        if(!player.getCurrentMove().equals(Program.BACK) &&
-                this.orientation.equals(player.getOrientation().opposite())){
-            return true;
-        }
-        return false;
-    }
-    /**
-     * Checks if the player will hit the wall, and resets the players current move.
-     * @param player Player on the tile
      * @param onTile Is player on the tile in question
      * @return does the player hit the wall with current move.
      */
