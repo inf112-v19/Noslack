@@ -10,23 +10,6 @@ import static org.junit.Assert.*;
 
 
 public class WallTest {
-
-    /*@Test
-    public void WallIsImpassableOnWallNextTile() {
-        TileGrid grid = new TileGrid("mapLayoutWallTest.txt");
-        Coordinate cor = grid.getPlayerPosition(0);
-        grid.movePlayer(0, 0, 2);
-        assertEquals(cor, grid.getPlayerPosition(0));
-    }
-
-    @Test
-    public void WallIsImpassableOnWallTile() {
-        TileGrid grid = new TileGrid("mapLayoutWallTest2.txt");
-        grid.movePlayer(0, 0, 3);
-        assertEquals(grid.getTile(grid.getPlayer(0).getPosition()), grid.getTile(2, 5));
-    }*/
-
-
     @Test
     public void getOrientationNorth() {
         Wall wall = new Wall(Orientation.FACING_NORTH);
@@ -71,37 +54,17 @@ public class WallTest {
         Player player = new Player(0,Orientation.FACING_NORTH);
         player.setCurrentMove(Program.BACK);
         Wall wall = new Wall(Orientation.FACING_SOUTH);
-        wall.playerHitWall(player, true);
-        assertEquals(player.getCurrentMove(), Program.NONE);
+        assertTrue(wall.playerHitWall(player, true));
     }
 
     @Test
     public void playerHitWallOnNextTile() {
         TileGrid tileGrid = new TileGrid("wallTestMap2.txt");
         Coordinate cor = tileGrid.getPlayerPosition(0);
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE3);
-        tileGrid.getPlayer(0).updateOrientation(Program.LEFT);
-        System.out.println(cor.getRow()+" "+cor.getColumn());
-        tileGrid.movePlayer(0, 0,1);
-        tileGrid.movePlayer(0, 0,1);
-        tileGrid.movePlayer(0, 0,1);
-
-
-        assertEquals(tileGrid.getPlayer(0).getCurrentMove(), Program.NONE);
-    }
-    @Test
-    public void wallStopsPlayer(){
-        TileGrid tileGrid = new TileGrid("wallTestMap2.txt");
-        Coordinate cor = tileGrid.getPlayerPosition(0);
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE3);
-        tileGrid.getPlayer(0).updateOrientation(Program.LEFT);
-        System.out.println(cor.getRow()+" "+cor.getColumn());
-        tileGrid.movePlayer(0, 0,1);
-        tileGrid.movePlayer(0, 0,1);
-        tileGrid.movePlayer(0, 0,1);
-
-        Coordinate cor2 = tileGrid.getPlayerPosition(0);
-
-        assertEquals(cor, cor2);
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        Coordinate cor2 = new Coordinate(tileGrid.getPlayerPosition(0));
+        System.out.println(cor+" after "+cor2);
+        assertEquals(cor,cor2);
     }
 }

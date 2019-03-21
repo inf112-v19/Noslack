@@ -78,12 +78,10 @@ public class Wall implements GameObject {
         if(onTile){
             if (player.getCurrentMove().equals(Program.BACK) &&
                     this.orientation.equals(player.getOrientation().opposite())) {
-                player.stopMove();
                 return true;
             }
             if (!player.getCurrentMove().equals(Program.BACK) &&
                     this.orientation.equals(player.getOrientation())) {
-                player.stopMove();
                 return true;
             }
         }

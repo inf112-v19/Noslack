@@ -284,11 +284,15 @@ public class TileGrid{
         if(tile.hasHole()){
             respawnPlayer(player.getPlayerNumber());
         }
-        if(tile.hasWall()){
-            tile.getWall().playerHitWall(player, true);
-        }
     }
 
+    private boolean wallOnCurrentTile(Player player){
+        Tile tile = getTile(player.getPosition());
+        if(tile.hasWall()){
+            return tile.getWall().playerHitWall(player, true);
+        }
+        return false;
+    }
     /**
      * TODO Needs reworking
      * @param player Active player
@@ -401,7 +405,7 @@ public class TileGrid{
      * Method that continues the move a player has in progress.
      * @param playerNumber the identifier of the player whose move should be continued.
      */
-    void continueMove(int playerNumber){
+    public void continueMove(int playerNumber){
         Program currentMove = getPlayer(playerNumber).getCurrentMove();
         int moveProgression = getPlayer(playerNumber).getMoveProgression();
         int totalMoves = currentMove.totalMoves();
@@ -446,6 +450,12 @@ public class TileGrid{
      */
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
+        if(wallOnCurrentTile(getPlayer(playerNumber))){
+            return false;
+        }
+        if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+            return false;
+        }
         if((coordinateOfPlayer.getRow()+rowsToMove > this.rows-1) || (coordinateOfPlayer.getRow()+rowsToMove < 0)){
             //Player out of bounds
             respawnPlayer(playerNumber);
@@ -457,10 +467,7 @@ public class TileGrid{
             respawnPlayer(playerNumber);
             return false;
         }
-        if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
-            stopPlayer(playerNumber);
-            return false;
-        }
+
         return true;
     }
 
