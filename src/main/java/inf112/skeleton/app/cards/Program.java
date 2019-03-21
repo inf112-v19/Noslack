@@ -6,11 +6,26 @@ package inf112.skeleton.app.cards;
 public enum Program {
     MOVE1, MOVE2, MOVE3, BACK, RIGHT, LEFT, U, NONE;
 
+    /**
+     * Returns the number a moves a program has
+     * @return number of moves.
+     */
     public int totalMoves(){
-        if(this.equals(Program.MOVE1)) return 1;
-        if(this.equals(Program.MOVE2)) return 2;
-        if(this.equals(Program.MOVE3)) return 3;
-        if(this.equals(Program.BACK)) return 1;
-        return 1;
+        switch (this){
+            case MOVE2:
+                return 2;
+            case MOVE3:
+                return 3;
+            default: return 1;
+        }
+    }
+    public boolean isMove(){
+        switch (this){
+            case MOVE1: return true;
+            case MOVE2: return true;
+            case MOVE3: return true;
+            case BACK: return true;
+            default: return false;
+        }
     }
 }

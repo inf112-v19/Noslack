@@ -12,8 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 public class AbilityCard implements RRCard {
     private Ability ability;
     private Sprite sprite;
-    private String name;
-    private Texture texture;
     private Vector2 position;
 
 
@@ -22,7 +20,7 @@ public class AbilityCard implements RRCard {
      * @param ability Ability to be assigned to the card
      */
     public AbilityCard (String ability){
-        this.ability=setAbility(this.name=ability);
+        this.ability=setAbility(ability);
     }
 
     private Ability setAbility(String s){
@@ -186,7 +184,7 @@ public class AbilityCard implements RRCard {
 
     @Override
     public String toString(){
-        return getAbility().toString();
+        return this.ability.toString();
     }
 
     @Override

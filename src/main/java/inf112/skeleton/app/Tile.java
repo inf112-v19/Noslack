@@ -27,15 +27,16 @@ public class Tile implements GameObject{
      * GameObjectType is.
      */
     public void evaluateSprite(){
-        switch(gameObjectType){
-            case STANDARD_TILE:
+        try {
+            if (gameObjectType == GameObjectType.STANDARD_TILE) {
                 texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
                 sprite = new Sprite(texture);
-                break;
-            default:
+            } else {
                 texture = new Texture(Gdx.files.internal("./assets/error.png"));
                 sprite = new Sprite(texture);
-                break;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -68,29 +69,35 @@ public class Tile implements GameObject{
         }
         return false;
     }
-
-    public Boolean hasWallWithOrientation(Orientation orientation){
-        GameObjectType wallType;
-        switch(orientation){
-            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; System.out.println("SouthWallAhead");break;
-            case FACING_WEST: wallType = GameObjectType.EAST_WALL; break;
-            case FACING_SOUTH: wallType = GameObjectType.NORTH_WALL; break;
-            case FACING_EAST: wallType = GameObjectType.WEST_WALL; break;
-            default: wallType = GameObjectType.NORTH_WALL; break;
-        }
-
+    public Flag getFlag(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == wallType){
-                System.out.println("Hit Wall!");
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return (Flag) gameObject;
+            }
+        }
+        return null;
+    }
+    public Boolean hasWall(){
+        for(GameObject gameObject : objectsOnTile){
+            if( gameObject.getGameObjectType().equals(GameObjectType.WALL)) {
                 return true;
             }
         }
         return false;
     }
+    public Wall getWall(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.WALL){
+                return (Wall) gameObject;
+            }
+        }
+        return null;
+    }
 
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR ||
+                    gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR ){
                 return true;
             }
         }
@@ -99,11 +106,11 @@ public class Tile implements GameObject{
 
     public Conveyor getConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR_NORTH){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return (Conveyor) gameObject;
             }
         }
-        return new Conveyor();
+        return null;
     }
 
     public Boolean hasRepairStation(){

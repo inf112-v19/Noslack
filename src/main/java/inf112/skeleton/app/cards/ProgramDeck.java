@@ -86,8 +86,8 @@ public class ProgramDeck implements IDeck {
 
     @Override
     public boolean contains(RRCard card) {
-        for (RRCard c :deck)
-            if(c.compareTo(card)==0)
+        for (RRCard c :this.deck)
+            if(((ProgramCard)c).getPriority() == ((ProgramCard)card).getPriority())
                 return true;
         return false;
     }
