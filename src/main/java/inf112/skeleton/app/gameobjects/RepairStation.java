@@ -17,11 +17,6 @@ public class RepairStation implements GameObject {
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    @Override
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/RepairPlaceholder.png"));
@@ -30,6 +25,16 @@ public class RepairStation implements GameObject {
             e.printStackTrace();
             System.out.println("Error in RepairStation evaluateSprite");
         }
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return null;
     }
 
     @Override

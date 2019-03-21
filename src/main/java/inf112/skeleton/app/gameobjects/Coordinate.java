@@ -14,18 +14,6 @@ public class Coordinate {
         this.orientation = Orientation.FACING_NORTH;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(o.getClass()==this.getClass())
-            return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(row, column, orientation);
-    }
-
     public Coordinate(int row, int column, Orientation orientation){
         this.row = row;
         this.column = column;
@@ -33,18 +21,25 @@ public class Coordinate {
     }
 
     public int getRow(){
-        return row;
+        return this.row;
     }
 
     public int getColumn() {
-        return column;
+        return this.column;
     }
 
-    public Orientation getOrientation(){
-        return orientation;
+    @Override
+    public boolean equals(Object o) {
+        if(o.getClass()==this.getClass())
+            return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
+        return false;
     }
 
-    public void setOrientation(Orientation orientation){
+    public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 }

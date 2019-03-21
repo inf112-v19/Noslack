@@ -31,6 +31,11 @@ public class Hole implements GameObject  {
     }
 
     @Override
+    public Orientation getOrientation() {
+        return null;
+    }
+
+    @Override
     public int compareTo(Object o) {
         if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
             return -1;

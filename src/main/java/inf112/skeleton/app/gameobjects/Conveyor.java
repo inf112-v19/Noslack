@@ -25,32 +25,6 @@ public class Conveyor implements GameObject {
         evaluateSprite();
     }
 
-    /**
-     * Boolean check for fast conveyor
-     * @return Conveyors Boolean
-     */
-    public boolean isFast(){
-        return this.fast;
-    }
-
-    /**
-     * Get value of the turn of this conveyor
-     * @return integer value of turn
-     */
-    public int getTurn(){
-        return this.turn;
-    }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return type;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
     @Override
     public void evaluateSprite() {
 
@@ -95,13 +69,36 @@ public class Conveyor implements GameObject {
                 break;
         }
     }
-
+    @Override
+    public Sprite getSprite() {
+        return this.sprite;
+    }
     /**
      * Get method for orientation
      * @return Conveyors Orientation
      */
     public Orientation getOrientation(){
         return this.orientation;
+    }
+    /**
+     * Boolean check for fast conveyor
+     * @return Conveyors Boolean
+     */
+    public boolean isFast(){
+        return this.fast;
+    }
+
+    /**
+     * Get value of the turn of this conveyor
+     * @return integer value of turn
+     */
+    public int getTurn(){
+        return this.turn;
+    }
+
+    @Override
+    public GameObjectType getGameObjectType() {
+        return this.type;
     }
 
     @Override

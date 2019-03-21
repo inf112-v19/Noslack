@@ -10,40 +10,54 @@ import java.util.PriorityQueue;
 public class Tile implements GameObject{
 
     private GameObjectType gameObjectType;
-    private Texture texture;
     private Sprite sprite;
     private PriorityQueue<GameObject> objectsOnTile;
 
     public Tile(GameObjectType gameObjectType){
-        objectsOnTile = new PriorityQueue<>();
+        this.objectsOnTile = new PriorityQueue<>();
         this.gameObjectType = gameObjectType;
         evaluateSprite();
     }
 
-
-    /**
-     * Evalautes what sprite should be loaded for
-     * this tile, based on what the tile's
-     * GameObjectType is.
-     */
+    @Override
     public void evaluateSprite(){
         try {
+            Texture texture;
             if (gameObjectType == GameObjectType.STANDARD_TILE) {
                 texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
-                sprite = new Sprite(texture);
-            } else {
-                texture = new Texture(Gdx.files.internal("./assets/error.png"));
-                sprite = new Sprite(texture);
             }
+            else {
+                texture = new Texture(Gdx.files.internal("./assets/error.png"));
+            }
+            sprite = new Sprite(texture);
         }catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error in Tile evaluateSprite");
         }
     }
 
+    @Override
+    public Sprite getSprite(){
+        return this.sprite;
+    }
+
+    @Override
+    public Orientation getOrientation(){
+        return null;
+    }
+
+    /**
+     * Adds an object on the Tile
+     * @param newObjectOnTile Object to be added on the Tile
+     */
     public void addObjectOnTile(GameObject newObjectOnTile){
         objectsOnTile.add(newObjectOnTile);
     }
 
+    /**
+     * Removes an Object from the Tile
+     * @param objectToRemove Object to be removed
+     */
     public void removeObjectFromTile(GameObject objectToRemove){
         objectsOnTile.remove(objectToRemove);
     }
@@ -54,11 +68,11 @@ public class Tile implements GameObject{
      * @return  PriorityQueue of every GameObject on the tile
      */
     public PriorityQueue<GameObject> getObjectsOnTile(){
-        return objectsOnTile;
+        return this.objectsOnTile;
     }
 
     public Boolean hasPlayer(Player player){
-        return objectsOnTile.contains(player);
+        return this.objectsOnTile.contains(player);
     }
 
     public Boolean hasFlag(){
@@ -133,12 +147,7 @@ public class Tile implements GameObject{
 
     @Override
     public GameObjectType getGameObjectType() {
-        return gameObjectType;
-    }
-
-    @Override
-    public Sprite getSprite(){
-        return sprite;
+        return this.gameObjectType;
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class LaserOutlet implements GameObject {
     private Sprite sprite;
-
     private Orientation orientation;
 
     public LaserOutlet() {
@@ -21,11 +20,6 @@ public class LaserOutlet implements GameObject {
     @Override
     public GameObjectType getGameObjectType() {
         return GameObjectType.LASER_OUTLET;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return sprite;
     }
 
     @Override
@@ -54,6 +48,16 @@ public class LaserOutlet implements GameObject {
             e.printStackTrace();
             System.out.println("Error in LaserOutlets evaluateSprite");
         }
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return this.orientation;
     }
 
     @Override

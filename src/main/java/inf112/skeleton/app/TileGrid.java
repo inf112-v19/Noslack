@@ -207,19 +207,21 @@ public class TileGrid{
     }
 
     /**
-     * Get the number of columns in TileGrid
-     * @return Columns in grid
-     */
-    int getColumns() {
-        return columns;
-    }
-    /**
      * Get the number of rows in TileGrid
      * @return Rows in grid
      */
     int getRows() {
         return rows;
     }
+
+    /**
+     * Get the number of columns in TileGrid
+     * @return Columns in grid
+     */
+    int getColumns() {
+        return columns;
+    }
+
     /**
      * Get the number of flags in TileGrid
      * @return Flags in grid
@@ -286,6 +288,14 @@ public class TileGrid{
             tile.getWall().playerHitWallOnTile(player);
         }
     }
+
+    /**
+     * TODO Needs reworking
+     * @param player Active player
+     * @param rowsToMove Rows to where the player is moving
+     * @param columnsToMove Columns to where the player is moving
+     * @return If player can move, or is blocked by wall
+     */
     private boolean wallOnNextTile(Player player,int rowsToMove, int columnsToMove){
         int row =player.getPosition().getRow()+rowsToMove;
         int column =player.getPosition().getColumn()+columnsToMove;
@@ -297,8 +307,6 @@ public class TileGrid{
         }
         return false;
     }
-
-
 
     /**
      * Moves player on conveyor
@@ -402,8 +410,7 @@ public class TileGrid{
             getPlayer(playerNumber).setCurrentMove(Program.NONE);
             getPlayer(playerNumber).resetMoveProgress();
         }else{
-            boolean moveIsRotation = (currentMove==Program.LEFT) || (currentMove==Program.RIGHT) || (currentMove==Program.U);
-            if(moveIsRotation){
+            if(!currentMove.isMove()){
                 applyRotation(currentMove, playerNumber);
             }else{
                 applyMove(currentMove, playerNumber);
@@ -485,6 +492,11 @@ public class TileGrid{
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
     }
+
+    /**
+     * Stop the players move
+     * @param playersNumber Player Number
+     */
     private void stopPlayer(int playersNumber){
         getPlayer(playersNumber).stopMove();
     }

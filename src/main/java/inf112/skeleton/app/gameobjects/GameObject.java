@@ -5,10 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public interface GameObject extends Comparable {
 
     /**
-     * Get method for enum GameObjectType
-     * @return GameObjects GameObjectType
+     * Evaluates sprite for direction or special behaviour and creates texture and sprite
      */
-    GameObjectType getGameObjectType();
+    void evaluateSprite();
 
     /**
      * Returns the sprite
@@ -17,8 +16,14 @@ public interface GameObject extends Comparable {
     Sprite getSprite();
 
     /**
-     * Evaluates sprite for direction or special behaviour and creates texture and sprite
+     * Get the Orientation of the object
+     * @return Objects orientation.
      */
-    void evaluateSprite();
+    Orientation getOrientation();
 
+    /**
+     * Get method for enum GameObjectType
+     * @return GameObjects GameObjectType
+     */
+    GameObjectType getGameObjectType();
 }

@@ -19,21 +19,6 @@ public class Flag implements GameObject {
         evaluateSprite();
     }
 
-    public int getFlagNumber(){
-        return flagNumber;
-    }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return GameObjectType.FLAG;
-    }
-
-    @Override
-    public Sprite getSprite() {return sprite;}
-
-    /**
-     * Evaluates flagNumber.
-     */
     @Override
     public void evaluateSprite() {
         try {
@@ -55,6 +40,25 @@ public class Flag implements GameObject {
         }
     }
 
+    @Override
+    public Sprite getSprite() {return sprite;}
+
+    @Override
+    public Orientation getOrientation(){
+        return null;
+    }
+
+    /**
+     * Get the flags number
+     * @return Flag number
+     */
+    public int getFlagNumber(){
+        return flagNumber;
+    }
+    @Override
+    public GameObjectType getGameObjectType() {
+        return GameObjectType.FLAG;
+    }
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){

@@ -24,11 +24,6 @@ public class Pusher implements GameObject {
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    @Override
     public void evaluateSprite() {
         Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/pusher.png"));
 
@@ -52,6 +47,14 @@ public class Pusher implements GameObject {
         }
     }
 
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+    @Override
+    public Orientation getOrientation(){
+        return this.orientation;
+    }
     @Override
     public int compareTo(Object o) {
         if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){
