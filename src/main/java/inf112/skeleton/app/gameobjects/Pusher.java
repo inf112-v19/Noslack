@@ -11,9 +11,9 @@ public class Pusher implements GameObject {
     private Orientation orientation;
     private GameObjectType type;
 
-    public Pusher(Orientation orientation, GameObjectType type) {
+    public Pusher(Orientation orientation) {
         this.orientation = orientation;
-        this.type = type;
+        evaluateSprite();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/pusher.png"));
+        texture = new Texture(Gdx.files.internal("./assets/error.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
@@ -55,8 +55,8 @@ public class Pusher implements GameObject {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.NORTH_PUSHER){
+    public int compareTo(Object other) {
+        if(((GameObject)other).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;

@@ -214,6 +214,18 @@ public class TileGrid{
             case "RC":
                 this.tileGrid[row][column].addObjectOnTile(new Rotator(GameObjectType.ROTATOR_CLOCKWISE));
                 break;
+            case "D1":
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_NORTH));
+                break;
+            case "D2":
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_EAST));
+                break;
+            case "D3":
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_SOUTH));
+                break;
+            case "D4":
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_WEST));
+                break;
             case "P":
                 Player newPlayer;
                 switch (nextTileType) {
@@ -286,11 +298,27 @@ public class TileGrid{
         if(tile.hasGameObjectOfType(GameObjectType.LASER_BEAM)){
             player.receiveDamage(1);
         }
+
+        // Rotator activation
         if(tile.hasGameObjectOfType(GameObjectType.ROTATOR_CLOCKWISE)){
             applyRotation(Program.RIGHT, player.getPlayerNumber());
         }
         if(tile.hasGameObjectOfType(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
             applyRotation(Program.LEFT, player.getPlayerNumber());
+        }
+
+        // Pusher activation
+        if(tile.hasGameObjectOfType(GameObjectType.NORTH_PUSHER)){
+            movePlayer(player.getPlayerNumber(), 1, 0);
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.EAST_PUSHER)){
+            movePlayer(player.getPlayerNumber(), 0, 1);
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.SOUTH_PUSHER)){
+            movePlayer(player.getPlayerNumber(), -1, 0);
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.WEST_PUSHER)){
+            movePlayer(player.getPlayerNumber(), 0, -1);
         }
     }
 
