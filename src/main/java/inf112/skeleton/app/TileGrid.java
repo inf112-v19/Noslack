@@ -151,9 +151,9 @@ public class TileGrid{
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
             case "D":
-                boolean oddPusher = nextTileType.contains("DD");
+                boolean evenPusher = nextTileType.contains("DD");
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,oddPusher));
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
             case "P":
                 Player newPlayer;
