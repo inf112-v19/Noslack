@@ -18,12 +18,13 @@ public class CardSpriteAnimation {
         this.startPos = new Vector2(550,400);
         this.i = 0;
         this.j = 0;
-
+        for (ProgramCard card : hand){
+            card.getSprite().setPosition(700,555);
+        }
 
     }
 
     public ArrayList<ProgramCard> updatePositions(){
-
         shuffleLeft();
 
 
@@ -37,16 +38,15 @@ public class CardSpriteAnimation {
 
     private void shuffleLeft(){
         if(i<hand.size()){
-            int y = j%15;
-            Vector2 pos = new Vector2(640-j,555+y);
+            int end = 25+(i*75);
+            Vector2 pos = new Vector2(640-j,555);
             ProgramCard card = hand.get(i);
             card.getSprite().setPosition(pos.x,pos.y);
             card.setPosition(pos);
             hand.set(i,card);
             j+=5;
 
-            if(j == 25+(i*75)){
-
+            if(j == end){
                 i++;
                 j=0;
             }
