@@ -150,6 +150,9 @@ public class TileGrid{
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
+            case "D":
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation));
             case "P":
                 Player newPlayer;
                 orientation = stringToOrientation(nextTileType);
