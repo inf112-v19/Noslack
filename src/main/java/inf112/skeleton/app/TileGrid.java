@@ -41,7 +41,7 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "mapLayout.txt";
+        this.fileName = this.fileName + "ConveyorLoops.txt";
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
 
@@ -109,6 +109,7 @@ public class TileGrid{
                     }
                 }
             }
+            System.out.println("Players: " + getPlayers());
             for(Player p : getPlayers()){
                 p.setFlagsVisited(getFlagsInitiated());
             }
@@ -304,7 +305,8 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        if(getPlayer(playerNumber).getCurrentMove() == Program.NONE) {
+        Player player = getPlayer(playerNumber);
+        if(player.getCurrentMove() == Program.NONE) {
             if(conveyor.getTurn() > 0){
                 applyRotation(Program.RIGHT,playerNumber);
             }
@@ -330,7 +332,10 @@ public class TileGrid{
                 default:
                     break;
             }
-            if(conveyor.isFast()){
+            int row = player.getPosition().getRow();
+            int col = player.getPosition().getColumn();
+
+            if(conveyor.isFast() && getTile(row+rowsToMove,col+colsToMove).hasConveyor()){
                 rowsToMove *= 2;
                 colsToMove *= 2;
 
