@@ -9,12 +9,13 @@ public class Pusher implements GameObject {
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
+    private boolean even;
 
-
-
-    public Pusher(Orientation orientation) {
+    public Pusher(Orientation orientation, boolean even) {
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
+        this.even = even;
+        evaluateSprite();
     }
 
 
@@ -25,7 +26,13 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusher24-32x32.png"));
+        Texture texture;
+        if(even){
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
+        }
+        else{
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
+        }
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
