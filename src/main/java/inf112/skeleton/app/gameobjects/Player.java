@@ -88,6 +88,7 @@ public class Player implements GameObject {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error in Player evaluateSprite");
         }
     }
 
