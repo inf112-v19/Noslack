@@ -28,7 +28,7 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        texture = new Texture(Gdx.files.internal("./assets/error.png"));
+        texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusher24-32x32.png"));
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
