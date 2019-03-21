@@ -12,7 +12,6 @@ public class SoundContainer {
     public SoundContainer(){
 
         this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
-        this.gameMusic.loop();
         this.shuffleCard = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/shuffleCard.wav"));
 
 
@@ -31,6 +30,7 @@ public class SoundContainer {
     }
 
     public void gameMusic(){
+        this.gameMusic.loop();
 
     }
 

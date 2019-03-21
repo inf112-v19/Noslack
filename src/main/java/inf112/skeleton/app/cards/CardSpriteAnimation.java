@@ -1,6 +1,7 @@
 package inf112.skeleton.app.cards;
 
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.SoundContainer;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,8 +13,10 @@ public class CardSpriteAnimation {
     private int j;
     private Vector2 startPos;
     private Vector2 endPos;
+    private SoundContainer sounds;
 
     public CardSpriteAnimation(ArrayList<ProgramCard> hand){
+        this.sounds = new SoundContainer();
 
         this.hand=hand;
         this.startPos = new Vector2(730,400);
@@ -48,6 +51,7 @@ public class CardSpriteAnimation {
             j+=10;
 
             if(x <= end){
+                sounds.shuffleCardSound();
                 card.getSprite().setPosition((float)end,endPos.y);
                 card.setPosition(endPos);
                 i++;

@@ -86,7 +86,7 @@ public class RoboRally extends Game implements InputProcessor {
 
 
     public void createGame(){
-
+        gameSounds.gameMusic();
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
         this.CSI = new CardSpriteInteraction();
