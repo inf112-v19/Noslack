@@ -85,7 +85,7 @@ public class SpriteContainer {
 
     }
 
-    private Sprite setSprite(String texturePath) {
+    public Sprite setSprite(String texturePath) {
         Texture texture = new Texture(Gdx.files.internal(texturePath));
         return new Sprite(texture);
     }

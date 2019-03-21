@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -68,85 +69,90 @@ public class RoboRally extends Game implements InputProcessor {
     private boolean animation;
     private SpriteContainer spriteContainer;
 
-    //private Sound gameMusic;
     private SoundContainer gameSounds;
+    private MenuScreen menuScreen;
 
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
 
         this.gameSounds = new SoundContainer();
-
-
         Gdx.input.setInputProcessor(this);
-        this.font = new BitmapFont();
-        this.font.setColor(0,0,0,1);
-        this.CSI = new CardSpriteInteraction();
-
         this.batch = new SpriteBatch();
+        this.menuScreen = new MenuScreen(batch);
 
-
-        //NEW SPRITECONTAINER
-        this.spriteContainer = new SpriteContainer(batch);
-
-
-
-        this.currentPhase = 0;
-        this.tileGrid = new TileGrid(this.GRID_ROWS, this.GRID_COLUMNS, 1);
-
-        this.programDeck = new ProgramDeck("ProgramCards.txt");
-        this.abilityDeck = new AbilityDeck("AbilityCards.txt");
-
-        int playerHealth = this.tileGrid.getPlayerHealth(0);
-        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
-
-        this.programHand = tileGrid.getPlayerProgramHand(0);
-        this.animator = new CardSpriteAnimation(programHand);
-
-        this.cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
-
-        //this.goButton.setPosition(33, 220);
-
-        this.emptyProgram = new ProgramCard(0, Program.NONE);
-        this.emptyAbility = new AbilityCard(" ");
-
-        this.currentAbility = emptyAbility;
-        this.abilityText = "";
-
-        this.roboTick = 0;
-        this.animation = false;
-        dealNewCards();
     }
 
 
 
+    public void createGame(){
+
+        this.font = new BitmapFont();
+        this.font.setColor(0,0,0,1);
+        this.CSI = new CardSpriteInteraction();
+        //NEW SPRITECONTAINER
+        this.spriteContainer = new SpriteContainer(batch);
+        this.currentPhase = 0;
+        this.tileGrid = new TileGrid(this.GRID_ROWS, this.GRID_COLUMNS, 1);
+        this.programDeck = new ProgramDeck("ProgramCards.txt");
+        this.abilityDeck = new AbilityDeck("AbilityCards.txt");
+        int playerHealth = this.tileGrid.getPlayerHealth(0);
+        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        this.programHand = tileGrid.getPlayerProgramHand(0);
+        this.animator = new CardSpriteAnimation(programHand);
+        this.cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
+        this.emptyProgram = new ProgramCard(0, Program.NONE);
+        this.emptyAbility = new AbilityCard(" ");
+        this.currentAbility = emptyAbility;
+        this.abilityText = "";
+        this.roboTick = 0;
+        this.animation = false;
+        dealNewCards();
+
+    }
+
     @Override
     public void render() {
+
+
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.batch.begin();
-        spriteContainer.renderGrid(tileGrid);
-        performPhase();
-        //activateTiles();
-        if (sequenceReady && (roboTick % 20 == 0)) {
-            tick();
+        if(menuScreen.runMenu()){
+
+            menuScreen.startMenu();
+
+        }
+
+        else{
+
+            this.batch.begin();
+            spriteContainer.renderGrid(tileGrid);
+            performPhase();
+            //activateTiles();
+            if (sequenceReady && (roboTick % 20 == 0)) {
+                tick();
+            }
+
+
+
+            if (animation){
+                programHand = animator.updatePositions();
+            }
+
+
+            spriteContainer.renderDealtCards(programHand);
+
+
+            drawTextBox(abilityText,50);
+            this.batch.end();
+            this.roboTick++;
+
         }
 
 
 
-        if (animation){
-            programHand = animator.updatePositions();
-        }
-
-
-        spriteContainer.renderDealtCards(programHand);
-
-
-        drawTextBox(abilityText,50);
-        this.batch.end();
-        this.roboTick++;
     }
 
     private void drawTextBox(String text, int lenght){
@@ -275,6 +281,10 @@ public class RoboRally extends Game implements InputProcessor {
      */
     private boolean isInsideCard(float screenX, float screenY, RRCard card) {
 
+        if(menuScreen.runMenu()){
+            return false;
+        }
+
         Sprite sprite = card.getSprite();
         if (spriteContainer.isInsideSprite(screenX,screenY,sprite)){
             // Moves the given sprite
@@ -333,7 +343,19 @@ public class RoboRally extends Game implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int nulls = 0;
-        if (spriteContainer.isInsideGo(screenX, screenY)) {
+
+        if(menuScreen.clickStart(screenX,screenY)){
+
+            menuScreen.stopMenu();
+            createGame();
+
+        }
+
+        if(menuScreen.runMenu()){
+            return false;
+        }
+
+        else if (spriteContainer.isInsideGo(screenX, screenY)) {
             ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
             for(ProgramCard card : chosenCards){
                 if (card.getPriority() == 0) nulls++;
@@ -344,6 +366,10 @@ public class RoboRally extends Game implements InputProcessor {
                 sequenceReady = true;
             }
         }
+
+
+
+
         isInsideCard(screenX,screenY,currentAbility);
 
         return false;
@@ -351,6 +377,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(menuScreen.runMenu()){
+            return false;
+        }
         float cardDeltaH = cardTestSprite.getHeight() / 2;
         float cardDeltaW = cardTestSprite.getWidth() / 2;
 
@@ -371,6 +400,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if(menuScreen.runMenu()){
+            return false;
+        }
 
         float cardDeltaH = cardTestSprite.getHeight() / 2;
         float cardDeltaW = cardTestSprite.getWidth() / 2;
