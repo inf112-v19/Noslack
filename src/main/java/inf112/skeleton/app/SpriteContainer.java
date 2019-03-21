@@ -52,8 +52,6 @@ public class SpriteContainer {
         this.abilityText = "";
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
-
-
     }
 
 
@@ -137,6 +135,34 @@ public class SpriteContainer {
         // Resetting the vertical drawPosition.
         this.drawPositionY = 0;
 
+        //Drawing the go button
+        goButton.draw(this.batch);
+
     }
 
-}
+    public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
+
+        // Boolean to see if the coordinates is inside given sprite in the x-axis
+        if (screenX >= sprite.getX() && screenX < sprite.getX() + sprite.getWidth()) {
+            // Checks y-axis, but considered that the Y given is starting at the top of the screen
+            // Moves the given sprite
+            return Gdx.graphics.getHeight() - screenY >= sprite.getY() &&
+                    Gdx.graphics.getHeight() - screenY < sprite.getY() + sprite.getHeight();
+        }
+        return false;
+
+    }
+
+    public void moveSprite(Sprite sprite, float newX, float newY) {
+        this.batch.begin();
+        sprite.setPosition(newX, newY);
+        sprite.draw(this.batch);
+        this.batch.end();
+    }
+
+    public boolean isInsideGo(float screenX, float screenY){
+        return isInsideSprite(screenX,screenY,this.goButton);
+    }
+
+
+    }
