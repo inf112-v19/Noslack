@@ -5,7 +5,6 @@ import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,22 +18,6 @@ public class TileGrid{
     private Player[] players;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
-
-    /**
-     * Default constructor.
-     */
-   /* public TileGrid(){
-        this.fileName=this.fileName + "mapLayout.txt";
-
-        this.rows = 12;
-        this.columns = 12;
-        this.tileGrid = new Tile[rows][columns];
-        this.players = new Player[1];
-        this.playersInitiated = 0;
-
-        initiateTiles();
-    }
-    */
 
     /**
      * Constructor with specifications.
@@ -119,30 +102,6 @@ public class TileGrid{
             e.printStackTrace();
         }
     }
-    private Orientation stringToOrientation(String nextTileType, int row, int columns){
-        Orientation orientation;
-        switch (nextTileType.charAt(nextTileType.length() - 1)){
-            case '1':
-                orientation = Orientation.FACING_NORTH;
-                break;
-            case '2':
-                orientation = Orientation.FACING_EAST;
-                break;
-            case '3':
-                orientation = Orientation.FACING_SOUTH;
-                break;
-            case '4':
-                orientation = Orientation.FACING_WEST;
-                break;
-            default:
-                orientation = Orientation.FACING_NORTH;
-                break;
-        }
-        return orientation;
-
-    }
-
-
     /**
      *
      * @param nextTileType String which contains the delegation of new type
@@ -153,12 +112,13 @@ public class TileGrid{
         Orientation orientation;
         switch(nextTileType.substring(0,1)){
             case "W":
-                orientation = stringToOrientation(nextTileType,row,column);
+                orientation = stringToOrientation(nextTileType);
                 this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
                 break;
             case "C":
                 //One speed conveyors
                 boolean fast = nextTileType.contains("CC");
+
                 int rotating;
                 if (nextTileType.contains("R"))
                     rotating = 1;
@@ -166,12 +126,9 @@ public class TileGrid{
                     rotating = -1;
                 else
                     rotating = 0;
-                orientation = stringToOrientation(nextTileType,row,column);
+                orientation = stringToOrientation(nextTileType);
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
-
                 break;
-
-
             case "F":
                 /*
                 * If there was no number after F, it cast "F" to ascii int 70.
@@ -181,14 +138,12 @@ public class TileGrid{
                 char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
                 int n = Character.getNumericValue(ch);
 
-
                 if(n < 1 || n > 9){
                     n = flagsInitiated+1;
                 }
                 this.tileGrid[row][column].addObjectOnTile(new Flag(n));
                 flagsInitiated += 1;
                 break;
-
             case "H":
                 this.tileGrid[row][column].addObjectOnTile(new Hole());
                 break;
@@ -197,7 +152,7 @@ public class TileGrid{
                 break;
             case "P":
                 Player newPlayer;
-                orientation = stringToOrientation(nextTileType,row,column);
+                orientation = stringToOrientation(nextTileType);
                 newPlayer = new Player(this.playersInitiated, orientation);
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
                 this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
@@ -205,7 +160,25 @@ public class TileGrid{
                 break;
         }
     }
-
+    /**
+     * Findsorentation of tile element
+     * @param nextTileType String of what the next element is
+     * @return The orientation of the element
+     */
+    private Orientation stringToOrientation(String nextTileType){
+        switch (nextTileType.charAt(nextTileType.length() - 1)){
+            case '1':
+                return Orientation.FACING_NORTH;
+            case '2':
+                return Orientation.FACING_EAST;
+            case '3':
+                return Orientation.FACING_SOUTH;
+            case '4':
+                return Orientation.FACING_WEST;
+            default:
+                return Orientation.FACING_NORTH;
+        }
+    }
     /**
      * Takes a String from the buffered reader and gets the map information
      * @param mapInfo String containing map info
@@ -234,16 +207,33 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Get the number of rows in TileGrid
+     * @return Rows in grid
+     */
+    int getRows() {
+        return rows;
+    }
+
+    /**
+     * Get the number of columns in TileGrid
+     * @return Columns in grid
+     */
     int getColumns() {
         return columns;
     }
 
-    int getRows() {
-        return rows;
-    }
+    /**
+     * Get the number of flags in TileGrid
+     * @return Flags in grid
+     */
     int getFlagsInitiated(){
         return flagsInitiated;
     }
+    /**
+     * Get the number of players in TileGrid
+     * @return Players in grid
+     */
     int getPlayersInitiated(){
         return playersInitiated;
     }
@@ -295,9 +285,29 @@ public class TileGrid{
         if(tile.hasHole()){
             respawnPlayer(player.getPlayerNumber());
         }
+        if(tile.hasWall()){
+            tile.getWall().playerHitWall(player, true);
+        }
     }
 
+    /**
+     * TODO Needs reworking
+     * @param player Active player
+     * @param rowsToMove Rows to where the player is moving
+     * @param columnsToMove Columns to where the player is moving
+     * @return If player can move, or is blocked by wall
+     */
+    private boolean wallOnNextTile(Player player,int rowsToMove, int columnsToMove){
+        int row =player.getPosition().getRow()+rowsToMove;
+        int column =player.getPosition().getColumn()+columnsToMove;
+        Coordinate coordinate = new Coordinate(row,column);
 
+        Tile tile = getTile(coordinate);
+        if(tile.hasWall()){
+            return tile.getWall().playerHitWall(player, false);
+        }
+        return false;
+    }
 
     /**
      * Moves player on conveyor
@@ -405,8 +415,7 @@ public class TileGrid{
             getPlayer(playerNumber).setCurrentMove(Program.NONE);
             getPlayer(playerNumber).resetMoveProgress();
         }else{
-            boolean moveIsRotation = (currentMove==Program.LEFT) || (currentMove==Program.RIGHT) || (currentMove==Program.U);
-            if(moveIsRotation){
+            if(!currentMove.isMove()){
                 applyRotation(currentMove, playerNumber);
             }else{
                 applyMove(currentMove, playerNumber);
@@ -453,6 +462,10 @@ public class TileGrid{
             respawnPlayer(playerNumber);
             return false;
         }
+        if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+            stopPlayer(playerNumber);
+            return false;
+        }
         return true;
     }
 
@@ -483,6 +496,14 @@ public class TileGrid{
         player.receiveDamage();
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
+    }
+
+    /**
+     * Stop the players move
+     * @param playersNumber Player Number
+     */
+    private void stopPlayer(int playersNumber){
+        getPlayer(playersNumber).stopMove();
     }
 
     /**

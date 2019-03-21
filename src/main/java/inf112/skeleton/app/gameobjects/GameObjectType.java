@@ -1,38 +1,14 @@
 package inf112.skeleton.app.gameobjects;
 
 public enum GameObjectType {
-
-    PLAYER,
-
-
-
-    REPAIR_STATION,
+    CONVEYOR,
+    F_CONVEYOR,
     FLAG,
-    STANDARD_TILE,
-
-    CONVEYOR, F_CONVEYOR,
-
-
-    FAST_CONVEYOR_WEST,
-    FAST_CONVEYOR_NORTH,
-    FAST_CONVEYOR_EAST,
-    FAST_CONVEYOR_SOUTH,
-
-    WEST_WALL,
-    NORTH_WALL,
-    EAST_WALL,
-    SOUTH_WALL,
-
-    WEST_PUSHER,
-    NORTH_PUSHER,
-    EAST_PUSHER,
-    SOUTH_PUSHER,
-
     HOLE,
-
-    WEST_LASER_OUTLET,
-    NORTH_LASER_OUTLET,
-    EAST_LASER_OUTLET,
-    SOUTH_LASER_OUTLET,
-
+    LASER_OUTLET,
+    PLAYER,
+    PUSHER,
+    REPAIR_STATION,
+    STANDARD_TILE,
+    WALL
 }

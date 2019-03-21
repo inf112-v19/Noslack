@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class LaserOutlet implements GameObject {
-        private Texture texture;
-        private Sprite sprite;
-
+    private Sprite sprite;
     private Orientation orientation;
 
     public LaserOutlet() {
@@ -21,18 +19,13 @@ public class LaserOutlet implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {
-        return GameObjectType.NORTH_LASER_OUTLET;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return sprite;
+        return GameObjectType.LASER_OUTLET;
     }
 
     @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
             this.sprite = new Sprite(texture);
             switch (orientation) {
                 default:
@@ -58,8 +51,18 @@ public class LaserOutlet implements GameObject {
     }
 
     @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return this.orientation;
+    }
+
+    @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.NORTH_LASER_OUTLET){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.LASER_OUTLET){
             return -1;
         } else {
             return 1;

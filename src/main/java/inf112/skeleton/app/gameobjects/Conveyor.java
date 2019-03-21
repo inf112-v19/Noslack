@@ -25,37 +25,12 @@ public class Conveyor implements GameObject {
         evaluateSprite();
     }
 
-    /**
-     * Boolean check for fast conveyor
-     * @return Conveyors Boolean
-     */
-    public boolean isFast(){
-        return fast;
-    }
-
-    public int getTurn(){
-        return turn;
-    }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return GameObjectType.CONVEYOR;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    /**
-     * Evaluates if conveyor is fast.
-     */
     @Override
     public void evaluateSprite() {
 
         Texture texture;
         if(this.fast){
-
+            this.type = GameObjectType.F_CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
             }
@@ -64,6 +39,7 @@ public class Conveyor implements GameObject {
             }
         }
         else{
+            this.type = GameObjectType.CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
             }
@@ -71,12 +47,10 @@ public class Conveyor implements GameObject {
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
             }
         }
-
         this.sprite = new Sprite(texture);
         if(turn < 0){
             sprite.flip(true,false);
         }
-
         switch (orientation) {
             default:
                 sprite.setRotation(0);
@@ -94,20 +68,37 @@ public class Conveyor implements GameObject {
                 sprite.setRotation(90);
                 break;
         }
-        if(fast){
-            this.type = GameObjectType.F_CONVEYOR;
-        }
-        else{
-            this.type = GameObjectType.CONVEYOR;
-        }
     }
-
+    @Override
+    public Sprite getSprite() {
+        return this.sprite;
+    }
     /**
      * Get method for orientation
      * @return Conveyors Orientation
      */
     public Orientation getOrientation(){
         return this.orientation;
+    }
+    /**
+     * Boolean check for fast conveyor
+     * @return Conveyors Boolean
+     */
+    public boolean isFast(){
+        return this.fast;
+    }
+
+    /**
+     * Get value of the turn of this conveyor
+     * @return integer value of turn
+     */
+    public int getTurn(){
+        return this.turn;
+    }
+
+    @Override
+    public GameObjectType getGameObjectType() {
+        return this.type;
     }
 
     @Override

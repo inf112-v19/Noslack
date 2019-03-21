@@ -18,12 +18,10 @@ public class Player implements GameObject {
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
-    private GameObjectType type;
     private Coordinate position;
     private String name;
     private boolean hasWon;
     private ArrayList<Integer> flagsVisited;
-
     private Program currentMove;
     private int moveProgression;
 
@@ -47,8 +45,6 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
-
-
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
@@ -67,44 +63,6 @@ public class Player implements GameObject {
         evaluateSprite();
     }
 
-    @Override
-    public Sprite getSprite() {return sprite;}
-
-    /**
-     * Get method for health
-     * @return Players health
-     */
-    public int getHealth(){return health;}
-
-    /**
-     * Get method for orientation
-     * @return Players Orientation
-     */
-    public Orientation getOrientation() {return orientation;}
-
-    /**
-     * Method for updating orientation
-     * @param rotation ??
-     */
-    public void updateOrientation(Program rotation){
-        this.orientation = orientation.rotate(rotation);
-        evaluateSprite();
-    }
-    public void setOrientation(Orientation orientation){
-        this.orientation = orientation;
-        evaluateSprite();
-    }
-
-    public void setFlagsVisited(int n){
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
-    }
-
-    @Override
-    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
-
-    /**
-     * Method that evaluates the player's sprite based on the player's orientation.
-     */
     @Override
     public void evaluateSprite() {
         try {
@@ -130,27 +88,26 @@ public class Player implements GameObject {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in players evaluateSprite");
         }
+    }
+
+    @Override
+    public Sprite getSprite() {return sprite;}
+
+    /**
+     * Get the players number
+     * @return The players number.
+     */
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
     /**
-     * Give Cards to Player
-     * @param AbilityCards IDeck of AbilityCards
-     * @param ProgramCards IDeck of ProgramCards
+     * Get method for health
+     * @return Players health
      */
-    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
-        for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
-        for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
-    }
-    // TODO take selected program from user interface
-    public void pushProgram(ArrayList<ProgramCard> selectedCards){
-        this.program.clear();
-
-        for (int i = (selectedCards.size()-1); i >=0; i--) {
-            this.program.push(selectedCards.get(i));
-        }
-        //this.program.addAll(selectedCards);
+    public int getHealth(){
+        return health;
     }
 
     /**
@@ -169,21 +126,153 @@ public class Player implements GameObject {
     }
 
     /**
+     * Give player a new orientation
+     * @param orientation The players new orientation
+     */
+    public void setOrientation(Orientation orientation){
+        this.orientation = orientation;
+        evaluateSprite();
+    }
+
+    @Override
+    public Orientation getOrientation() {return orientation;}
+
+    /**
+     * Method for updating orientation
+     * @param rotation ??
+     */
+    public void updateOrientation(Program rotation){
+        this.orientation = orientation.rotate(rotation);
+        evaluateSprite();
+    }
+
+    /**
+     * Set a new psoition for the player
+     * @param position New position
+     */
+    public void setPosition(Coordinate position) {
+        this.position = position;
+    }
+
+    /**
+     * Get the players position
+     * @return Players current position
+     */
+    public Coordinate getPosition() {
+        return this.position;
+    }
+
+    /**
+     * Give Cards to Player
+     * @param AbilityCards IDeck of AbilityCards
+     * @param ProgramCards IDeck of ProgramCards
+     */
+    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
+        for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
+        for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
+    }
+
+    /**
+     * @return Player AbilityDeck
+     */
+    public ArrayList<AbilityCard> getAbilityHand() {return abilityHand;}
+
+    /**
+     * @return Players ProgramDeck
+     */
+    public ArrayList<ProgramCard> getProgramHand() {return programHand;}
+
+    /**
+     * Push the players chosen program into a queue
+     * @param selectedCards The selected programs
+     */
+    public void pushProgram(ArrayList<ProgramCard> selectedCards){
+        this.program.clear();
+
+        for (int i = (selectedCards.size()-1); i >=0; i--) {
+            this.program.push(selectedCards.get(i));
+        }
+        //this.program.addAll(selectedCards);
+    }
+
+    /**
+     * @return Program for round
+     */
+    public Stack<ProgramCard> getProgram() {return this.program;}
+
+    /**
+     * Get the players next chosen program
+     * @return Next Program
+     */
+    public ProgramCard getNextProgram(){
+        return this.program.pop();
+    }
+
+    /**
+     * Set the next program to be executed
+     * @param currentMove The current Program to be executed
+     */
+    public void setCurrentMove(Program currentMove) {
+        this.currentMove = currentMove;
+    }
+
+    /**
+     * Get the players current program.
+     * @return The current program.
+     */
+    public Program getCurrentMove(){
+        return this.currentMove;
+    }
+
+    /**
      * Replenishes the players health by 1, up to a maximum of 9 (no damage).
      */
     public void repair(){
         if(health < 9)this.health++;
     }
 
-    /**
-     * Reset player for new round
-     */
-
     public ArrayList<Integer> getFlagsVisited(){
         return flagsVisited;
     }
 
+    public void initiate (Coordinate cor){
+        setPosition(cor);
+        setBackUp();
+    }
 
+    /**
+     * Get the move progression for the players current program
+     * @return How far the player has gotten in the move.
+     */
+    public int getMoveProgression() {
+        return moveProgression;
+    }
+
+    /**
+     * Progress the players current move.
+     */
+    public void progressMove(){
+        this.moveProgression++;
+    }
+
+    /**
+     * Stop the current program.
+     */
+    public void resetMoveProgress(){
+        this.moveProgression = 0;
+    }
+
+    /**
+     * Stop a players move
+     */
+    public void stopMove(){
+        this.currentMove = Program.NONE;
+        resetMoveProgress();
+    }
+
+    /**
+     * Reset player for new round
+     */
     public void reset(){
         this.programHand.clear();
         this.abilityHand.clear();
@@ -191,64 +280,26 @@ public class Player implements GameObject {
         this.currentMove=Program.NONE;
         resetMoveProgress();
     }
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
+
+
     /**
-     * @return Player AbilityDeck
+     * Set the players Back Up
      */
-    public ArrayList<AbilityCard> getAbilityHand() {return abilityHand;}
-    /**
-     * @return Players ProgramDeck
-     */
-    public ArrayList<ProgramCard> getProgramHand() {return programHand;}
-
-    public void initiate (Coordinate cor){
-        setPosition(cor);
-        setBackUp();
-    }
-    /**
-     * @return Program for round
-     */
-    public Stack<ProgramCard> getProgram() {return program;}
-
-    public ProgramCard getNextProgram(){
-        return this.program.pop();
-    }
-
-    public Program getCurrentMove(){
-        return this.currentMove;
-    }
-
-    public void setCurrentMove(Program currentMove) {
-        this.currentMove = currentMove;
-    }
-
-    public int getMoveProgression() {
-        return moveProgression;
-    }
-
-    public void progressMove(){
-        this.moveProgression++;
-    }
-
-    public void resetMoveProgress(){
-        this.moveProgression = 0;
-    }
-
     public void setBackUp(){
         this.backUp = this.getPosition();
         this.backUp.setOrientation(getOrientation());
     }
+
+    /**
+     * Get the players Back Up
+     * @return the players Back Up
+     */
     public Coordinate getBackUp(){
-        return backUp;
+        return this.backUp;
     }
 
-    public void setPosition(Coordinate position) {
-        this.position = position;
-    }
-    public Coordinate getPosition() {
-        return this.position;
+    public void setFlagsVisited(int n){
+        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
     }
 
     public boolean isFinished(){
@@ -261,6 +312,9 @@ public class Player implements GameObject {
             this.hasWon = true;
         }
     }
+
+    @Override
+    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
 
     @Override
     public int compareTo(Object o) {

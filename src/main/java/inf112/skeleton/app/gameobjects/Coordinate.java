@@ -1,5 +1,7 @@
 package inf112.skeleton.app.gameobjects;
 
+import java.util.Objects;
+
 public class Coordinate {
 
     private int row;
@@ -19,18 +21,25 @@ public class Coordinate {
     }
 
     public int getRow(){
-        return row;
+        return this.row;
     }
 
     public int getColumn() {
-        return column;
+        return this.column;
     }
 
-    public Orientation getOrientation(){
-        return orientation;
+    @Override
+    public boolean equals(Object o) {
+        if(o.getClass()==this.getClass())
+            return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
+        return false;
     }
 
-    public void setOrientation(Orientation orientation){
+    public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 }

@@ -16,7 +16,6 @@ import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import inf112.skeleton.app.gameobjects.Player;
 
 public class RoboRally extends Game implements InputProcessor {
 
@@ -70,8 +69,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     private int roboTick;
 
-    private Sound gameMusic;
-
     /**
      * Creates the game
      */
@@ -79,8 +76,8 @@ public class RoboRally extends Game implements InputProcessor {
     public void create() {
         // Load Dealt cards background texture and sprite.
 
-        this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
-        this.gameMusic.loop();
+        Sound gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
+        gameMusic.loop();
 
         Gdx.input.setInputProcessor(this);
 
