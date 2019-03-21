@@ -20,6 +20,12 @@ public class Coordinate {
         this.orientation = orientation;
     }
 
+    public Coordinate (Coordinate coordinate){
+        this.row = coordinate.getRow();
+        this.column = coordinate.getColumn();
+        this.orientation = coordinate.getOrientation();
+    }
+
     public int getRow(){
         return this.row;
     }
@@ -28,18 +34,26 @@ public class Coordinate {
         return this.column;
     }
 
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return this.orientation;
+    }
+
+    public void update(Coordinate coordinate){
+        this.row = coordinate.getRow();
+        this.column = coordinate.getColumn();
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o.getClass()==this.getClass())
             return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
         return false;
     }
-
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
+    public String toString(){
+        return "Row: "+getRow()+" Column: "+getColumn();
     }
 }

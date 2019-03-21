@@ -151,7 +151,7 @@ public class Player implements GameObject {
      * @param position New position
      */
     public void setPosition(Coordinate position) {
-        this.position = position;
+        this.position =position;
     }
 
     /**
