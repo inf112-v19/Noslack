@@ -14,6 +14,7 @@ import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.GameObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
@@ -188,15 +189,6 @@ public class RoboRally extends Game implements InputProcessor {
      * drawposition.
      */
     private void renderGrid() {
-
-        /*
-         * Todo:
-         * Render the grid and all the objects residing
-         * on it.
-         */
-
-        // Work in progress
-
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
         this.drawPositionY = 40 + TILE_SIZE * 4;
@@ -213,8 +205,12 @@ public class RoboRally extends Game implements InputProcessor {
                 spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
                 spriteOfTile.draw(this.batch);
 
+                GameObject[] objectsOnTileAsArray = new GameObject[objectsOnTile.size()];
+                objectsOnTileAsArray = objectsOnTile.toArray(objectsOnTileAsArray);
+                Arrays.sort(objectsOnTileAsArray);
+
                 // Draw GameObjects on tile
-                for (GameObject gameObject : objectsOnTile) {
+                for (GameObject gameObject : objectsOnTileAsArray) {
                     Sprite spriteOfGameObject = gameObject.getSprite();
                     spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
                     spriteOfGameObject.draw(this.batch);

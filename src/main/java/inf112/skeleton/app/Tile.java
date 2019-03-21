@@ -60,19 +60,10 @@ public class Tile implements GameObject{
         return objectsOnTile.contains(player);
     }
 
-    public Boolean hasFlag(){
-        for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Boolean hasWallWithOrientation(Orientation orientation){
         GameObjectType wallType;
         switch(orientation){
-            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; System.out.println("SouthWallAhead");break;
+            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; break;
             case FACING_WEST: wallType = GameObjectType.EAST_WALL; break;
             case FACING_SOUTH: wallType = GameObjectType.NORTH_WALL; break;
             case FACING_EAST: wallType = GameObjectType.WEST_WALL; break;
@@ -106,18 +97,9 @@ public class Tile implements GameObject{
         return new Conveyor();
     }
 
-    public Boolean hasRepairStation(){
+    public boolean hasGameObjectOfType(GameObjectType type){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.REPAIR_STATION){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean hasHole() {
-        for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.HOLE){
+            if(gameObject.getGameObjectType() == type){
                 return true;
             }
         }
@@ -138,4 +120,6 @@ public class Tile implements GameObject{
     public int compareTo(Object other) {
         return -1;
     }
+
+
 }

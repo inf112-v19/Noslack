@@ -11,13 +11,10 @@ public class Pusher implements GameObject {
     private Orientation orientation;
     private GameObjectType type;
 
-
-
     public Pusher(Orientation orientation, GameObjectType type) {
         this.orientation = orientation;
         this.type = type;
     }
-
 
     @Override
     public GameObjectType getGameObjectType() {

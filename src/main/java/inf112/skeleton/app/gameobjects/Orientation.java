@@ -1,13 +1,14 @@
 package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
 
 public enum Orientation {
     FACING_NORTH,
     FACING_WEST,
     FACING_SOUTH,
     FACING_EAST,
+    HORIZONTAL,
+    VERTICAL,
     NONE;
 
     /**

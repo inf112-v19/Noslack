@@ -120,6 +120,7 @@ public class TileGrid{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
     /**
      *
@@ -133,13 +134,13 @@ public class TileGrid{
                 this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
                 break;
             case "W2":
-                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
                 break;
             case "W3":
-                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_SOUTH));
                 break;
             case "W4":
-                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_WEST));
                 break;
             case "W":
                 this.tileGrid[row][column].addObjectOnTile(new Wall());
@@ -188,6 +189,30 @@ public class TileGrid{
                 break;
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
+                break;
+            case "O1":
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_NORTH));
+                break;
+            case "O2":
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_EAST));
+                break;
+            case "O3":
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_SOUTH));
+                break;
+            case "O4":
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_WEST));
+                break;
+            case "LH":
+                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(Orientation.HORIZONTAL));
+                break;
+            case "LV":
+                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(Orientation.VERTICAL));
+                break;
+            case "RCC":
+                this.tileGrid[row][column].addObjectOnTile(new Rotator(GameObjectType.ROTATOR_COUNTER_CLOCKWISE));
+                break;
+            case "RC":
+                this.tileGrid[row][column].addObjectOnTile(new Rotator(GameObjectType.ROTATOR_CLOCKWISE));
                 break;
             case "P":
                 Player newPlayer;
@@ -243,20 +268,29 @@ public class TileGrid{
             Conveyor conveyor = tile.getConveyor();
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
         }
-        if(tile.hasRepairStation()){
+        if(tile.hasGameObjectOfType(GameObjectType.REPAIR_STATION)){
             if (player.isFinished()) {
                 player.repair();
                 player.setBackUp(player.getPosition());
             }
         }
-        if(tile.hasFlag()){
+        if(tile.hasGameObjectOfType(GameObjectType.FLAG)){
             if(player.isFinished()){
                 player.setBackUp(player.getPosition());
                 player.win();
             }
         }
-        if(tile.hasHole()){
+        if(tile.hasGameObjectOfType(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.LASER_BEAM)){
+            player.receiveDamage(1);
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.ROTATOR_CLOCKWISE)){
+            applyRotation(Program.RIGHT, player.getPlayerNumber());
+        }
+        if(tile.hasGameObjectOfType(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
+            applyRotation(Program.LEFT, player.getPlayerNumber());
         }
     }
 
@@ -414,7 +448,46 @@ public class TileGrid{
             respawnPlayer(playerNumber);
             return false;
         }
+        if(aboutToCrashIntoWall(playerNumber)){
+            return false;
+        }
         return true;
+    }
+
+    public boolean aboutToCrashIntoWall(int playerNumber){
+
+        Player player = players[playerNumber];
+        Orientation orientationOfPlayer = player.getOrientation();
+        Coordinate coordinatesOfPlayer = getPlayerPosition(playerNumber);
+        int rowOfPlayer = coordinatesOfPlayer.getRow();
+        int columnOfPlayer = coordinatesOfPlayer.getColumn();
+
+
+        //Player faces north, wall faces south.
+        if(orientationOfPlayer == Orientation.FACING_NORTH){
+            Tile tileNorthOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer];
+            if(tileNorthOfPlayer.hasWallWithOrientation(orientationOfPlayer)){
+                return true;
+            }
+        }
+
+        //Player faces north, wall faces south.
+        if(orientationOfPlayer == Orientation.FACING_NORTH){
+            Tile tileNorthOfPlayer = tileGrid[rowOfPlayer-1][columnOfPlayer];
+            if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_SOUTH)){
+                return true;
+            }
+        }
+
+        //Player faces east, wall faces west.
+        if(orientationOfPlayer == Orientation.FACING_EAST){
+            Tile tileNorthOfPlayer = tileGrid[rowOfPlayer][columnOfPlayer+1];
+            if(tileNorthOfPlayer.hasWallWithOrientation(Orientation.FACING_WEST)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
