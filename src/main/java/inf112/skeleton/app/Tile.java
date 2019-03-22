@@ -3,8 +3,10 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.*;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Tile implements GameObject{
@@ -12,10 +14,12 @@ public class Tile implements GameObject{
     private GameObjectType gameObjectType;
     private Sprite sprite;
     private PriorityQueue<GameObject> objectsOnTile;
+    private ArrayList<Orientation> blocked;
 
     public Tile(GameObjectType gameObjectType){
         this.objectsOnTile = new PriorityQueue<>();
         this.gameObjectType = gameObjectType;
+        this.blocked = new ArrayList<>();
         evaluateSprite();
     }
 
@@ -51,7 +55,8 @@ public class Tile implements GameObject{
      * @param newObjectOnTile Object to be added on the Tile
      */
     public void addObjectOnTile(GameObject newObjectOnTile){
-        objectsOnTile.add(newObjectOnTile);
+        this.objectsOnTile.add(newObjectOnTile);
+        tileBlocked(newObjectOnTile);
     }
 
     /**
@@ -59,7 +64,7 @@ public class Tile implements GameObject{
      * @param objectToRemove Object to be removed
      */
     public void removeObjectFromTile(GameObject objectToRemove){
-        objectsOnTile.remove(objectToRemove);
+        this.objectsOnTile.remove(objectToRemove);
     }
 
     /**
@@ -76,7 +81,7 @@ public class Tile implements GameObject{
     }
 
     public Boolean hasFlag(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.FLAG){
                 return true;
             }
@@ -84,7 +89,7 @@ public class Tile implements GameObject{
         return false;
     }
     public Flag getFlag(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.FLAG){
                 return (Flag) gameObject;
             }
@@ -92,7 +97,7 @@ public class Tile implements GameObject{
         return null;
     }
     public Boolean hasWall(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if( gameObject.getGameObjectType().equals(GameObjectType.WALL)) {
                 return true;
             }
@@ -100,7 +105,7 @@ public class Tile implements GameObject{
         return false;
     }
     public Wall getWall(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.WALL){
                 return (Wall) gameObject;
             }
@@ -109,7 +114,7 @@ public class Tile implements GameObject{
     }
 
     public Boolean hasConveyor(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR ||
                     gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR ){
                 return true;
@@ -119,7 +124,7 @@ public class Tile implements GameObject{
     }
 
     public Conveyor getConveyor(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
                 return (Conveyor) gameObject;
             }
@@ -128,7 +133,7 @@ public class Tile implements GameObject{
     }
 
     public Boolean hasRepairStation(){
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.REPAIR_STATION){
                 return true;
             }
@@ -137,12 +142,54 @@ public class Tile implements GameObject{
     }
 
     public Boolean hasHole() {
-        for(GameObject gameObject : objectsOnTile){
+        for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType() == GameObjectType.HOLE){
                 return true;
             }
         }
         return false;
+    }
+
+
+    /**
+     * Finds out which orientations on the tile are blocked
+     */
+    private void tileBlocked(GameObject gameObject){
+        switch (gameObject.getGameObjectType()){
+            case WALL:
+                this.blocked.add(gameObject.getOrientation());
+                break;
+            case LASER_OUTLET:
+                this.blocked.add(gameObject.getOrientation().opposite());
+                break;
+            case PUSHER:
+                this.blocked.add(gameObject.getOrientation().opposite());
+                break;
+        }
+    }
+
+    /**
+     * Finds out if the players path is blocked by object.
+     * @param player player in question
+     * @return if Player can move
+     */
+    public boolean playerPathBlocked(Player player){
+        if(this.objectsOnTile.contains(player)){
+            if(player.getCurrentMove().equals(Program.BACK)){
+                return this.blocked.contains(player.getOrientation().opposite());
+            }
+            else{
+                return this.blocked.contains(player.getOrientation());
+            }
+        }
+        else{
+            if(player.getCurrentMove().equals(Program.BACK)){
+                return this.blocked.contains(player.getOrientation());
+            }
+            else{
+                return this.blocked.contains(player.getOrientation().opposite());
+            }
+        }
     }
 
     @Override

@@ -133,7 +133,7 @@ public class TileGrid{
                 /*
                 * If there was no number after F, it cast "F" to ascii int 70.
                 * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
-                * */
+                */
 
                 char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
                 int n = Character.getNumericValue(ch);
@@ -287,12 +287,9 @@ public class TileGrid{
         }
     }
 
-    private boolean wallOnCurrentTile(Player player){
+    private boolean blockedOnCurrentTile(Player player){
         Tile tile = getTile(player.getPosition());
-        if(tile.hasWall()){
-            return tile.getWall().playerHitWall(player, true);
-        }
-        return false;
+        return tile.playerPathBlocked(player);
     }
     /**
      * TODO Needs reworking
@@ -307,10 +304,7 @@ public class TileGrid{
         Coordinate coordinate = new Coordinate(row,column);
 
         Tile tile = getTile(coordinate);
-        if(tile.hasWall()){
-            return tile.getWall().playerHitWall(player, false);
-        }
-        return false;
+        return tile.playerPathBlocked(player);
     }
 
     /**
@@ -455,7 +449,7 @@ public class TileGrid{
      */
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
-        if(wallOnCurrentTile(getPlayer(playerNumber))){
+        if(blockedOnCurrentTile(getPlayer(playerNumber))){
             return false;
         }
         if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
