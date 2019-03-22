@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class RepairStation implements GameObject {
-    private Texture texture;
     private Sprite sprite;
 
     public RepairStation() {
@@ -18,19 +17,24 @@ public class RepairStation implements GameObject {
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    @Override
     public void evaluateSprite() {
         try {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/RepairPlaceholder.png"));
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/RepairPlaceholder.png"));
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error in RepairStation evaluateSprite");
         }
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public Orientation getOrientation() {
+        return null;
     }
 
     @Override

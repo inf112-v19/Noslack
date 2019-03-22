@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -25,8 +26,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     // Grid and tile specifications
     private final int TILE_SIZE = 32;
-    private final int GRID_ROWS = 12;
-    private final int GRID_COLUMNS = 12;
+    private int GRID_ROWS;
+    private int GRID_COLUMNS;
 
     // Dealt cards background texture and sprite.
 
@@ -68,14 +69,15 @@ public class RoboRally extends Game implements InputProcessor {
 
     private int roboTick;
 
-    private Sound gameMusic;
-
+    /**
+     * Creates the game
+     */
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
 
-        this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
-        this.gameMusic.loop();
+        Sound gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
+        gameMusic.loop();
 
         Gdx.input.setInputProcessor(this);
 
@@ -95,13 +97,17 @@ public class RoboRally extends Game implements InputProcessor {
         this.batch = new SpriteBatch();
 
         this.currentPhase = 0;
-        this.tileGrid = new TileGrid(this.GRID_ROWS, this.GRID_COLUMNS, 1);
+        this.tileGrid = new TileGrid();
+        this.GRID_COLUMNS = tileGrid.getColumns();
+        this.GRID_ROWS = tileGrid.getRows();
 
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
 
-        int playerHealth = this.tileGrid.getPlayerHealth(0);
-        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        for(Player player : this.tileGrid.getPlayers()){
+            int playerHealth = player.getHealth();
+            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        }
 
         this.programHand = tileGrid.getPlayerProgramHand(0);
 
@@ -240,6 +246,7 @@ public class RoboRally extends Game implements InputProcessor {
                 try {
                     Thread.sleep(targetDelay - this.diff);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
             this.start = System.currentTimeMillis();
@@ -261,8 +268,13 @@ public class RoboRally extends Game implements InputProcessor {
             currentPhase++;
         }
         */
+
+        if(this.tileGrid.getPlayer(0).isFinished()){
+            this.currentPhase = 100;
+        }
         if (this.currentPhase <= 5) {
             // Runs per phase
+
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 activateTiles();
                 this.tileGrid.applyNextProgram(0);
@@ -297,8 +309,10 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        int playerHealth = this.tileGrid.getPlayerHealth(0);
-        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        for(Player player : this.tileGrid.getPlayers()){
+            int playerHealth = player.getHealth();
+            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        }
 
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
@@ -343,7 +357,7 @@ public class RoboRally extends Game implements InputProcessor {
                 this.currentSprite = sprite;
             }
             if (card instanceof AbilityCard){
-                if(this.abilityText == ""){
+                if(this.abilityText.equals("")){
                     this.abilityText = ((AbilityCard) card).getAbility().toString();
                 } else {
                     this.abilityText = "";

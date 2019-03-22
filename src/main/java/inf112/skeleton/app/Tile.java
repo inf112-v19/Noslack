@@ -10,39 +10,54 @@ import java.util.PriorityQueue;
 public class Tile implements GameObject{
 
     private GameObjectType gameObjectType;
-    private Texture texture;
     private Sprite sprite;
     private PriorityQueue<GameObject> objectsOnTile;
 
     public Tile(GameObjectType gameObjectType){
-        objectsOnTile = new PriorityQueue<>();
+        this.objectsOnTile = new PriorityQueue<>();
         this.gameObjectType = gameObjectType;
         evaluateSprite();
     }
 
-
-    /**
-     * Evaluates what sprite should be loaded for
-     * this tile, based on what the tile's
-     * GameObjectType is.
-     */
+    @Override
     public void evaluateSprite(){
-        switch(gameObjectType){
-            case STANDARD_TILE:
+        try {
+            Texture texture;
+            if (gameObjectType == GameObjectType.STANDARD_TILE) {
                 texture = new Texture(Gdx.files.internal("./assets/tiles/standardTile32x32.png"));
-                sprite = new Sprite(texture);
-                break;
-            default:
+            }
+            else {
                 texture = new Texture(Gdx.files.internal("./assets/error.png"));
-                sprite = new Sprite(texture);
-                break;
+            }
+            sprite = new Sprite(texture);
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in Tile evaluateSprite");
         }
     }
 
+    @Override
+    public Sprite getSprite(){
+        return this.sprite;
+    }
+
+    @Override
+    public Orientation getOrientation(){
+        return null;
+    }
+
+    /**
+     * Adds an object on the Tile
+     * @param newObjectOnTile Object to be added on the Tile
+     */
     public void addObjectOnTile(GameObject newObjectOnTile){
         objectsOnTile.add(newObjectOnTile);
     }
 
+    /**
+     * Removes an Object from the Tile
+     * @param objectToRemove Object to be removed
+     */
     public void removeObjectFromTile(GameObject objectToRemove){
         objectsOnTile.remove(objectToRemove);
     }
@@ -53,11 +68,11 @@ public class Tile implements GameObject{
      * @return  PriorityQueue of every GameObject on the tile
      */
     public PriorityQueue<GameObject> getObjectsOnTile(){
-        return objectsOnTile;
+        return this.objectsOnTile;
     }
 
     public Boolean hasPlayer(Player player){
-        return objectsOnTile.contains(player);
+        return this.objectsOnTile.contains(player);
     }
 
     public Boolean hasFlag(){
@@ -68,29 +83,35 @@ public class Tile implements GameObject{
         }
         return false;
     }
-
-    public Boolean hasWallWithOrientation(Orientation orientation){
-        GameObjectType wallType;
-        switch(orientation){
-            case FACING_NORTH: wallType = GameObjectType.NORTH_WALL; System.out.println("SouthWallAhead");break;
-            case FACING_WEST: wallType = GameObjectType.EAST_WALL; break;
-            case FACING_SOUTH: wallType = GameObjectType.NORTH_WALL; break;
-            case FACING_EAST: wallType = GameObjectType.WEST_WALL; break;
-            default: wallType = GameObjectType.NORTH_WALL; break;
-        }
-
+    public Flag getFlag(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == wallType){
-                System.out.println("Hit Wall!");
+            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
+                return (Flag) gameObject;
+            }
+        }
+        return null;
+    }
+    public Boolean hasWall(){
+        for(GameObject gameObject : objectsOnTile){
+            if( gameObject.getGameObjectType().equals(GameObjectType.WALL)) {
                 return true;
             }
         }
         return false;
     }
+    public Wall getWall(){
+        for(GameObject gameObject : objectsOnTile){
+            if(gameObject.getGameObjectType() == GameObjectType.WALL){
+                return (Wall) gameObject;
+            }
+        }
+        return null;
+    }
 
     public Boolean hasConveyor(){
         for(GameObject gameObject : objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
+            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR ||
+                    gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR ){
                 return true;
             }
         }
@@ -103,7 +124,7 @@ public class Tile implements GameObject{
                 return (Conveyor) gameObject;
             }
         }
-        return new Conveyor(Orientation.FACING_NORTH, false, 0);
+        return null;
     }
 
     public Boolean hasRepairStation(){
@@ -126,12 +147,7 @@ public class Tile implements GameObject{
 
     @Override
     public GameObjectType getGameObjectType() {
-        return gameObjectType;
-    }
-
-    @Override
-    public Sprite getSprite(){
-        return sprite;
+        return this.gameObjectType;
     }
 
     @Override

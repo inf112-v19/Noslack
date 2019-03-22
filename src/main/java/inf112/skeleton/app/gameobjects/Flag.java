@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import java.io.FileNotFoundException;
-
 public class Flag implements GameObject {
     private Sprite sprite;
     private int flagNumber;
@@ -21,21 +19,6 @@ public class Flag implements GameObject {
         evaluateSprite();
     }
 
-    public int getFlagNumber(){
-        return flagNumber;
-    }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return GameObjectType.FLAG;
-    }
-
-    @Override
-    public Sprite getSprite() {return sprite;}
-
-    /**
-     * Evaluates flagNumber.
-     */
     @Override
     public void evaluateSprite() {
         try {
@@ -50,8 +33,6 @@ public class Flag implements GameObject {
             else{
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png"));
             }
-
-
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,6 +40,25 @@ public class Flag implements GameObject {
         }
     }
 
+    @Override
+    public Sprite getSprite() {return sprite;}
+
+    @Override
+    public Orientation getOrientation(){
+        return null;
+    }
+
+    /**
+     * Get the flags number
+     * @return Flag number
+     */
+    public int getFlagNumber(){
+        return flagNumber;
+    }
+    @Override
+    public GameObjectType getGameObjectType() {
+        return GameObjectType.FLAG;
+    }
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){
