@@ -88,6 +88,7 @@ public class Player implements GameObject {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Error in Player evaluateSprite");
         }
     }
 
@@ -151,7 +152,7 @@ public class Player implements GameObject {
      * @param position New position
      */
     public void setPosition(Coordinate position) {
-        this.position = position;
+        this.position =position;
     }
 
     /**
