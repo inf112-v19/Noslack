@@ -130,6 +130,10 @@ public class AbilityCard implements RRCard {
     }
 
 
+    @Override
+    public boolean equals(RRCard card) {
+        return this.ability.equals(((AbilityCard)card).getAbility());
+    }
 
     @Override
     public Sprite getSprite() {

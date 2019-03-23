@@ -10,17 +10,14 @@ public class Pusher implements GameObject {
     private Orientation orientation;
     private GameObjectType type;
 
-
+    public Pusher() {
+        this.orientation = Orientation.FACING_NORTH;
+        this.type = GameObjectType.PUSHER;
+    }
 
     public Pusher(Orientation orientation) {
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
-    }
-
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return type;
     }
 
     @Override
@@ -49,12 +46,19 @@ public class Pusher implements GameObject {
 
     @Override
     public Sprite getSprite() {
-        return sprite;
+        return this.sprite;
     }
+
     @Override
     public Orientation getOrientation(){
         return this.orientation;
     }
+
+    @Override
+    public GameObjectType getGameObjectType() {
+        return this.type;
+    }
+
     @Override
     public int compareTo(Object o) {
         if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){

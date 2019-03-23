@@ -149,10 +149,19 @@ public class Tile implements GameObject{
         }
         return false;
     }
-
+    public Boolean hasGameObject(GameObjectType objectType){
+        for(GameObject gameObject : this.objectsOnTile){
+            if(gameObject.getGameObjectType().equals(objectType)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Finds out which orientations on the tile are blocked
+     * TODO Add new objects that kan block player
+     * @param gameObject Object that was just added to tile
      */
     private void tileBlocked(GameObject gameObject){
         switch (gameObject.getGameObjectType()){

@@ -52,6 +52,4 @@ public interface IDeck {
      */
     boolean contains(RRCard card);
 
-
-
 }
