@@ -67,12 +67,12 @@ public class TileGrid{
      * Todo: Implement reading tile-layout from file, or randomisation.
      */
     private void initiateTiles(){
-
         try {
             // FileReader reads text files in the default encoding.
             FileReader fileReader = new FileReader(this.fileName);
-            // Designate the space used in the file between tiles
+            // Designate the space used in the file between tiles and objects
             String space =" ";
+            String split = ",";
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             getMapInfo(bufferedReader.readLine());
 
@@ -82,7 +82,7 @@ public class TileGrid{
                 for(int column = this.columns-1; column>=0; column--) {
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
                     this. tileGrid[row][column] = new Tile(GameObjectType.STANDARD_TILE);
-                    String[] typesOnTile = nextTileTypesOfColumn.split(",");
+                    String[] typesOnTile = nextTileTypesOfColumn.split(split);
 
                     for (String s : typesOnTile) {
                         // Adding objects on top of tile
@@ -93,8 +93,8 @@ public class TileGrid{
                 }
             }
             System.out.println("Players: " + getPlayers());
-            for(Player p : getPlayers()){
-                p.setFlagsVisited(getFlagsInitiated());
+            for(Player player : getPlayers()){
+                player.setFlagsVisited(getFlagsInitiated());
             }
 
             bufferedReader.close();
