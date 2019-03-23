@@ -245,22 +245,22 @@ public class TileGrid{
      * @param player The active player
      */
     private void playerOnTile(Tile tile, Player player) {
-        if(tile.hasConveyor()) {
-            Conveyor conveyor = tile.getConveyor();
+        // Conveyor
+        if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
+            Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
         }
-        if(tile.hasRepairStation()){
+        // Repair Station
+        if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
             if (player.isFinished()) {
                 player.repair();
                 player.setBackUp();
             }
         }
-        if(tile.hasFlag()){
+        // Flag
+        if(tile.hasGameObject(GameObjectType.FLAG)){
             if(player.isFinished()){
-
-                int n = tile.getFlag().getFlagNumber();
-
-
+                int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
                 if(!player.getFlagsVisited().subList(n-1,player.getFlagsVisited().size()-1).contains(1)
                         && (!player.getFlagsVisited().subList(0,n-1).contains(0)
@@ -278,33 +278,12 @@ public class TileGrid{
                     }
 
                 }
-
-
             }
         }
-        if(tile.hasHole()){
+        // Hole
+        if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
         }
-    }
-
-    private boolean blockedOnCurrentTile(Player player){
-        Tile tile = getTile(player.getPosition());
-        return tile.playerPathBlocked(player);
-    }
-    /**
-     * TODO Needs reworking
-     * @param player Active player
-     * @param rowsToMove Rows to where the player is moving
-     * @param columnsToMove Columns to where the player is moving
-     * @return If player can move, or is blocked by wall
-     */
-    private boolean wallOnNextTile(Player player,int rowsToMove, int columnsToMove){
-        int row =player.getPosition().getRow()+rowsToMove;
-        int column =player.getPosition().getColumn()+columnsToMove;
-        Coordinate coordinate = new Coordinate(row,column);
-
-        Tile tile = getTile(coordinate);
-        return tile.playerPathBlocked(player);
     }
 
     /**
@@ -343,10 +322,12 @@ public class TileGrid{
             int row = player.getPosition().getRow();
             int col = player.getPosition().getColumn();
 
-            if(conveyor.isFast() && getTile(row+rowsToMove,col+colsToMove).hasConveyor()){
-                rowsToMove *= 2;
-                colsToMove *= 2;
-
+            if(conveyor.isFast()){
+                Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
+                if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
+                    rowsToMove *= 2;
+                    colsToMove *= 2;
+                }
             }
             movePlayer(playerNumber,rowsToMove,colsToMove);
         }
@@ -357,7 +338,7 @@ public class TileGrid{
      * @param playerNumber Player number
      */
     void applyNextProgram(int playerNumber){
-        getPlayer(playerNumber).setCurrentMove(getPlayer(playerNumber).getNextProgram().getMove());
+        getPlayer(playerNumber).setNextProgram();
     }
 
     /**
@@ -407,12 +388,12 @@ public class TileGrid{
     public void continueMove(int playerNumber){
         Program currentMove = getPlayer(playerNumber).getCurrentMove();
         int moveProgression = getPlayer(playerNumber).getMoveProgression();
-        int totalMoves = currentMove.totalMoves();
 
-        if(moveProgression == totalMoves){
+        if(moveProgression==currentMove.totalMoves()){
             getPlayer(playerNumber).setCurrentMove(Program.NONE);
             getPlayer(playerNumber).resetMoveProgress();
-        }else{
+        }
+        else{
             if(!currentMove.isMove()){
                 applyRotation(currentMove, playerNumber);
             }else{
@@ -449,26 +430,57 @@ public class TileGrid{
      */
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
-        if(blockedOnCurrentTile(getPlayer(playerNumber))){
+        if(playerBlockedOnCurrentTile(getPlayer(playerNumber))){
             return false;
         }
-        if(wallOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
             return false;
         }
-        if((coordinateOfPlayer.getRow()+rowsToMove > this.rows-1) || (coordinateOfPlayer.getRow()+rowsToMove < 0)){
-            //Player out of bounds
-            respawnPlayer(playerNumber);
-            return false;
-        }
-        if((coordinateOfPlayer.getColumn()+columnsToMove > this.columns-1) ||
-                (coordinateOfPlayer.getColumn()+columnsToMove < 0)){
-            //Player out of bounds
+        if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
             return false;
         }
 
         return true;
     }
+
+    /**
+     * @param player Player in question
+     * @return If the path is blocked on the Tile
+     */
+    private boolean playerBlockedOnCurrentTile(Player player){
+        Tile tile = getTile(player.getPosition());
+        return tile.playerPathBlocked(player);
+    }
+    /**
+     * @param player Active player
+     * @param rowsToMove Rows to where the player is moving
+     * @param columnsToMove Columns to where the player is moving
+     * @return If player can move, or is blocked by wall
+     */
+    private boolean playerBlockedOnNextTile(Player player, int rowsToMove, int columnsToMove){
+        Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
+                player.getPosition().getColumn()+columnsToMove);
+
+        return getTile(coordinate).playerPathBlocked(player);
+    }
+
+    /**
+     * Finds out if the player is moving out of bounds
+     * @param coordinateOfPlayer Current position of player in question
+     * @param rowsToMove The number of rows to be moved
+     * @param columnsToMove The number of columns to be moved
+     * @return Is the move out of bounds.
+     */
+    private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
+        Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow()+rowsToMove,
+                coordinateOfPlayer.getColumn()+columnsToMove);
+        if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
+            return true;
+        }
+        else return newCoordinate.getColumn() > this.columns - 1 || newCoordinate.getColumn() < 0;
+    }
+
 
     /**
      * Respawns the player after it has fallen out of grid, with health=6.
@@ -497,14 +509,6 @@ public class TileGrid{
         player.receiveDamage();
 
         //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
-    }
-
-    /**
-     * Stop the players move
-     * @param playersNumber Player Number
-     */
-    private void stopPlayer(int playersNumber){
-        getPlayer(playersNumber).stopMove();
     }
 
     /**

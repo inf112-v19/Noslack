@@ -15,6 +15,7 @@ public class Conveyor implements GameObject {
         this.orientation = Orientation.FACING_NORTH;
         this.turn = 0;
         this.fast = false;
+        this.type = GameObjectType.CONVEYOR;
         evaluateSprite();
     }
 
@@ -22,6 +23,7 @@ public class Conveyor implements GameObject {
         this.orientation = orientation;
         this.turn = turn;
         this.fast = fast;
+        this.type = GameObjectType.CONVEYOR;
         evaluateSprite();
     }
 
@@ -30,7 +32,6 @@ public class Conveyor implements GameObject {
 
         Texture texture;
         if(this.fast){
-            this.type = GameObjectType.F_CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
             }
@@ -39,7 +40,6 @@ public class Conveyor implements GameObject {
             }
         }
         else{
-            this.type = GameObjectType.CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
             }

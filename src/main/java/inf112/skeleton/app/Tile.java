@@ -80,75 +80,6 @@ public class Tile implements GameObject{
         return this.objectsOnTile.contains(player);
     }
 
-    public Boolean hasFlag(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
-                return true;
-            }
-        }
-        return false;
-    }
-    public Flag getFlag(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.FLAG){
-                return (Flag) gameObject;
-            }
-        }
-        return null;
-    }
-    public Boolean hasWall(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if( gameObject.getGameObjectType().equals(GameObjectType.WALL)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public Wall getWall(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.WALL){
-                return (Wall) gameObject;
-            }
-        }
-        return null;
-    }
-
-    public Boolean hasConveyor(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR ||
-                    gameObject.getGameObjectType() == GameObjectType.F_CONVEYOR ){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Conveyor getConveyor(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.CONVEYOR){
-                return (Conveyor) gameObject;
-            }
-        }
-        return null;
-    }
-
-    public Boolean hasRepairStation(){
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.REPAIR_STATION){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean hasHole() {
-        for(GameObject gameObject : this.objectsOnTile){
-            if(gameObject.getGameObjectType() == GameObjectType.HOLE){
-                return true;
-            }
-        }
-        return false;
-    }
     public Boolean hasGameObject(GameObjectType objectType){
         for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType().equals(objectType)){
@@ -156,6 +87,14 @@ public class Tile implements GameObject{
             }
         }
         return false;
+    }
+    public GameObject getGameObject(GameObjectType objectType){
+        for(GameObject gameObject : this.objectsOnTile){
+            if(gameObject.getGameObjectType().equals(objectType)){
+                return gameObject;
+            }
+        }
+        return null;
     }
 
     /**
