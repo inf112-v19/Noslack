@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 
 public class RotatorTest {
 
-    Rotator clockwiseRotator = new Rotator(GameObjectType.ROTATOR_CLOCKWISE);
-    Player player = new Player(0);
-    //TileGrid tileGrid = new TileGrid("rotatorTestMap.txt");
+    TileGrid tileGrid = new TileGrid("rotatorTestMap.txt");
 
     @Test
     public void ClockwiseRotatorRotatesClockwise(){
-        assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
+        assertEquals(tileGrid.getPlayer(0).getOrientation(), Orientation.FACING_NORTH);
+        tileGrid.activateTiles();
+        assertEquals(tileGrid.getPlayer(0).getOrientation(), Orientation.FACING_EAST);
 
     }
 }

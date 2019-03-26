@@ -150,6 +150,11 @@ public class TileGrid{
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
+            case "T":
+                char modifier = nextTileType.charAt(nextTileType.length()-1);
+                Rotator rotatorToAdd = modifier == 1 ?
+                        new Rotator(GameObjectType.ROTATOR_CLOCKWISE) : new Rotator(GameObjectType.ROTATOR_COUNTER_CLOCKWISE);
+                this.tileGrid[row][column].addObjectOnTile(rotatorToAdd);
             case "P":
                 Player newPlayer;
                 orientation = stringToOrientation(nextTileType);
@@ -195,7 +200,7 @@ public class TileGrid{
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
-    void activateTiles(){
+    public void activateTiles(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
