@@ -20,6 +20,7 @@ public class HoleTest {
         grid.getPlayer(0).setCurrentMove(Program.MOVE1);
         int lives = grid.getPlayer(0).getLives();
         grid.continueMove(0);
+        grid.continueMove(0);
         grid.activateTiles();
         assertNotEquals(lives,grid.getPlayer(0).getLives());
         assertEquals(--lives,grid.getPlayer(0).getLives());

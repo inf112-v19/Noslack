@@ -1,5 +1,6 @@
 package inf112.skeleton.app.gameobjects;
 
+import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
@@ -75,25 +76,43 @@ public class PlayerTest {
     }
 
     @Test
-    public void playerStartWithNoFlags() {
-        assertEquals(player.getFlagsVisited().size(), 0);
-    }
-
-    @Test
     public void flagsAreRegistered() {
         TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
     }
 
     @Test
-    public void flagsOutOfOrderNotCounted() {
+    public void flagsCounted() {
         TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
-        ArrayList oldValue = tileGrid.getPlayer(0).getFlagsVisited();
-        tileGrid.getPlayer(0).setPosition(new Coordinate(1, 2, Orientation.FACING_NORTH));
+
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited());
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        tileGrid.getPlayer(0).setOrientation(Orientation.FACING_EAST);
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
+        assertTrue(tileGrid.getPlayer(0).getFlag(2));
+    }
+
+    @Test
+    public void flagsOutOfOrderNotCounted(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap2.txt");
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
+        assertFalse(tileGrid.getPlayer(0).getFlag(2));
     }
 }

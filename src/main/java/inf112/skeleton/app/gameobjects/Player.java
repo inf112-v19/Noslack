@@ -22,7 +22,7 @@ public class Player implements GameObject {
     private Coordinate position;
     private String name;
     private boolean hasWon;
-    private ArrayList<Integer> flagsVisited;
+    private boolean[] flagsVisited;
     private Program currentMove;
     private int moveProgression;
 
@@ -43,7 +43,6 @@ public class Player implements GameObject {
         this.playerNumber = playerNumber;
         this.hasWon = false;
         this.name = "RoboHally";
-        this.flagsVisited = new ArrayList<Integer>(9);
         evaluateSprite();
     }
 
@@ -247,13 +246,16 @@ public class Player implements GameObject {
      * @param n The number of flags on the map.
      */
     public void setFlagsVisitedSize(int n){
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
+        this.flagsVisited = new boolean[n];
+        for(int i =0;i<this.flagsVisited.length;i++){
+            this.flagsVisited[i] = false;
+        }
     }
 
     /**
      * @return Get the list of which flags the player has visited.
      */
-    public ArrayList<Integer> getFlagsVisited(){
+    public boolean[] getFlagsVisited(){
         return flagsVisited;
     }
 
@@ -262,7 +264,7 @@ public class Player implements GameObject {
      * @param n The flags number.
      */
     public void visitFlag(int n){
-        this.flagsVisited.set(n - 1, 1);
+        this.flagsVisited[n-1]=true;
     }
 
     /**
@@ -270,8 +272,10 @@ public class Player implements GameObject {
      * @param n Flag number
      * @return If the flag has been visited.
      */
-    public int getFlag(int n){
-       return this.flagsVisited.get(n-1);
+    public boolean getFlag(int n){
+        if(n<1)
+            n=1;
+       return this.flagsVisited[n-1];
     }
 
     public void initiate (Coordinate cor){

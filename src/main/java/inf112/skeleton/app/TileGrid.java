@@ -141,8 +141,9 @@ public class TileGrid{
                 if(n < 1 || n > 9){
                     n = flagsInitiated+1;
                 }
+
                 this.tileGrid[row][column].addObjectOnTile(new Flag(n));
-                flagsInitiated += 1;
+                flagsInitiated ++;
                 break;
             case "H":
                 this.tileGrid[row][column].addObjectOnTile(new Hole());
@@ -286,9 +287,7 @@ public class TileGrid{
             if(player.isFinished()){
                 int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
-                if(!player.getFlagsVisited().subList(n-1,player.getFlagsVisited().size()-1).contains(1)
-                        && (!player.getFlagsVisited().subList(0,n-1).contains(0)
-                        || (n == 1 && !player.getFlagsVisited().subList(1,n-1).contains(0)))){
+                if(n==1&&!player.getFlag(n)||player.getFlag(n-1)){
 
                     //Creates a backUp
                     player.setBackUp();
