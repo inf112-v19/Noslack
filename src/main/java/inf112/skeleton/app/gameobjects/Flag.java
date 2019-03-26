@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Flag implements GameObject {
+
     private Sprite sprite;
     private int flagNumber;
-
 
     public Flag() {
         this.flagNumber = 1;
