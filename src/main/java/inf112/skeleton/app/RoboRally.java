@@ -344,33 +344,26 @@ public class RoboRally extends Game implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int nulls = 0;
 
-        if(menuScreen.clickStart(screenX,screenY)){
-
-            menuScreen.stopMenu();
-            createGame();
-
-        }
-
         if(menuScreen.runMenu()){
-            return false;
+            if(menuScreen.clickStart(screenX,screenY)){
+                menuScreen.stopMenu();
+                createGame();
+            }
+        } else {
+            if (spriteContainer.isInsideGo(screenX, screenY)) {
+                ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
+                for(ProgramCard card : chosenCards){
+                    if (card.getPriority() == 0) nulls++;
+                }
+                if (nulls == 0) {
+                    this.tileGrid.getPlayer(0).pushProgram(chosenCards);
+                    CSI.reset();
+                    sequenceReady = true;
+                }
+            }
+            isInsideCard(screenX,screenY,currentAbility);
         }
 
-        else if (spriteContainer.isInsideGo(screenX, screenY)) {
-            ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
-            for(ProgramCard card : chosenCards){
-                if (card.getPriority() == 0) nulls++;
-            }
-            if (nulls == 0) {
-                this.tileGrid.getPlayer(0).pushProgram(chosenCards);
-                CSI.reset();
-                sequenceReady = true;
-            }
-        }
-
-
-
-
-        isInsideCard(screenX,screenY,currentAbility);
 
         return false;
     }

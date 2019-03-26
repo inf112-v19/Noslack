@@ -52,6 +52,7 @@ public class SpriteContainer {
         this.abilityText = "";
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
+        //this.font.getData().setScale(font.getScaleX()+3,font.getScaleY()+3);
     }
 
 
