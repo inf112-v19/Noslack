@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Input;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -156,13 +157,19 @@ public class TileGrid{
                 this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
             case "O":
-                boolean dual = nextTileType.contains("OO");
+                boolean dualOutlet = nextTileType.contains("OO");
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dual));
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "L":
-                // H V
-                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(Orientation.HORIZONTAL));
+                boolean dualLaser = nextTileType.contains("LL");
+                if( nextTileType.contains("H"))
+                    orientation = Orientation.HORIZONTAL;
+                else if(nextTileType.contains("V"))
+                    orientation = Orientation.VERTICAL;
+                else
+                    orientation = Orientation.VERTICAL;
+                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(orientation, dualLaser));
                 break;
             case "T":
                 boolean counterClockwise = nextTileType.contains("CC");
