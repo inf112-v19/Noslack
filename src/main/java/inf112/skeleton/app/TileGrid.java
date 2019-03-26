@@ -109,57 +109,118 @@ public class TileGrid{
      * @param column The column of the new tile
      */
     private void stringToGameObjectType(String nextTileType, int row, int column){
-        Orientation orientation;
-        switch(nextTileType.substring(0,1)){
-            case "W":
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
-                break;
-            case "C":
-                //One speed conveyors
-                boolean fast = nextTileType.contains("CC");
-
-                int rotating;
-                if (nextTileType.contains("R"))
-                    rotating = 1;
-                else if(nextTileType.contains("L"))
-                    rotating = -1;
-                else
-                    rotating = 0;
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
-                break;
-            case "F":
-                /*
-                * If there was no number after F, it cast "F" to ascii int 70.
-                * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
-                * */
-
-                char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
-                int n = Character.getNumericValue(ch);
-
-                if(n < 1 || n > 9){
-                    n = flagsInitiated+1;
-                }
-                this.tileGrid[row][column].addObjectOnTile(new Flag(n));
-                flagsInitiated += 1;
-                break;
-            case "H":
-                this.tileGrid[row][column].addObjectOnTile(new Hole());
-                break;
-            case "R":
-                this.tileGrid[row][column].addObjectOnTile(new RepairStation());
-                break;
-            case "P":
-                Player newPlayer;
-                orientation = stringToOrientation(nextTileType);
-                newPlayer = new Player(this.playersInitiated, orientation);
-                this.tileGrid[row][column].addObjectOnTile(newPlayer);
-                this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
-                newPlayer.initiate(new Coordinate(row, column));
-                break;
+        switch (nextTileType) {
+                case "W1":
+                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_NORTH));
+                    break;
+                case "W2":
+                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_EAST));
+                    break;
+                case "W3":
+                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_SOUTH));
+                    break;
+                case "W4":
+                    this.tileGrid[row][column].addObjectOnTile(new Wall(Orientation.FACING_WEST));
+                    break;
+                case "W":
+                    this.tileGrid[row][column].addObjectOnTile(new Wall());
+                    break;
+                case "C1":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor());
+                    break;
+                case "C2":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST));
+                    break;
+                case "C3":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH));
+                    break;
+                case "C4":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST));
+                    break;
+                case "CC1":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                    break;
+                case "CC2":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_EAST, true));
+                    break;
+                case "CC3":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_SOUTH, true));
+                    break;
+                case "CC4":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(Orientation.FACING_WEST, true));
+                    break;
+                case "F1":
+                    this.tileGrid[row][column].addObjectOnTile(new Flag(1));
+                    break;
+                case "F2":
+                    this.tileGrid[row][column].addObjectOnTile(new Flag(2));
+                    break;
+                case "F":
+                    this.tileGrid[row][column].addObjectOnTile(new Flag());
+                    break;
+                case "C":
+                    tileGrid[row][column].addObjectOnTile(new Conveyor());
+                    break;
+                case "CC":
+                    this.tileGrid[row][column].addObjectOnTile(new Conveyor(true));
+                    break;
+                case "H":
+                    this.tileGrid[row][column].addObjectOnTile(new Hole());
+                    break;
+                case "R":
+                    this.tileGrid[row][column].addObjectOnTile(new RepairStation());
+                    break;
+                case "O1":
+                    this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_NORTH));
+                    break;
+                case "O2":
+                    this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_EAST));
+                    break;
+                case "O3":
+                    this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_SOUTH));
+                    break;
+                case "O4":
+                    this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(Orientation.FACING_WEST));
+                    break;
+                case "D1":
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_NORTH));
+                    break;
+                case "D2":
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_EAST));
+                    break;
+                case "D3":
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_SOUTH));
+                    break;
+                case "D4":
+                    this.tileGrid[row][column].addObjectOnTile(new Pusher(Orientation.FACING_WEST));
+                    break;
+                case "P":
+                    Player newPlayer;
+                    switch (nextTileType) {
+                        case "P1":
+                            newPlayer = new Player(this.playersInitiated, Orientation.FACING_NORTH);
+                            break;
+                        case "P2":
+                            newPlayer = new Player(this.playersInitiated, Orientation.FACING_EAST);
+                            break;
+                        case "P3":
+                            newPlayer = new Player(this.playersInitiated, Orientation.FACING_SOUTH);
+                            break;
+                        case "P4":
+                            newPlayer = new Player(this.playersInitiated, Orientation.FACING_WEST);
+                            break;
+                        default:
+                            newPlayer = new Player(this.playersInitiated);
+                            break;
+                    }
+                    this.tileGrid[row][column].addObjectOnTile(newPlayer);
+                    this.players[playersInitiated] = newPlayer; // Add new player to list of players.
+                    newPlayer.setPosition(new Coordinate(row, column));
+                    newPlayer.setBackUp(new Coordinate(row, column));
+                    this.playersInitiated++; // One more player has been initiated, move the index 1 up.
+                    break;
+            }
         }
-    }
     /**
      * Findsorentation of tile element
      * @param nextTileType String of what the next element is

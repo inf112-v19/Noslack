@@ -1,5 +1,6 @@
 package inf112.skeleton.app.gameobjects;
 
+import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
 
@@ -69,5 +70,29 @@ public class PlayerTest {
         o=player.getOrientation();
         player.updateOrientation(p4);
         assertEquals(o,player.getOrientation());
+    }
+
+    @Test
+    public void playerStartWithNoFlags() {
+        assertEquals(player.getFlagsVisited().size(), 0);
+    }
+
+    @Test
+    public void flagsAreRegistered() {
+        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
+        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        assertEquals(tileGrid.getPlayer(0).getFlagsVisited().size(), oldValue+1);
+    }
+
+    @Test
+    public void flagsOutOfOrderNotCounted() {
+        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
+        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
+        tileGrid.getPlayer(0).setPosition(new Coordinate(1, 2, Orientation.FACING_NORTH));
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited().size());
     }
 }
