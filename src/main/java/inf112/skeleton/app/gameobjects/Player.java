@@ -265,6 +265,15 @@ public class Player implements GameObject {
         this.flagsVisited.set(n - 1, 1);
     }
 
+    /**
+     * Checks if flag has been visited.
+     * @param n Flag number
+     * @return If the flag has been visited.
+     */
+    public int getFlag(int n){
+       return this.flagsVisited.get(n-1);
+    }
+
     public void initiate (Coordinate cor){
         setPosition(cor);
         setBackUp();

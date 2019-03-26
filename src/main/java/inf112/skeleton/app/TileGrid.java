@@ -308,6 +308,7 @@ public class TileGrid{
         if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
         }
+        // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
             boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
             if (dual)
@@ -322,7 +323,6 @@ public class TileGrid{
             else
                 player.receiveDamage(1);
         }
-
         // Rotator activation
         if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
             applyRotation(Program.RIGHT, player.getPlayerNumber());
