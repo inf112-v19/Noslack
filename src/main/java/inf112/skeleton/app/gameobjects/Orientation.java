@@ -7,6 +7,8 @@ public enum Orientation {
     FACING_WEST,
     FACING_SOUTH,
     FACING_EAST,
+    HORIZONTAL,
+    VERTICAL,
     NONE;
 
     /**

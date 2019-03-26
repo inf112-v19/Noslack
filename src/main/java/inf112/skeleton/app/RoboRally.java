@@ -15,6 +15,7 @@ import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
@@ -194,15 +195,6 @@ public class RoboRally extends Game implements InputProcessor {
      * drawposition.
      */
     private void renderGrid() {
-
-        /*
-         * Todo:
-         * Render the grid and all the objects residing
-         * on it.
-         */
-
-        // Work in progress
-
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
         this.drawPositionY = 40 + TILE_SIZE * 4;
@@ -219,8 +211,12 @@ public class RoboRally extends Game implements InputProcessor {
                 spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
                 spriteOfTile.draw(this.batch);
 
+                GameObject[] objectsOnTileAsArray = new GameObject[objectsOnTile.size()];
+                objectsOnTileAsArray = objectsOnTile.toArray(objectsOnTileAsArray);
+                Arrays.sort(objectsOnTileAsArray);
+
                 // Draw GameObjects on tile
-                for (GameObject gameObject : objectsOnTile) {
+                for (GameObject gameObject : objectsOnTileAsArray) {
                     Sprite spriteOfGameObject = gameObject.getSprite();
                     spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
                     spriteOfGameObject.draw(this.batch);
@@ -272,10 +268,14 @@ public class RoboRally extends Game implements InputProcessor {
         if(this.tileGrid.getPlayer(0).isFinished()){
             this.currentPhase = 100;
         }
+
+
+
         if (this.currentPhase <= 5) {
             // Runs per phase
 
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
+
                 activateTiles();
                 this.tileGrid.applyNextProgram(0);
                 this.currentPhase++;
@@ -285,6 +285,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             this.tileGrid.continueMove(0);
+
         } else if (this.currentPhase > 5){
             dealNewCards();
             sequenceReady = false;
@@ -424,7 +425,8 @@ public class RoboRally extends Game implements InputProcessor {
             for(ProgramCard card : chosenCards){
                 if (card.getPriority() == 0) nulls++;
             }
-            if (nulls == 0) {
+            //Test -> skal være nulls == 0
+            if (nulls >= 0) {
                 this.tileGrid.getPlayer(0).pushProgram(chosenCards);
                 CSI.reset();
                 sequenceReady = true;

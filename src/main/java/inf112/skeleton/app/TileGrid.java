@@ -155,6 +155,19 @@ public class TileGrid{
                 orientation = stringToOrientation(nextTileType);
                 this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
+            case "O":
+                boolean dual = nextTileType.contains("OO");
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dual));
+                break;
+            case "L":
+                // H V
+                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(Orientation.HORIZONTAL));
+                break;
+            case "T":
+                boolean counterClockwise = nextTileType.contains("CC");
+                this.tileGrid[row][column].addObjectOnTile(new Rotator(counterClockwise));
+                break;
             case "P":
                 Player newPlayer;
                 orientation = stringToOrientation(nextTileType);
@@ -289,6 +302,36 @@ public class TileGrid{
         if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
         }
+        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
+            player.receiveDamage(1);
+        }
+
+        // Rotator activation
+        if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
+            applyRotation(Program.RIGHT, player.getPlayerNumber());
+        }
+        if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
+            applyRotation(Program.LEFT, player.getPlayerNumber());
+        }
+
+        // Pusher activation
+        if(tile.hasGameObject(GameObjectType.PUSHER)){
+            Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
+            switch (pusher.getOrientation()){
+                case FACING_NORTH:
+                    movePlayer(player.getPlayerNumber(), 1, 0);
+                    break;
+                case FACING_EAST:
+                    movePlayer(player.getPlayerNumber(), 0, 1);
+                    break;
+                case FACING_SOUTH:
+                    movePlayer(player.getPlayerNumber(), -1, 0);
+                    break;
+                case FACING_WEST:
+                    movePlayer(player.getPlayerNumber(), 0, -1);
+                    break;
+            }
+        }
     }
 
     /**
@@ -327,7 +370,7 @@ public class TileGrid{
             int row = player.getPosition().getRow();
             int col = player.getPosition().getColumn();
 
-            if(conveyor.isFast() && tileGrid[row + rowsToMove][col + colsToMove].hasGameObject(GameObjectType.CONVEYOR)){
+            if(conveyor.isFast()){
                 Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
                 if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
                     rowsToMove *= 2;
@@ -381,7 +424,6 @@ public class TileGrid{
                 columnsToMove = -1;
                 break;
         }
-
         if(move==Program.BACK){
             rowsToMove *= -1;
             columnsToMove *= -1;
@@ -487,7 +529,6 @@ public class TileGrid{
         }
         else return newCoordinate.getColumn() > this.columns - 1 || newCoordinate.getColumn() < 0;
     }
-
 
     /**
      * Respawns the player after it has fallen out of grid, with health=6.
