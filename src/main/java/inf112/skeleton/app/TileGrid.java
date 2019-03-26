@@ -292,6 +292,10 @@ public class TileGrid{
         if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
             applyRotation(Program.LEFT, player.getPlayerNumber());
         }
+
+        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
+            player.receiveDamage();
+        }
     }
 
     /**
