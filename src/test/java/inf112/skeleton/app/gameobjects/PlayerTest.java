@@ -76,6 +76,13 @@ public class PlayerTest {
     }
 
     @Test
+    public void flagsSizeTest(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        Player player = tileGrid.getPlayer(0);
+        assertEquals(2,player.getFlagsVisited().length);
+    }
+
+    @Test
     public void flagsAreRegistered() {
         TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
         assertFalse(tileGrid.getPlayer(0).getFlag(1));

@@ -34,7 +34,7 @@ public class FlagTest {
     }
     @Test
     public void flagNumberOnMapTest2() {
-        TileGrid tileGrid = new TileGrid("playerTestFlagMap2.txt");
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
         Tile tile2 =tileGrid.getTile(2 ,2);
         assertTrue(tile2.hasGameObject(GameObjectType.FLAG));
         int flag2=((Flag)tile2.getGameObject(GameObjectType.FLAG)).getFlagNumber();
