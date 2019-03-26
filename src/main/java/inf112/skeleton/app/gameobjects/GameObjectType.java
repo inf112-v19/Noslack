@@ -4,13 +4,13 @@ public enum GameObjectType {
     CONVEYOR,
     FLAG,
     HOLE,
+    LASER_BEAM,
     LASER_OUTLET,
     PLAYER,
     PUSHER,
     REPAIR_STATION,
     STANDARD_TILE,
-    WALL,
-    ROTATOR_CLOCKWISE,
     ROTATOR_COUNTER_CLOCKWISE,
-    LASER_BEAM;
+    ROTATOR_CLOCKWISE,
+    WALL
 }

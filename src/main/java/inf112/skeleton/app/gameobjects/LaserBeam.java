@@ -8,15 +8,23 @@ public class LaserBeam implements GameObject{
 
     private Orientation orientation;
     private Sprite sprite;
+    private Coordinate coordinate;
+    private boolean dual;
 
-    public LaserBeam(Orientation orientation) {
+    public LaserBeam(Orientation orientation, boolean dual) {
         this.orientation = orientation;
+        this.dual = dual;
         evaluateSprite();
     }
 
     @Override
     public void evaluateSprite() {
-        Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+        Texture texture;
+        if (dual) {
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+        }
+        else
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
         this.sprite = new Sprite(texture);
         if(this.orientation == Orientation.HORIZONTAL){
             this.sprite.setRotation(90);
@@ -24,13 +32,27 @@ public class LaserBeam implements GameObject{
     }
 
     @Override
-    public GameObjectType getGameObjectType() {
-        return GameObjectType.LASER_BEAM;
+    public Sprite getSprite() {
+        return this.sprite;
+    }
+
+    /**
+     * @return Is this a dual Laser
+     */
+    public boolean isDual(){
+        return this.dual;
+    }
+
+
+
+    @Override
+    public Orientation getOrientation() {
+        return this.orientation;
     }
 
     @Override
-    public Sprite getSprite() {
-        return this.sprite;
+    public GameObjectType getGameObjectType() {
+        return GameObjectType.LASER_BEAM;
     }
 
     @Override
