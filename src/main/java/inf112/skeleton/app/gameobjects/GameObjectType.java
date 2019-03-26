@@ -9,5 +9,8 @@ public enum GameObjectType {
     PUSHER,
     REPAIR_STATION,
     STANDARD_TILE,
-    WALL
+    WALL,
+    ROTATOR_CLOCKWISE,
+    ROTATOR_COUNTER_CLOCKWISE,
+    LASER_BEAM;
 }

@@ -42,6 +42,11 @@ public class Rotator implements GameObject{
     }
 
     @Override
+    public Orientation getOrientation() {
+        return null;
+    }
+
+    @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){
             return -1;

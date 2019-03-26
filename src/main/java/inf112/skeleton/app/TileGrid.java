@@ -284,6 +284,14 @@ public class TileGrid{
         if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
         }
+
+        if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
+            applyRotation(Program.RIGHT, player.getPlayerNumber());
+        }
+
+        if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
+            applyRotation(Program.LEFT, player.getPlayerNumber());
+        }
     }
 
     /**

@@ -3,510 +3,112 @@
   <ID>JAVA</ID>
   <OriginalElement>inf112.skeleton.app.gameobjects</OriginalElement>
   <nodes>
-    <node x="1227.0320959703577" y="1004.0">inf112.skeleton.app.Main</node>
-    <node x="1415.643185108213" y="587.0">inf112.skeleton.app.cards.IDeck</node>
-    <node x="366.0444741008457" y="0.0">inf112.skeleton.app.gameobjects.GameObjectType</node>
-    <node x="305.88366675260716" y="149.0">inf112.skeleton.app.gameobjects.GameObject</node>
-    <node x="1513.643185108213" y="746.0">inf112.skeleton.app.cards.ProgramDeck</node>
-    <node x="1334.083974581897" y="746.0">inf112.skeleton.app.cards.AbilityDeck</node>
-    <node x="889.3916963230681" y="0.0">inf112.skeleton.app.cards.Program</node>
-    <node x="1063.7246628410064" y="458.0">inf112.skeleton.app.cards.CardSpriteInteraction</node>
-    <node x="511.4232442957163" y="458.0">inf112.skeleton.app.gameobjects.Wall</node>
-    <node x="1122.1406547438405" y="149.0">inf112.skeleton.app.cards.ProgramCard</node>
-    <node x="727.6732442957164" y="149.0">inf112.skeleton.app.gameobjects.Orientation</node>
-    <node x="602.4232442957164" y="458.0">inf112.skeleton.app.gameobjects.LaserOutlet</node>
-    <node x="418.42324429571636" y="458.0">inf112.skeleton.app.gameobjects.Hole</node>
-    <node x="730.4232442957164" y="458.0">inf112.skeleton.app.gameobjects.Pusher</node>
-    <node x="295.9173849772883" y="587.0">inf112.skeleton.app.Tile</node>
-    <node x="1238.8039489096627" y="0.0">inf112.skeleton.app.cards.Ability</node>
-    <node x="1214.0320959703577" y="925.0">inf112.skeleton.app.RoboRally</node>
-    <node x="1344.895176979838" y="0.0">inf112.skeleton.app.cards.RRCard</node>
-    <node x="910.4121628410064" y="458.0">inf112.skeleton.app.gameobjects.Player</node>
-    <node x="1263.9765184415462" y="149.0">inf112.skeleton.app.cards.AbilityCard</node>
-    <node x="119.31944444444457" y="458.0">inf112.skeleton.app.gameobjects.RepairStation</node>
-    <node x="960.9121628410064" y="149.0">inf112.skeleton.app.gameobjects.Coordinate</node>
-    <node x="299.42324429571636" y="458.0">inf112.skeleton.app.gameobjects.Conveyor</node>
-    <node x="29.31944444444457" y="458.0">inf112.skeleton.app.gameobjects.Flag</node>
-    <node x="456.4232442957163" y="746.0">inf112.skeleton.app.TileGrid</node>
+    <node x="131.0" y="400.0">inf112.skeleton.app.Main</node>
+    <node x="96.0" y="173.0">inf112.skeleton.app.cards.IDeck</node>
+    <node x="464.5" y="0.0">inf112.skeleton.app.gameobjects.GameObject</node>
+    <node x="0.0" y="326.0">inf112.skeleton.app.gameobjects.GameObjectType</node>
+    <node x="0.0" y="252.0">inf112.skeleton.app.cards.ProgramDeck</node>
+    <node x="150.0" y="252.0">inf112.skeleton.app.cards.AbilityDeck</node>
+    <node x="674.0" y="326.0">inf112.skeleton.app.cards.Program</node>
+    <node x="620.0" y="173.0">inf112.skeleton.app.cards.CardSpriteInteraction</node>
+    <node x="0.0" y="99.0">inf112.skeleton.app.gameobjects.Wall</node>
+    <node x="198.0" y="326.0">inf112.skeleton.app.gameobjects.Orientation</node>
+    <node x="311.0" y="252.0">inf112.skeleton.app.cards.ProgramCard</node>
+    <node x="349.0" y="99.0">inf112.skeleton.app.gameobjects.LaserOutlet</node>
+    <node x="488.0" y="99.0">inf112.skeleton.app.gameobjects.Hole</node>
+    <node x="584.0" y="99.0">inf112.skeleton.app.gameobjects.Pusher</node>
+    <node x="695.0" y="99.0">inf112.skeleton.app.Tile</node>
+    <node x="0.0" y="400.0">inf112.skeleton.app.cards.Ability</node>
+    <node x="521.0" y="326.0">inf112.skeleton.app.RoboRally</node>
+    <node x="400.0" y="173.0">inf112.skeleton.app.cards.RRCard</node>
+    <node x="244.0" y="99.0">inf112.skeleton.app.gameobjects.Player</node>
+    <node x="460.0" y="252.0">inf112.skeleton.app.cards.AbilityCard</node>
+    <node x="94.0" y="99.0">inf112.skeleton.app.gameobjects.RepairStation</node>
+    <node x="360.0" y="326.0">inf112.skeleton.app.gameobjects.Coordinate</node>
+    <node x="784.0" y="99.0">inf112.skeleton.app.gameobjects.Conveyor</node>
+    <node x="911.0" y="99.0">inf112.skeleton.app.gameobjects.Flag</node>
+    <node x="819.0" y="326.0">inf112.skeleton.app.TileGrid</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.cards.RRCard">
-      <point x="0.0" y="-14.5" />
-      <point x="950.4121628410064" y="109.0" />
-      <point x="1348.8497224343835" y="109.0" />
-      <point x="-39.54545454545456" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.AbilityDeck" target="inf112.skeleton.app.cards.RRCard">
-      <point x="-21.599999999999966" y="-14.5" />
-      <point x="1366.4839745818972" y="726.0" />
-      <point x="1381.4765184415462" y="726.0" />
-      <point x="1381.4765184415462" y="129.0" />
-      <point x="1372.5769951616562" y="129.0" />
-      <point x="-15.818181818181813" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.Conveyor">
-      <point x="7.444444444444343" y="-14.5" />
-      <point x="336.86182942173264" y="517.0" />
-      <point x="311.79824429571636" y="517.0" />
-      <point x="-37.125" y="14.5" />
-    </edge>
     <edge source="inf112.skeleton.app.cards.ProgramCard" target="inf112.skeleton.app.cards.RRCard">
-      <point x="39.666666666666686" y="-14.5" />
-      <point x="1221.307321410507" y="119.0" />
-      <point x="1356.7588133434745" y="119.0" />
-      <point x="-31.636363636363626" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.RRCard">
-      <point x="37.21052631578948" y="-14.5" />
-      <point x="1301.742622286147" y="885.0" />
-      <point x="1503.143185108213" y="885.0" />
-      <point x="1503.143185108213" y="89.0" />
-      <point x="1404.2133587980197" y="89.0" />
-      <point x="15.818181818181813" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.CardSpriteInteraction" target="inf112.skeleton.app.cards.Program">
-      <point x="-64.00000000000006" y="-14.5" />
-      <point x="1079.7246628410064" y="368.0" />
-      <point x="1111.6406547438405" y="368.0" />
-      <point x="1111.6406547438405" y="99.0" />
-      <point x="954.0166963230681" y="99.0" />
-      <point x="17.625" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="375.5" y="227.0" />
+      <point x="423.25" y="227.0" />
+      <point x="-23.25" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.AbilityCard" target="inf112.skeleton.app.cards.RRCard">
-      <point x="35.666666666666686" y="-14.5" />
-      <point x="1353.143185108213" y="129.0" />
-      <point x="1364.6679042525652" y="129.0" />
-      <point x="-23.72727272727272" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.ProgramDeck">
-      <point x="42.5263157894737" y="-14.5" />
-      <point x="1307.0584117598312" y="895.0" />
-      <point x="1543.643185108213" y="895.0" />
-      <point x="-30.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.cards.Program">
-      <point x="12.361111111111086" y="-14.5" />
-      <point x="513.2843554068274" y="666.0" />
-      <point x="876.9232442957164" y="666.0" />
-      <point x="876.9232442957164" y="99.0" />
-      <point x="907.0166963230681" y="99.0" />
-      <point x="-29.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Wall">
-      <point x="2.4722222222221717" y="-14.5" />
-      <point x="503.3954665179385" y="646.0" />
-      <point x="587.4173849772883" y="646.0" />
-      <point x="587.4173849772883" y="547.0" />
-      <point x="546.9232442957164" y="547.0" />
-      <point x="0.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="7.4166666666667425" y="-14.5" />
-      <point x="508.33991096238304" y="656.0" />
-      <point x="841.4861111111113" y="656.0" />
-      <point x="841.4861111111113" y="408.0" />
-      <point x="813.1732442957164" y="408.0" />
-      <point x="31.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.LaserOutlet" target="inf112.skeleton.app.gameobjects.GameObjectType">
       <point x="0.0" y="-14.5" />
-      <point x="656.4232442957164" y="99.0" />
-      <point x="466.6694741008457" y="99.0" />
-      <point x="30.625" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.cards.Program">
-      <point x="-10.666666666666629" y="-14.5" />
-      <point x="939.7454961743399" y="208.0" />
-      <point x="916.0065776290496" y="208.0" />
-      <point x="916.0065776290496" y="119.0" />
-      <point x="930.5166963230681" y="119.0" />
-      <point x="-5.875" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.Program">
-      <point x="-26.57894736842104" y="-14.5" />
-      <point x="1237.9531486019364" y="865.0" />
-      <point x="887.9232442957164" y="865.0" />
-      <point x="887.9232442957164" y="109.0" />
-      <point x="918.7666963230681" y="109.0" />
-      <point x="-17.625" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.ProgramCard" target="inf112.skeleton.app.cards.Program">
-      <point x="-39.66666666666663" y="-14.5" />
-      <point x="1141.9739880771738" y="89.0" />
-      <point x="965.7666963230681" y="89.0" />
-      <point x="29.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.CardSpriteInteraction">
-      <point x="-15.947368421052659" y="-14.5" />
-      <point x="1248.584727549305" y="845.0" />
-      <point x="1139.9813213102689" y="845.0" />
-      <point x="1139.9813213102689" y="567.0" />
-      <point x="1183.7246628410064" y="567.0" />
-      <point x="40.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.AbilityCard">
-      <point x="21.26315789473682" y="-14.5" />
-      <point x="1285.7952538650943" y="855.0" />
-      <point x="1322.3829336829685" y="855.0" />
-      <point x="1322.3829336829685" y="428.0" />
-      <point x="1344.2265184415462" y="428.0" />
-      <point x="26.75" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Hole">
-      <point x="-2.4722222222221717" y="-14.5" />
-      <point x="498.45102207349413" y="636.0" />
-      <point x="495.4173849772883" y="636.0" />
-      <point x="495.4173849772883" y="547.0" />
-      <point x="454.92324429571636" y="547.0" />
-      <point x="0.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Conveyor" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="24.75" y="-14.5" />
-      <point x="373.67324429571636" y="348.0" />
-      <point x="732.1732442957164" y="348.0" />
-      <point x="-49.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Conveyor" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-41.25" y="-14.5" />
-      <point x="307.67324429571636" y="338.0" />
-      <point x="284.38366675260716" y="338.0" />
-      <point x="284.38366675260716" y="109.0" />
-      <point x="414.1694741008457" y="109.0" />
-      <point x="-21.875" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Conveyor">
-      <point x="-12.361111111111086" y="-14.5" />
-      <point x="488.5621331846052" y="656.0" />
-      <point x="401.7923849772883" y="656.0" />
-      <point x="401.7923849772883" y="547.0" />
-      <point x="361.29824429571636" y="547.0" />
-      <point x="12.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.ProgramCard">
-      <point x="-10.631578947368439" y="-14.5" />
-      <point x="1253.900517022989" y="795.0" />
-      <point x="1258.878172931255" y="795.0" />
-      <point x="1258.878172931255" y="398.0" />
-      <point x="1199.948347051533" y="398.0" />
-      <point x="18.30769230769232" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.Tile">
-      <point x="-22.25" y="-14.5" />
-      <point x="478.6732442957163" y="676.0" />
-      <point x="337.7923849772883" y="676.0" />
-      <point x="8.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-47.84210526315786" y="-14.5" />
-      <point x="1216.6899907071997" y="905.0" />
-      <point x="247.81944444444457" y="905.0" />
-      <point x="247.81944444444457" y="388.0" />
-      <point x="332.88366675260716" y="388.0" />
-      <point x="-30.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Player">
-      <point x="22.25" y="-14.5" />
-      <point x="523.1732442957164" y="686.0" />
-      <point x="960.4121628410064" y="686.0" />
-      <point x="10.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.ProgramDeck" target="inf112.skeleton.app.cards.RRCard">
-      <point x="48.0" y="-14.5" />
-      <point x="1621.643185108213" y="716.0" />
-      <point x="1600.8769978367277" y="716.0" />
-      <point x="1600.8769978367277" y="59.0" />
-      <point x="1427.9406315252927" y="59.0" />
-      <point x="39.54545454545456" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-42.02777777777783" y="-14.5" />
-      <point x="458.8954665179385" y="716.0" />
-      <point x="0.0" y="716.0" />
-      <point x="0.0" y="59.0" />
-      <point x="370.4194741008457" y="59.0" />
-      <point x="-65.625" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.IDeck" target="inf112.skeleton.app.cards.RRCard">
-      <point x="0.0" y="-14.5" />
-      <point x="1454.143185108213" y="99.0" />
-      <point x="1396.304267888929" y="99.0" />
-      <point x="7.909090909090935" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Pusher" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="21.0" y="-14.5" />
-      <point x="793.4232442957164" y="428.0" />
-      <point x="846.1732442957164" y="428.0" />
-      <point x="846.1732442957164" y="79.0" />
-      <point x="475.4194741008457" y="79.0" />
-      <point x="39.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.ProgramDeck" target="inf112.skeleton.app.cards.ProgramCard">
-      <point x="-48.0" y="-14.5" />
-      <point x="1525.643185108213" y="716.0" />
-      <point x="1283.979387506154" y="716.0" />
-      <point x="1283.979387506154" y="358.0" />
-      <point x="1236.5637316669174" y="358.0" />
-      <point x="54.92307692307696" y="14.5" />
+      <point x="517.5" y="227.0" />
+      <point x="469.75" y="227.0" />
+      <point x="23.25" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-37.33333333333337" y="-14.5" />
-      <point x="913.0788295076732" y="258.0" />
-      <point x="416.88366675260716" y="258.0" />
-      <point x="54.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.LaserOutlet" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="21.600000000000023" y="-14.5" />
-      <point x="678.0232442957163" y="388.0" />
-      <point x="768.1732442957164" y="388.0" />
-      <point x="-13.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.GameObject" target="inf112.skeleton.app.gameobjects.GameObjectType">
       <point x="0.0" y="-14.5" />
-      <point x="362.88366675260716" y="129.0" />
-      <point x="431.6694741008457" y="129.0" />
-      <point x="-4.375" y="14.5" />
+      <point x="286.5" y="69.0" />
+      <point x="498.6666666666667" y="69.0" />
+      <point x="-27.333333333333314" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Pusher" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-21.0" y="-14.5" />
-      <point x="751.4232442957164" y="268.0" />
-      <point x="410.88366675260716" y="268.0" />
-      <point x="48.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.TileGrid">
-      <point x="-31.89473684210526" y="-14.5" />
-      <point x="1232.6373591282522" y="875.0" />
-      <point x="523.1732442957164" y="875.0" />
-      <point x="22.25" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="629.5" y="79.0" />
+      <point x="539.6666666666666" y="79.0" />
+      <point x="13.666666666666629" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Flag" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="23.333333333333258" y="-14.5" />
-      <point x="87.65277777777783" y="358.0" />
-      <point x="314.88366675260716" y="358.0" />
-      <point x="-48.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Wall" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="17.75" y="-14.5" />
-      <point x="564.6732442957164" y="368.0" />
-      <point x="750.1732442957164" y="368.0" />
-      <point x="-31.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.cards.AbilityDeck">
-      <point x="26.57894736842104" y="-14.5" />
-      <point x="1291.1110433387785" y="865.0" />
-      <point x="1361.083974581897" y="865.0" />
-      <point x="-27.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Hole" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="24.333333333333258" y="-14.5" />
-      <point x="479.2565776290496" y="338.0" />
-      <point x="469.00866675260716" y="338.0" />
-      <point x="469.00866675260716" y="129.0" />
-      <point x="440.4194741008457" y="129.0" />
-      <point x="4.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.cards.ProgramCard">
-      <point x="16.0" y="-14.5" />
-      <point x="966.4121628410064" y="378.0" />
-      <point x="1126.7175778207636" y="378.0" />
-      <point x="-54.923076923076906" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Wall" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-5.9166666666667425" y="-14.5" />
-      <point x="541.4232442957164" y="119.0" />
-      <point x="449.1694741008457" y="119.0" />
-      <point x="13.125" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-29.77777777777783" y="-14.5" />
-      <point x="299.63960719951046" y="567.0" />
-      <point x="8.75" y="567.0" />
-      <point x="8.75" y="69.0" />
-      <point x="379.1694741008457" y="69.0" />
-      <point x="-56.875" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="22.333333333333258" y="-14.5" />
-      <point x="351.75071831062155" y="557.0" />
-      <point x="824.9232442957164" y="557.0" />
-      <point x="824.9232442957164" y="418.0" />
-      <point x="804.1732442957164" y="418.0" />
-      <point x="22.5" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="947.5" y="49.0" />
+      <point x="580.6666666666666" y="49.0" />
+      <point x="54.66666666666663" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Wall" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-17.75" y="-14.5" />
-      <point x="529.1732442957164" y="308.0" />
-      <point x="386.88366675260716" y="308.0" />
-      <point x="24.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.cards.AbilityCard">
-      <point x="32.0" y="-14.5" />
-      <point x="982.4121628410064" y="428.0" />
-      <point x="1272.893185108213" y="428.0" />
-      <point x="-44.583333333333314" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="-32.0" y="-14.5" />
-      <point x="918.4121628410064" y="248.0" />
-      <point x="822.1732442957164" y="248.0" />
-      <point x="40.5" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="37.0" y="49.0" />
+      <point x="471.3333333333333" y="49.0" />
+      <point x="-54.666666666666686" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-7.444444444444343" y="-14.5" />
-      <point x="321.97294053284395" y="537.0" />
-      <point x="269.92324429571636" y="537.0" />
-      <point x="269.92324429571636" y="408.0" />
-      <point x="344.88366675260716" y="408.0" />
-      <point x="-18.0" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="729.5" y="69.0" />
+      <point x="553.3333333333333" y="69.0" />
+      <point x="27.333333333333314" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Hole" target="inf112.skeleton.app.gameobjects.GameObject">
       <point x="0.0" y="-14.5" />
-      <point x="454.92324429571636" y="328.0" />
-      <point x="374.88366675260716" y="328.0" />
-      <point x="12.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.AbilityDeck" target="inf112.skeleton.app.cards.AbilityCard">
-      <point x="-43.19999999999999" y="-14.5" />
-      <point x="1344.883974581897" y="726.0" />
-      <point x="1347.425956937799" y="726.0" />
-      <point x="1347.425956937799" y="438.0" />
-      <point x="1362.0598517748795" y="438.0" />
-      <point x="44.583333333333314" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-21.33333333333337" y="-14.5" />
-      <point x="929.0788295076732" y="228.0" />
-      <point x="865.9232442957164" y="228.0" />
-      <point x="865.9232442957164" y="59.0" />
-      <point x="492.9194741008457" y="59.0" />
-      <point x="56.875" y="14.5" />
+      <point x="0.0" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.RepairStation" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="39.33333333333326" y="-14.5" />
-      <point x="217.65277777777783" y="378.0" />
-      <point x="326.88366675260716" y="378.0" />
-      <point x="-36.0" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="159.0" y="59.0" />
+      <point x="485.0" y="59.0" />
+      <point x="-41.0" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.ProgramDeck" target="inf112.skeleton.app.cards.IDeck">
-      <point x="-24.0" y="-14.5" />
-      <point x="1549.643185108213" y="706.0" />
-      <point x="1473.393185108213" y="706.0" />
-      <point x="19.25" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.Player">
-      <point x="29.77777777777783" y="-14.5" />
-      <point x="359.1951627550661" y="567.0" />
-      <point x="920.4121628410064" y="567.0" />
-      <point x="-30.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.RoboRally" target="inf112.skeleton.app.Tile">
-      <point x="-42.52631578947364" y="-14.5" />
-      <point x="1222.005780180884" y="895.0" />
-      <point x="297.5127797141304" y="895.0" />
-      <point x="297.5127797141304" y="726.0" />
-      <point x="304.2923849772883" y="726.0" />
-      <point x="-25.125" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.RepairStation" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-39.33333333333326" y="-14.5" />
-      <point x="138.9861111111113" y="338.0" />
-      <point x="150.97502965640138" y="338.0" />
-      <point x="150.97502965640138" y="99.0" />
-      <point x="405.4194741008457" y="99.0" />
-      <point x="-30.625" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.cards.ProgramCard">
-      <point x="42.02777777777783" y="-14.5" />
-      <point x="542.9510220734942" y="726.0" />
-      <point x="1249.7243267774088" y="726.0" />
-      <point x="1249.7243267774088" y="408.0" />
-      <point x="1190.7945008976867" y="408.0" />
-      <point x="9.153846153846189" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.RepairStation">
-      <point x="-32.138888888888914" y="-14.5" />
-      <point x="468.7843554068274" y="696.0" />
-      <point x="178.31944444444457" y="696.0" />
-      <point x="0.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.Main" target="inf112.skeleton.app.RoboRally">
-      <point x="18.75" y="-14.5" />
-      <point x="1283.2820959703577" y="979.0" />
-      <point x="1289.7820959703577" y="979.0" />
-      <point x="25.25" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.gameobjects.Coordinate">
-      <point x="10.666666666666629" y="-14.5" />
-      <point x="961.0788295076732" y="368.0" />
-      <point x="1001.0371628410064" y="368.0" />
-      <point x="-13.375" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="65.0" y="227.0" />
+      <point x="116.25" y="227.0" />
+      <point x="-20.25" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.Conveyor" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="8.25" y="-14.5" />
-      <point x="357.17324429571636" y="438.0" />
-      <point x="362.88366675260716" y="438.0" />
-      <point x="0.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Flag">
-      <point x="-37.08333333333326" y="-14.5" />
-      <point x="463.83991096238304" y="706.0" />
-      <point x="64.31944444444457" y="706.0" />
-      <point x="0.0" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="837.5" y="59.0" />
+      <point x="567.0" y="59.0" />
+      <point x="41.0" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.AbilityDeck" target="inf112.skeleton.app.cards.IDeck">
-      <point x="43.19999999999999" y="-14.5" />
-      <point x="1431.283974581897" y="726.0" />
-      <point x="1434.893185108213" y="726.0" />
-      <point x="-19.25" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.TileGrid" target="inf112.skeleton.app.gameobjects.Coordinate">
-      <point x="32.138888888888914" y="-14.5" />
-      <point x="533.0621331846053" y="706.0" />
-      <point x="1038.6899406187842" y="706.0" />
-      <point x="1038.6899406187842" y="368.0" />
-      <point x="1027.7871628410064" y="368.0" />
-      <point x="13.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Flag" target="inf112.skeleton.app.gameobjects.GameObjectType">
-      <point x="-23.333333333333258" y="-14.5" />
-      <point x="40.98611111111131" y="338.0" />
-      <point x="69.25071831062166" y="338.0" />
-      <point x="69.25071831062166" y="89.0" />
-      <point x="396.6694741008457" y="89.0" />
-      <point x="-39.375" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.AbilityCard" target="inf112.skeleton.app.cards.Ability">
-      <point x="-35.66666666666666" y="-14.5" />
-      <point x="1281.8098517748795" y="99.0" />
-      <point x="1259.3039489096627" y="99.0" />
-      <point x="-20.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Pusher" target="inf112.skeleton.app.gameobjects.Orientation">
-      <point x="-7.0" y="-14.5" />
-      <point x="765.4232442957164" y="408.0" />
-      <point x="786.1732442957164" y="408.0" />
-      <point x="4.5" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Orientation" target="inf112.skeleton.app.cards.Program">
       <point x="0.0" y="-14.5" />
-      <point x="781.6732442957164" y="89.0" />
-      <point x="895.2666963230681" y="89.0" />
-      <point x="-41.125" y="14.5" />
+      <point x="208.0" y="227.0" />
+      <point x="156.75" y="227.0" />
+      <point x="20.25" y="14.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.LaserOutlet" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-43.200000000000045" y="-14.5" />
-      <point x="613.2232442957163" y="298.0" />
-      <point x="392.88366675260716" y="298.0" />
-      <point x="30.0" y="14.5" />
-    </edge>
-    <edge source="inf112.skeleton.app.cards.CardSpriteInteraction" target="inf112.skeleton.app.cards.ProgramCard">
-      <point x="-32.00000000000006" y="-14.5" />
-      <point x="1111.7246628410064" y="408.0" />
-      <point x="1154.179116282302" y="408.0" />
-      <point x="-27.461538461538453" y="14.5" />
+      <point x="0.0" y="-14.5" />
+      <point x="408.5" y="79.0" />
+      <point x="512.3333333333333" y="79.0" />
+      <point x="-13.666666666666686" y="14.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.5999999999999994" x="550.7768680594775" y="415.7500000000002" />
+  <settings layout="Hierarchic Group" zoom="0.5999999999999994" x="551.0" y="416.0" />
   <SelectedNodes>
     <node>inf112.skeleton.app.cards.IDeck</node>
   </SelectedNodes>
