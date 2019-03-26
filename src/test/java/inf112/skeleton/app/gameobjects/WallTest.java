@@ -32,29 +32,10 @@ public class WallTest {
     }
 
     @Test
-    public void possibleEffectPlayer() {
-        Wall wall = new Wall(Orientation.FACING_NORTH);
-        assertTrue(wall.possibleEffectPlayer(Orientation.FACING_NORTH));
-
-    }
-    @Test
-    public void possibleEffectPlayerOpposite() {
-        Wall wall = new Wall(Orientation.FACING_SOUTH);
-        assertTrue(wall.possibleEffectPlayer(Orientation.FACING_NORTH));
-
-    }
-    @Test
-    public void possibleEffectPlayerFalse() {
-        Wall wall = new Wall(Orientation.FACING_WEST);
-        assertFalse(wall.possibleEffectPlayer(Orientation.FACING_NORTH));
-    }
-
-    @Test
     public void playerHitWallOnTile() {
         Player player = new Player(0,Orientation.FACING_NORTH);
         player.setCurrentMove(Program.BACK);
         Wall wall = new Wall(Orientation.FACING_SOUTH);
-        assertTrue(wall.playerHitWall(player, true));
     }
 
     @Test

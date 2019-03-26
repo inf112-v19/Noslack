@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class LaserOutlet implements GameObject {
     private Sprite sprite;
     private Orientation orientation;
+    private boolean dual;
 
     public LaserOutlet() {
         this.orientation = Orientation.FACING_NORTH;
+        this.dual = false;
         evaluateSprite();
     }
-    public LaserOutlet(Orientation orientation1) {
-        this.orientation = orientation1;
+    public LaserOutlet(Orientation orientation, boolean dual) {
+        this.orientation = orientation;
+        this.dual = dual;
         evaluateSprite();
     }
 
@@ -25,8 +28,15 @@ public class LaserOutlet implements GameObject {
     @Override
     public void evaluateSprite() {
         try {
-            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            Texture texture;
+            if(dual){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            }
+            else {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            }
             this.sprite = new Sprite(texture);
+
             switch (orientation) {
                 default:
                     sprite.setRotation(0);
@@ -53,6 +63,13 @@ public class LaserOutlet implements GameObject {
     @Override
     public Sprite getSprite() {
         return sprite;
+    }
+
+    /**
+     * @return If the laser is a dual output
+     */
+    public boolean isDual() {
+        return dual;
     }
 
     @Override
