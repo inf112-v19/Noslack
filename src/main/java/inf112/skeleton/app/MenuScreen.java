@@ -44,7 +44,6 @@ public class MenuScreen
     }
 
     public boolean clickStart(int screenX, int screenY){
-        System.out.println("HEI");
         return spriteContainer.isInsideSprite(screenX,screenY,startGame);
 
     }

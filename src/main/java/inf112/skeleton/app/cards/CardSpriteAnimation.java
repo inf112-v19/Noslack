@@ -42,7 +42,6 @@ public class CardSpriteAnimation {
             int x = (int)(startPos.x - j);
             double progress = (j/(startPos.x-end));
             int y = (int)(progress*endPos.y + (1-progress)*startPos.y);
-            System.out.println(progress);
             Vector2 pos = new Vector2(x,y);
             ProgramCard card = hand.get(i);
             card.getSprite().setPosition(pos.x,pos.y);
