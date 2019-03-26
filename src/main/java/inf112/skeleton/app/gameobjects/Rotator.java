@@ -16,19 +16,24 @@ public class Rotator implements GameObject{
 
     @Override
     public void evaluateSprite() {
-        Texture texture = new Texture(Gdx.files.internal("./assets/error.png"));
-        this.sprite = new Sprite(texture);
+        try {
+            Texture texture = new Texture(Gdx.files.internal("./assets/error.png"));
+            this.sprite = new Sprite(texture);
 
-        switch(this.gameObjectType){
-            case ROTATOR_CLOCKWISE:
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/leftWheel32x32.png"));
-                break;
-            case ROTATOR_COUNTER_CLOCKWISE:
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/rightWheel32x32.png"));
-                break;
+            switch (this.gameObjectType) {
+                case ROTATOR_CLOCKWISE:
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/leftWheel32x32.png"));
+                    break;
+                case ROTATOR_COUNTER_CLOCKWISE:
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/rightWheel32x32.png"));
+                    break;
+            }
+
+            this.sprite = new Sprite(texture);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error in Rotator evaluateSprite()");
         }
-
-        this.sprite = new Sprite(texture);
     }
 
     @Override
