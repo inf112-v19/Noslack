@@ -24,7 +24,7 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "ConveyorLoops.txt";
+        this.fileName = this.fileName + "counterClockwiseRotatorTestMap.txt";
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
 
@@ -152,9 +152,11 @@ public class TileGrid{
                 break;
             case "T":
                 char modifier = nextTileType.charAt(nextTileType.length()-1);
-                Rotator rotatorToAdd = modifier == 1 ?
-                        new Rotator(GameObjectType.ROTATOR_CLOCKWISE) : new Rotator(GameObjectType.ROTATOR_COUNTER_CLOCKWISE);
+                int modiferAsInt = Character.getNumericValue(modifier);
+                Rotator rotatorToAdd = modiferAsInt == 2 ?
+                        new Rotator(GameObjectType.ROTATOR_COUNTER_CLOCKWISE) : new Rotator(GameObjectType.ROTATOR_CLOCKWISE);
                 this.tileGrid[row][column].addObjectOnTile(rotatorToAdd);
+                break;
             case "P":
                 Player newPlayer;
                 orientation = stringToOrientation(nextTileType);
@@ -450,11 +452,11 @@ public class TileGrid{
         if(playerBlockedOnCurrentTile(getPlayer(playerNumber))){
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
-            return false;
-        }
         if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
+            return false;
+        }
+        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
             return false;
         }
 
