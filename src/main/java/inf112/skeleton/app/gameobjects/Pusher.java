@@ -9,22 +9,38 @@ public class Pusher implements GameObject {
     private Sprite sprite;
     private Orientation orientation;
     private GameObjectType type;
+    private boolean evenPusher;
 
     public Pusher() {
         this.orientation = Orientation.FACING_NORTH;
         this.type = GameObjectType.PUSHER;
+        this.evenPusher = true;
         evaluateSprite();
     }
 
-    public Pusher(Orientation orientation) {
+    public Pusher(Orientation orientation){
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
+        this.evenPusher = true;
+        evaluateSprite();
+    }
+
+    public Pusher(Orientation orientation,boolean evenPusher) {
+        this.orientation = orientation;
+        this.type = GameObjectType.PUSHER;
+        this.evenPusher = evenPusher;
         evaluateSprite();
     }
 
     @Override
     public void evaluateSprite() {
-        Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/pusher.png"));
+        Texture texture;
+        if(this.evenPusher) {
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
+        }
+        else{
+            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
+        }
 
         this.sprite = new Sprite(texture);
         switch (orientation) {
@@ -62,8 +78,8 @@ public class Pusher implements GameObject {
     }
 
     @Override
-    public int compareTo(Object other) {
-        if(((GameObject)other).getGameObjectType() == GameObjectType.PLAYER){
+    public int compareTo(Object o) {
+        if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){
             return -1;
         } else {
             return 1;

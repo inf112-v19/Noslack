@@ -150,6 +150,11 @@ public class TileGrid{
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
                 break;
+            case "D":
+                boolean evenPusher = nextTileType.contains("DD");
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
+                break;
             case "O":
                 boolean dual = nextTileType.contains("OO");
                 orientation = stringToOrientation(nextTileType);
@@ -162,10 +167,6 @@ public class TileGrid{
             case "T":
                 boolean counterClockwise = nextTileType.contains("CC");
                 this.tileGrid[row][column].addObjectOnTile(new Rotator(counterClockwise));
-                break;
-            case "D":
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation));
                 break;
             case "P":
                 Player newPlayer;
@@ -376,7 +377,10 @@ public class TileGrid{
                     colsToMove *= 2;
                 }
             }
-            movePlayer(playerNumber,rowsToMove,colsToMove);
+            if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
+                movePlayer(playerNumber,rowsToMove,colsToMove);
+            }
+
         }
     }
 
