@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Input;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -156,13 +157,19 @@ public class TileGrid{
                 this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
             case "O":
-                boolean dual = nextTileType.contains("OO");
+                boolean dualOutlet = nextTileType.contains("OO");
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dual));
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "L":
-                // H V
-                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(Orientation.HORIZONTAL));
+                boolean dualLaser = nextTileType.contains("LL");
+                if( nextTileType.contains("H"))
+                    orientation = Orientation.HORIZONTAL;
+                else if(nextTileType.contains("V"))
+                    orientation = Orientation.VERTICAL;
+                else
+                    orientation = Orientation.VERTICAL;
+                this.tileGrid[row][column].addObjectOnTile(new LaserBeam(orientation, dualLaser));
                 break;
             case "T":
                 boolean counterClockwise = nextTileType.contains("CC");
@@ -303,7 +310,18 @@ public class TileGrid{
             respawnPlayer(player.getPlayerNumber());
         }
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            player.receiveDamage(1);
+            boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
+            if (dual)
+                player.receiveDamage(2);
+            else
+                player.receiveDamage(1);
+        }
+        if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
+            boolean dual = ((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
+            if (dual)
+                player.receiveDamage(2);
+            else
+                player.receiveDamage(1);
         }
 
         // Rotator activation
@@ -483,13 +501,14 @@ public class TileGrid{
         if(playerBlockedOnCurrentTile(getPlayer(playerNumber))){
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
-            return false;
-        }
         if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
             return false;
         }
+        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+            return false;
+        }
+
         return true;
     }
 
