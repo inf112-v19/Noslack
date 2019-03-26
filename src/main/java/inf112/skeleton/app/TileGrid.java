@@ -95,7 +95,7 @@ public class TileGrid{
             }
             System.out.println("Players: " + getPlayers());
             for(Player player : getPlayers()){
-                player.setFlagsVisited(getFlagsInitiated());
+                player.setFlagsVisitedSize(getFlagsInitiated());
             }
             bufferedReader.close();
         } catch (IOException e) {
@@ -293,7 +293,7 @@ public class TileGrid{
                     //Creates a backUp
                     player.setBackUp();
 
-                    player.getFlagsVisited().set(n - 1, 1);
+                    player.visitFlag(n);
                     System.out.println("Visited: " + player.getFlagsVisited());
 
                     //if you are on the last flag, and visited all previous, you win.

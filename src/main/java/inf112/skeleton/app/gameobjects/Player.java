@@ -242,12 +242,27 @@ public class Player implements GameObject {
         if(health < 9)this.health++;
     }
 
+    /**
+     * Set the size of the flags visited array, based on how many flags the map contains.
+     * @param n The number of flags on the map.
+     */
+    public void setFlagsVisitedSize(int n){
+        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
+    }
+
+    /**
+     * @return Get the list of which flags the player has visited.
+     */
     public ArrayList<Integer> getFlagsVisited(){
         return flagsVisited;
     }
 
-    public void setFlagsVisited(int n){
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
+    /**
+     * Initiate a visit to a flag.
+     * @param n The flags number.
+     */
+    public void visitFlag(int n){
+        this.flagsVisited.set(n - 1, 1);
     }
 
     public void initiate (Coordinate cor){

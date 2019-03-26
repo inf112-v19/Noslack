@@ -82,11 +82,9 @@ public class PlayerTest {
     @Test
     public void flagsAreRegistered() {
         TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
-        ArrayList oldValue = tileGrid.getPlayer(0).getFlagsVisited();
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.activateTiles();
-        assertEquals(tileGrid.getPlayer(0).getFlagsVisited(), oldValue);
     }
 
     @Test
