@@ -24,7 +24,7 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "counterClockwiseRotatorTestMap.txt";
+        this.fileName = this.fileName + "ConveyorLoops.txt";
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
 
@@ -73,6 +73,7 @@ public class TileGrid{
             // Designate the space used in the file between tiles and objects
             String space =" ";
             String split = ",";
+
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             getMapInfo(bufferedReader.readLine());
 
@@ -96,12 +97,10 @@ public class TileGrid{
             for(Player player : getPlayers()){
                 player.setFlagsVisited(getFlagsInitiated());
             }
-
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
     /**
      *
@@ -220,7 +219,7 @@ public class TileGrid{
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
-    public void activateTiles(){
+    void activateTiles(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
