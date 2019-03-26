@@ -273,6 +273,10 @@ public class Player implements GameObject {
         resetMoveProgress();
     }
 
+    public void setBackUp(Coordinate backUp){
+        this.backUp=backUp;
+    }
+
 
     /**
      * Set the players Back Up

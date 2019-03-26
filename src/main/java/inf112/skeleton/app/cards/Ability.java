@@ -11,7 +11,6 @@ public enum Ability {
      * Returns an Abilities description
      * @return String with ability description
      */
-    @Override
     public String toString() {
         switch (this) {
             case AblativeCoat:

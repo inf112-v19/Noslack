@@ -43,8 +43,6 @@ public class LaserBeam implements GameObject{
         return this.dual;
     }
 
-
-
     @Override
     public Orientation getOrientation() {
         return this.orientation;
