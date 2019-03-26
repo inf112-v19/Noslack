@@ -310,7 +310,18 @@ public class TileGrid{
             respawnPlayer(player.getPlayerNumber());
         }
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            player.receiveDamage(1);
+            boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
+            if (dual)
+                player.receiveDamage(2);
+            else
+                player.receiveDamage(1);
+        }
+        if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
+            boolean dual = ((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
+            if (dual)
+                player.receiveDamage(2);
+            else
+                player.receiveDamage(1);
         }
 
         // Rotator activation
