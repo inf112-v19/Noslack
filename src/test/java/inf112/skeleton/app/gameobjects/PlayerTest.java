@@ -4,6 +4,8 @@ import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {
@@ -79,20 +81,21 @@ public class PlayerTest {
 
     @Test
     public void flagsAreRegistered() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        ArrayList oldValue = tileGrid.getPlayer(0).getFlagsVisited();
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        assertEquals(tileGrid.getPlayer(0).getFlagsVisited().size(), oldValue+1);
+        tileGrid.activateTiles();
+        assertEquals(tileGrid.getPlayer(0).getFlagsVisited(), oldValue);
     }
 
     @Test
     public void flagsOutOfOrderNotCounted() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        ArrayList oldValue = tileGrid.getPlayer(0).getFlagsVisited();
         tileGrid.getPlayer(0).setPosition(new Coordinate(1, 2, Orientation.FACING_NORTH));
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited().size());
+        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited());
     }
 }

@@ -1,8 +1,7 @@
 package inf112.skeleton.app.gameobjects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.TileGrid;
+import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,11 +15,13 @@ public class HoleTest {
     }
 
     @Test
-    public void checkSprite() {
-        Hole hole = new Hole();
-        Sprite s1 = new Sprite(new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png")));
-
-        assertEquals(s1, hole.getSprite());
+    public void playerFallsInHole(){
+        TileGrid grid = new TileGrid("holeTest.txt");
+        grid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        int lives = grid.getPlayer(0).getLives();
+        grid.continueMove(0);
+        grid.activateTiles();
+        assertNotEquals(lives,grid.getPlayer(0).getLives());
+        assertEquals(--lives,grid.getPlayer(0).getLives());
     }
-
 }

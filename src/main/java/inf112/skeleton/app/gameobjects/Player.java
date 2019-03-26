@@ -15,6 +15,7 @@ public class Player implements GameObject {
     private ArrayList<AbilityCard> abilityHand;
     private Sprite sprite;
     private int health;
+    private int lives;
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
@@ -33,6 +34,7 @@ public class Player implements GameObject {
      */
     public Player(int playerNumber){
         this.health = 9;
+        this.lives = 3;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -52,6 +54,7 @@ public class Player implements GameObject {
      */
     public Player(int playerNumber,Orientation orientation){
         this.health = 9;
+        this.lives = 3;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -127,6 +130,16 @@ public class Player implements GameObject {
     }
 
     /**
+     * @return How many lives the player has left.
+     */
+    public int getLives(){
+        return this.lives;
+    }
+    public void takeLives(){
+        this.lives--;
+    }
+
+    /**
      * Give player a new orientation
      * @param orientation The players new orientation
      */
@@ -189,11 +202,9 @@ public class Player implements GameObject {
      */
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
         this.program.clear();
-
         for (int i = (selectedCards.size()-1); i >=0; i--) {
             this.program.push(selectedCards.get(i));
         }
-        //this.program.addAll(selectedCards);
     }
 
     /**
@@ -235,6 +246,10 @@ public class Player implements GameObject {
         return flagsVisited;
     }
 
+    public void setFlagsVisited(int n){
+        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
+    }
+
     public void initiate (Coordinate cor){
         setPosition(cor);
         setBackUp();
@@ -273,10 +288,15 @@ public class Player implements GameObject {
         resetMoveProgress();
     }
 
-    public void setBackUp(Coordinate backUp){
-        this.backUp=backUp;
+    /**
+     * Respawn player after death
+     */
+    public void respawn(){
+        reset();
+        takeLives();
+        setPosition(this.backUp);
+        setOrientation(this.backUp.getOrientation());
     }
-
 
     /**
      * Set the players Back Up
@@ -294,14 +314,16 @@ public class Player implements GameObject {
         return this.backUp;
     }
 
-    public void setFlagsVisited(int n){
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
-    }
-
+    /**
+     * @return If program chosen by player is completed
+     */
     public boolean isFinished(){
         return this.program.isEmpty();
     }
 
+    /**
+     * Call if player wins
+     */
     public void win(){
         if(!this.hasWon){
             System.out.println(this.name + " HAS WON!");

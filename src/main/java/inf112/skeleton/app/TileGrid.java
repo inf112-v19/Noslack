@@ -576,28 +576,11 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
-
         Player player = getPlayer(playerNumber);
-        //int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
-        //int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
+        getTile(player.getPosition()).removeObjectFromTile(player);
 
-        int rowOfPlayer = player.getPosition().getRow();
-        int columnOfPlayer = player.getPosition().getColumn();
-
-        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(player);
-
-        Coordinate backUp = player.getBackUp();
-
-        this.tileGrid[backUp.getRow()][backUp.getColumn()].addObjectOnTile(player);
-
-        player.setPosition(backUp);
-        player.setOrientation(backUp.getOrientation());
-
-        player.reset();
-
-        player.receiveDamage();
-
-        //players[playerNumber].getSprite().translate(respawnRow, respawnColumn);
+        player.respawn();
+        getTile(player.getBackUp()).addObjectOnTile(player);
     }
 
     /**
