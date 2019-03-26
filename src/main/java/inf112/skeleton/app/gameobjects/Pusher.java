@@ -13,11 +13,13 @@ public class Pusher implements GameObject {
     public Pusher() {
         this.orientation = Orientation.FACING_NORTH;
         this.type = GameObjectType.PUSHER;
+        evaluateSprite();
     }
 
     public Pusher(Orientation orientation) {
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
+        evaluateSprite();
     }
 
     @Override
@@ -60,8 +62,8 @@ public class Pusher implements GameObject {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){
+    public int compareTo(Object other) {
+        if(((GameObject)other).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;
