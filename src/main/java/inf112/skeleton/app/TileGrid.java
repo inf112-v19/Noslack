@@ -219,7 +219,7 @@ public class TileGrid{
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
-    void activateTiles(){
+    public void activateTiles(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
@@ -497,14 +497,15 @@ public class TileGrid{
      */
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
-        if(playerBlockedOnCurrentTile(getPlayer(playerNumber))){
+        Orientation directionOfMove = findOrientationOfMovement(rowsToMove, columnsToMove);
+        if(playerBlockedOnCurrentTile(getPlayer(playerNumber), directionOfMove)){
             return false;
         }
         if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+        if(playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
             return false;
         }
 
@@ -512,12 +513,34 @@ public class TileGrid{
     }
 
     /**
+     * Finds the Orientation of the move about to be applied
+     * @param rowsToMove Rows to be moved
+     * @param columnsToMove Columns to be moved.
+     * @return The orientation of the movement.
+     */
+    private Orientation findOrientationOfMovement(int rowsToMove, int columnsToMove){
+        if(columnsToMove==0){
+            if(rowsToMove>0)
+                return Orientation.FACING_NORTH;
+            if(rowsToMove<0)
+                return Orientation.FACING_SOUTH;
+        }
+        if(rowsToMove==0){
+            if(columnsToMove>0)
+                return Orientation.FACING_EAST;
+            if(columnsToMove<0)
+                return Orientation.FACING_WEST;
+        }
+        return null;
+    }
+
+    /**
      * @param player Player in question
      * @return If the path is blocked on the Tile
      */
-    private boolean playerBlockedOnCurrentTile(Player player){
+    private boolean playerBlockedOnCurrentTile(Player player, Orientation directionOfMove){
         Tile tile = getTile(player.getPosition());
-        return tile.playerPathBlocked(player);
+        return tile.playerPathBlocked(player, directionOfMove);
     }
     /**
      * @param player Active player
@@ -525,11 +548,11 @@ public class TileGrid{
      * @param columnsToMove Columns to where the player is moving
      * @return If player can move, or is blocked by wall
      */
-    private boolean playerBlockedOnNextTile(Player player, int rowsToMove, int columnsToMove){
+    private boolean playerBlockedOnNextTile(Player player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
                 player.getPosition().getColumn()+columnsToMove);
 
-        return getTile(coordinate).playerPathBlocked(player);
+        return getTile(coordinate).playerPathBlocked(player, directionOfMove);
     }
 
     /**
