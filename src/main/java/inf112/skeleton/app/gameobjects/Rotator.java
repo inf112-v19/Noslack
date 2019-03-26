@@ -6,35 +6,38 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Rotator implements GameObject{
 
-    private GameObjectType gameObjectType;
     private Sprite sprite;
+    private GameObjectType gameObjectType;
+    private boolean counterClockwise;
 
-    public Rotator(GameObjectType gameObjectType) {
-        this.gameObjectType = gameObjectType;
+    public Rotator(boolean counterClockwise) {
+        this.counterClockwise = counterClockwise;
+        evaluateGameObjectType();
         evaluateSprite();
+    }
+
+    public void evaluateGameObjectType(){
+        this.gameObjectType = this.counterClockwise ?
+                GameObjectType.ROTATOR_COUNTER_CLOCKWISE : GameObjectType.ROTATOR_CLOCKWISE;
     }
 
     @Override
     public void evaluateSprite() {
         try {
-            Texture texture = new Texture(Gdx.files.internal("./assets/error.png"));
-            this.sprite = new Sprite(texture);
 
-            switch (this.gameObjectType) {
-                case ROTATOR_CLOCKWISE:
-                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/leftWheel32x32.png"));
-                    break;
-                case ROTATOR_COUNTER_CLOCKWISE:
-                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/rotator/rightWheel32x32.png"));
-                    break;
-            }
+            Texture texture = this.counterClockwise ?
+                    new Texture(Gdx.files.internal("./assets/gameObjects/rotator/leftWheel32x32.png"))
+                    : new Texture(Gdx.files.internal("./assets/gameObjects/rotator/rightWheel32x32.png"));
 
             this.sprite = new Sprite(texture);
+
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error in Rotator evaluateSprite()");
         }
     }
+
+
 
     @Override
     public GameObjectType getGameObjectType() {

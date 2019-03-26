@@ -24,7 +24,7 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.fileName = this.fileName + "ConveyorLoops.txt";
+        this.fileName = this.fileName + "counterClockwiseRotatorTestMap.txt";
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
 
