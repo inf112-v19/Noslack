@@ -33,6 +33,16 @@ public class LaserBeam implements GameObject{
         return this.sprite;
     }
 
+    /**
+     * Get the Orientation of the object
+     *
+     * @return Objects orientation.
+     */
+    @Override
+    public Orientation getOrientation() {
+        return this.orientation;
+    }
+
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){

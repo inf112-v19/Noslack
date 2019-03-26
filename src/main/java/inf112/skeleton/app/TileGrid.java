@@ -483,13 +483,14 @@ public class TileGrid{
         if(playerBlockedOnCurrentTile(getPlayer(playerNumber))){
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
-            return false;
-        }
         if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
             return false;
         }
+        if(playerBlockedOnNextTile(getPlayer(playerNumber),rowsToMove,columnsToMove)){
+            return false;
+        }
+
         return true;
     }
 
