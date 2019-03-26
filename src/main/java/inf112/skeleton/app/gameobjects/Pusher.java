@@ -83,7 +83,7 @@ public class Pusher implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;

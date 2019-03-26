@@ -55,10 +55,17 @@ public class Flag implements GameObject {
     public int getFlagNumber(){
         return flagNumber;
     }
+
+    @Override
+    public String toString(){
+        return "Flag " + this.flagNumber;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
         return GameObjectType.FLAG;
     }
+
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){
