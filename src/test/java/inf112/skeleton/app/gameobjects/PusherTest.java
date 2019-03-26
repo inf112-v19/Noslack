@@ -1,6 +1,5 @@
 package inf112.skeleton.app.gameobjects;
 
-import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
@@ -37,12 +36,26 @@ public class PusherTest {
     @Test
     public void pushPlayerTest() {
         TileGrid tileGrid = new TileGrid("pusherTestMap.txt");
-        Tile tile = tileGrid.getTile(1, 0);
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         for(int i =0; i<2; i++){
             tileGrid.continueMove(0);
             tileGrid.activateTiles();
         }
         assertEquals(new Coordinate(1,1),tileGrid.getPlayerPosition(0));
+    }
+    @Test
+    public void pushPlayerEvenTest() {
+        TileGrid tileGrid = new TileGrid("pusherEvenTestMap.txt");
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        for(int i =0; i<2; i++){
+            tileGrid.continueMove(0);
+            tileGrid.activateTiles();
+        }
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        for(int i =0; i<2; i++){
+            tileGrid.continueMove(0);
+            tileGrid.activateTiles();
+        }
+        assertEquals(new Coordinate(2,1),tileGrid.getPlayerPosition(0));
     }
 }
