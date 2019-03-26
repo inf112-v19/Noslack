@@ -34,31 +34,35 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        Texture texture;
-        if(this.evenPusher) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
-        }
-        else{
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
-        }
+        try {
+            Texture texture;
+            if (this.evenPusher) {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
+            } else {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
+            }
 
-        this.sprite = new Sprite(texture);
-        switch (orientation) {
-            default:
-                sprite.setRotation(0);
-                break;
-            case FACING_NORTH:
-                sprite.setRotation(0);
-                break;
-            case FACING_EAST:
-                sprite.setRotation(90);
-                break;
-            case FACING_WEST:
-                sprite.setRotation(270);
-                break;
-            case FACING_SOUTH:
-                sprite.setRotation(180);
-                break;
+            this.sprite = new Sprite(texture);
+            switch (orientation) {
+                default:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_NORTH:
+                    sprite.setRotation(0);
+                    break;
+                case FACING_EAST:
+                    sprite.setRotation(90);
+                    break;
+                case FACING_WEST:
+                    sprite.setRotation(270);
+                    break;
+                case FACING_SOUTH:
+                    sprite.setRotation(180);
+                    break;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error in Pusher evaluateSprite()");
         }
     }
 

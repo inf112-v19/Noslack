@@ -43,8 +43,6 @@ public class LaserBeam implements GameObject{
         return this.dual;
     }
 
-
-
     @Override
     public Orientation getOrientation() {
         return this.orientation;
@@ -53,11 +51,6 @@ public class LaserBeam implements GameObject{
     @Override
     public GameObjectType getGameObjectType() {
         return GameObjectType.LASER_BEAM;
-    }
-
-    @Override
-    public Orientation getOrientation() {
-        return null;
     }
 
     @Override
