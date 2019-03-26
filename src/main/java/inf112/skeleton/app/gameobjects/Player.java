@@ -202,11 +202,10 @@ public class Player implements GameObject {
     public Stack<ProgramCard> getProgram() {return this.program;}
 
     /**
-     * Get the players next chosen program
-     * @return Next Program
+     * Set the players next program from the program stack.
      */
-    public ProgramCard getNextProgram(){
-        return this.program.pop();
+    public void setNextProgram(){
+        this.currentMove = this.program.pop().getMove();
     }
 
     /**
@@ -261,14 +260,6 @@ public class Player implements GameObject {
      */
     public void resetMoveProgress(){
         this.moveProgression = 0;
-    }
-
-    /**
-     * Stop a players move
-     */
-    public void stopMove(){
-        this.currentMove = Program.NONE;
-        resetMoveProgress();
     }
 
     /**

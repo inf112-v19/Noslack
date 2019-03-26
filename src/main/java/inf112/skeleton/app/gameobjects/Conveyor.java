@@ -11,34 +11,19 @@ public class Conveyor implements GameObject {
     private boolean fast;
     private int turn;
 
+    public Conveyor(){
+        this.orientation = Orientation.FACING_NORTH;
+        this.turn = 0;
+        this.fast = false;
+        this.type = GameObjectType.CONVEYOR;
+        evaluateSprite();
+    }
 
     public Conveyor(Orientation orientation, boolean fast, int turn){
         this.orientation = orientation;
         this.turn = turn;
         this.fast = fast;
-        evaluateSprite();
-    }
-    public Conveyor(){
-        this.orientation = Orientation.FACING_NORTH;
-        this.fast = false;
-        evaluateSprite();
-    }
-
-    public Conveyor(boolean fast){
-        this.orientation = Orientation.FACING_NORTH;
-        this.fast = fast;
-        evaluateSprite();
-
-    }
-    public Conveyor(Orientation orientation){
-        this.orientation = orientation;
-        this.fast = false;
-        evaluateSprite();
-    }
-
-    public Conveyor(Orientation orientation, boolean fast){
-        this.orientation = orientation;
-        this.fast = fast;
+        this.type = GameObjectType.CONVEYOR;
         evaluateSprite();
     }
 
@@ -47,7 +32,6 @@ public class Conveyor implements GameObject {
 
         Texture texture;
         if(this.fast){
-            this.type = GameObjectType.F_CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
             }
@@ -56,7 +40,6 @@ public class Conveyor implements GameObject {
             }
         }
         else{
-            this.type = GameObjectType.CONVEYOR;
             if(turn != 0){
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
             }
