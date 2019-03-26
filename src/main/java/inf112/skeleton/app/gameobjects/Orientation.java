@@ -63,4 +63,22 @@ public enum Orientation {
 
     }
 
+    /**
+     * Returns the opposite of the orientation.
+     * @return Opposite of the original orientation.
+     */
+    public Orientation opposite(){
+        switch (this){
+            case FACING_NORTH:
+                return FACING_SOUTH;
+            case FACING_SOUTH:
+                return FACING_NORTH;
+            case FACING_EAST:
+                return FACING_WEST;
+            case FACING_WEST:
+                return FACING_EAST;
+            default:
+                return this;
+        }
+    }
 }

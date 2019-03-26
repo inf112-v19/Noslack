@@ -83,7 +83,7 @@ public class CardSpriteInteraction {
 
     /**
      *
-     * CHANGE THIS METHOD :)
+     * TODO CHANGE THIS METHOD :)
      * @param screenX
      * @param screenY
      * @return
@@ -99,8 +99,7 @@ public class CardSpriteInteraction {
                         this.overlappingCard = this.chosenCards.get(i);
                     }
                     setCardSlot(card, i);
-                    Vector2 pos = new Vector2(this.cardSlotPositions.get(i).x-74,this.cardSlotPositions.get(i).y);
-                    return pos;
+                    return new Vector2(this.cardSlotPositions.get(i).x-74, this.cardSlotPositions.get(i).y);
                 }
             }
         }
@@ -113,9 +112,7 @@ public class CardSpriteInteraction {
 
     private boolean insideSlot(float screenX, float screenY, float slotX, float slotY){
         if (screenX > slotX-cardOffset.x/2 && screenX < slotX+cardOffset.x/2){
-            if (screenY > slotY-cardOffset.y/2 && screenY < slotY-cardOffset.y/2){
-                return true;
-            }
+            return screenY > slotY - cardOffset.y / 2 && screenY < slotY - cardOffset.y / 2;
         }
         return false;
     }
