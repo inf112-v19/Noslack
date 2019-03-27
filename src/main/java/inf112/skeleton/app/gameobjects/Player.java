@@ -7,7 +7,6 @@ import inf112.skeleton.app.cards.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.Collections;
 
 public class Player implements GameObject {
     private ArrayList<ProgramCard> programHand;
@@ -361,6 +360,11 @@ public class Player implements GameObject {
 
     @Override
     public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
+
+    @Override
+    public String toString(){
+        return this.playerNumber + this.name;
+    }
 
     @Override
     public int compareTo(Object o) {

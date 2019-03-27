@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 
 public class TileGrid{
-    private TileGridBuilder builder;
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
@@ -20,7 +19,7 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        this.builder= new TileGridBuilder("ConveyorLoops.txt");
+        TileGridBuilder builder= new TileGridBuilder("ConveyorLoops.txt");
         this.tileGrid = builder.getTileGrid();
         this.players = builder.getPlayers();
         this.rows = builder.getRows();
@@ -34,7 +33,7 @@ public class TileGrid{
      * @param file The file name, the program fixes directory.
      */
     public TileGrid(String file) {
-        this.builder= new TileGridBuilder(file);
+        TileGridBuilder builder= new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
         this.players = builder.getPlayers();
         this.rows = builder.getRows();
