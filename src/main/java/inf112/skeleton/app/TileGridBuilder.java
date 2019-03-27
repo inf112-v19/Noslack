@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.TileTypes.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

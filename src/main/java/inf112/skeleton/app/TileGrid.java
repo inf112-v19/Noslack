@@ -3,6 +3,11 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.TileTypes.Conveyor;
+import inf112.skeleton.app.gameobjects.TileTypes.Flag;
+import inf112.skeleton.app.gameobjects.TileTypes.LaserOutlet;
+import inf112.skeleton.app.gameobjects.TileTypes.Pusher;
+
 import java.util.ArrayList;
 
 

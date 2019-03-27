@@ -2,7 +2,7 @@ package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
-import org.junit.Before;
+import inf112.skeleton.app.gameobjects.TileTypes.Wall;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -33,9 +33,12 @@ public class WallTest {
 
     @Test
     public void playerHitWallOnTile() {
-        Player player = new Player(0,Orientation.FACING_NORTH);
-        player.setCurrentMove(Program.BACK);
-        Wall wall = new Wall(Orientation.FACING_SOUTH);
+        TileGrid tileGrid = new TileGrid("wallTestMap.txt");
+        Coordinate cor = tileGrid.getPlayerPosition(0);
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        Coordinate cor2 = new Coordinate(tileGrid.getPlayerPosition(0));
+        assertEquals(cor,cor2);
     }
 
     @Test
@@ -45,7 +48,6 @@ public class WallTest {
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         Coordinate cor2 = new Coordinate(tileGrid.getPlayerPosition(0));
-        System.out.println(cor+" after "+cor2);
         assertEquals(cor,cor2);
     }
 }

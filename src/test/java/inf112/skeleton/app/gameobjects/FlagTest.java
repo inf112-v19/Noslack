@@ -1,10 +1,8 @@
 package inf112.skeleton.app.gameobjects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
+import inf112.skeleton.app.gameobjects.TileTypes.Flag;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

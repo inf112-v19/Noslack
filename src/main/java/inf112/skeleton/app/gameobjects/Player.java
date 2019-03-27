@@ -133,7 +133,11 @@ public class Player implements GameObject {
     public int getLives(){
         return this.lives;
     }
-    public void takeLives(){
+
+    /**
+     * Take a live from player when respawning
+     */
+    private void takeLives(){
         this.lives--;
     }
 

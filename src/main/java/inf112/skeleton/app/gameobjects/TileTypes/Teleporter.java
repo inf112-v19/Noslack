@@ -1,9 +1,12 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.TileTypes;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.Tile;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
-public class Teleporter implements GameObject{
+public class Teleporter implements GameObject {
 
     Tile teleportLocation;
 

@@ -2,6 +2,7 @@ package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.TileTypes.Pusher;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
