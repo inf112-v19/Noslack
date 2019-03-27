@@ -342,6 +342,12 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
+        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
+
+        System.out.println(screenX + " " + screenY);
+
         int nulls = 0;
 
         if(menuScreen.runMenu()){
@@ -370,6 +376,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
+        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
+
         if(menuScreen.runMenu()){
             return false;
         }
@@ -393,6 +402,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
+        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
+
         if(menuScreen.runMenu()){
             return false;
         }
