@@ -183,8 +183,6 @@ public class RoboRally extends Game implements InputProcessor {
         for (ProgramCard card : this.programHand) {
             card.getSprite().draw(this.batch);
         }
-
-        //cardTestSprite.draw(batch);
     }
 
     /**
@@ -256,19 +254,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     private void tick() {
-
-        /*
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-        }
-        /*
-        if (currentPhase == 0) {
-            performProgrammingPhase();
-            currentPhase++;
-        }
-        */
-
         if(this.tileGrid.getPlayer(0).isFinished()){
             this.currentPhase = 100;
         }

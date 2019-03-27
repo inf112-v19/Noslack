@@ -1,7 +1,5 @@
 package inf112.skeleton.app.gameobjects;
 
-import java.util.Objects;
-
 public class Coordinate {
 
     private int row;

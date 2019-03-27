@@ -344,7 +344,6 @@ public class TileGrid{
         if(playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
             return false;
         }
-
         return true;
     }
 

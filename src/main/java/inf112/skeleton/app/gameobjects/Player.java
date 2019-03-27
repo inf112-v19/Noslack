@@ -372,7 +372,6 @@ public class Player implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        // return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
         return 1;
     }
 }
