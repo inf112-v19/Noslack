@@ -1,8 +1,11 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.gameobjects.TileTypes.Pusher;
+import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.Orientation;
+import inf112.skeleton.app.gameobjects.tiletypes.Pusher;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -42,7 +45,7 @@ public class PusherTest {
             tileGrid.continueMove(0);
             tileGrid.activateTiles();
         }
-        assertEquals(new Coordinate(1,1),tileGrid.getPlayerPosition(0));
+        Assert.assertEquals(new Coordinate(1,1),tileGrid.getPlayerPosition(0));
     }
     @Test
     public void pushPlayerEvenTest() {

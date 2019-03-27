@@ -1,9 +1,8 @@
-package inf112.skeleton.app.gameobjects.TileTypes;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;

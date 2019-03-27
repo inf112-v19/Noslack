@@ -1,4 +1,4 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;

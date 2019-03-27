@@ -1,4 +1,4 @@
-package inf112.skeleton.app.gameobjects.TileTypes;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

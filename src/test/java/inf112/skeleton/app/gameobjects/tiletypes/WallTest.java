@@ -1,8 +1,10 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.gameobjects.TileTypes.Wall;
+import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.Orientation;
+import inf112.skeleton.app.gameobjects.tiletypes.Wall;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

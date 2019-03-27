@@ -1,8 +1,9 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
-import inf112.skeleton.app.gameobjects.TileTypes.Flag;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.tiletypes.Flag;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

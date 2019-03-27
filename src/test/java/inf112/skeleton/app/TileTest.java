@@ -1,9 +1,9 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
-import inf112.skeleton.app.gameobjects.TileTypes.LaserOutlet;
-import inf112.skeleton.app.gameobjects.TileTypes.Pusher;
-import inf112.skeleton.app.gameobjects.TileTypes.Wall;
+import inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet;
+import inf112.skeleton.app.gameobjects.tiletypes.Pusher;
+import inf112.skeleton.app.gameobjects.tiletypes.Wall;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
