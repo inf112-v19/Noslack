@@ -291,7 +291,6 @@ public class TileGrid{
 
                     //Creates a backUp
                     player.setBackUp();
-
                     player.visitFlag(n);
                     System.out.println("Visited: " + player.getFlagsVisited());
 
@@ -299,7 +298,6 @@ public class TileGrid{
                     if (n >= flagsInitiated) {
                         player.win();
                     }
-
                 }
             }
         }
@@ -310,17 +308,21 @@ public class TileGrid{
         // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
             boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
-            if (dual)
+            if (dual) {
                 player.receiveDamage(2);
-            else
+            }
+            else {
                 player.receiveDamage(1);
+            }
         }
         if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
             boolean dual = ((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
-            if (dual)
+            if (dual) {
                 player.receiveDamage(2);
-            else
+            }
+            else {
                 player.receiveDamage(1);
+            }
         }
         // Rotator activation
         if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
@@ -329,24 +331,12 @@ public class TileGrid{
         if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
             applyRotation(Program.LEFT, player.getPlayerNumber());
         }
-
         // Pusher activation
         if(tile.hasGameObject(GameObjectType.PUSHER)){
             Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
-            switch (pusher.getOrientation()){
-                case FACING_NORTH:
-                    movePlayer(player.getPlayerNumber(), 1, 0);
-                    break;
-                case FACING_EAST:
-                    movePlayer(player.getPlayerNumber(), 0, 1);
-                    break;
-                case FACING_SOUTH:
-                    movePlayer(player.getPlayerNumber(), -1, 0);
-                    break;
-                case FACING_WEST:
-                    movePlayer(player.getPlayerNumber(), 0, -1);
-                    break;
-            }
+
+            int[] move = calculateMove(pusher.getOrientation());
+            movePlayer(player.getPlayerNumber(), move[0],move[1]);
         }
     }
 
@@ -364,25 +354,10 @@ public class TileGrid{
             if(conveyor.getTurn() < 0){
                 applyRotation(Program.LEFT,playerNumber);
             }
-            int rowsToMove = 0;
-            int colsToMove = 0;
+            int[] move = calculateMove(conveyor.getOrientation());
+            int rowsToMove = move[0];
+            int colsToMove = move[1];
 
-            switch (conveyor.getOrientation()) {
-                case FACING_NORTH:
-                    rowsToMove = 1;
-                    break;
-                case FACING_WEST:
-                    colsToMove = -1;
-                    break;
-                case FACING_SOUTH:
-                    rowsToMove = -1;
-                    break;
-                case FACING_EAST:
-                    colsToMove = 1;
-                    break;
-                default:
-                    break;
-            }
             int row = player.getPosition().getRow();
             int col = player.getPosition().getColumn();
 
@@ -396,8 +371,33 @@ public class TileGrid{
             if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
                 movePlayer(playerNumber,rowsToMove,colsToMove);
             }
-
         }
+    }
+
+    /**
+     * Calculate new move, based on orientation
+     * @param orientation Orientation of movement
+     * @return a list of integers, first row, second column
+     */
+    private int[] calculateMove(Orientation orientation){
+        int[] rowColumn = new int[2];
+        rowColumn[0]=0;
+        rowColumn[1]=0;
+        switch (orientation) {
+            case FACING_NORTH:
+                rowColumn[0] = 1;
+                break;
+            case FACING_WEST:
+                rowColumn[1] = -1;
+                break;
+            case FACING_SOUTH:
+                rowColumn[0] = -1;
+                break;
+            case FACING_EAST:
+                rowColumn[1] = 1;
+                break;
+        }
+        return rowColumn;
     }
 
     /**
@@ -423,23 +423,10 @@ public class TileGrid{
      * @param playerNumber the number of the player that the move should be applied to
      */
     private void applyMove(Program move, int playerNumber){
-        int rowsToMove = 0;
-        int columnsToMove = 0;
+        int[] movement = calculateMove(getPlayer(0).getOrientation());
+        int rowsToMove = movement[0];
+        int columnsToMove = movement[1];
 
-        switch (this.players[playerNumber].getOrientation()) {
-            case FACING_NORTH:
-                rowsToMove = 1;
-                break;
-            case FACING_SOUTH:
-                rowsToMove = -1;
-                break;
-            case FACING_EAST:
-                columnsToMove = 1;
-                break;
-            case FACING_WEST:
-                columnsToMove = -1;
-                break;
-        }
         if(move==Program.BACK){
             rowsToMove *= -1;
             columnsToMove *= -1;
@@ -571,18 +558,6 @@ public class TileGrid{
     }
 
     /**
-     * Respawns the player after it has fallen out of grid, with health=6.
-     * @param playerNumber Players number
-     */
-    private void respawnPlayer(int playerNumber){
-        Player player = getPlayer(playerNumber);
-        getTile(player.getPosition()).removeObjectFromTile(player);
-
-        player.respawn();
-        getTile(player.getBackUp()).addObjectOnTile(player);
-    }
-
-    /**
      * Get Player
      * @param playerNumber Player number
      * @return Wanted Player
@@ -600,12 +575,32 @@ public class TileGrid{
     }
 
     /**
+     * Reset a player
+     * @param playerNumber Player number
+     */
+    void resetPlayer(int playerNumber){
+        getPlayer(playerNumber).reset();
+    }
+
+    /**
+     * Respawns the player after it has fallen out of grid, with health=6.
+     * @param playerNumber Players number
+     */
+    private void respawnPlayer(int playerNumber){
+        Player player = getPlayer(playerNumber);
+        getTile(player.getPosition()).removeObjectFromTile(player);
+
+        player.respawn();
+        getTile(player.getBackUp()).addObjectOnTile(player);
+    }
+
+    /**
      * Get Players Coordinates
      * @param playerNumber Player number
      * @return Players current position
      */
     public Coordinate getPlayerPosition(int playerNumber){
-        return this.players[playerNumber].getPosition();
+        return getPlayer(playerNumber).getPosition();
     }
 
     /**
@@ -614,7 +609,7 @@ public class TileGrid{
      * @return Player ProgramHand
      */
     ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
-        return this.players[playerNumber].getProgramHand();
+        return getPlayer(playerNumber).getProgramHand();
     }
 
     /**
@@ -623,7 +618,7 @@ public class TileGrid{
      * @return Program of current move
      */
     Program getPlayerCurrentMove(int playerNumber){
-        return this.players[playerNumber].getCurrentMove();
+        return getPlayer(playerNumber).getCurrentMove();
     }
 
     /**
@@ -634,13 +629,5 @@ public class TileGrid{
      */
     private void setPlayerPosition(int playerNumber, int row, int column){
      getPlayer(playerNumber).setPosition(new Coordinate(row, column));
-    }
-
-    /**
-     * Reset a player
-     * @param playerNumber Player number
-     */
-    void resetPlayer(int playerNumber){
-        this.players[playerNumber].reset();
     }
 }
