@@ -3,24 +3,15 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Flag;
-import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.GameObjectType;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
+
 
 public class RoboRally extends Game implements InputProcessor {
 
@@ -53,7 +44,6 @@ public class RoboRally extends Game implements InputProcessor {
     private ProgramCard currentCard;
 
     private String abilityText;
-    private BitmapFont font;
 
     private boolean insideSprite;
     private Sprite currentSprite;
@@ -87,8 +77,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     public void createGame(){
         gameSounds.gameMusic();
-        this.font = new BitmapFont();
-        this.font.setColor(0,0,0,1);
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
         this.spriteContainer = new SpriteContainer(batch);
@@ -121,7 +109,11 @@ public class RoboRally extends Game implements InputProcessor {
 
         if(menuScreen.runMenu()){
 
-            menuScreen.startMenu();
+            if(menuScreen.runTests()){
+                menuScreen.testMenu();
+            } else {
+                menuScreen.render();
+            }
 
         }
 
@@ -145,7 +137,7 @@ public class RoboRally extends Game implements InputProcessor {
             spriteContainer.renderDealtCards(programHand);
 
 
-            drawTextBox(abilityText,50);
+            spriteContainer.drawTextBox(abilityText,50);
             this.batch.end();
             this.roboTick++;
 
@@ -153,30 +145,6 @@ public class RoboRally extends Game implements InputProcessor {
 
 
 
-    }
-
-    private void drawTextBox(String text, int lenght){
-        ArrayList<String> lines = new ArrayList<>();
-
-        String sentence = "";
-        int i = 0;
-        for (String words : text.split(" ")){
-            if ((sentence+words).length() > lenght){
-                lines.add(i,sentence);
-                i++;
-                sentence = "";
-            }
-            sentence += words + " ";
-        }
-        if (sentence.length() > 0){
-            lines.add(i,sentence);
-        }
-        int y = 170+i*20;
-        i = 0;
-        for (String line : lines){
-            this.font.draw(this.batch,line,540,y-i*20);
-            i++;
-        }
     }
 
 
@@ -354,6 +322,9 @@ public class RoboRally extends Game implements InputProcessor {
             if(menuScreen.clickStart(screenX,screenY)){
                 menuScreen.stopMenu();
                 createGame();
+            }
+            else if(menuScreen.clickTestStart(screenX,screenY)){
+                menuScreen.testMenu();
             }
         } else {
             if (spriteContainer.isInsideGo(screenX, screenY)) {

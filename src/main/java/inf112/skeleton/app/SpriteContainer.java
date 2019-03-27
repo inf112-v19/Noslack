@@ -166,4 +166,34 @@ public class SpriteContainer {
     }
 
 
+    public void drawTextBox(String text, int lenght){
+        ArrayList<String> lines = new ArrayList<>();
+
+        String sentence = "";
+        int i = 0;
+        for (String words : text.split(" ")){
+            if ((sentence+words).length() > lenght){
+                lines.add(i,sentence);
+                i++;
+                sentence = "";
+            }
+            sentence += words + " ";
+        }
+        if (sentence.length() > 0){
+            lines.add(i,sentence);
+        }
+        int y = 170+i*20;
+        i = 0;
+        for (String line : lines){
+            this.font.draw(this.batch,line,540,y-i*20);
+            i++;
+        }
+    }
+
+
+
+
+
+
+
     }
