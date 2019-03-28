@@ -40,7 +40,6 @@ public class MenuScreen
 
     public void render(){
 
-
         batch.begin();
         startGame.draw(batch);
         testsButton.draw(batch);
@@ -71,7 +70,6 @@ public class MenuScreen
     public boolean clickTestStart(int screenX, int screenY){
         if(runTests){
             this.runTests=false;
-
         } else {
             this.runTests=true;
         }
@@ -86,9 +84,6 @@ public class MenuScreen
         this.drawSpritesBtn.setPosition(500,50);
         this.drawSpritesBtn.draw(batch);
         testsButton.draw(batch);
-
-
-
         batch.end();
 }
 

@@ -46,8 +46,6 @@ public class RoboRally extends Game implements InputProcessor {
     private String abilityText;
 
     private boolean insideSprite;
-    private Sprite currentSprite;
-
 
     private ProgramCard emptyProgram;
     private AbilityCard emptyAbility;
@@ -136,8 +134,8 @@ public class RoboRally extends Game implements InputProcessor {
 
             spriteContainer.renderDealtCards(programHand);
 
-
-            spriteContainer.drawTextBox(abilityText,50);
+            spriteContainer.drawAbilityText();
+            //spriteContainer.drawTextBox(abilityText,50);
             this.batch.end();
             this.roboTick++;
 
@@ -156,7 +154,7 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         // Limit fps
-        sleep(60);
+        //sleep(60);
     }
 
     private void activateTiles() {
@@ -230,47 +228,8 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentAbility.getSprite().setPosition(550,20);
             spriteContainer.getCardSprite(currentAbility);
         }
-
-
         animator = new CardSpriteAnimation(programHand);
         animation = true;
-
-    }
-
-
-
-
-    /**
-     * Checks if cursor is inside given sprite
-     *
-     * @param screenX coordinate of cursor
-     * @param screenY coordinate of cursor
-     * @return boolean true if inside given sprite
-     */
-    private boolean isInsideCard(float screenX, float screenY, RRCard card) {
-
-        if(menuScreen.runMenu()){
-            return false;
-        }
-
-        Sprite sprite = card.getSprite();
-        if (spriteContainer.isInsideSprite(screenX,screenY,sprite)){
-            // Moves the given sprite
-            if (card instanceof ProgramCard){
-                spriteContainer.moveSprite(sprite, screenX - sprite.getWidth() / 2, Gdx.graphics.getHeight() - screenY - sprite.getHeight() / 2);
-                this.currentCard = (ProgramCard) card;
-                this.currentSprite = sprite;
-            }
-            if (card instanceof AbilityCard){
-                if(this.abilityText == ""){
-                    this.abilityText = ((AbilityCard) card).getAbility().toString();
-                } else {
-                    this.abilityText = "";
-                }
-            }
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -308,16 +267,26 @@ public class RoboRally extends Game implements InputProcessor {
         return false;
     }
 
+    /**
+     * Transforms given X-coordinate to the correct one when transformed
+     * @param screenX to be transformed
+     * @return correct X
+     */
+    public int transformX(int screenX){return (int)((screenX/(double)Gdx.graphics.getWidth())*960);}
+
+    /**
+     * Transforms given Y-coordinate to the correct one when transformed
+     * @param screenY to be transformed
+     * @return correct Y
+     */
+    public int transformY(int screenY){return (int)((screenY/(double)(Gdx.graphics.getHeight()))*704) + (Gdx.graphics.getHeight() - 704); }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
-        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
-
-        System.out.println(screenX + " " + screenY);
+        screenX = transformX(screenX);
+        screenY = transformY(screenY);
 
         int nulls = 0;
-
         if(menuScreen.runMenu()){
             if(menuScreen.clickStart(screenX,screenY)){
                 menuScreen.stopMenu();
@@ -338,7 +307,8 @@ public class RoboRally extends Game implements InputProcessor {
                     sequenceReady = true;
                 }
             }
-            isInsideCard(screenX,screenY,currentAbility);
+            spriteContainer.isInsideCard(screenX,screenY,currentAbility);
+            //isInsideCard(screenX,screenY,currentAbility);
         }
 
 
@@ -347,24 +317,26 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
-        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
 
+        screenX = transformX(screenX);
+        screenY = transformY(screenY);
+
+        //Stops the function if the user is still in the menu
         if(menuScreen.runMenu()){
             return false;
         }
+
         float cardDeltaH = cardTestSprite.getHeight() / 2;
         float cardDeltaW = cardTestSprite.getWidth() / 2;
 
 
         if (insideSprite) {
-            Vector2 newPos = CSI.cardSnapPosition(this.currentCard, screenX + cardDeltaW,
-                    Gdx.graphics.getHeight() - screenY - cardDeltaH);
+            Vector2 newPos = CSI.cardSnapPosition(spriteContainer.getCurrentCard(), screenX + cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
             ProgramCard overlap = CSI.getCardOverlap();
             if (overlap.getPriority() != this.emptyProgram.getPriority()) {
                 spriteContainer.moveSprite(overlap.getSprite(), overlap.getPosition().x, overlap.getPosition().y);
             }
-            spriteContainer.moveSprite(currentSprite, newPos.x, newPos.y);
+            spriteContainer.moveSprite(spriteContainer.getCurrentSprite(), newPos.x, newPos.y);
             insideSprite = false;
             return true;
         }
@@ -373,9 +345,10 @@ public class RoboRally extends Game implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        screenX = (int)((screenX/(double)Gdx.graphics.getWidth())*960);
-        screenY = (int)((screenY/(double)Gdx.graphics.getHeight())*704);
+        screenX = transformX(screenX);
+        screenY = transformY(screenY);
 
+        //Stops the function if the user is still in the menu
         if(menuScreen.runMenu()){
             return false;
         }
@@ -384,17 +357,21 @@ public class RoboRally extends Game implements InputProcessor {
         float cardDeltaW = cardTestSprite.getWidth() / 2;
 
         if (insideSprite) {
-            spriteContainer.moveSprite(currentSprite, screenX - cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
+            spriteContainer.moveSprite(spriteContainer.getCurrentSprite(), screenX - cardDeltaW,  Gdx.graphics.getHeight() - screenY - cardDeltaH);
             return true;
         }
 
         for (ProgramCard card : this.programHand) {
-            if (isInsideCard(screenX, screenY, card)) {
-
+            if(spriteContainer.isInsideCard(screenX,screenY,card)){
                 insideSprite = true;
                 return true;
             }
-
+            /*
+            if (isInsideCard(screenX, screenY, card)) {
+                insideSprite = true;
+                return true;
+            }
+            */
         }
         return false;
     }

@@ -151,7 +151,36 @@ public class SpriteContainer {
                     Gdx.graphics.getHeight() - screenY < sprite.getY() + sprite.getHeight();
         }
         return false;
+    }
 
+    public void setAbilityText(String text){this.abilityText = text;}
+
+    public String getAbilityText(){return this.abilityText;}
+
+    private void setCurrentCard(ProgramCard card){this.currentCard = card;}
+
+    public ProgramCard getCurrentCard() {return this.currentCard; }
+
+    public Sprite getCurrentSprite() {return this.currentCard.getSprite();}
+
+    public boolean isInsideCard(float screenX, float screenY, RRCard card) {
+        Sprite sprite = card.getSprite();
+        if (isInsideSprite(screenX,screenY,sprite)){
+            // Moves the given sprite
+            if (card instanceof ProgramCard){
+                moveSprite(sprite, screenX - sprite.getWidth() / 2, Gdx.graphics.getHeight() - screenY - sprite.getHeight() / 2);
+                setCurrentCard((ProgramCard) card);
+            }
+            if (card instanceof AbilityCard){
+                if(this.abilityText.equals("")){
+                    setAbilityText(((AbilityCard) card).getAbility().toString());
+                } else {
+                    setAbilityText("");
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     public void moveSprite(Sprite sprite, float newX, float newY) {
@@ -188,6 +217,10 @@ public class SpriteContainer {
             this.font.draw(this.batch,line,540,y-i*20);
             i++;
         }
+    }
+
+    public void drawAbilityText(){
+        drawTextBox(this.abilityText, 50);
     }
 
 
