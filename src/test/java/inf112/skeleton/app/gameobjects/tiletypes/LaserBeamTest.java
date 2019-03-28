@@ -12,6 +12,12 @@ import static org.junit.Assert.*;
 public class LaserBeamTest {
 
     @Test
+    public void laserBeamInitialized() {
+        LaserBeam lzr = new LaserBeam(Orientation.VERTICAL, false);
+        assertNotEquals(lzr, null);
+    }
+
+    @Test
     public void takesDamageSingle() {
         TileGrid tileGrid = new TileGrid("laserTestMap.txt");
         int oldHP = tileGrid.getPlayer(0).getHealth();

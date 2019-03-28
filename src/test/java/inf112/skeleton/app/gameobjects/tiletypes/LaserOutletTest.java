@@ -11,6 +11,12 @@ import static org.junit.Assert.*;
 public class LaserOutletTest {
 
     @Test
+    public void laserBeamInitialized() {
+        LaserOutlet lzr = new LaserOutlet();
+        assertNotEquals(lzr, null);
+    }
+
+    @Test
     public void takesDamageSingle() {
         TileGrid tileGrid = new TileGrid("laserOutletTestMap.txt");
         int oldHP = tileGrid.getPlayer(0).getHealth();
