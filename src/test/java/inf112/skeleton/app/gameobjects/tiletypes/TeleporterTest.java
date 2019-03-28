@@ -10,7 +10,7 @@ public class TeleporterTest {
 
     @Test
     public void teleporterInitialized() {
-        Teleporter tele = new Teleporter(1);
+        Teleporter tele = new Teleporter(1, 0,0);
         assertNotEquals(tele, null);
     }
 
