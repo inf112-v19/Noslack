@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.cards.AbilityCard;
 import inf112.skeleton.app.cards.ProgramCard;
+import inf112.skeleton.app.cards.RRCard;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.tiletypes.Flag;
