@@ -150,7 +150,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     private void performPhase() {
         if (this.currentPhase == 0) {
-            performProgrammingPhase();
             this.currentPhase++;
             return;
         }
@@ -256,24 +255,9 @@ public class RoboRally extends Game implements InputProcessor {
 
     //   ROUND LOGIC   //
     private void tick() {
-
-        /*
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-        }
-        /*
-        if (currentPhase == 0) {
-            performProgrammingPhase();
-            currentPhase++;
-        }
-        */
-
         if(this.tileGrid.getPlayer(0).isFinished()){
             this.currentPhase = 100;
         }
-
-
 
         if (this.currentPhase <= 5) {
             // Runs per phase
@@ -283,10 +267,11 @@ public class RoboRally extends Game implements InputProcessor {
                 activateTiles();
                 this.tileGrid.applyNextProgram(0);
                 this.currentPhase++;
-                // Runs mid phase
+
             }
         }
 
+        // Runs mid phase
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             this.tileGrid.continueMove(0);
 
@@ -296,17 +281,6 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase = 0;
             activateTiles();
         }
-    }
-
-    private void performProgrammingPhase() {
-
-        /*
-         * Todo:
-         * Implement programming-phase where the
-         * player chooses which cards their robot
-         * should use.
-         */
-
     }
 
     private void dealNewCards() {
@@ -383,22 +357,6 @@ public class RoboRally extends Game implements InputProcessor {
     private Sprite setSprite(String texturePath) {
         Texture texture = new Texture(Gdx.files.internal(texturePath));
         return new Sprite(texture);
-    }
-
-
-    @Override
-    public void resize(int i, int i1) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
     }
 
     @Override
@@ -491,5 +449,20 @@ public class RoboRally extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int i) {
         return false;
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
     }
 }
