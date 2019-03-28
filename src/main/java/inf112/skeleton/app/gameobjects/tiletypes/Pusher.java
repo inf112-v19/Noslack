@@ -28,7 +28,7 @@ public class Pusher implements GameObject {
         evaluateSprite();
     }
 
-    public Pusher(Orientation orientation,boolean evenPusher) {
+    public Pusher(Orientation orientation, boolean evenPusher) {
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
         this.evenPusher = evenPusher;
