@@ -12,5 +12,6 @@ public enum GameObjectType {
     STANDARD_TILE,
     ROTATOR_COUNTER_CLOCKWISE,
     ROTATOR_CLOCKWISE,
+    TELEPORTER,
     WALL
 }

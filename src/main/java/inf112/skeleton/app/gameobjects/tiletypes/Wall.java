@@ -1,9 +1,11 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 public class Wall implements GameObject {
     private Sprite sprite;
@@ -33,23 +35,7 @@ public class Wall implements GameObject {
         try{
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/oneWall32x32.png"));
             this.sprite = new Sprite(texture);
-            switch (orientation) {
-                default:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_NORTH:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_EAST:
-                    sprite.setRotation(270);
-                    break;
-                case FACING_WEST:
-                    sprite.setRotation(90);
-                    break;
-                case FACING_SOUTH:
-                    sprite.setRotation(180);
-                    break;
-            }
+            sprite.setRotation(this.orientation.turnSprite());
         } catch(Exception e){
             e.printStackTrace();
         }

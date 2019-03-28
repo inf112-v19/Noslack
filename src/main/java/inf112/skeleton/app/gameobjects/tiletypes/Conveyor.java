@@ -1,8 +1,11 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 public class Conveyor implements GameObject {
     private Sprite sprite;
@@ -51,23 +54,7 @@ public class Conveyor implements GameObject {
         if(turn < 0){
             sprite.flip(true,false);
         }
-        switch (orientation) {
-            default:
-                sprite.setRotation(0);
-                break;
-            case FACING_NORTH:
-                sprite.setRotation(0);
-                break;
-            case FACING_EAST:
-                sprite.setRotation(270);
-                break;
-            case FACING_SOUTH:
-                sprite.setRotation(180);
-                break;
-            case FACING_WEST:
-                sprite.setRotation(90);
-                break;
-        }
+        sprite.setRotation(this.orientation.turnSprite());
     }
     @Override
     public Sprite getSprite() {

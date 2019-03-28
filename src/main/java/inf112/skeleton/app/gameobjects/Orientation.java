@@ -1,6 +1,7 @@
 package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.cards.ProgramCard;
 
 public enum Orientation {
     FACING_NORTH,
@@ -79,6 +80,25 @@ public enum Orientation {
                 return FACING_EAST;
             default:
                 return this;
+        }
+    }
+
+    /**
+     * Get the value of which the sprite needs to be turned
+     * @return The turn value
+     */
+    public int turnSprite(){
+        switch (this){
+            case FACING_NORTH:
+                return 0;
+            case FACING_SOUTH:
+                return 180;
+            case FACING_EAST:
+                return 270;
+            case FACING_WEST:
+                return 90;
+            default:
+                return 0;
         }
     }
 }

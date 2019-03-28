@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.tiletypes.Flag;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -35,22 +36,4 @@ public class FlagTest {
         assertEquals(s2, f2.getSprite());
     }
 
-    @Test
-    public void flagsAreRegistered() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-        tileGrid.continueMove(0);
-        assertEquals(tileGrid.getPlayer(0).getFlagsVisited().size(), oldValue+1);
-    }
-
-    @Test
-    public void flagsOutOfOrderNotCounted() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
-        tileGrid.getPlayer(0).setPosition(new Coordinate(1, 2, Orientation.FACING_NORTH));
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-        tileGrid.continueMove(0);
-        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited().size());
-    }
 }

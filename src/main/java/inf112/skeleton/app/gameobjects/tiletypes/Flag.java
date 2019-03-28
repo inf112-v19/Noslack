@@ -1,13 +1,16 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 public class Flag implements GameObject {
+
     private Sprite sprite;
     private int flagNumber;
-
 
     public Flag() {
         this.flagNumber = 1;
@@ -55,10 +58,17 @@ public class Flag implements GameObject {
     public int getFlagNumber(){
         return flagNumber;
     }
+
+    @Override
+    public String toString(){
+        return "Flag " + this.flagNumber;
+    }
+
     @Override
     public GameObjectType getGameObjectType() {
         return GameObjectType.FLAG;
     }
+
     @Override
     public int compareTo(Object other) {
         if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){

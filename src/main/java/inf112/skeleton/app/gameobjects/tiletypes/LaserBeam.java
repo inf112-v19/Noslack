@@ -1,10 +1,14 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
-public class LaserBeam implements GameObject{
+public class LaserBeam implements GameObject {
 
     private Orientation orientation;
     private Sprite sprite;
@@ -29,6 +33,7 @@ public class LaserBeam implements GameObject{
         if(this.orientation == Orientation.HORIZONTAL){
             this.sprite.setRotation(90);
         }
+
     }
 
     @Override
@@ -42,8 +47,6 @@ public class LaserBeam implements GameObject{
     public boolean isDual(){
         return this.dual;
     }
-
-
 
     @Override
     public Orientation getOrientation() {

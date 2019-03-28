@@ -16,7 +16,7 @@ public class Main {
         * cards the player has been dealt and may choose
         * from
         */
-        cfg.width = 32*22;
+        cfg.width = 32*30;
         cfg.height = 32*22;
         cfg.initialBackgroundColor = Color.BLACK;
 

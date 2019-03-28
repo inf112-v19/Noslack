@@ -1,8 +1,11 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 public class Pusher implements GameObject {
 
@@ -25,7 +28,7 @@ public class Pusher implements GameObject {
         evaluateSprite();
     }
 
-    public Pusher(Orientation orientation,boolean evenPusher) {
+    public Pusher(Orientation orientation, boolean evenPusher) {
         this.orientation = orientation;
         this.type = GameObjectType.PUSHER;
         this.evenPusher = evenPusher;
@@ -34,31 +37,19 @@ public class Pusher implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        Texture texture;
-        if(this.evenPusher) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
-        }
-        else{
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
-        }
+        try {
+            Texture texture;
+            if (this.evenPusher) {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherEven32x32.png"));
+            } else {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/pusher/pusherOdd32x32.png"));
+            }
 
-        this.sprite = new Sprite(texture);
-        switch (orientation) {
-            default:
-                sprite.setRotation(0);
-                break;
-            case FACING_NORTH:
-                sprite.setRotation(0);
-                break;
-            case FACING_EAST:
-                sprite.setRotation(90);
-                break;
-            case FACING_WEST:
-                sprite.setRotation(270);
-                break;
-            case FACING_SOUTH:
-                sprite.setRotation(180);
-                break;
+            this.sprite = new Sprite(texture);
+            sprite.setRotation(this.orientation.turnSprite());
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error in Pusher evaluateSprite()");
         }
     }
 
@@ -79,7 +70,7 @@ public class Pusher implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PUSHER){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;
