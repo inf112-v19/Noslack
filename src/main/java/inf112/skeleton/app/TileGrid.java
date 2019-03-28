@@ -138,11 +138,12 @@ public class TileGrid{
             if(player.isFinished()){
                 int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
-                if(n==1&&!player.getFlag(n)||player.getFlag(n-1)){
-
+                if(n==1||player.getFlag(n-1)){
                     //Creates a backUp
                     player.setBackUp();
-                    player.visitFlag(n);
+                    if(!player.getFlag(n)) {
+                        player.visitFlag(n);
+                    }
                     System.out.println("Visited: " + player.getFlagsVisited());
 
                     //if you are on the last flag, and visited all previous, you win.
