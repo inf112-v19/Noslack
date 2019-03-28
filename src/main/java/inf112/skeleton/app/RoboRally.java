@@ -120,31 +120,20 @@ public class RoboRally extends Game implements InputProcessor {
             this.batch.begin();
             spriteContainer.renderGrid(tileGrid);
             performPhase();
-            //activateTiles();
             if (sequenceReady && (roboTick % 20 == 0)) {
                 tick();
             }
-
-
 
             if (animation){
                 programHand = animator.updatePositions();
             }
 
-
             spriteContainer.renderDealtCards(programHand);
-
             spriteContainer.drawAbilityText();
-            //spriteContainer.drawTextBox(abilityText,50);
             this.batch.end();
             this.roboTick++;
-
         }
-
-
-
     }
-
 
     private void performPhase() {
         if (this.currentPhase == 0) {
@@ -152,16 +141,11 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase++;
             return;
         }
-
-        // Limit fps
-        //sleep(60);
     }
 
     private void activateTiles() {
         this.tileGrid.activateTiles();
     }
-
-
 
     private long diff, start = System.currentTimeMillis();
 
@@ -308,7 +292,6 @@ public class RoboRally extends Game implements InputProcessor {
                 }
             }
             spriteContainer.isInsideCard(screenX,screenY,currentAbility);
-            //isInsideCard(screenX,screenY,currentAbility);
         }
 
 
@@ -366,12 +349,6 @@ public class RoboRally extends Game implements InputProcessor {
                 insideSprite = true;
                 return true;
             }
-            /*
-            if (isInsideCard(screenX, screenY, card)) {
-                insideSprite = true;
-                return true;
-            }
-            */
         }
         return false;
     }
