@@ -70,7 +70,16 @@ public class Player implements GameObject {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
 
             this.sprite = new Sprite(texture);
-            switch (orientation) {
+            turnSprite();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in Player evaluateSprite");
+        }
+    }
+
+    private void turnSprite(){
+        try {
+            switch (this.orientation) {
                 default:
                     sprite.setRotation(0);
                     break;
@@ -87,9 +96,9 @@ public class Player implements GameObject {
                     sprite.setRotation(180);
                     break;
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in Player evaluateSprite");
+            System.out.println("Error in Player turnSprite");
         }
     }
 
@@ -147,8 +156,9 @@ public class Player implements GameObject {
      */
     public void setOrientation(Orientation orientation){
         this.orientation = orientation;
-        evaluateSprite();
+        turnSprite();
     }
+
 
     @Override
     public Orientation getOrientation() {return orientation;}
@@ -159,7 +169,7 @@ public class Player implements GameObject {
      */
     public void updateOrientation(Program rotation){
         this.orientation = orientation.rotate(rotation);
-        evaluateSprite();
+        turnSprite();
     }
 
     /**
