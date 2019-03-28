@@ -1,5 +1,7 @@
 package inf112.skeleton.app.gameobjects.tiletypes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.gameobjects.Coordinate;
@@ -16,7 +18,7 @@ public class Teleporter implements GameObject {
     private Coordinate position;
     private boolean coupled;
 
-    public Teleporter(int teleporterNr,int row, int column){
+    public Teleporter(int teleporterNr, int row, int column){
         this.type = GameObjectType.TELEPORTER;
         this.teleporterNr = teleporterNr;
         this.position = new Coordinate(row, column);
@@ -26,7 +28,13 @@ public class Teleporter implements GameObject {
 
     @Override
     public void evaluateSprite() {
-
+        try{
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
+            this.sprite = new Sprite(texture);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Error in Teleporter evaluateSprite");
+        }
     }
 
     @Override
