@@ -157,6 +157,7 @@ public class TileGrid{
             Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
             tile.removeObjectFromTile(player);
             getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
+            setPlayerPosition(player.getPlayerNumber(),teleporter.getTeleportLocation());
         }
         // Hole
         if(tile.hasGameObject(GameObjectType.HOLE)){
@@ -485,5 +486,14 @@ public class TileGrid{
      */
     private void setPlayerPosition(int playerNumber, int row, int column){
      getPlayer(playerNumber).setPosition(new Coordinate(row, column));
+    }
+
+    /**
+     * Set new position of player
+     * @param playerNumber player number
+     * @param coordinate New Coordinate
+     */
+    private void setPlayerPosition(int playerNumber, Coordinate coordinate){
+        getPlayer(playerNumber).setPosition(coordinate);
     }
 }
