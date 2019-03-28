@@ -45,6 +45,38 @@ public class TileGrid{
     }
 
     /**
+     * Get the number of rows in TileGrid
+     * @return Rows in grid
+     */
+    int getRows() {
+        return rows;
+    }
+
+    /**
+     * Get the number of columns in TileGrid
+     * @return Columns in grid
+     */
+    int getColumns() {
+        return columns;
+    }
+
+    /**
+     * Get the number of flags in TileGrid
+     * @return Flags in grid
+     */
+    int getFlagsInitiated(){
+        return flagsInitiated;
+    }
+
+    /**
+     * Get the number of players in TileGrid
+     * @return Players in grid
+     */
+    int getPlayersInitiated(){
+        return playersInitiated;
+    }
+
+    /**
      * Get Tile based on row and column
      * @param row: row of the requested tile
      * @param column: column of the requested tile
@@ -77,37 +109,6 @@ public class TileGrid{
                 }
             }
         }
-    }
-
-    /**
-     * Get the number of rows in TileGrid
-     * @return Rows in grid
-     */
-    int getRows() {
-        return rows;
-    }
-
-    /**
-     * Get the number of columns in TileGrid
-     * @return Columns in grid
-     */
-    int getColumns() {
-        return columns;
-    }
-
-    /**
-     * Get the number of flags in TileGrid
-     * @return Flags in grid
-     */
-    int getFlagsInitiated(){
-        return flagsInitiated;
-    }
-    /**
-     * Get the number of players in TileGrid
-     * @return Players in grid
-     */
-    int getPlayersInitiated(){
-        return playersInitiated;
     }
 
     /**
