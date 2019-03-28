@@ -17,7 +17,10 @@
    - Jobbe mer etter Kanban project board (workast)  
    - Veksle mer mellom ulike roller i gruppen
    
+ - Antall commits er under "Distributions" svært ulikt. Dette er fordi distributions kun telle commits gjort direkte til master-branchen, og ikke brancher som på et tidspunkt er blitt merget inn til master. For å få en oversikt over hvor mye hvert gruppemedlem har gjort, må derfor hver enkelt commit i commit-loggen undersøkes, framfor å lese av diagrammet. 
+   
  - REFERAT FRA TIDLIGERE MØTER
+ 
  
  #Deloppgave 2
  
