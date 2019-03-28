@@ -88,6 +88,10 @@ public class Tile implements GameObject{
         }
         return false;
     }
+    public Boolean hasGameObject(GameObject object){
+        return objectsOnTile.contains(object);
+    }
+
     public GameObject getGameObject(GameObjectType objectType){
         for(GameObject gameObject : this.objectsOnTile){
             if(gameObject.getGameObjectType().equals(objectType)){

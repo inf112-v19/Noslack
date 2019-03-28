@@ -22,6 +22,7 @@ public class TileGridBuilder {
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
         initiateTiles();
+        coupleTeleporters();
     }
 
     /**
@@ -73,10 +74,6 @@ public class TileGridBuilder {
     private void stringToGameObjectType(String nextTileType, int row, int column){
         Orientation orientation;
         switch(nextTileType.substring(0,1)){
-            case "W":
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
-                break;
             case "C":
                 //One speed conveyors
                 boolean fast = nextTileType.contains("CC");
@@ -90,6 +87,11 @@ public class TileGridBuilder {
                     rotating = 0;
                 orientation = stringToOrientation(nextTileType);
                 this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
+                break;
+            case "D":
+                boolean evenPusher = nextTileType.contains("DD");
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
             case "F":
                 /*
@@ -107,21 +109,12 @@ public class TileGridBuilder {
                 this.tileGrid[row][column].addObjectOnTile(new Flag(n));
                 flagsInitiated ++;
                 break;
+            case "G":
+                int teleporterNr = Character.getNumericValue(nextTileType.charAt(nextTileType.length()-1));
+                this.tileGrid[row][column].addObjectOnTile(new Teleporter(teleporterNr, row, column));
+                break;
             case "H":
                 this.tileGrid[row][column].addObjectOnTile(new Hole());
-                break;
-            case "R":
-                this.tileGrid[row][column].addObjectOnTile(new RepairStation());
-                break;
-            case "D":
-                boolean evenPusher = nextTileType.contains("DD");
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
-                break;
-            case "O":
-                boolean dualOutlet = nextTileType.contains("OO");
-                orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "L":
                 boolean dualLaser = nextTileType.contains("LL");
@@ -133,9 +126,10 @@ public class TileGridBuilder {
                     orientation = Orientation.VERTICAL;
                 this.tileGrid[row][column].addObjectOnTile(new LaserBeam(orientation, dualLaser));
                 break;
-            case "T":
-                boolean counterClockwise = nextTileType.contains("CC");
-                this.tileGrid[row][column].addObjectOnTile(new Rotator(counterClockwise));
+            case "O":
+                boolean dualOutlet = nextTileType.contains("OO");
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "P":
                 Player newPlayer;
@@ -144,6 +138,17 @@ public class TileGridBuilder {
                 this.tileGrid[row][column].addObjectOnTile(newPlayer);
                 this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
                 newPlayer.initiate(new Coordinate(row, column));
+                break;
+            case "R":
+                this.tileGrid[row][column].addObjectOnTile(new RepairStation());
+                break;
+            case "T":
+                boolean counterClockwise = nextTileType.contains("CC");
+                this.tileGrid[row][column].addObjectOnTile(new Rotator(counterClockwise));
+                break;
+            case "W":
+                orientation = stringToOrientation(nextTileType);
+                this.tileGrid[row][column].addObjectOnTile(new Wall(orientation));
                 break;
         }
     }
@@ -179,6 +184,39 @@ public class TileGridBuilder {
         s.close();
     }
 
+    /**
+     * Finds uncoupled teleporters
+     */
+    private void coupleTeleporters(){
+        for(Tile[] tileRow : tileGrid){
+            for(Tile tile : tileRow){
+                if (tile.hasGameObject(GameObjectType.TELEPORTER)) {
+                    Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
+                    if(!teleporter.isCoupled()){
+                        findTeleporterPartner (teleporter);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Couples teleporters together
+     * @param teleporter teleporter to be coupled
+     */
+    private void findTeleporterPartner(Teleporter teleporter){
+        for(Tile[] tileRow : tileGrid){
+            for(Tile tile : tileRow){
+                if (tile.hasGameObject(GameObjectType.TELEPORTER)&& !tile.hasGameObject(teleporter)) {
+                    Teleporter partner = (Teleporter) tile.getGameObject(GameObjectType.TELEPORTER);
+                    if(teleporter.getTeleporterNr()==partner.getTeleporterNr()){
+                        teleporter.setTeleportLocation(partner.getPosition());
+                        partner.setTeleportLocation(teleporter.getPosition());
+                    }
+                }
+            }
+        }
+    }
     /**
      * @return Get the built grid
      */

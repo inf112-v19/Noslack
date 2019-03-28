@@ -13,10 +13,15 @@ public class Teleporter implements GameObject {
     private Sprite sprite;
     private GameObjectType type;
     private int teleporterNr;
+    private Coordinate position;
+    private boolean coupled;
 
-    public Teleporter(int teleporterNr){
+    public Teleporter(int teleporterNr,int row, int column){
         this.type = GameObjectType.TELEPORTER;
         this.teleporterNr = teleporterNr;
+        this.position = new Coordinate(row, column);
+        this.coupled =false;
+        evaluateSprite();
     }
 
     @Override
@@ -30,11 +35,19 @@ public class Teleporter implements GameObject {
     }
 
     /**
+     * @return Is the teleporter coupled.
+     */
+    public boolean isCoupled(){
+        return this.coupled;
+    }
+
+    /**
      * Set the location of where to teleport the player to
      * @param teleportLocation Other teleport location
      */
     public void setTeleportLocation(Coordinate teleportLocation) {
         this.teleportLocation = teleportLocation;
+        this.coupled = true;
     }
 
     /**
@@ -42,6 +55,17 @@ public class Teleporter implements GameObject {
      */
     public Coordinate getTeleportLocation() {
         return teleportLocation;
+    }
+
+    /**
+     * @return Get position of Teleporter
+     */
+    public Coordinate getPosition(){
+        return this.position;
+    }
+
+    public int getTeleporterNr() {
+        return teleporterNr;
     }
 
     @Override
