@@ -1,10 +1,13 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
-public class Rotator implements GameObject{
+public class Rotator implements GameObject {
 
     private Sprite sprite;
     private GameObjectType gameObjectType;
@@ -16,7 +19,7 @@ public class Rotator implements GameObject{
         evaluateSprite();
     }
 
-    public void evaluateGameObjectType(){
+    private void evaluateGameObjectType(){
         this.gameObjectType = this.counterClockwise ?
                 GameObjectType.ROTATOR_COUNTER_CLOCKWISE : GameObjectType.ROTATOR_CLOCKWISE;
     }

@@ -121,22 +121,12 @@ public class Tile implements GameObject{
      * @param player player in question
      * @return if Player can move
      */
-    public boolean playerPathBlocked(Player player){
+    public boolean playerPathBlocked(Player player, Orientation directionOfMove){
         if(this.objectsOnTile.contains(player)){
-            if(player.getCurrentMove().equals(Program.BACK)){
-                return this.blocked.contains(player.getOrientation().opposite());
-            }
-            else{
-                return this.blocked.contains(player.getOrientation());
-            }
+                return this.blocked.contains(directionOfMove);
         }
         else{
-            if(player.getCurrentMove().equals(Program.BACK)){
-                return this.blocked.contains(player.getOrientation());
-            }
-            else{
-                return this.blocked.contains(player.getOrientation().opposite());
-            }
+            return this.blocked.contains(directionOfMove.opposite());
         }
     }
 

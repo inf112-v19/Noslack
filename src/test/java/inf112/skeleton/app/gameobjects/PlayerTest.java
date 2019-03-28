@@ -1,8 +1,11 @@
 package inf112.skeleton.app.gameobjects;
 
+import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -73,26 +76,50 @@ public class PlayerTest {
     }
 
     @Test
-    public void playerStartWithNoFlags() {
-        assertEquals(player.getFlagsVisited().size(), 0);
+    public void flagsSizeTest(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        Player player = tileGrid.getPlayer(0);
+        assertEquals(2,player.getFlagsVisited().length);
     }
 
     @Test
     public void flagsAreRegistered() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        assertEquals(tileGrid.getPlayer(0).getFlagsVisited().size(), oldValue+1);
+        tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
     }
 
     @Test
-    public void flagsOutOfOrderNotCounted() {
-        TileGrid tileGrid = new TileGrid("playerTestMap.txt");
-        int oldValue = tileGrid.getPlayer(0).getFlagsVisited().size();
-        tileGrid.getPlayer(0).setPosition(new Coordinate(1, 2, Orientation.FACING_NORTH));
+    public void flagsCounted() {
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        assertEquals(oldValue, tileGrid.getPlayer(0).getFlagsVisited().size());
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        tileGrid.getPlayer(0).setOrientation(Orientation.FACING_EAST);
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
+        assertTrue(tileGrid.getPlayer(0).getFlag(2));
+    }
+
+    @Test
+    public void flagsOutOfOrderNotCounted(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap2.txt");
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
+        assertFalse(tileGrid.getPlayer(0).getFlag(2));
     }
 }

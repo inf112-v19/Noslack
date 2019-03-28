@@ -1,6 +1,8 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.TileGrid;
+import inf112.skeleton.app.gameobjects.Orientation;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,7 +14,7 @@ public class RotatorTest {
 
     @Test
     public void ClockwiseRotatorRotatesClockwise(){
-        assertEquals(Orientation.FACING_NORTH, tileGridClockwise.getPlayer(0).getOrientation());
+        Assert.assertEquals(Orientation.FACING_NORTH, tileGridClockwise.getPlayer(0).getOrientation());
         tileGridClockwise.activateTiles();
         assertEquals(Orientation.FACING_EAST, tileGridClockwise.getPlayer(0).getOrientation());
     }

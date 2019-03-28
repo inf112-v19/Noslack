@@ -1,8 +1,11 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.tiletypes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 public class LaserOutlet implements GameObject {
     private Sprite sprite;
@@ -79,7 +82,7 @@ public class LaserOutlet implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.LASER_OUTLET){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
             return -1;
         } else {
             return 1;

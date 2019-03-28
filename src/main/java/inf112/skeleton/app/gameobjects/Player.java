@@ -7,7 +7,6 @@ import inf112.skeleton.app.cards.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import java.util.Collections;
 
 public class Player implements GameObject {
     private ArrayList<ProgramCard> programHand;
@@ -15,13 +14,14 @@ public class Player implements GameObject {
     private ArrayList<AbilityCard> abilityHand;
     private Sprite sprite;
     private int health;
+    private int lives;
     private Orientation orientation;
     private int playerNumber;
     private Coordinate backUp;
     private Coordinate position;
     private String name;
     private boolean hasWon;
-    private ArrayList<Integer> flagsVisited;
+    private boolean[] flagsVisited;
     private Program currentMove;
     private int moveProgression;
 
@@ -33,6 +33,7 @@ public class Player implements GameObject {
      */
     public Player(int playerNumber){
         this.health = 9;
+        this.lives = 3;
         this.orientation = Orientation.FACING_NORTH;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -41,7 +42,6 @@ public class Player implements GameObject {
         this.playerNumber = playerNumber;
         this.hasWon = false;
         this.name = "RoboHally";
-        this.flagsVisited = new ArrayList<Integer>(9);
         evaluateSprite();
     }
 
@@ -52,6 +52,7 @@ public class Player implements GameObject {
      */
     public Player(int playerNumber,Orientation orientation){
         this.health = 9;
+        this.lives = 3;
         this.orientation = orientation;
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
@@ -127,6 +128,20 @@ public class Player implements GameObject {
     }
 
     /**
+     * @return How many lives the player has left.
+     */
+    public int getLives(){
+        return this.lives;
+    }
+
+    /**
+     * Take a live from player when respawning
+     */
+    private void takeLives(){
+        this.lives--;
+    }
+
+    /**
      * Give player a new orientation
      * @param orientation The players new orientation
      */
@@ -189,11 +204,9 @@ public class Player implements GameObject {
      */
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
         this.program.clear();
-
         for (int i = (selectedCards.size()-1); i >=0; i--) {
             this.program.push(selectedCards.get(i));
         }
-        //this.program.addAll(selectedCards);
     }
 
     /**
@@ -231,8 +244,41 @@ public class Player implements GameObject {
         if(health < 9)this.health++;
     }
 
-    public ArrayList<Integer> getFlagsVisited(){
+    /**
+     * Set the size of the flags visited array, based on how many flags the map contains.
+     * @param n The number of flags on the map.
+     */
+    public void setFlagsVisitedSize(int n){
+        this.flagsVisited = new boolean[n];
+        for(int i =0;i<this.flagsVisited.length;i++){
+            this.flagsVisited[i] = false;
+        }
+    }
+
+    /**
+     * @return Get the list of which flags the player has visited.
+     */
+    public boolean[] getFlagsVisited(){
         return flagsVisited;
+    }
+
+    /**
+     * Initiate a visit to a flag.
+     * @param n The flags number.
+     */
+    public void visitFlag(int n){
+        this.flagsVisited[n-1]=true;
+    }
+
+    /**
+     * Checks if flag has been visited.
+     * @param n Flag number
+     * @return If the flag has been visited.
+     */
+    public boolean getFlag(int n){
+        if(n<1)
+            n=1;
+       return this.flagsVisited[n-1];
     }
 
     public void initiate (Coordinate cor){
@@ -273,10 +319,15 @@ public class Player implements GameObject {
         resetMoveProgress();
     }
 
-    public void setBackUp(Coordinate backUp){
-        this.backUp=backUp;
+    /**
+     * Respawn player after death
+     */
+    public void respawn(){
+        reset();
+        takeLives();
+        setPosition(this.backUp);
+        setOrientation(this.backUp.getOrientation());
     }
-
 
     /**
      * Set the players Back Up
@@ -294,14 +345,16 @@ public class Player implements GameObject {
         return this.backUp;
     }
 
-    public void setFlagsVisited(int n){
-        this.flagsVisited = new ArrayList<Integer>(Collections.nCopies(n,0));
-    }
-
+    /**
+     * @return If program chosen by player is completed
+     */
     public boolean isFinished(){
         return this.program.isEmpty();
     }
 
+    /**
+     * Call if player wins
+     */
     public void win(){
         if(!this.hasWon){
             System.out.println(this.name + " HAS WON!");
@@ -313,8 +366,12 @@ public class Player implements GameObject {
     public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
 
     @Override
+    public String toString(){
+        return this.playerNumber + this.name;
+    }
+
+    @Override
     public int compareTo(Object o) {
-        // return Integer.compare(getPlayerNumber(),((Player) o).getPlayerNumber());
         return 1;
     }
 }

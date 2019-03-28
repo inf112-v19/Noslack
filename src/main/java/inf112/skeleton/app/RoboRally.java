@@ -182,8 +182,6 @@ public class RoboRally extends Game implements InputProcessor {
         for (ProgramCard card : this.programHand) {
             card.getSprite().draw(this.batch);
         }
-
-        //cardTestSprite.draw(batch);
     }
 
     /**

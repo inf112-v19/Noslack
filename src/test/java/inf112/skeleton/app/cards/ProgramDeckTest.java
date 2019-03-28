@@ -22,7 +22,6 @@ public class ProgramDeckTest {
     public void getInformationOnElement() {
         IDeck deck = new ProgramDeck(this.filename);
         ArrayList<RRCard> testDeck;
-        //ProgramCard card= new ProgramCard(820,"Move 3");
         ProgramCard card;
 
         int priority=820;
@@ -33,8 +32,6 @@ public class ProgramDeckTest {
 
         assertEquals(priority,card.getPriority());
         assertSame(program,card.getMove());
-
-
     }
 
     @Test
@@ -56,16 +53,15 @@ public class ProgramDeckTest {
         testDeck.add(deck.dealOne());
         assertEquals(1,testDeck.size());
         assertEquals((size-1),deck.getSize());
-
     }
 
     @Test
     public void contains() {
-        IDeck deck = new ProgramDeck(this.filename2);
-        RRCard card = deck.dealOne();
-        assertFalse(deck.contains(card));
-        deck.reset();
-        assertTrue(deck.contains(card));
+        IDeck deckContains = new ProgramDeck(this.filename2);
+        RRCard card = deckContains.dealOne();
+        assertFalse(deckContains.contains(card));
+        deckContains.reset();
+        assertTrue(deckContains.contains(card));
     }
 
     @Test
