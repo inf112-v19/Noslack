@@ -12,9 +12,11 @@ public class Teleporter implements GameObject {
     private Coordinate teleportLocation;
     private Sprite sprite;
     private GameObjectType type;
+    private int teleporterNr;
 
-    public Teleporter(){
+    public Teleporter(int teleporterNr){
         this.type = GameObjectType.TELEPORTER;
+        this.teleporterNr = teleporterNr;
     }
 
     @Override

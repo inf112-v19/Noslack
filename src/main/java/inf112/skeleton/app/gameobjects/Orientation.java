@@ -82,4 +82,23 @@ public enum Orientation {
                 return this;
         }
     }
+
+    /**
+     * Get the value of which the sprite needs to be turned
+     * @return The turn value
+     */
+    public int turnSprite(){
+        switch (this){
+            case FACING_NORTH:
+                return 0;
+            case FACING_SOUTH:
+                return 180;
+            case FACING_EAST:
+                return 270;
+            case FACING_WEST:
+                return 90;
+            default:
+                return 0;
+        }
+    }
 }

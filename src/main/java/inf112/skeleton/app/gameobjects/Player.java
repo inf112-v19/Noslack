@@ -79,23 +79,7 @@ public class Player implements GameObject {
 
     private void turnSprite(){
         try {
-            switch (this.orientation) {
-                default:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_NORTH:
-                    sprite.setRotation(0);
-                    break;
-                case FACING_EAST:
-                    sprite.setRotation(270);
-                    break;
-                case FACING_WEST:
-                    sprite.setRotation(90);
-                    break;
-                case FACING_SOUTH:
-                    sprite.setRotation(180);
-                    break;
-            }
+            sprite.setRotation(this.orientation.turnSprite());
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error in Player turnSprite");
