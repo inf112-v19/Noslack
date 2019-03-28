@@ -24,16 +24,51 @@ public class FlagTest {
         Flag flag = new Flag(2);
         assertEquals(flag.getFlagNumber(), 2);
     }
-
     @Test
-    public void getSprite() {
-        Flag f1 = new Flag();
-        Flag f2 = new Flag(2);
-        Sprite s1 = new Sprite(new Texture(Gdx.files.internal("./assets/gameObjects/flags/oneFlag32x32.png")));
-        Sprite s2 = new Sprite(new Texture(Gdx.files.internal("./assets/gameObjects/flags/twoFlag32x32.png")));
-
-        assertEquals(s1, f1.getSprite());
-        assertEquals(s2, f2.getSprite());
+    public void flagsSizeTest(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        Player player = tileGrid.getPlayer(0);
+        assertEquals(2,player.getFlagsVisited().length);
     }
 
+    @Test
+    public void flagsAreRegistered() {
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
+    }
+
+    @Test
+    public void flagsCounted() {
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        tileGrid.getPlayer(0).setOrientation(Orientation.FACING_EAST);
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+        assertTrue(tileGrid.getPlayer(0).getFlag(1));
+        assertTrue(tileGrid.getPlayer(0).getFlag(2));
+    }
+
+    @Test
+    public void flagsOutOfOrderNotCounted(){
+        TileGrid tileGrid = new TileGrid("playerTestFlagMap2.txt");
+
+        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.continueMove(0);
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+
+        assertFalse(tileGrid.getPlayer(0).getFlag(1));
+        assertFalse(tileGrid.getPlayer(0).getFlag(2));
+    }
 }
