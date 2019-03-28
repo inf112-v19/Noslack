@@ -23,15 +23,19 @@ public class LaserBeam implements GameObject {
 
     @Override
     public void evaluateSprite() {
-        Texture texture;
-        if (dual) {
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
-        }
-        else
-            texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
-        this.sprite = new Sprite(texture);
-        if(this.orientation == Orientation.HORIZONTAL){
-            this.sprite.setRotation(90);
+        try {
+            Texture texture;
+            if (dual) {
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            } else
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+            this.sprite = new Sprite(texture);
+            if (this.orientation == Orientation.HORIZONTAL) {
+                this.sprite.setRotation(90);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in LaserBeams evaluateSprite");
         }
     }
 

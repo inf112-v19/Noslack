@@ -21,13 +21,8 @@ public class TileGrid{
      * Uses standard map.
      */
     public TileGrid(){
-        TileGridBuilder builder= new TileGridBuilder("ConveyorLoops.txt");
-        this.tileGrid = builder.getTileGrid();
-        this.players = builder.getPlayers();
-        this.rows = builder.getRows();
-        this.columns = builder.getColumns();
-        this.playersInitiated = builder.getPlayersInitiated();
-        this.flagsInitiated = builder.getFlagsInitiated();
+        build("ConveyorLoops.txt");
+
     }
 
     /**
@@ -35,6 +30,14 @@ public class TileGrid{
      * @param file The file name, the program fixes directory.
      */
     public TileGrid(String file) {
+        build(file);
+    }
+
+    /**
+     * Constructs tilegrid and declares initial values.
+     * @param file name of file
+     */
+    private void build(String file) {
         TileGridBuilder builder= new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
         this.players = builder.getPlayers();
