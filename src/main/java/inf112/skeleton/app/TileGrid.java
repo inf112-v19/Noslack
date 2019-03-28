@@ -151,6 +151,12 @@ public class TileGrid{
                 }
             }
         }
+        //Teleporter
+        if(tile.hasGameObject(GameObjectType.TELEPORTER)){
+            Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
+            tile.removeObjectFromTile(player);
+            getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
+        }
         // Hole
         if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnPlayer(player.getPlayerNumber());
