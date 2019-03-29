@@ -26,14 +26,14 @@ public class FlagTest {
     }
     @Test
     public void flagsSizeTest(){
-        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        TileGrid tileGrid = new TileGrid("playerFlagTestMap.txt");
         Player player = tileGrid.getPlayer(0);
         assertEquals(2,player.getFlagsVisited().length);
     }
 
     @Test
     public void flagsAreRegistered() {
-        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        TileGrid tileGrid = new TileGrid("playerFlagTestMap.txt");
         assertFalse(tileGrid.getPlayer(0).getFlag(1));
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
@@ -43,7 +43,7 @@ public class FlagTest {
 
     @Test
     public void flagsCounted() {
-        TileGrid tileGrid = new TileGrid("playerTestFlagMap.txt");
+        TileGrid tileGrid = new TileGrid("playerFlagTestMap.txt");
 
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
@@ -61,7 +61,7 @@ public class FlagTest {
 
     @Test
     public void flagsOutOfOrderNotCounted(){
-        TileGrid tileGrid = new TileGrid("playerTestFlagMap2.txt");
+        TileGrid tileGrid = new TileGrid("playerFlagTestMap2.txt");
 
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);

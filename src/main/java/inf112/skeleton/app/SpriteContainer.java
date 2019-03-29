@@ -31,17 +31,22 @@ public class SpriteContainer {
     private AbilityCard currentAbility;
     private AbilityCard emptyAbility;
     private BitmapFont font;
-    private final int GRID_ROWS = 12;
-    private final int GRID_COLUMNS = 12;
-
-
-
-
-
+    private int gridRows = 12;
+    private int gridColumns = 12;
 
     public SpriteContainer(SpriteBatch batch){
-
         this.batch = batch;
+        initiate();
+    }
+
+    public SpriteContainer(SpriteBatch batch, int rows, int columns){
+        this.gridRows = rows;
+        this.gridColumns = columns;
+        this.batch = batch;
+        initiate();
+    }
+
+    private void initiate(){
         this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
         this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
@@ -52,10 +57,7 @@ public class SpriteContainer {
         this.abilityText = "";
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
-        //this.font.getData().setScale(font.getScaleX()+3,font.getScaleY()+3);
     }
-
-
 
     public void renderDealtCards(ArrayList<ProgramCard> programHand) {
         this.drawPositionX = 0;
@@ -91,7 +93,6 @@ public class SpriteContainer {
         return new Sprite(texture);
     }
 
-
     public void renderGrid(TileGrid tileGrid) {
 
         /*
@@ -105,8 +106,8 @@ public class SpriteContainer {
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
         this.drawPositionY = 40 + TILE_SIZE * 4;
-        for (int row = 0; row < this.GRID_ROWS; row++) {
-            for (int column = 0; column < this.GRID_COLUMNS; column++) {
+        for (int row = 0; row < this.gridRows; row++) {
+            for (int column = 0; column < this.gridColumns; column++) {
 
                 // Retrieve current tile from grid
                 Tile tileBeingDrawn = tileGrid.getTile(row, column);
@@ -135,10 +136,8 @@ public class SpriteContainer {
         }
         // Resetting the vertical drawPosition.
         this.drawPositionY = 0;
-
         //Drawing the go button
         goButton.draw(this.batch);
-
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
@@ -153,7 +152,7 @@ public class SpriteContainer {
         return false;
     }
 
-    public void setAbilityText(String text){this.abilityText = text;}
+    private void setAbilityText(String text){this.abilityText = text;}
 
     public String getAbilityText(){return this.abilityText;}
 
@@ -194,7 +193,6 @@ public class SpriteContainer {
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
-
     public void drawTextBox(String text, int lenght){
         ArrayList<String> lines = new ArrayList<>();
 
@@ -222,11 +220,4 @@ public class SpriteContainer {
     public void drawAbilityText(){
         drawTextBox(this.abilityText, 50);
     }
-
-
-
-
-
-
-
     }

@@ -17,7 +17,7 @@ public class HoleTest {
 
     @Test
     public void playerFallsInHole(){
-        TileGrid grid = new TileGrid("holeTest.txt");
+        TileGrid grid = new TileGrid("holeTestMap.txt");
         grid.getPlayer(0).setCurrentMove(Program.MOVE1);
         int lives = grid.getPlayer(0).getLives();
         grid.continueMove(0);

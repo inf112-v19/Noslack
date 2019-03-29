@@ -212,7 +212,8 @@ public class Player implements GameObject {
      * Set the players next program from the program stack.
      */
     public void setNextProgram(){
-        this.currentMove = this.program.pop().getMove();
+        if(!this.program.isEmpty())
+            this.currentMove = this.program.pop().getMove();
     }
 
     /**

@@ -18,6 +18,9 @@ public class TileGridBuilder {
     private int playersInitiated; // How many players have been initiated so far.
 
     public TileGridBuilder(String file){
+        if(file.contains("Test")){
+            this.fileName+= "testMaps/";
+        }
         fileName +=file;
         this.playersInitiated = 0;
         this.flagsInitiated = 0;

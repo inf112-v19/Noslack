@@ -40,10 +40,11 @@ public class Coordinate {
         return this.orientation;
     }
 
-    public void update(Coordinate coordinate){
-        this.row = coordinate.getRow();
-        this.column = coordinate.getColumn();
+    public void moveCoordinate(int rowsToMove, int columnsToMove){
+        this.row += rowsToMove;
+        this.column += columnsToMove;
     }
+
 
     @Override
     public boolean equals(Object o) {

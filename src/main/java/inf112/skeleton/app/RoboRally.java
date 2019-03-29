@@ -15,20 +15,8 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
-
-
-    // Grid and tile specifications
-    private final int TILE_SIZE = 32;
-    private final int GRID_ROWS = 12;
-    private final int GRID_COLUMNS = 12;
-
     // Dealt cards background texture and sprite.
-
-
-
     private Sprite cardTestSprite;
-
-
     private int currentPhase;
 
     private SpriteBatch batch;
@@ -69,18 +57,15 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
         this.menuScreen = new MenuScreen(batch);
-
     }
-
-
 
     public void createGame(){
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.spriteContainer = new SpriteContainer(batch);
+        this.tileGrid = new TileGrid("LevelX.txt");
+        this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
-        this.tileGrid = new TileGrid();
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
         int playerHealth = this.tileGrid.getPlayer(0).getHealth();
@@ -95,7 +80,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.roboTick = 0;
         this.animation = false;
         dealNewCards();
-
     }
 
     @Override
@@ -104,17 +88,13 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(menuScreen.runMenu()){
-
             if(menuScreen.runTests()){
                 menuScreen.testMenu();
             } else {
                 menuScreen.render();
             }
-
         }
-
         else{
-
             this.batch.begin();
             spriteContainer.renderGrid(tileGrid);
             performPhase();
@@ -136,7 +116,6 @@ public class RoboRally extends Game implements InputProcessor {
     private void performPhase() {
         if (this.currentPhase == 0) {
             this.currentPhase++;
-            return;
         }
     }
 
@@ -161,13 +140,13 @@ public class RoboRally extends Game implements InputProcessor {
         }
     }
 
-
-    //   ROUND LOGIC   //
+    /**
+     * Round Logic
+     */
     private void tick() {
         if(this.tileGrid.getPlayer(0).isFinished()){
             this.currentPhase = 100;
         }
-
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
@@ -177,7 +156,6 @@ public class RoboRally extends Game implements InputProcessor {
 
             }
         }
-
         // Runs mid phase
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             this.tileGrid.continueMove(0);
@@ -190,7 +168,6 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void dealNewCards() {
-
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
@@ -198,7 +175,6 @@ public class RoboRally extends Game implements InputProcessor {
             int playerHealth = player.getHealth();
             player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         }
-
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
             this.currentAbility.getSprite().setPosition(550,20);
@@ -285,17 +261,13 @@ public class RoboRally extends Game implements InputProcessor {
             }
             spriteContainer.isInsideCard(screenX,screenY,currentAbility);
         }
-
-
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
         screenX = transformX(screenX);
         screenY = transformY(screenY);
-
         //Stops the function if the user is still in the menu
         if(menuScreen.runMenu()){
             return false;
@@ -303,7 +275,6 @@ public class RoboRally extends Game implements InputProcessor {
 
         float cardDeltaH = cardTestSprite.getHeight() / 2;
         float cardDeltaW = cardTestSprite.getWidth() / 2;
-
 
         if (insideSprite) {
             Vector2 newPos = CSI.cardSnapPosition(spriteContainer.getCurrentCard(), screenX + cardDeltaW, Gdx.graphics.getHeight() - screenY - cardDeltaH);
@@ -322,7 +293,6 @@ public class RoboRally extends Game implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = transformX(screenX);
         screenY = transformY(screenY);
-
         //Stops the function if the user is still in the menu
         if(menuScreen.runMenu()){
             return false;

@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TileGridBuilderTest {
-    private TileGridBuilder builder = new TileGridBuilder("testMapOnePlayer.txt");
+    private TileGridBuilder builder = new TileGridBuilder("onePlayerTestMap.txt");
 
     @Test
     public void getRows() {

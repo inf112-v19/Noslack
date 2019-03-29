@@ -240,8 +240,6 @@ public class TileGrid{
      */
     private int[] calculateMove(Orientation orientation){
         int[] rowColumn = new int[2];
-        rowColumn[0]=0;
-        rowColumn[1]=0;
         switch (orientation) {
             case FACING_NORTH:
                 rowColumn[0] = 1;
@@ -409,6 +407,9 @@ public class TileGrid{
     private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
         Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow()+rowsToMove,
                 coordinateOfPlayer.getColumn()+columnsToMove);
+        if(getTile(newCoordinate).hasGameObject(GameObjectType.HOLE)){
+            return true;
+        }
         if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
             return true;
         }

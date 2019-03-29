@@ -11,7 +11,7 @@ public class TileGridTest {
 
     @Test
     public void movePlayer() {
-        TileGrid grid = new TileGrid("testMapOnePlayer.txt");
+        TileGrid grid = new TileGrid("onePlayerTestMap.txt");
         grid.getPlayer(0).setCurrentMove(Program.MOVE1);
         Coordinate coordinate = grid.getPlayerPosition(0);
         grid.continueMove(0);
@@ -24,20 +24,20 @@ public class TileGridTest {
 
     @Test
     public void getPlayer() {
-        TileGrid grid = new TileGrid("testMapOnePlayer.txt");
+        TileGrid grid = new TileGrid("onePlayerTestMap.txt");
         assertEquals(GameObjectType.PLAYER,grid.getPlayer(0).getGameObjectType());
     }
 
     @Test
     public void getCoordinatesOfPlayer() {
-        TileGrid grid = new TileGrid("testMapOnePlayer.txt");
+        TileGrid grid = new TileGrid("onePlayerTestMap.txt");
         Coordinate coordinate = new Coordinate(1,2);
         assertEquals(coordinate,grid.getPlayerPosition(0));
     }
 
     @Test
     public void getCoordinatesOfPlayers() {
-        TileGrid grid = new TileGrid("testMapTwoPlayers.txt");
+        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
         Coordinate coordinate1 = new Coordinate(1,2);
         Coordinate coordinate2 = new Coordinate(4,1);
         assertEquals(coordinate1,grid.getPlayerPosition(1));
@@ -46,19 +46,19 @@ public class TileGridTest {
 
     @Test
     public void getRows() {
-        TileGrid grid = new TileGrid("testMapTwoPlayers.txt");
+        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
         assertEquals(6,grid.getRows());
     }
 
     @Test
     public void getColumns() {
-        TileGrid grid = new TileGrid("testMapTwoPlayers.txt");
+        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
         assertEquals(6,grid.getColumns());
     }
 
     @Test
     public void getPlayersInitiated() {
-        TileGrid grid = new TileGrid("testMapTwoPlayers.txt");
+        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
         assertEquals(2,grid.getPlayersInitiated());
     }
 }
