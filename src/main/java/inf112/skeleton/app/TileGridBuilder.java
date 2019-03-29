@@ -135,12 +135,17 @@ public class TileGridBuilder {
                 this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "P":
-                Player newPlayer;
-                orientation = stringToOrientation(nextTileType);
-                newPlayer = new Player(this.playersInitiated, orientation);
-                this.tileGrid[row][column].addObjectOnTile(newPlayer);
-                this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
-                newPlayer.initiate(new Coordinate(row, column));
+                if(nextTileType.contains("AI")){
+                    orientation = stringToOrientation(nextTileType);
+                }
+                else {
+                    Player newPlayer;
+                    orientation = stringToOrientation(nextTileType);
+                    newPlayer = new Player(this.playersInitiated, orientation);
+                    this.tileGrid[row][column].addObjectOnTile(newPlayer);
+                    this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
+                    newPlayer.initiate(new Coordinate(row, column));
+                }
                 break;
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());

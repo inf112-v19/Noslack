@@ -30,9 +30,7 @@ public class LaserBeam implements GameObject {
             } else
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
             this.sprite = new Sprite(texture);
-            if (this.orientation == Orientation.HORIZONTAL) {
-                this.sprite.setRotation(90);
-            }
+            this.sprite.setRotation(this.orientation.turnSprite());
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Error in LaserBeams evaluateSprite");
