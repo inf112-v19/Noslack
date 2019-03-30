@@ -1,19 +1,18 @@
 package inf112.skeleton.app.gameobjects.AI;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.AIHand;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.Coordinate;
-import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Orientation;
+import inf112.skeleton.app.gameobjects.Robot;
 
 import java.util.Stack;
 
-public abstract class AI implements GameObject {
-    private Orientation orientation;
-    private Coordinate position;
-    private Stack<ProgramCard> program;
+public abstract class AI extends Robot {
     private AIHand hand;
+    private Stack<ProgramCard> program;
 
     /**
      * Decides the program that the AIBot is to run
@@ -34,9 +33,9 @@ public abstract class AI implements GameObject {
         if(!hand.containsTurn()) {
             return;
         }
-        Orientation direction = this.position.orientationToPosition(target);
-        if(!this.orientation.equals(direction)){
-            Program turnNeeded = this.orientation.turnNeeded(direction);
+        Orientation direction = getPosition().orientationToPosition(target);
+        if(!getOrientation().equals(direction)){
+            Program turnNeeded = getOrientation().turnNeeded(direction);
             if(this.hand.contains(turnNeeded)){
                 this.program.push(this.hand.get(turnNeeded));
             }
@@ -108,15 +107,6 @@ public abstract class AI implements GameObject {
         else{
             return;
         }
-    }
-
-    @Override
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-    public Coordinate getPosition() {
-        return position;
     }
 
     public Stack<ProgramCard> getProgram() {

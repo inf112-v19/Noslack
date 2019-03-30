@@ -8,7 +8,7 @@ import inf112.skeleton.app.cards.*;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Player implements GameObject {
+public class Player implements IRobot {
     private ArrayList<ProgramCard> programHand;
     private Stack<ProgramCard> program;
     private ArrayList<AbilityCard> abilityHand;
@@ -77,6 +77,9 @@ public class Player implements GameObject {
         }
     }
 
+    /**
+     * Turns the sprite based on the objects orientation
+     */
     private void turnSprite(){
         try {
             sprite.setRotation(this.orientation.turnSprite());
@@ -89,40 +92,27 @@ public class Player implements GameObject {
     @Override
     public Sprite getSprite() {return sprite;}
 
-    /**
-     * Get the players number
-     * @return The players number.
-     */
+    @Override
     public int getPlayerNumber() {
         return playerNumber;
     }
 
-    /**
-     * Get method for health
-     * @return Players health
-     */
+    @Override
     public int getHealth(){
         return health;
     }
 
-    /**
-     * Removes one health from the player.
-     */
+    @Override
     public void receiveDamage(){
         this.health--;
     }
 
-    /**
-     * Remove given amount of health from player
-     * @param damage amount of health to be deducted
-     */
+    @Override
     public void receiveDamage(int damage){
         this.health -= damage;
     }
 
-    /**
-     * @return How many lives the player has left.
-     */
+    @Override
     public int getLives(){
         return this.lives;
     }
@@ -134,62 +124,41 @@ public class Player implements GameObject {
         this.lives--;
     }
 
-    /**
-     * Give player a new orientation
-     * @param orientation The players new orientation
-     */
+    @Override
     public void setOrientation(Orientation orientation){
         this.orientation = orientation;
         turnSprite();
     }
 
-
     @Override
     public Orientation getOrientation() {return orientation;}
 
-    /**
-     * Method for updating orientation
-     * @param rotation ??
-     */
+    @Override
     public void updateOrientation(Program rotation){
         this.orientation = orientation.rotate(rotation);
         turnSprite();
     }
 
-    /**
-     * Set a new psoition for the player
-     * @param position New position
-     */
+    @Override
     public void setPosition(Coordinate position) {
         this.position =position;
     }
 
-    /**
-     * Get the players position
-     * @return Players current position
-     */
+    @Override
     public Coordinate getPosition() {
         return this.position;
     }
 
-    /**
-     * Give Cards to Player
-     * @param AbilityCards IDeck of AbilityCards
-     * @param ProgramCards IDeck of ProgramCards
-     */
+    @Override
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
     }
 
-    /**
-     * @return Player AbilityDeck
-     */
+    @Override
     public ArrayList<AbilityCard> getAbilityHand() {return abilityHand;}
 
-    /**
-     * @return Players ProgramDeck
-     */
+    @Override
     public ArrayList<ProgramCard> getProgramHand() {return programHand;}
 
     /**
@@ -203,46 +172,31 @@ public class Player implements GameObject {
         }
     }
 
-    /**
-     * @return Program for round
-     */
+    @Override
     public Stack<ProgramCard> getProgram() {return this.program;}
 
-    /**
-     * Set the players next program from the program stack.
-     */
+    @Override
     public void setNextProgram(){
         if(!this.program.isEmpty())
             this.currentMove = this.program.pop().getMove();
     }
 
-    /**
-     * Set the next program to be executed
-     * @param currentMove The current Program to be executed
-     */
+    @Override
     public void setCurrentMove(Program currentMove) {
         this.currentMove = currentMove;
     }
 
-    /**
-     * Get the players current program.
-     * @return The current program.
-     */
+    @Override
     public Program getCurrentMove(){
         return this.currentMove;
     }
 
-    /**
-     * Replenishes the players health by 1, up to a maximum of 9 (no damage).
-     */
+    @Override
     public void repair(){
         if(health < 9)this.health++;
     }
 
-    /**
-     * Set the size of the flags visited array, based on how many flags the map contains.
-     * @param n The number of flags on the map.
-     */
+    @Override
     public void setFlagsVisitedSize(int n){
         this.flagsVisited = new boolean[n];
         for(int i =0;i<this.flagsVisited.length;i++){
@@ -250,62 +204,45 @@ public class Player implements GameObject {
         }
     }
 
-    /**
-     * @return Get the list of which flags the player has visited.
-     */
+    @Override
     public boolean[] getFlagsVisited(){
         return flagsVisited;
     }
 
-    /**
-     * Initiate a visit to a flag.
-     * @param n The flags number.
-     */
+    @Override
     public void visitFlag(int n){
         this.flagsVisited[n-1]=true;
     }
 
-    /**
-     * Checks if flag has been visited.
-     * @param n Flag number
-     * @return If the flag has been visited.
-     */
+    @Override
     public boolean getFlag(int n){
         if(n<1)
             n=1;
        return this.flagsVisited[n-1];
     }
 
+    @Override
     public void initiate (Coordinate cor){
         setPosition(cor);
         setBackUp();
     }
 
-    /**
-     * Get the move progression for the players current program
-     * @return How far the player has gotten in the move.
-     */
+    @Override
     public int getMoveProgression() {
         return moveProgression;
     }
 
-    /**
-     * Progress the players current move.
-     */
+    @Override
     public void progressMove(){
         this.moveProgression++;
     }
 
-    /**
-     * Stop the current program.
-     */
+    @Override
     public void resetMoveProgress(){
         this.moveProgression = 0;
     }
 
-    /**
-     * Reset player for new round
-     */
+    @Override
     public void reset(){
         this.programHand.clear();
         this.abilityHand.clear();
@@ -314,9 +251,7 @@ public class Player implements GameObject {
         resetMoveProgress();
     }
 
-    /**
-     * Respawn player after death
-     */
+    @Override
     public void respawn(){
         reset();
         takeLives();
@@ -324,32 +259,23 @@ public class Player implements GameObject {
         setOrientation(this.backUp.getOrientation());
     }
 
-    /**
-     * Set the players Back Up
-     */
+    @Override
     public void setBackUp(){
         this.backUp = this.getPosition();
         this.backUp.setOrientation(getOrientation());
     }
 
-    /**
-     * Get the players Back Up
-     * @return the players Back Up
-     */
+    @Override
     public Coordinate getBackUp(){
         return this.backUp;
     }
 
-    /**
-     * @return If program chosen by player is completed
-     */
+    @Override
     public boolean isFinished(){
         return this.program.isEmpty();
     }
 
-    /**
-     * Call if player wins
-     */
+    @Override
     public void win(){
         if(!this.hasWon){
             System.out.println(this.name + " HAS WON!");
