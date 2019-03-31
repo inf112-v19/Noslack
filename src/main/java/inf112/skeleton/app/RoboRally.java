@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.GameObject;
-import inf112.skeleton.app.gameobjects.Player;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.

@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.io.BufferedReader;
@@ -59,7 +60,7 @@ public class TileGridBuilder {
                     }
                 }
             }
-            System.out.println("Players: " + getPlayers());
+            System.out.println("Players: " + getPlayers().toString());
             for(Player player : getPlayers()){
                 player.setFlagsVisitedSize(getFlagsInitiated());
             }
@@ -135,12 +136,12 @@ public class TileGridBuilder {
                 this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
                 break;
             case "P":
-                if(nextTileType.contains("AI")){
-                    orientation = stringToOrientation(nextTileType);
+                orientation = stringToOrientation(nextTileType);
+                if(nextTileType.contains("Robots")){
+
                 }
                 else {
                     Player newPlayer;
-                    orientation = stringToOrientation(nextTileType);
                     newPlayer = new Player(this.playersInitiated, orientation);
                     this.tileGrid[row][column].addObjectOnTile(newPlayer);
                     this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.

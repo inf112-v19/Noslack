@@ -23,7 +23,7 @@
     <node x="305.0" y="326.0">inf112.skeleton.app.RoboRally</node>
     <node x="374.75" y="173.0">inf112.skeleton.app.cards.RRCard</node>
     <node x="821.0" y="99.0">inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet</node>
-    <node x="631.0" y="99.0">inf112.skeleton.app.gameobjects.Player</node>
+    <node x="631.0" y="99.0">inf112.skeleton.app.gameobjects.Robots.Player</node>
     <node x="431.0" y="252.0">inf112.skeleton.app.cards.AbilityCard</node>
     <node x="153.0" y="326.0">inf112.skeleton.app.gameobjects.Coordinate</node>
     <node x="92.0" y="99.0">inf112.skeleton.app.gameobjects.tiletypes.Hole</node>
@@ -37,7 +37,7 @@
       <point x="396.5" y="227.0" />
       <point x="-21.75" y="14.5" />
     </edge>
-    <edge source="inf112.skeleton.app.gameobjects.Player" target="inf112.skeleton.app.gameobjects.GameObject">
+    <edge source="inf112.skeleton.app.gameobjects.Robots.Player" target="inf112.skeleton.app.gameobjects.GameObject">
       <point x="0.0" y="-14.5" />
       <point x="671.0" y="69.0" />
       <point x="508.3333333333333" y="69.0" />

@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
@@ -144,7 +145,7 @@ public class TileGrid{
                     if(!player.getFlag(n)) {
                         player.visitFlag(n);
                     }
-                    System.out.println("Visited: " + player.getFlagsVisited());
+                    System.out.println("Visited: " + player.getFlagsVisited().toString());
 
                     //if you are on the last flag, and visited all previous, you win.
                     if (n >= flagsInitiated) {

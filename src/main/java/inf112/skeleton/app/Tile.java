@@ -3,8 +3,8 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;

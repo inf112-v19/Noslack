@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 import inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet;
 import inf112.skeleton.app.gameobjects.tiletypes.Pusher;
 import inf112.skeleton.app.gameobjects.tiletypes.Wall;

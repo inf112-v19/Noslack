@@ -1,9 +1,12 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.Robots;
 
 import inf112.skeleton.app.cards.AbilityCard;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.cards.RRCard;
+import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.GameObject;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
 import java.util.Stack;

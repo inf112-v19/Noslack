@@ -1,11 +1,8 @@
 package inf112.skeleton.app.gameobjects;
 
-import inf112.skeleton.app.Tile;
-import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.Robots.Player;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 

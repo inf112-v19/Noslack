@@ -1,25 +1,21 @@
-package inf112.skeleton.app.gameobjects.AI;
+package inf112.skeleton.app.gameobjects.Robots;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.AIHand;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
-import inf112.skeleton.app.gameobjects.Robot;
 
-import java.util.Stack;
 
 public abstract class AI extends Robot {
-    private AIHand hand;
-    private Stack<ProgramCard> program;
+    AIHand hand;
 
     /**
      * Decides the program that the AIBot is to run
      * @param target Coordinate of target.
      */
     public void decideProgram(Coordinate target){
-        while(program.size()<5) {
+        while(this.program.size()<5) {
             turnDirectionOfTarget(target);
             applyMove();
         }
@@ -30,12 +26,12 @@ public abstract class AI extends Robot {
      * @param target Coordinate of target
      */
     private void turnDirectionOfTarget (Coordinate target){
-        if(!hand.containsTurn()) {
+        if(!this.hand.containsTurn()) {
             return;
         }
-        Orientation direction = getPosition().orientationToPosition(target);
+        Orientation direction = this.position.orientationToPosition(target);
         if(!getOrientation().equals(direction)){
-            Program turnNeeded = getOrientation().turnNeeded(direction);
+            Program turnNeeded = this.orientation.turnNeeded(direction);
             if(this.hand.contains(turnNeeded)){
                 this.program.push(this.hand.get(turnNeeded));
             }
@@ -101,15 +97,11 @@ public abstract class AI extends Robot {
     }
 
     private void applyMove(){
-        if(hand.containsMove()) {
-            program.push(hand.findMove());
+        if(this.hand.containsMove()) {
+            this.program.push(this.hand.findMove());
         }
         else{
             return;
         }
-    }
-
-    public Stack<ProgramCard> getProgram() {
-        return program;
     }
 }
