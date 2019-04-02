@@ -17,13 +17,14 @@ import java.util.PriorityQueue;
 
 public class SpriteContainer {
 
-    private Sprite dealtCardsBackgroundSprite;
     private Sprite selectedCardsBackgroundSprite;
     private Sprite cardTestSprite;
     private Sprite currentSprite;
     private ProgramCard currentCard;
     private String abilityText;
     private Sprite goButton;
+    private Sprite muteButton;
+    private Sprite background;
     private SpriteBatch batch;
     private int drawPositionX;
     private int drawPositionY;
@@ -33,6 +34,7 @@ public class SpriteContainer {
     private BitmapFont font;
     private int gridRows = 12;
     private int gridColumns = 12;
+
 
     public SpriteContainer(SpriteBatch batch){
         this.batch = batch;
@@ -47,28 +49,27 @@ public class SpriteContainer {
     }
 
     private void initiate(){
-        this.dealtCardsBackgroundSprite = setSprite("./assets/cards/dealtCardsBackground.png");
+        this.background = setSprite("./assets/background.png");
+        this.background.setPosition(0, 0);
         this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
         this.goButton = setSprite("./assets/cards/dontpress.png");
         this.goButton.setPosition(33, 220);
+        this.muteButton = setSprite("./assets/muteButton.png");
+        this.muteButton.setPosition(25, 300);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
         this.abilityText = "";
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
+        //this.font.getData().setScale(10);
     }
 
     public void renderDealtCards(ArrayList<ProgramCard> programHand) {
         this.drawPositionX = 0;
         this.drawPositionY = 40 + TILE_SIZE * 4;
 
-        // Draw background for dealt cards.
-        this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, Gdx.graphics.getHeight()-dealtCardsBackgroundSprite.getHeight()-1);
-        this.dealtCardsBackgroundSprite.draw(this.batch);
-
         this.selectedCardsBackgroundSprite.draw(this.batch);
-
         this.currentAbility.getSprite().draw(this.batch);
 
         for (ProgramCard card : programHand) {
@@ -76,6 +77,7 @@ public class SpriteContainer {
             font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
             font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
         }
+
     }
 
     public void getCardSprite(AbilityCard abilityCard){
@@ -89,6 +91,10 @@ public class SpriteContainer {
     }
 
     public void renderGrid(TileGrid tileGrid) {
+        background.draw(this.batch);
+
+        // Work in progress
+
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
         this.drawPositionY = 40 + TILE_SIZE * 4;
@@ -124,9 +130,11 @@ public class SpriteContainer {
         this.drawPositionY = 0;
         //Drawing the go button
         goButton.draw(this.batch);
+        muteButton.draw(this.batch);
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
+
         // Boolean to see if the coordinates is inside given sprite in the x-axis
         if (screenX >= sprite.getX() && screenX < sprite.getX() + sprite.getWidth()) {
             // Checks y-axis, but considered that the Y given is starting at the top of the screen
@@ -176,6 +184,10 @@ public class SpriteContainer {
 
     public boolean isInsideGo(float screenX, float screenY){
         return isInsideSprite(screenX,screenY,this.goButton);
+    }
+
+    public boolean isInsideMute(float screenX, float screenY){
+        return isInsideSprite(screenX,screenY,this.muteButton);
     }
 
     public void drawTextBox(String text, int length){

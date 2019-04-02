@@ -85,6 +85,7 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         if(menuScreen.runMenu()){
             if(menuScreen.runTests()){
                 menuScreen.testMenu();
@@ -240,8 +241,8 @@ public class RoboRally extends Game implements InputProcessor {
                 menuScreen.stopMenu();
                 createGame();
             }
-            else if(menuScreen.clickTestStart(screenX,screenY)){
-                menuScreen.testMenu();
+            else {
+                menuScreen.clickTestStart(screenX,screenY);
             }
         } else {
             if (spriteContainer.isInsideGo(screenX, screenY)) {
@@ -253,6 +254,13 @@ public class RoboRally extends Game implements InputProcessor {
                     this.tileGrid.getPlayer(0).pushProgram(chosenCards);
                     CSI.reset();
                     sequenceReady = true;
+                }
+            }
+            if (spriteContainer.isInsideMute(screenX,screenY)){
+                if(gameSounds.isGameMusicPlaying()){
+                    gameSounds.pauseGameMusic();
+                } else {
+                    gameSounds.resumeGameMusic();
                 }
             }
             spriteContainer.isInsideCard(screenX,screenY,currentAbility);

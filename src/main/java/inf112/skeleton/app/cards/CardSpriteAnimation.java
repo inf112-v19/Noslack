@@ -38,7 +38,7 @@ public class CardSpriteAnimation {
     private void shuffleLeft(){
 
         if(i<hand.size()){
-            double end = 25+i*75;
+            double end = 25+i*80;
             int x = (int)(startPos.x - j);
             double progress = (j/(startPos.x-end));
             //double deltaY = (0.5-Math.abs(progress - 0.5));
