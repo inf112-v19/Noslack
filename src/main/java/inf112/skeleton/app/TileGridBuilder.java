@@ -98,13 +98,7 @@ public class TileGridBuilder {
                 this.tileGrid[row][column].addObjectOnTile(new Pusher(orientation,evenPusher));
                 break;
             case "F":
-                /*
-                 * If there was no number after F, it cast "F" to ascii int 70.
-                 * If its not a number between 1-9, we just set n as the lowest unused number between 1-9
-                 */
-
-                char ch = nextTileType.charAt(nextTileType.length()-1);//At the moment it only takes 1 digit.
-                int n = Character.getNumericValue(ch);
+                int n = Character.getNumericValue(nextTileType.charAt(nextTileType.length()-1));
 
                 if(n < 1 || n > 9){
                     n = flagsInitiated+1;

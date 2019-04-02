@@ -103,17 +103,24 @@ public class TileGrid{
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
+
     public void activateTiles(){
+        activateTiles(0);
+    }
+
+    public void activateTiles(int currentPhase){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (Player player : players) {
                     if (tile.hasPlayer(player)) {
-                        playerOnTile(tile, player);
+                        playerOnTile(tile, player, currentPhase);
                     }
                 }
             }
         }
     }
+
+
 
     /**
      * Finds out what kind of tile the player is standing on and
@@ -121,8 +128,13 @@ public class TileGrid{
      * @param tile The active file
      * @param player The active player
      */
-    private void playerOnTile(Tile tile, Player player) {
+    private void playerOnTile(Tile tile, Player player, int currentPhase) {
         // Conveyor
+
+        if(tile.hasGameObject(GameObjectType.PLAYER)){
+
+        }
+
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
@@ -155,7 +167,7 @@ public class TileGrid{
             }
         }
         //Teleporter
-        if(tile.hasGameObject(GameObjectType.TELEPORTER)){
+        if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (player.getMoveProgression() == 0)){
             Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
             tile.removeObjectFromTile(player);
             getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
@@ -194,7 +206,15 @@ public class TileGrid{
         // Pusher activation
         if(tile.hasGameObject(GameObjectType.PUSHER)){
             Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
+            Orientation orientation = pusher.getOrientation();
 
+            int n[] = calculateMove(orientation);
+            if((currentPhase+1)%2==0 && pusher.isEven()){
+                movePlayer(player.getPlayerNumber(),n[0],n[1]);
+            }
+            else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
+                movePlayer(player.getPlayerNumber(),n[0],n[1]);
+            }
             int[] move = calculateMove(pusher.getOrientation());
             movePlayer(player.getPlayerNumber(), move[0],move[1]);
         }
@@ -394,6 +414,12 @@ public class TileGrid{
     private boolean playerBlockedOnNextTile(Player player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
                 player.getPosition().getColumn()+columnsToMove);
+        if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
+            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.PLAYER);
+            int[] move= calculateMove(directionOfMove);
+            movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
+        }
+
 
         return getTile(coordinate).playerPathBlocked(player, directionOfMove);
     }

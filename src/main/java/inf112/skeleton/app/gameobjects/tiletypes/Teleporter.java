@@ -29,7 +29,14 @@ public class Teleporter implements GameObject {
     @Override
     public void evaluateSprite() {
         try{
-            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
+            Texture texture;
+            if(teleporterNr%2 == 0){
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/portalOrange32x32.png"));
+            }
+            else{
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/portalBlue32x32.png"));
+            }
+
             this.sprite = new Sprite(texture);
         }catch (Exception e){
             e.printStackTrace();
