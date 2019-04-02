@@ -52,6 +52,10 @@ public abstract class Robot implements IRobot{
         return health;
     }
 
+    private void setHealth(int health){
+        this.health = health;
+    }
+
     @Override
     public void receiveDamage(){
         this.health--;
@@ -176,6 +180,7 @@ public abstract class Robot implements IRobot{
     public void respawn(){
         reset();
         takeLives();
+        setHealth(7);
         setPosition(this.backUp);
         setOrientation(this.backUp.getOrientation());
     }

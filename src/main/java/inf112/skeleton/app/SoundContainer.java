@@ -31,7 +31,6 @@ public class SoundContainer {
 
     public void gameMusic(){
         this.gameMusic.loop();
-
     }
 
     public void rotateSound(){

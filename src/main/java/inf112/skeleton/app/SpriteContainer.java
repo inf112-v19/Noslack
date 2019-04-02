@@ -193,13 +193,13 @@ public class SpriteContainer {
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
-    public void drawTextBox(String text, int lenght){
+    public void drawTextBox(String text, int length){
         ArrayList<String> lines = new ArrayList<>();
 
         String sentence = "";
         int i = 0;
         for (String words : text.split(" ")){
-            if ((sentence+words).length() > lenght){
+            if ((sentence+words).length() > length){
                 lines.add(i,sentence);
                 i++;
                 sentence = "";
