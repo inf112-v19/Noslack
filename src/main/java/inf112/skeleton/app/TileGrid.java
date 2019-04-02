@@ -408,13 +408,18 @@ public class TileGrid{
     private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
         Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow()+rowsToMove,
                 coordinateOfPlayer.getColumn()+columnsToMove);
-        if(getTile(newCoordinate).hasGameObject(GameObjectType.HOLE)){
-            return true;
-        }
+
         if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
             return true;
         }
-        else return newCoordinate.getColumn() > this.columns - 1 || newCoordinate.getColumn() < 0;
+        if(newCoordinate.getColumn() > this.columns-1 || newCoordinate.getColumn() < 0){
+            return true;
+        }
+        if(getTile(newCoordinate).hasGameObject(GameObjectType.HOLE)){
+            return true;
+        }
+
+        return false;
     }
 
     /**
