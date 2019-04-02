@@ -148,10 +148,9 @@ public class RoboRally extends Game implements InputProcessor {
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
-                activateTiles();
                 this.tileGrid.applyNextProgram(0);
+                activateTiles();
                 this.currentPhase++;
-
             }
         }
         // Runs mid phase
@@ -161,7 +160,6 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-            activateTiles();
         }
     }
 

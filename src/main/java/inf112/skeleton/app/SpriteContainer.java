@@ -64,23 +64,18 @@ public class SpriteContainer {
         this.drawPositionY = 40 + TILE_SIZE * 4;
 
         // Draw background for dealt cards.
-
         this.dealtCardsBackgroundSprite.setPosition(this.drawPositionX, Gdx.graphics.getHeight()-dealtCardsBackgroundSprite.getHeight()-1);
         this.dealtCardsBackgroundSprite.draw(this.batch);
 
         this.selectedCardsBackgroundSprite.draw(this.batch);
 
-
         this.currentAbility.getSprite().draw(this.batch);
-
-
 
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
             font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
             font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
         }
-
     }
 
     public void getCardSprite(AbilityCard abilityCard){
@@ -94,15 +89,6 @@ public class SpriteContainer {
     }
 
     public void renderGrid(TileGrid tileGrid) {
-
-        /*
-         * Todo:
-         * Render the grid and all the objects residing
-         * on it.
-         */
-
-        // Work in progress
-
         // Start draw position after the dealt cards.
         this.drawPositionX = TILE_SIZE * 4;
         this.drawPositionY = 40 + TILE_SIZE * 4;
@@ -141,7 +127,6 @@ public class SpriteContainer {
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
-
         // Boolean to see if the coordinates is inside given sprite in the x-axis
         if (screenX >= sprite.getX() && screenX < sprite.getX() + sprite.getWidth()) {
             // Checks y-axis, but considered that the Y given is starting at the top of the screen

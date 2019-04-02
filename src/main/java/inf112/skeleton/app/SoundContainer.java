@@ -39,7 +39,6 @@ public class SoundContainer {
 
     public void shuffleCardSound(){
         shuffleCard.play();
-
     }
 
     public void victorySound(){
