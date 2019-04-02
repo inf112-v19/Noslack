@@ -1,0 +1,9 @@
+650 Move 1
+770 Move 2
+773 Move 2
+772 Move 2
+790 Move 3
+60 U Turn
+320 Rotate Right
+330 Rotate Left
+440 Back Up
