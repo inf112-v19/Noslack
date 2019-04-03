@@ -5,8 +5,11 @@ import java.util.ArrayList;
 public class AIHand {
     private ArrayList<ProgramCard> hand;
 
-    public AIHand(ArrayList<ProgramCard> hand){
-        this.hand = hand;
+    public AIHand(ArrayList<RRCard> hand){
+        this.hand = new ArrayList<>();
+        for (RRCard card : hand){
+            this.hand.add((ProgramCard)card);
+        }
     }
 
     /**
@@ -98,5 +101,9 @@ public class AIHand {
             }
         }
         return null;
+    }
+
+    public ArrayList<ProgramCard> getHand(){
+        return this.hand;
     }
 }
