@@ -25,7 +25,7 @@ public class TileGridTest {
     @Test
     public void getPlayer() {
         TileGrid grid = new TileGrid("onePlayerTestMap.txt");
-        assertEquals(GameObjectType.PLAYER,grid.getPlayer(0).getGameObjectType());
+        assertEquals(GameObjectType.ROBOT,grid.getPlayer(0).getGameObjectType());
     }
 
     @Test

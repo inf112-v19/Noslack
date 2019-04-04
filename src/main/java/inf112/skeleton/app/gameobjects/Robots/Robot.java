@@ -27,6 +27,16 @@ public abstract class Robot implements IRobot{
     boolean hasWon;
     private boolean[] flagsVisited;
 
+    public void create(){
+        this.name = "Robot";
+        this.lives = 3;
+        this.health = 9;
+        this.program = new Stack();
+        this.abilityHand = new ArrayList<>();
+        this.currentMove = Program.NONE;
+        this.hasWon = false;
+    }
+
     @Override
     public int getPlayerNumber() {
         return playerNumber;
@@ -35,12 +45,13 @@ public abstract class Robot implements IRobot{
     /**
      * Turns the sprite based on the objects orientation
      */
+
     void turnSprite(){
         try {
             sprite.setRotation(this.orientation.turnSprite());
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in Player turnSprite");
+            System.out.println("Error in Robot turnSprite");
         }
     }
 
@@ -210,5 +221,10 @@ public abstract class Robot implements IRobot{
     @Override
     public int compareTo(Object o) {
         return 1;
+    }
+
+    @Override
+    public String toString(){
+        return this.playerNumber + ":" + this.name;
     }
 }

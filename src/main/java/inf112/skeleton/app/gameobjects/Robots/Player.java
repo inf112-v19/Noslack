@@ -20,35 +20,19 @@ public class Player extends Robot {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 9;
-        this.lives = 3;
-        this.orientation = Orientation.FACING_NORTH;
-        this.program = new Stack<>();
-        this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this.currentMove = Program.NONE;
-        this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "RoboHally";
-        evaluateSprite();
+        this(playerNumber, Orientation.FACING_NORTH);
     }
-
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber,Orientation orientation){
-        this.health = 9;
-        this.lives = 3;
+        create();
+        this.name = "Player";
         this.orientation = orientation;
-        this.program = new Stack<>();
         this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "RoboHally";
         evaluateSprite();
     }
 
@@ -95,10 +79,10 @@ public class Player extends Robot {
     }
 
     @Override
-    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
+    public GameObjectType getGameObjectType() {return GameObjectType.ROBOT;}
 
     @Override
     public String toString(){
-        return this.playerNumber + this.name;
+        return this.playerNumber + ":" + this.name;
     }
 }
