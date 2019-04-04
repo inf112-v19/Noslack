@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
+import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
@@ -103,5 +104,15 @@ public class Player extends Robot {
     @Override
     public String toString(){
         return this.playerNumber + this.name;
+    }
+
+    @Override
+    public int compareTo(Object other) {
+        if(((GameObject)other).getGameObjectType() == GameObjectType.PLAYER){
+            //if(other.getNextProgramPriority < )
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

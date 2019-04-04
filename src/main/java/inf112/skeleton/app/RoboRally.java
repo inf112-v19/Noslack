@@ -47,6 +47,8 @@ public class RoboRally extends Game implements InputProcessor {
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
 
+    private int currentPlayerNumber;
+
     @Override
     public void create() {
         // Load Dealt cards background texture and sprite.
@@ -61,7 +63,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("LevelX.txt");
+        this.tileGrid = new TileGrid("twoPlayersTestMap.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -77,7 +79,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
         this.roboTick = 0;
         this.animation = false;
-        dealNewCards();
     }
 
     @Override
@@ -96,7 +97,7 @@ public class RoboRally extends Game implements InputProcessor {
         else{
             this.batch.begin();
             spriteContainer.renderGrid(tileGrid);
-            performPhase();
+            //performPhase();
             if (sequenceReady && (roboTick % 20 == 0)) {
                 tick();
             }
@@ -143,37 +144,52 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
-        if(this.tileGrid.getPlayer(0).isFinished()){
-            this.currentPhase = 100;
-        }
-        if (this.currentPhase <= 5) {
-            // Runs per phase
-            if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
-                this.tileGrid.applyNextProgram(0);
-                activateTiles();
-                this.currentPhase++;
+
+        Player[] players = tileGrid.getPlayers();
+        int nPlayers = players.length;
+        for(Player player : tileGrid.getPlayers()) {
+            int playerNumber = player.getPlayerNumber();
+
+            //if(this.tileGrid.getPlayer(playerNumber).isFinished()){
+            //    this.currentPhase = 100;
+            //}
+            if(this.currentPhase==0){
+                dealNewCards(playerNumber);
             }
-        }
-        // Runs mid phase
-        if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
-            this.tileGrid.continueMove(0);
-        } else if (this.currentPhase > 5){
-            dealNewCards();
-            sequenceReady = false;
-            this.currentPhase = 0;
+            print("Playernumber: " + playerNumber);
+            print("Phase: " + currentPhase);
+            if (this.currentPhase <= 5) {
+                print("inside phase");
+                // Runs per phase
+                if (this.tileGrid.getPlayerCurrentMove(playerNumber) == Program.NONE) {
+                    print("Applying program");
+                    this.tileGrid.applyNextProgram(playerNumber);
+                    activateTiles();
+                }
+            }
+            // Runs mid phase
+            if (!(this.tileGrid.getPlayerCurrentMove(playerNumber) == Program.NONE)) {
+                print("Continuing move");
+                this.tileGrid.continueMove(playerNumber);
+            } else if (this.currentPhase > 5) {
+                this.programDeck.reset();
+                this.abilityDeck.reset();
+                dealNewCards(playerNumber);
+                sequenceReady = false;
+                this.currentPhase = 0;
+            }
+            if(playerNumber == nPlayers-1)
+            this.currentPhase++;
         }
     }
 
-    private void dealNewCards() {
-        this.tileGrid.resetPlayer(0);
-        this.programDeck.reset();
-        this.abilityDeck.reset();
-        for(Player player : this.tileGrid.getPlayers()){
-            int playerHealth = player.getHealth();
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
-        }
+    private void dealNewCards(int playerNumber) {
+        this.tileGrid.resetPlayer(playerNumber);
+        Player player = this.tileGrid.getPlayer(playerNumber);
+        int playerHealth = player.getHealth();
+        player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
-            this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
+            this.currentAbility = this.tileGrid.getPlayer(playerNumber).getAbilityHand().get(0);
             this.currentAbility.getSprite().setPosition(550,20);
             spriteContainer.getCardSprite(currentAbility);
         }
@@ -327,5 +343,17 @@ public class RoboRally extends Game implements InputProcessor {
     @Override
     public boolean scrolled(int i) {
         return false;
+    }
+
+    public void print(Object s){
+        System.out.println(s);
+    }
+
+    public void print(String s, boolean newLine){
+        if(newLine){
+            System.out.println(s);
+        }else{
+            System.out.print(s);
+        }
     }
 }

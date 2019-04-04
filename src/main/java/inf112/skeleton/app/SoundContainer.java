@@ -6,13 +6,15 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundContainer {
 
     private Sound gameMusic;
+    private long gameMusicId;
     private Sound shuffleCard;
     private boolean playing;
+    private int pitch;
 
 
 
     public SoundContainer(){
-
+        this.pitch = 1;
         this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
         this.shuffleCard = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/shuffleCard.wav"));
         this.playing = false;
@@ -32,7 +34,7 @@ public class SoundContainer {
     }
 
     public void gameMusic(){
-        this.gameMusic.loop();
+        this.gameMusicId = this.gameMusic.loop();
         this.playing = true;
     }
 
