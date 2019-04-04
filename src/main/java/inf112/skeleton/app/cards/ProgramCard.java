@@ -24,7 +24,6 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority, String move) {
         this.priority = priority;
         this.move=translateMove(this.name=move);
-        this.name = this.name+" "+this.priority;
     }
 
     /**
