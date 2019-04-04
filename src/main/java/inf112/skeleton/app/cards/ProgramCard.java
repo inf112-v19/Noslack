@@ -34,6 +34,7 @@ public class ProgramCard implements RRCard {
     public ProgramCard(int priority,Program move){
         this.priority = priority;
         this.move=move;
+        this.name = move.toString();
     }
 
     public void setPosition(Vector2 position) {
