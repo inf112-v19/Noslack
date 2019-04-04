@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.gameobjects.*;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -76,7 +76,7 @@ public class Tile implements GameObject{
         return this.objectsOnTile;
     }
 
-    public Boolean hasPlayer(Player player){
+    public Boolean hasPlayer(IRobot player){
         return this.objectsOnTile.contains(player);
     }
 
@@ -125,8 +125,9 @@ public class Tile implements GameObject{
      * @param player player in question
      * @return if Player can move
      */
-    public boolean playerPathBlocked(Player player, Orientation directionOfMove){
+    public boolean playerPathBlocked(IRobot player, Orientation directionOfMove){
         if(this.objectsOnTile.contains(player)){
+
                 return this.blocked.contains(directionOfMove);
         }
         else{

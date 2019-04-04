@@ -86,6 +86,12 @@ public interface IRobot extends GameObject {
     Stack<ProgramCard> getProgram();
 
     /**
+     * Get the Priority of the next ProgramCard
+     * @return the Priority
+     */
+    int getNextProgramPriority();
+
+    /**
      * Set the players next program from the program stack.
      */
     void setNextProgram();
@@ -132,6 +138,13 @@ public interface IRobot extends GameObject {
     boolean getFlag(int n);
 
     void initiate(Coordinate cor);
+
+    /**
+     * Push the players chosen program into a queue
+     * @param selectedCards The selected programs
+     */
+    void pushProgram(ArrayList<ProgramCard> selectedCards);
+
     /**
      * Get the move progression for the players current program
      * @return How far the player has gotten in the move.

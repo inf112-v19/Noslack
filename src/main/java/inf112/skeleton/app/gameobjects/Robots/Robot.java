@@ -139,6 +139,11 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
+    public int getNextProgramPriority(){
+        return program.peek().getPriority();
+    }
+
+    @Override
     public void setNextProgram(){
         if(!this.program.isEmpty())
             this.currentMove = this.program.pop().getMove();

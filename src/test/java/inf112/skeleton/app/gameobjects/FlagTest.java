@@ -35,7 +35,7 @@ public class FlagTest {
         assertFalse(tileGrid.getPlayer(0).getFlag(1));
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        tileGrid.activateTiles();
+        tileGrid.activateTiles(0);
         assertTrue(tileGrid.getPlayer(0).getFlag(1));
     }
 
@@ -46,13 +46,13 @@ public class FlagTest {
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.continueMove(0);
-        tileGrid.activateTiles();
+        tileGrid.activateTiles(0);
         tileGrid.getPlayer(0).setOrientation(Orientation.FACING_EAST);
 
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.continueMove(0);
-        tileGrid.activateTiles();
+        tileGrid.activateTiles(0);
         assertTrue(tileGrid.getPlayer(0).getFlag(1));
         assertTrue(tileGrid.getPlayer(0).getFlag(2));
     }
@@ -64,7 +64,7 @@ public class FlagTest {
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.continueMove(0);
-        tileGrid.activateTiles();
+        tileGrid.activateTiles(0);
 
         assertFalse(tileGrid.getPlayer(0).getFlag(1));
         assertFalse(tileGrid.getPlayer(0).getFlag(2));

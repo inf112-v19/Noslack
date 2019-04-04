@@ -52,6 +52,9 @@ public class Pusher implements GameObject {
             System.out.println("Error in Pusher evaluateSprite()");
         }
     }
+    public boolean isEven(){
+        return this.evenPusher;
+    }
 
     @Override
     public Sprite getSprite() {
