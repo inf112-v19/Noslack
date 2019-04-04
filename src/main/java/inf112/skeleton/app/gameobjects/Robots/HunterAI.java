@@ -16,7 +16,7 @@ public class HunterAI extends AI {
 
     @Override
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards) {
-        this.ProgramHand = new AIHand(ProgramCards);
+        this.programHand = new AIHand(ProgramCards);
         for(RRCard card : AbilityCards){
             this.abilityHand.add((AbilityCard) card);
         }
@@ -29,7 +29,7 @@ public class HunterAI extends AI {
 
     @Override
     public ArrayList<ProgramCard> getProgramHand() {
-        return this.ProgramHand.getHand();
+        return this.programHand.getHand();
     }
 
     @Override
