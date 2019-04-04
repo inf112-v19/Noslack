@@ -32,29 +32,30 @@ public class Conveyor implements GameObject {
 
     @Override
     public void evaluateSprite() {
-
-        Texture texture;
-        if(this.fast){
-            if(turn != 0){
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
+        try {
+            Texture texture;
+            if (this.fast) {
+                if (turn != 0) {
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
+                } else {
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
+                }
+            } else {
+                if (turn != 0) {
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
+                } else {
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
+                }
             }
-            else{
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
+            this.sprite = new Sprite(texture);
+            if (turn < 0) {
+                sprite.flip(true, false);
             }
+            sprite.setRotation(this.orientation.turnSprite());
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in Pusher evaluateSprite()");
         }
-        else{
-            if(turn != 0){
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
-            }
-            else{
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
-            }
-        }
-        this.sprite = new Sprite(texture);
-        if(turn < 0){
-            sprite.flip(true,false);
-        }
-        sprite.setRotation(this.orientation.turnSprite());
     }
     @Override
     public Sprite getSprite() {
