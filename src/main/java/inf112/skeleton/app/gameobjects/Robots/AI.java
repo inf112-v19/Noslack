@@ -4,6 +4,8 @@ import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
 
+import java.util.ArrayList;
+
 
 public abstract class AI extends Robot {
     AIHand ProgramHand;
@@ -108,5 +110,9 @@ public abstract class AI extends Robot {
     }
     private void isFull(){
         this.full = this.program.size()==5;
+    }
+
+    public void pushProgram(ArrayList<ProgramCard> selectedCards){
+
     }
 }

@@ -132,6 +132,13 @@ public interface IRobot extends GameObject {
     boolean getFlag(int n);
 
     void initiate(Coordinate cor);
+
+    /**
+     * Push the players chosen program into a queue
+     * @param selectedCards The selected programs
+     */
+    void pushProgram(ArrayList<ProgramCard> selectedCards);
+
     /**
      * Get the move progression for the players current program
      * @return How far the player has gotten in the move.

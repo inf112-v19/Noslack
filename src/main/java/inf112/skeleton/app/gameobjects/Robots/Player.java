@@ -77,10 +77,7 @@ public class Player extends Robot {
     @Override
     public ArrayList<ProgramCard> getProgramHand() {return programHand;}
 
-    /**
-     * Push the players chosen program into a queue
-     * @param selectedCards The selected programs
-     */
+    @Override
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
         this.program.clear();
         for (int i = (selectedCards.size()-1); i >=0; i--) {
