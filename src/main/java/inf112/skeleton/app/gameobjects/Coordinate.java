@@ -9,9 +9,7 @@ public class Coordinate {
     private Orientation orientation;
 
     public Coordinate(int row, int column){
-        this.row = row;
-        this.column = column;
-        this.orientation = Orientation.FACING_NORTH;
+        this(row,column, Orientation.FACING_NORTH);
     }
 
     public Coordinate(int row, int column, Orientation orientation){
@@ -55,7 +53,7 @@ public class Coordinate {
         return false;
     }
     public String toString(){
-        return "Row: "+getRow()+" Column: "+getColumn();
+        return "Row: "+getRow()+" Column: "+getColumn() + "Orientation: " + getOrientation();
     }
 
     /**

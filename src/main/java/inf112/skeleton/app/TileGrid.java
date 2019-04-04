@@ -13,7 +13,7 @@ public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private IRobot[] players;
+    private ArrayList<IRobot> robots;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -23,7 +23,6 @@ public class TileGrid{
      */
     public TileGrid(){
         build("ConveyorLoops.txt");
-
     }
 
     /**
@@ -41,7 +40,7 @@ public class TileGrid{
     private void build(String file) {
         TileGridBuilder builder= new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
-        this.players = builder.getPlayers();
+        this.robots = builder.getPlayers();
         this.rows = builder.getRows();
         this.columns = builder.getColumns();
         this.playersInitiated = builder.getPlayersInitiated();
@@ -111,7 +110,7 @@ public class TileGrid{
     public void activateTiles(int currentPhase){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
-                for(IRobot player : players) {
+                for(IRobot player : robots) {
                     if (tile.hasPlayer(player)) {
                         playerOnTile(tile, player, currentPhase);
                     }
@@ -130,11 +129,6 @@ public class TileGrid{
      */
     private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
         // Conveyor
-
-        if(tile.hasGameObject(GameObjectType.PLAYER)){
-
-        }
-
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
@@ -414,8 +408,8 @@ public class TileGrid{
     private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
                 player.getPosition().getColumn()+columnsToMove);
-        if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
-            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.PLAYER);
+        if(getTile(coordinate).hasGameObject(GameObjectType.ROBOT)){
+            IRobot otherPlayer = (IRobot)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
             int[] move= calculateMove(directionOfMove);
             movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
         }
@@ -454,15 +448,15 @@ public class TileGrid{
      * @return Wanted Player
      */
     public IRobot getPlayer(int playerNumber){
-        return this.players[playerNumber];
+        return this.robots.get(playerNumber);
     }
 
     /**
      * Get all players
      * @return List of players
      */
-    IRobot[] getPlayers() {
-        return players;
+    ArrayList<IRobot> getPlayers() {
+        return robots;
     }
 
     /**
