@@ -1,23 +1,27 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
-import inf112.skeleton.app.cards.AIHand;
-import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
+import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
 
+import java.util.ArrayList;
+
 
 public abstract class AI extends Robot {
-    AIHand hand;
+    AIHand ProgramHand;
+    boolean full;
 
     /**
      * Decides the program that the AIBot is to run
      * @param target Coordinate of target.
      */
     public void decideProgram(Coordinate target){
-        while(this.program.size()<5) {
+        isFull();
+        while(!this.full) {
             turnDirectionOfTarget(target);
             applyMove();
+
+            isFull();
         }
     }
 
@@ -26,14 +30,14 @@ public abstract class AI extends Robot {
      * @param target Coordinate of target
      */
     private void turnDirectionOfTarget (Coordinate target){
-        if(!this.hand.containsTurn()) {
+        if(!this.ProgramHand.containsTurn()) {
             return;
         }
         Orientation direction = this.position.orientationToPosition(target);
         if(!getOrientation().equals(direction)){
             Program turnNeeded = this.orientation.turnNeeded(direction);
-            if(this.hand.contains(turnNeeded)){
-                this.program.push(this.hand.get(turnNeeded));
+            if(this.ProgramHand.contains(turnNeeded)){
+                this.program.push(this.ProgramHand.get(turnNeeded));
             }
             else{
                 turnNotFound(turnNeeded);
@@ -48,60 +52,67 @@ public abstract class AI extends Robot {
     private void turnNotFound(Program turnNeeded){
         switch (turnNeeded){
             case U:
-                if(this.hand.contains(Program.RIGHT,2)&& this.program.size()<4){
-                    this.program.push(hand.get(Program.RIGHT));
-                    this.program.push(hand.get(Program.RIGHT));
+                if(this.ProgramHand.contains(Program.RIGHT,2)&& this.program.size()<4){
+                    this.program.push(ProgramHand.get(Program.RIGHT));
+                    this.program.push(ProgramHand.get(Program.RIGHT));
                 }
-                else if(this.hand.contains(Program.LEFT,2)&& this.program.size()<4){
-                    this.program.push(hand.get(Program.LEFT));
-                    this.program.push(hand.get(Program.LEFT));
+                else if(this.ProgramHand.contains(Program.LEFT,2)&& this.program.size()<4){
+                    this.program.push(ProgramHand.get(Program.LEFT));
+                    this.program.push(ProgramHand.get(Program.LEFT));
                 }
                 else{
-                    program.push(hand.findTurn());
+                    program.push(ProgramHand.findTurn());
                 }
                 break;
             case RIGHT:
-                if(this.hand.contains(Program.U)){
-                    this.program.push(hand.get(Program.U));
-                    if(this.hand.contains(Program.LEFT)){
-                        this.program.push(hand.get(Program.LEFT));
+                if(this.ProgramHand.contains(Program.U)){
+                    this.program.push(ProgramHand.get(Program.U));
+                    if(this.ProgramHand.contains(Program.LEFT)){
+                        this.program.push(ProgramHand.get(Program.LEFT));
                     }
                 }
-                else if(this.hand.contains(Program.LEFT,3)&& this.program.size()<4){
+                else if(this.ProgramHand.contains(Program.LEFT,3)&& this.program.size()<4){
                     for (int i =0; i<3; i++){
-                        this.program.push(hand.get(Program.LEFT));
+                        this.program.push(ProgramHand.get(Program.LEFT));
                     }
                     return;
                 }
                 else{
-                    program.push(hand.findTurn());
+                    program.push(ProgramHand.findTurn());
                 }
                 break;
             case LEFT:
-                if(this.hand.contains(Program.U)){
-                    this.program.push(hand.get(Program.U));
-                    if(this.hand.contains(Program.RIGHT)){
-                        this.program.push(hand.get(Program.RIGHT));
+                if(this.ProgramHand.contains(Program.U)){
+                    this.program.push(ProgramHand.get(Program.U));
+                    if(this.ProgramHand.contains(Program.RIGHT)){
+                        this.program.push(ProgramHand.get(Program.RIGHT));
                     }
                 }
-                else if(this.hand.contains(Program.RIGHT,3)&& this.program.size()<4){
+                else if(this.ProgramHand.contains(Program.RIGHT,3)&& this.program.size()<4){
                     for (int i =0; i<3; i++) {
-                        this.program.push(hand.get(Program.RIGHT));
+                        this.program.push(ProgramHand.get(Program.RIGHT));
                     }
                 }
                 else{
-                    program.push(hand.findTurn());
+                    program.push(ProgramHand.findTurn());
                 }
                 break;
         }
     }
 
     private void applyMove(){
-        if(this.hand.containsMove()) {
-            this.program.push(this.hand.findMove());
+        if(this.ProgramHand.containsMove()) {
+            this.program.push(this.ProgramHand.findMove());
         }
         else{
             return;
         }
+    }
+    private void isFull(){
+        this.full = this.program.size()==5;
+    }
+
+    public void pushProgram(ArrayList<ProgramCard> selectedCards){
+
     }
 }

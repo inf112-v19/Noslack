@@ -7,13 +7,15 @@ public class SoundContainer {
 
     private Sound gameMusic;
     private Sound shuffleCard;
+    private boolean playing;
+
 
 
     public SoundContainer(){
 
         this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
         this.shuffleCard = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/shuffleCard.wav"));
-
+        this.playing = false;
 
     }
 
@@ -31,7 +33,22 @@ public class SoundContainer {
 
     public void gameMusic(){
         this.gameMusic.loop();
+        this.playing = true;
+    }
 
+    public void pauseGameMusic(){
+        this.gameMusic.pause();
+        this.playing = false;
+    }
+
+    public void resumeGameMusic(){
+        this.gameMusic.resume();
+        this.playing = true;
+        //this.gameMusic.setPitch();
+    }
+
+    public boolean isGameMusicPlaying(){
+        return playing;
     }
 
     public void rotateSound(){

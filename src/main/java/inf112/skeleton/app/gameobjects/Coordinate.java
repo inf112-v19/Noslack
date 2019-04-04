@@ -1,8 +1,5 @@
 package inf112.skeleton.app.gameobjects;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-import inf112.skeleton.app.cards.Program;
-
 import static java.lang.Math.abs;
 
 public class Coordinate {

@@ -4,6 +4,7 @@ public enum GameObjectType {
     CONVEYOR,
     FLAG,
     HOLE,
+    HUNTER,
     LASER_BEAM,
     LASER_OUTLET,
     PLAYER,

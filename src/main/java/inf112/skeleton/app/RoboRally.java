@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("LevelX.txt");
+        this.tileGrid = new TileGrid("twoPlayersTestMap.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -84,6 +84,7 @@ public class RoboRally extends Game implements InputProcessor {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         if(menuScreen.runMenu()){
             if(menuScreen.runTests()){
@@ -118,7 +119,7 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void activateTiles() {
-        this.tileGrid.activateTiles();
+        this.tileGrid.activateTiles(this.currentPhase);
     }
 
     private long diff, start = System.currentTimeMillis();
@@ -148,10 +149,9 @@ public class RoboRally extends Game implements InputProcessor {
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
-                activateTiles();
                 this.tileGrid.applyNextProgram(0);
+                activateTiles();
                 this.currentPhase++;
-
             }
         }
         // Runs mid phase
@@ -161,7 +161,6 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-            activateTiles();
         }
     }
 
@@ -169,7 +168,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        for(Player player : this.tileGrid.getPlayers()){
+        for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
             player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         }
@@ -242,8 +241,8 @@ public class RoboRally extends Game implements InputProcessor {
                 menuScreen.stopMenu();
                 createGame();
             }
-            else if(menuScreen.clickTestStart(screenX,screenY)){
-                menuScreen.testMenu();
+            else {
+                menuScreen.clickTestStart(screenX,screenY);
             }
         } else {
             if (spriteContainer.isInsideGo(screenX, screenY)) {
@@ -255,6 +254,13 @@ public class RoboRally extends Game implements InputProcessor {
                     this.tileGrid.getPlayer(0).pushProgram(chosenCards);
                     CSI.reset();
                     sequenceReady = true;
+                }
+            }
+            if (spriteContainer.isInsideMute(screenX,screenY)){
+                if(gameSounds.isGameMusicPlaying()){
+                    gameSounds.pauseGameMusic();
+                } else {
+                    gameSounds.resumeGameMusic();
                 }
             }
             spriteContainer.isInsideCard(screenX,screenY,currentAbility);
