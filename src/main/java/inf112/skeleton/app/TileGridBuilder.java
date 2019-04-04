@@ -130,7 +130,7 @@ public class TileGridBuilder {
                 break;
             case "P":
                 orientation = stringToOrientation(nextTileType);
-                if(nextTileType.contains("Robots")){
+                if(nextTileType.contains("H")){
                     this.tileGrid[row][column].addObjectOnTile(new HunterAI());
                 }
                 else {
