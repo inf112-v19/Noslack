@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
 
@@ -120,7 +120,7 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     private void activateTiles() {
-        this.tileGrid.activateTiles();
+        this.tileGrid.activateTiles(this.currentPhase);
     }
 
     private long diff, start = System.currentTimeMillis();
@@ -145,9 +145,9 @@ public class RoboRally extends Game implements InputProcessor {
      */
     private void tick() {
 
-        Player[] players = tileGrid.getPlayers();
+        IRobot[] players = tileGrid.getPlayers();
         int nPlayers = players.length;
-        for(Player player : tileGrid.getPlayers()) {
+        for(IRobot player : tileGrid.getPlayers()) {
             int playerNumber = player.getPlayerNumber();
 
             //if(this.tileGrid.getPlayer(playerNumber).isFinished()){
@@ -185,7 +185,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private void dealNewCards(int playerNumber) {
         this.tileGrid.resetPlayer(playerNumber);
-        Player player = this.tileGrid.getPlayer(playerNumber);
+        IRobot player = this.tileGrid.getPlayer(playerNumber);
         int playerHealth = player.getHealth();
         player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
