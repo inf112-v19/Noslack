@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
 
@@ -168,7 +168,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        for(Player player : this.tileGrid.getPlayers()){
+        for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
             player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         }
