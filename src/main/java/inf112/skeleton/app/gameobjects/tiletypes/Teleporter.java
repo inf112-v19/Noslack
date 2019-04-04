@@ -29,7 +29,7 @@ public class Teleporter implements GameObject {
     @Override
     public void evaluateSprite() {
         try{
-            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/teleporterTest32x32.png"));
             this.sprite = new Sprite(texture);
         }catch (Exception e){
             e.printStackTrace();

@@ -61,7 +61,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("LevelX.txt");
+        this.tileGrid = new TileGrid("ConveyorLoops.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -98,6 +98,7 @@ public class RoboRally extends Game implements InputProcessor {
             spriteContainer.renderGrid(tileGrid);
             performPhase();
             if (sequenceReady && (roboTick % 20 == 0)) {
+
                 tick();
             }
 
