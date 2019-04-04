@@ -1,7 +1,9 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.gameobjects.robots;
 
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.Orientation;
 import inf112.skeleton.app.gameobjects.Robots.Player;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,7 +19,7 @@ public class PlayerTest {
     @Test
     public void PlayerStartsNorth() {
         //Player player = new Player();
-        assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
+        Assert.assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
     }
 
     @Test
