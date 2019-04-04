@@ -1,6 +1,5 @@
 package inf112.skeleton.app.gameobjects;
 
-
 import static java.lang.Math.abs;
 
 public class Coordinate {

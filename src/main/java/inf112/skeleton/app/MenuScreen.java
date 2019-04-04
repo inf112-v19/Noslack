@@ -11,22 +11,27 @@ public class MenuScreen
     private Sprite startGame;
     private Sprite testsButton;
     private Sprite createNewMap;
+    private Sprite hostGame;
     private SpriteContainer spriteContainer;
     private boolean runTests;
     private Sprite drawSpritesBtn;
+    private Sprite background;
 
     public MenuScreen(SpriteBatch batch)
     {
         this.batch=batch;
         this.run = true;
         this.spriteContainer = new SpriteContainer(batch);
-
-        this.startGame = spriteContainer.setSprite("./assets/cards/startGameButton.png");
-        this.startGame.setPosition(200, 220);
-        this.testsButton = spriteContainer.setSprite("./assets/cards/ManualTestsButton.png");
-        this.testsButton.setPosition(400,220);
-        this.createNewMap = spriteContainer.setSprite("./assets/cards/CreateNewMapButton.png");
-        this.createNewMap.setPosition(600,220);
+        this.background = spriteContainer.setSprite("./assets/menuScreen/mainMenu.png");
+        this.background.setPosition(0, 0);
+        this.startGame = spriteContainer.setSprite("./assets/menuScreen/startBtn.png");
+        this.startGame.setPosition(100, 220);
+        this.testsButton = spriteContainer.setSprite("./assets/menuScreen/testsBtn.png");
+        this.testsButton.setPosition(375,220);
+        this.createNewMap = spriteContainer.setSprite("./assets/menuScreen/createMapBtn.png");
+        this.createNewMap.setPosition(650,220);
+        this.hostGame = spriteContainer.setSprite("./assets/menuScreen/hostGameBtn.png");
+        this.hostGame.setPosition(375,95);
         this.runTests = false;
 
 
@@ -41,40 +46,33 @@ public class MenuScreen
     public void render(){
 
         batch.begin();
+        background.draw(batch);
         startGame.draw(batch);
         testsButton.draw(batch);
         createNewMap.draw(batch);
+        hostGame.draw(batch);
         batch.end();
 
     }
 
-    public boolean runTests(){
-        return this.runTests;
+    public boolean runTests(){ return this.runTests; }
 
-    }
+    public boolean runMenu() { return run; }
 
-    public boolean runMenu()
-    {
-        return run;
-
-    }
-
-    public void stopMenu(){
-        run = false;
-    }
+    public void stopMenu(){ run = false; }
 
     public boolean clickStart(int screenX, int screenY){
         return spriteContainer.isInsideSprite(screenX,screenY,startGame);
 
     }
-    public boolean clickTestStart(int screenX, int screenY){
-        if(runTests){
-            this.runTests=false;
-        } else {
-            this.runTests=true;
+    public void clickTestStart(int screenX, int screenY){
+        if(spriteContainer.isInsideSprite(screenX,screenY,testsButton)){
+            if(runTests){
+                this.runTests=false;
+            } else {
+                this.runTests=true;
+            }
         }
-        return spriteContainer.isInsideSprite(screenX,screenY,testsButton);
-
     }
 
     public void testMenu(){
@@ -85,10 +83,5 @@ public class MenuScreen
         this.drawSpritesBtn.draw(batch);
         testsButton.draw(batch);
         batch.end();
-}
-
-
-
-
-
+    }
 }
