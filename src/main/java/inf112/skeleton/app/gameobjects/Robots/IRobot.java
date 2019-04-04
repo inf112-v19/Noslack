@@ -86,6 +86,12 @@ public interface IRobot extends GameObject {
     Stack<ProgramCard> getProgram();
 
     /**
+     * Get the Priority of the next ProgramCard
+     * @return the Priority
+     */
+    int getNextProgramPriority();
+
+    /**
      * Set the players next program from the program stack.
      */
     void setNextProgram();
