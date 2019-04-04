@@ -100,6 +100,20 @@ public abstract class AI extends Robot {
         }
     }
 
+    private void moveNotFound(Program moveNeeded) {
+        switch(moveNeeded) {
+            case MOVE1:
+                if (this.ProgramHand.contains(Program.MOVE2) && this.ProgramHand.contains(Program.BACK)) {
+                    this.program.push(ProgramHand.get(Program.MOVE2));
+                    this.program.push(ProgramHand.get(Program.BACK));
+                } else if (this.ProgramHand.contains(Program.U) && this.ProgramHand.contains(Program.BACK)) {
+                    this.program.push(ProgramHand.get(Program.U));
+                    this.program.push(ProgramHand.get(Program.BACK));
+                }
+                break;
+        }
+    }
+
     private void applyMove(){
         if(this.ProgramHand.containsMove()) {
             this.program.push(this.ProgramHand.findMove());
