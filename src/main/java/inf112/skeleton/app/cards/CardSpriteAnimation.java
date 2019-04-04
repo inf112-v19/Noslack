@@ -20,7 +20,7 @@ public class CardSpriteAnimation {
 
         this.hand=hand;
         this.startPos = new Vector2(730,400);
-        this.endPos = new Vector2(0,555);
+        this.endPos = new Vector2(0,565);
 
         this.i = 0;
         this.j = 0;

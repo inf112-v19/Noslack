@@ -11,20 +11,24 @@ import inf112.skeleton.app.cards.RRCard;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.tiletypes.Flag;
+import inf112.skeleton.app.gameobjects.tiletypes.Teleporter;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class SpriteContainer {
 
-    private Sprite selectedCardsBackgroundSprite;
     private Sprite cardTestSprite;
+    private Sprite cardSlot;
     private Sprite currentSprite;
     private ProgramCard currentCard;
     private String abilityText;
     private Sprite goButton;
     private Sprite muteButton;
+    private Sprite unMuteButton;
     private Sprite background;
+    private Sprite lifeHeart;
+    private Sprite cardBack;
     private SpriteBatch batch;
     private int drawPositionX;
     private int drawPositionY;
@@ -34,7 +38,7 @@ public class SpriteContainer {
     private BitmapFont font;
     private int gridRows = 12;
     private int gridColumns = 12;
-
+    private boolean mute = false;
 
     public SpriteContainer(SpriteBatch batch){
         this.batch = batch;
@@ -51,12 +55,17 @@ public class SpriteContainer {
     private void initiate(){
         this.background = setSprite("./assets/background.png");
         this.background.setPosition(0, 0);
-        this.selectedCardsBackgroundSprite = setSprite("./assets/cards/KortBakgrunn2.png");
+        this.cardSlot = setSprite("./assets/cards/cardSlot.png");
         this.cardTestSprite = setSprite("./assets/cards/back-up.png");
-        this.goButton = setSprite("./assets/cards/dontpress.png");
+        this.goButton = setSprite("./assets/buttons/runButton.png");
         this.goButton.setPosition(33, 220);
-        this.muteButton = setSprite("./assets/muteButton.png");
+        this.muteButton = setSprite("./assets/buttons/muteButton.png");
         this.muteButton.setPosition(25, 300);
+        this.unMuteButton = setSprite("./assets/buttons/unMuteButton.png");
+        this.unMuteButton.setPosition(25, 300);
+        this.lifeHeart = setSprite("./assets/player/lifeHeart32x32.png");
+        this.cardBack = setSprite("./assets/cards/cardBackside.png");
+        this.cardBack.setPosition(730,400);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
         this.abilityText = "";
@@ -69,14 +78,20 @@ public class SpriteContainer {
         this.drawPositionX = 0;
         this.drawPositionY = 40 + TILE_SIZE * 4;
 
-        this.selectedCardsBackgroundSprite.draw(this.batch);
+        for (int i = 0; i < 5; i++) {
+            this.cardSlot.setPosition((20+100*i),25);
+            this.cardSlot.draw(this.batch);
+            this.font.draw(this.batch,(i+1)+"",(60+100*i),94);
+        }
         this.currentAbility.getSprite().draw(this.batch);
 
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
+            font.setColor(255,255,255,1);
             font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+30);
+            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
         }
+        this.cardBack.draw(this.batch);
 
     }
 
@@ -119,6 +134,9 @@ public class SpriteContainer {
                     if (gameObject.getGameObjectType() == GameObjectType.FLAG){
                         this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
                     }
+                    if (gameObject.getGameObjectType() == GameObjectType.TELEPORTER){
+                        this.font.draw(this.batch,((Teleporter)gameObject).getTeleporterNr()+"",drawPositionX+spriteOfGameObject.getWidth()/3,drawPositionY+spriteOfGameObject.getHeight()/2+7);
+                    }
                 }
 
                 this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
@@ -130,7 +148,15 @@ public class SpriteContainer {
         this.drawPositionY = 0;
         //Drawing the go button
         goButton.draw(this.batch);
-        muteButton.draw(this.batch);
+        if (mute){
+            muteButton.draw(this.batch);
+        } else {
+            unMuteButton.draw(this.batch);
+        }
+        for (int i = 0; i < tileGrid.getPlayer(0).getLives(); i++){
+            this.lifeHeart.setPosition((12+40*i), 350);
+            this.lifeHeart.draw(this.batch);
+        }
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
@@ -187,6 +213,14 @@ public class SpriteContainer {
     }
 
     public boolean isInsideMute(float screenX, float screenY){
+        if (isInsideSprite(screenX,screenY,this.muteButton)){
+            if(!mute){
+                mute = true;
+            } else{
+                mute = false;
+            }
+            return true;
+        }
         return isInsideSprite(screenX,screenY,this.muteButton);
     }
 

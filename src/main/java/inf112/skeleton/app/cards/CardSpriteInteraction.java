@@ -25,11 +25,9 @@ public class CardSpriteInteraction {
 
         this.chosenCards = chosenCards;
         this.cardSlotPositions = new ArrayList<>();
-        this.cardSlotPositions.add(new Vector2(80,44));
-        this.cardSlotPositions.add(new Vector2(187,44));
-        this.cardSlotPositions.add(new Vector2(293,44));
-        this.cardSlotPositions.add(new Vector2(400,44));
-        this.cardSlotPositions.add(new Vector2(508,44));
+        for (int i = 0; i < 5; i++) {
+            this.cardSlotPositions.add(new Vector2((100+100*i),34));
+        }
 
     }
 
@@ -38,13 +36,10 @@ public class CardSpriteInteraction {
         this.chosenCards = new ArrayList<>();
 
         reset();
-
         this.cardSlotPositions = new ArrayList<>();
-        this.cardSlotPositions.add(new Vector2(80,44));
-        this.cardSlotPositions.add(new Vector2(187,44));
-        this.cardSlotPositions.add(new Vector2(293,44));
-        this.cardSlotPositions.add(new Vector2(400,44));
-        this.cardSlotPositions.add(new Vector2(508,44));
+        for (int i = 0; i < 5; i++) {
+            this.cardSlotPositions.add(new Vector2((100+100*i),34));
+        }
     }
 
     /**

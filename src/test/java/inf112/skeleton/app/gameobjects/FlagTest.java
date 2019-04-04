@@ -2,6 +2,7 @@ package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
+import inf112.skeleton.app.gameobjects.Robots.IRobot;
 import inf112.skeleton.app.gameobjects.Robots.Player;
 import inf112.skeleton.app.gameobjects.tiletypes.Flag;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class FlagTest {
     @Test
     public void flagsSizeTest(){
         TileGrid tileGrid = new TileGrid("playerFlagTestMap.txt");
-        Player player = tileGrid.getPlayer(0);
+        IRobot player = tileGrid.getPlayer(0);
         assertEquals(2,player.getFlagsVisited().length);
     }
 
