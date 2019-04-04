@@ -36,7 +36,6 @@ public class Teleporter implements GameObject {
             else{
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/portalBlue32x32.png"));
             }
-
             this.sprite = new Sprite(texture);
         }catch (Exception e){
             e.printStackTrace();
