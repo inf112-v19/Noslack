@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
+import inf112.skeleton.app.gameobjects.Robots.IRobot;
 import inf112.skeleton.app.gameobjects.Robots.Player;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
@@ -14,7 +15,7 @@ public class TileGridBuilder {
     private int rows;
     private int columns;
     private String fileName = "./assets/maps/";
-    private Player[] players;
+    private IRobot[] players;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -61,7 +62,7 @@ public class TileGridBuilder {
                 }
             }
             System.out.println("Players: " + getPlayers().toString());
-            for(Player player : getPlayers()){
+            for(IRobot player : getPlayers()){
                 player.setFlagsVisitedSize(getFlagsInitiated());
             }
             bufferedReader.close();
@@ -244,7 +245,7 @@ public class TileGridBuilder {
     /**
      * @return get the number of
      */
-    public Player[] getPlayers() {
+    public IRobot[] getPlayers() {
         return this.players;
     }
 

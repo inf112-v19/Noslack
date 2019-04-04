@@ -3,7 +3,7 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private Player[] players;
+    private IRobot[] players;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -111,7 +111,7 @@ public class TileGrid{
     public void activateTiles(int currentPhase){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
-                for (Player player : players) {
+                for (IRobot player : players) {
                     if (tile.hasPlayer(player)) {
                         playerOnTile(tile, player, currentPhase);
                     }
@@ -128,7 +128,7 @@ public class TileGrid{
      * @param tile The active file
      * @param player The active player
      */
-    private void playerOnTile(Tile tile, Player player, int currentPhase) {
+    private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
         // Conveyor
 
         if(tile.hasGameObject(GameObjectType.PLAYER)){
@@ -226,7 +226,7 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        Player player = getPlayer(playerNumber);
+        IRobot player = getPlayer(playerNumber);
         if(player.getCurrentMove() == Program.NONE) {
             if(conveyor.getTurn() > 0){
                 applyRotation(Program.RIGHT,playerNumber);
@@ -401,7 +401,7 @@ public class TileGrid{
      * @param player Player in question
      * @return If the path is blocked on the Tile
      */
-    private boolean playerBlockedOnCurrentTile(Player player, Orientation directionOfMove){
+    private boolean playerBlockedOnCurrentTile(IRobot player, Orientation directionOfMove){
         Tile tile = getTile(player.getPosition());
         return tile.playerPathBlocked(player, directionOfMove);
     }
@@ -411,7 +411,7 @@ public class TileGrid{
      * @param columnsToMove Columns to where the player is moving
      * @return If player can move, or is blocked by wall
      */
-    private boolean playerBlockedOnNextTile(Player player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
+    private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
                 player.getPosition().getColumn()+columnsToMove);
         if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
@@ -453,7 +453,7 @@ public class TileGrid{
      * @param playerNumber Player number
      * @return Wanted Player
      */
-    public Player getPlayer(int playerNumber){
+    public IRobot getPlayer(int playerNumber){
         return this.players[playerNumber];
     }
 
@@ -461,7 +461,7 @@ public class TileGrid{
      * Get all players
      * @return List of players
      */
-    Player[] getPlayers() {
+    IRobot[] getPlayers() {
         return players;
     }
 
@@ -478,7 +478,7 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
-        Player player = getPlayer(playerNumber);
+        IRobot player = getPlayer(playerNumber);
         getTile(player.getPosition()).removeObjectFromTile(player);
 
         player.respawn();
