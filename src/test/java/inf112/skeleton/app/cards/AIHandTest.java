@@ -15,7 +15,7 @@ public class AIHandTest {
          for(RRCard card : deck.deal(9)){
              cards.add((ProgramCard) card);
          }
-         this.hand = new AIHand(cards);
+         //this.hand = new AIHand(cards);
      }
 
     @Test

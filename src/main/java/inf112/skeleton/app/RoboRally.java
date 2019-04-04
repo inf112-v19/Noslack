@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
+import inf112.skeleton.app.gameobjects.Robots.IRobot;
 import inf112.skeleton.app.gameobjects.Robots.Player;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("twoPlayersTestMap.txt");
+        this.tileGrid = new TileGrid("hunterTestMap.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -168,7 +169,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         this.abilityDeck.reset();
-        for(Player player : this.tileGrid.getPlayers()){
+        for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
             player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
         }
