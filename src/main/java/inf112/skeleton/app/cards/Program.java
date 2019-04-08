@@ -28,4 +28,18 @@ public enum Program {
             default: return false;
         }
     }
+
+    @Override
+    public String toString() {
+        switch (this){
+            case U: return "U Turn";
+            case RIGHT: return "Turn Right";
+            case LEFT: return "Turn Left";
+            case MOVE1: return "Move 1";
+            case MOVE2: return "Move 2";
+            case MOVE3: return "Move 3";
+            case BACK: return "Back Up";
+            default: return "No Program";
+        }
+    }
 }
