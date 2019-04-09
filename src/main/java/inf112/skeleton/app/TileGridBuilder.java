@@ -27,7 +27,7 @@ public class TileGridBuilder {
         this.playersInitiated = 0;
         this.flagsInitiated = 0;
         initiateTiles();
-        coupleTeleporters();
+        activateTileFunctions();
     }
 
     /**
@@ -128,7 +128,7 @@ public class TileGridBuilder {
             case "O":
                 boolean dualOutlet = nextTileType.contains("OO");
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet));
+                this.tileGrid[row][column].addObjectOnTile(new LaserOutlet(orientation, dualOutlet, row, column));
                 break;
             case "P":
                 orientation = stringToOrientation(nextTileType);
@@ -191,7 +191,7 @@ public class TileGridBuilder {
     /**
      * Finds uncoupled teleporters
      */
-    private void coupleTeleporters(){
+    private void activateTileFunctions(){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 if (tile.hasGameObject(GameObjectType.TELEPORTER)) {
@@ -199,6 +199,9 @@ public class TileGridBuilder {
                     if(!teleporter.isCoupled()){
                         findTeleporterPartner (teleporter);
                     }
+                }
+                if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
+                    addLaserFromOutlet((LaserOutlet) tile.getGameObject(GameObjectType.LASER_OUTLET));
                 }
             }
         }
@@ -221,6 +224,66 @@ public class TileGridBuilder {
             }
         }
     }
+
+    /**
+     * Adds laser from the outlets to the map.
+     */
+    private void addLaserFromOutlet(LaserOutlet outlet){
+        boolean dual = outlet.isDual();
+        Coordinate position = outlet.getPosition();
+        Orientation laserOrientation = position.getOrientation().laserOrientation();
+
+        boolean firing = continueFiring(position);
+        while (firing) {
+            position = position.moveCoordinate();
+            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual));
+            firing = continueFiring(position);
+        }
+    }
+
+    /**
+     * Figures out if the laser can keep firing
+     * @param pos lasers current position
+     * @return If hte laser can keep firing.
+     */
+    private boolean continueFiring(Coordinate pos){
+        Coordinate position = new Coordinate(pos.getRow(),pos.getColumn(), pos.getOrientation());
+        if(tileCheck(position,false)) {
+            return false;
+        }
+        position = position.moveCoordinate();
+
+        if(tileCheck(position,true)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks if it is possible to add a laser on the Tile
+     * @param position Position of the tile
+     * @param nextTile True if it is concerning the next tile over
+     * @return If it's not possible for the laser to be placed on this tile.
+     */
+    private boolean tileCheck(Coordinate position, boolean nextTile){
+        if(position.getRow()<0 || position.getRow()>this.rows-1 ||
+                position.getColumn()<0 || position.getColumn()>this.columns-1){
+            return true;
+        }
+        Tile tile = getTile(position);
+        if(nextTile){
+            if(tile.orientationBlocked(position.getOrientation().opposite())){
+                return true;
+            }
+        }
+        else{
+            if(tile.orientationBlocked(position.getOrientation())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @return Get the built grid
      */
@@ -261,5 +324,14 @@ public class TileGridBuilder {
      */
     public int getPlayersInitiated() {
         return this.playersInitiated;
+    }
+
+    /**
+     * Get Tile based on coordinate
+     * @param coordinate Coordinate of the requested Tile
+     * @return Tile at specified coordinate
+     */
+    public Tile getTile(Coordinate coordinate){
+        return tileGrid[coordinate.getRow()][coordinate.getColumn()];
     }
 }

@@ -3,22 +3,24 @@ package inf112.skeleton.app.gameobjects.tiletypes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 public class LaserOutlet implements GameObject {
     private Sprite sprite;
-    private Orientation orientation;
     private boolean dual;
+    private Coordinate coordinate;
 
-    public LaserOutlet() {
-        this.orientation = Orientation.FACING_NORTH;
-        this.dual = false;
+    public LaserOutlet(Orientation orientation, boolean dual) {
+        this.coordinate = new Coordinate(0,0, orientation);
+        this.dual = dual;
         evaluateSprite();
     }
-    public LaserOutlet(Orientation orientation, boolean dual) {
-        this.orientation = orientation;
+
+    public LaserOutlet(Orientation orientation, boolean dual, int row, int column) {
+        this.coordinate = new Coordinate(row, column, orientation);
         this.dual = dual;
         evaluateSprite();
     }
@@ -40,7 +42,7 @@ public class LaserOutlet implements GameObject {
             }
             this.sprite = new Sprite(texture);
 
-            sprite.setRotation(this.orientation.turnSprite());
+            sprite.setRotation(this.coordinate.getOrientation().turnSprite());
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error in LaserOutlets evaluateSprite");
@@ -59,9 +61,17 @@ public class LaserOutlet implements GameObject {
         return dual;
     }
 
+    /**
+     * Get the Coordinate of the outlet
+     * @return The coordinate of the Outlet which contains the orientation.
+     */
+    public Coordinate getPosition(){
+        return this.coordinate;
+    }
+
     @Override
     public Orientation getOrientation() {
-        return this.orientation;
+        return this.coordinate.getOrientation();
     }
 
     @Override

@@ -2,6 +2,7 @@ package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class LaserOutletTest {
 
     @Test
     public void laserBeamInitialized() {
-        LaserOutlet lzr = new LaserOutlet();
+        LaserOutlet lzr = new LaserOutlet(Orientation.FACING_NORTH, false,0,0);
         assertNotEquals(lzr, null);
     }
 

@@ -89,7 +89,9 @@ public class AIHand {
 
     public boolean containsTurn() {
         for(ProgramCard card: hand){
-            return !card.getMove().isMove();
+            if(!card.getMove().isMove()){
+                return true;
+            }
         }
         return false;
     }
