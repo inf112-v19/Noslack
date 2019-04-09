@@ -227,30 +227,28 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
         IRobot player = getPlayer(playerNumber);
-        if(player.getCurrentMove() == Program.NONE) {
-            if(conveyor.getTurn() > 0){
-                applyRotation(Program.RIGHT,playerNumber);
-            }
-            if(conveyor.getTurn() < 0){
-                applyRotation(Program.LEFT,playerNumber);
-            }
-            int[] move = calculateMove(conveyor.getOrientation());
-            int rowsToMove = move[0];
-            int colsToMove = move[1];
+        if(conveyor.getTurn() > 0){
+            applyRotation(Program.RIGHT,playerNumber);
+        }
+        if(conveyor.getTurn() < 0){
+            applyRotation(Program.LEFT,playerNumber);
+        }
+        int[] move = calculateMove(conveyor.getOrientation());
+        int rowsToMove = move[0];
+        int colsToMove = move[1];
 
-            int row = player.getPosition().getRow();
-            int col = player.getPosition().getColumn();
+        int row = player.getPosition().getRow();
+        int col = player.getPosition().getColumn();
 
-            if(conveyor.isFast()){
-                Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
-                if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
-                    rowsToMove *= 2;
-                    colsToMove *= 2;
-                }
+        if(conveyor.isFast()){
+            Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
+            if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
+                rowsToMove *= 2;
+                colsToMove *= 2;
             }
-            if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
-                movePlayer(playerNumber,rowsToMove,colsToMove);
-            }
+        }
+        if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
+            movePlayer(playerNumber,rowsToMove,colsToMove);
         }
     }
 
