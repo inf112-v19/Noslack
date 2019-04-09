@@ -557,6 +557,7 @@ public class TileGrid{
         boolean firing = continueFiring(position);
         while (firing) {
             position.moveCoordinate();
+            System.out.println(position.toString());
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,false, playerNumber));
             firing = continueFiring(position);
         }
@@ -564,15 +565,21 @@ public class TileGrid{
 
     /**
      * Figures out if the laser can keep firing
-     * @param position lasers current position
+     * @param pos lasers current position
      * @return If hte laser can keep firing.
      */
-    private boolean continueFiring(Coordinate position){
+    private boolean continueFiring(Coordinate pos){
+        Coordinate position = new Coordinate(pos.getRow(),pos.getColumn(), pos.getOrientation());
         Tile tile = getTile(position);
         if(tile.orientationBlocked(position.getOrientation())) {
+            System.out.println("Finds wall on tile");
             return false;
         }
         position.moveCoordinate();
+        if(tile.orientationBlocked(position.getOrientation().opposite())) {
+            System.out.println("Finds wall on next tile");
+            return false;
+        }
         if(position.getRow()<0 || position.getRow()>this.rows ||
                 position.getColumn()<0 || position.getColumn()>this.columns){
             return false;

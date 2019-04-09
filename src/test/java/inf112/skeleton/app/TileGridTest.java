@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Orientation;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -60,5 +61,19 @@ public class TileGridTest {
     public void getPlayersInitiated() {
         TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
         assertEquals(2,grid.getPlayersInitiated());
+    }
+
+    @Test
+    public void firePlayerLaser() {
+        TileGrid grid = new TileGrid("fireLaserTestMap.txt");
+        assertEquals(Orientation.FACING_EAST,grid.getPlayer(0).getOrientation());
+
+        grid.firePlayerLaser(0);
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertFalse(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+    }
+
+    @Test
+    public void removePlayerLaser() {
     }
 }
