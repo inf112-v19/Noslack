@@ -23,6 +23,22 @@ public interface IRobot extends GameObject {
      * Get method for health
      * @return Players health
      */
+
+    /**
+     * Get method for hasMoved
+     * Used in ActivateTiles so we dont move player twice
+     * @return hasMoved
+     */
+
+    boolean hasMoved();
+
+    /**
+     * Void setter-method for moved
+     * Sets hasMoved to true/false
+     */
+
+    void moved(boolean bol);
+
     int getHealth();
 
     /**
