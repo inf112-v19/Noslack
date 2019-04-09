@@ -42,10 +42,21 @@ public class Coordinate {
         return this.orientation;
     }
 
-    public void moveCoordinate(int rowsToMove, int columnsToMove){
-        this.row += rowsToMove;
-        this.column += columnsToMove;
+    /**
+     * Moves the coordinates based on the fed data
+     * @param rowsToMove Rows to move
+     * @param columnsToMove Columns to move
+     * @return The new coordinate
+     */
+    public Coordinate moveCoordinate(int rowsToMove, int columnsToMove){
+        return new Coordinate(this.row+rowsToMove,this.column+columnsToMove,
+                this.orientation);
     }
+
+    /**
+     * Feeds back a new coordinate moved in the direction of the coordinates orientation
+     * @return the new coordinate
+     */
     public Coordinate moveCoordinate(){
         int row = this.row;
         int column = this.column;

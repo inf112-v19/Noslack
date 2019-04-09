@@ -540,18 +540,8 @@ public class TileGrid{
     public void firePlayerLaser(int playerNumber) {
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
-        Orientation laserOrientation;
-        switch (position.getOrientation()) {
-            default:
-            case FACING_NORTH:
-            case FACING_SOUTH:
-                laserOrientation = Orientation.VERTICAL;
-                break;
-            case FACING_EAST:
-            case FACING_WEST:
-                laserOrientation = Orientation.HORIZONTAL;
-                break;
-        }
+        Orientation laserOrientation = position.getOrientation().laserOrientation();
+
         boolean firing = continueFiring(position);
         while (firing) {
             position = position.moveCoordinate();
@@ -610,7 +600,7 @@ public class TileGrid{
     public void removePlayerLaser(int playerNumber){
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
-        System.out.println("Starting position " +position);
+
         boolean firing = continueFiring(position);
         while (firing) {
             position = position.moveCoordinate();

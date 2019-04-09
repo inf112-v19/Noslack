@@ -83,6 +83,17 @@ public enum Orientation {
         }
     }
 
+    public Orientation laserOrientation(){
+        switch (this){
+            default:
+            case FACING_NORTH:
+            case FACING_SOUTH:
+                return Orientation.VERTICAL;
+            case FACING_EAST:
+            case FACING_WEST:
+                return Orientation.HORIZONTAL;
+        }
+    }
     /**
      * Get the value of which the sprite needs to be turned
      * @return The turn value
