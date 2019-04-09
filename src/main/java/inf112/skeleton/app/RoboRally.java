@@ -16,6 +16,7 @@ public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.
     private Sprite cardTestSprite;
     private int currentPhase;
+    private boolean activeTiles;
 
     private SpriteBatch batch;
     private TileGrid tileGrid;
@@ -97,8 +98,13 @@ public class RoboRally extends Game implements InputProcessor {
             this.batch.begin();
             spriteContainer.renderGrid(tileGrid);
             performPhase();
-            if (sequenceReady && (roboTick % 20 == 0)) {
-                tick();
+            if (roboTick % 20 == 0){
+                if (activeTiles){
+                    activateTiles();
+                    activeTiles = false;
+                } else if (sequenceReady){
+                    tick();
+                }
             }
 
             if (animation){
@@ -150,13 +156,13 @@ public class RoboRally extends Game implements InputProcessor {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 this.tileGrid.applyNextProgram(0);
-                activateTiles();
                 this.currentPhase++;
             }
         }
         // Runs mid phase
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             this.tileGrid.continueMove(0);
+            activeTiles = true;
         } else if (this.currentPhase > 5){
             dealNewCards();
             sequenceReady = false;

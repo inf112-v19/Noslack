@@ -144,7 +144,6 @@ public class TileGrid {
         }
 
         if (tile.hasGameObject(GameObjectType.CONVEYOR)) {
-            System.out.println("CONVEYOR");
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
         }
@@ -234,28 +233,30 @@ public class TileGrid {
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber) {
         IRobot player = getPlayer(playerNumber);
-        if (conveyor.getTurn() > 0) {
-            applyRotation(Program.RIGHT, playerNumber);
-        }
-        if (conveyor.getTurn() < 0) {
-            applyRotation(Program.LEFT, playerNumber);
-        }
-        int[] move = calculateMove(conveyor.getOrientation());
-        int rowsToMove = move[0];
-        int colsToMove = move[1];
-
-        int row = player.getPosition().getRow();
-        int col = player.getPosition().getColumn();
-
-        if (conveyor.isFast()) {
-            Coordinate coordinate = new Coordinate(row + rowsToMove, col + colsToMove);
-            if (getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)) {
-                rowsToMove *= 2;
-                colsToMove *= 2;
+        if (getPlayerCurrentMove(playerNumber) == Program.NONE){
+            if (conveyor.getTurn() > 0) {
+                applyRotation(Program.RIGHT, playerNumber);
             }
-        }
-        if (canMovePlayer(playerNumber, rowsToMove, colsToMove)) {
-            movePlayer(playerNumber, rowsToMove, colsToMove);
+            if (conveyor.getTurn() < 0) {
+                applyRotation(Program.LEFT, playerNumber);
+            }
+            int[] move = calculateMove(conveyor.getOrientation());
+            int rowsToMove = move[0];
+            int colsToMove = move[1];
+
+            int row = player.getPosition().getRow();
+            int col = player.getPosition().getColumn();
+
+            if (conveyor.isFast()) {
+                Coordinate coordinate = new Coordinate(row + rowsToMove, col + colsToMove);
+                if (getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)) {
+                    rowsToMove *= 2;
+                    colsToMove *= 2;
+                }
+            }
+            if (canMovePlayer(playerNumber, rowsToMove, colsToMove)) {
+                movePlayer(playerNumber, rowsToMove, colsToMove);
+            }
         }
     }
 
@@ -374,19 +375,15 @@ public class TileGrid {
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
         Orientation directionOfMove = findOrientationOfMovement(rowsToMove, columnsToMove);
         if (playerBlockedOnCurrentTile(getPlayer(playerNumber), directionOfMove)) {
-            System.out.println("blocked current!");
             return false;
         }
         if (playerOutOfBounds(coordinateOfPlayer, rowsToMove, columnsToMove)) {
-            System.out.println("respawn");
             respawnPlayer(playerNumber);
             return false;
         }
         if (playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove, rowsToMove, columnsToMove)) {
-            System.out.println("blocked next!");
             return false;
         }
-        System.out.println("can move???");
         return true;
     }
 
