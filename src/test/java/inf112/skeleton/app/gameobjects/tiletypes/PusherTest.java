@@ -50,16 +50,7 @@ public class PusherTest {
     @Test
     public void pushPlayerEvenTest() {
         TileGrid tileGrid = new TileGrid("pusherEvenTestMap.txt");
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-        for(int i =0; i<2; i++){
-            tileGrid.continueMove(0);
-            tileGrid.activateTiles();
-        }
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-        for(int i =0; i<2; i++){
-            tileGrid.continueMove(0);
-            tileGrid.activateTiles();
-        }
-        assertEquals(new Coordinate(2,1),tileGrid.getPlayerPosition(0));
+        tileGrid.activateTiles(2);
+        assertEquals(new Coordinate(1,2),tileGrid.getPlayerPosition(0));
     }
 }
