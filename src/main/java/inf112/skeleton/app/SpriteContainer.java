@@ -29,6 +29,7 @@ public class SpriteContainer {
     private Sprite background;
     private Sprite lifeHeart;
     private Sprite cardBack;
+    private Sprite emptyCard;
     private SpriteBatch batch;
     private int drawPositionX;
     private int drawPositionY;
@@ -66,12 +67,14 @@ public class SpriteContainer {
         this.lifeHeart = setSprite("./assets/player/lifeHeart32x32.png");
         this.cardBack = setSprite("./assets/cards/cardBackside.png");
         this.cardBack.setPosition(730,400);
+        this.emptyCard = setSprite("./assets/cards/emptyCard.png");
+        this.emptyCard.setPosition(550,30);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
         this.abilityText = "";
+
         this.font = new BitmapFont();
         this.font.setColor(0,0,0,1);
-        //this.font.getData().setScale(10);
     }
 
     public void renderDealtCards(ArrayList<ProgramCard> programHand) {
@@ -83,7 +86,10 @@ public class SpriteContainer {
             this.cardSlot.draw(this.batch);
             this.font.draw(this.batch,(i+1)+"",(60+100*i),94);
         }
-        this.currentAbility.getSprite().draw(this.batch);
+        String ability = (""+currentAbility).substring(0, (""+currentAbility).indexOf(':'));
+        this.emptyCard.draw(this.batch);
+        font.draw(this.batch,ability,emptyCard.getX()+20-ability.length()/2,emptyCard.getY()+60);
+        //this.currentAbility.getSprite().draw(this.batch);
 
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
