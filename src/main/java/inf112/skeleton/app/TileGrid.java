@@ -9,7 +9,7 @@ import inf112.skeleton.app.gameobjects.tiletypes.*;
 import java.util.ArrayList;
 
 
-public class TileGrid{
+public class TileGrid {
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
@@ -21,13 +21,14 @@ public class TileGrid{
      * Constructor with specifications.
      * Uses standard map.
      */
-    public TileGrid(){
+    public TileGrid() {
         build("ConveyorLoops.txt");
 
     }
 
     /**
      * Make sure the map to be used is filed under assets/maps/
+     *
      * @param file The file name, the program fixes directory.
      */
     public TileGrid(String file) {
@@ -36,10 +37,11 @@ public class TileGrid{
 
     /**
      * Constructs tilegrid and declares initial values.
+     *
      * @param file name of file
      */
     private void build(String file) {
-        TileGridBuilder builder= new TileGridBuilder(file);
+        TileGridBuilder builder = new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
         this.players = builder.getPlayers();
         this.rows = builder.getRows();
@@ -50,6 +52,7 @@ public class TileGrid{
 
     /**
      * Get the number of rows in TileGrid
+     *
      * @return Rows in grid
      */
     int getRows() {
@@ -58,6 +61,7 @@ public class TileGrid{
 
     /**
      * Get the number of columns in TileGrid
+     *
      * @return Columns in grid
      */
     int getColumns() {
@@ -66,36 +70,40 @@ public class TileGrid{
 
     /**
      * Get the number of flags in TileGrid
+     *
      * @return Flags in grid
      */
-    int getFlagsInitiated(){
+    int getFlagsInitiated() {
         return flagsInitiated;
     }
 
     /**
      * Get the number of players in TileGrid
+     *
      * @return Players in grid
      */
-    int getPlayersInitiated(){
+    int getPlayersInitiated() {
         return playersInitiated;
     }
 
     /**
      * Get Tile based on row and column
-     * @param row: row of the requested tile
+     *
+     * @param row:    row of the requested tile
      * @param column: column of the requested tile
      * @return Tile at specified coordinate
      */
-    public Tile getTile(int row, int column){
+    public Tile getTile(int row, int column) {
         return tileGrid[row][column];
     }
 
     /**
      * Get Tile based on coordinate
+     *
      * @param coordinate Coordinate of the requested Tile
      * @return Tile at specified coordinate
      */
-    public Tile getTile(Coordinate coordinate){
+    public Tile getTile(Coordinate coordinate) {
         return tileGrid[coordinate.getRow()][coordinate.getColumn()];
     }
 
@@ -104,13 +112,13 @@ public class TileGrid{
      * Then activates a function to find out what kind of tile the player is standing on.
      */
 
-    public void activateTiles(){
+    public void activateTiles() {
         activateTiles(0);
     }
 
-    public void activateTiles(int currentPhase){
-        for(Tile[] tileRow : tileGrid){
-            for(Tile tile : tileRow){
+    public void activateTiles(int currentPhase) {
+        for (Tile[] tileRow : tileGrid) {
+            for (Tile tile : tileRow) {
                 for (IRobot player : players) {
                     if (tile.hasPlayer(player)) {
                         playerOnTile(tile, player, currentPhase);
@@ -121,40 +129,41 @@ public class TileGrid{
     }
 
 
-
     /**
      * Finds out what kind of tile the player is standing on and
      * if it has a function which effects the player.
-     * @param tile The active file
+     *
+     * @param tile   The active file
      * @param player The active player
      */
     private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
         // Conveyor
 
-        if(tile.hasGameObject(GameObjectType.PLAYER)){
+        if (tile.hasGameObject(GameObjectType.PLAYER)) {
 
         }
 
-        if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
+        if (tile.hasGameObject(GameObjectType.CONVEYOR)) {
+            System.out.println("CONVEYOR");
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
         }
         // Repair Station
-        if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
+        if (tile.hasGameObject(GameObjectType.REPAIR_STATION)) {
             if (player.isFinished()) {
                 player.repair();
                 player.setBackUp();
             }
         }
         // Flag
-        if(tile.hasGameObject(GameObjectType.FLAG)){
-            if(player.isFinished()){
-                int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
+        if (tile.hasGameObject(GameObjectType.FLAG)) {
+            if (player.isFinished()) {
+                int n = ((Flag) tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
-                if(n==1||player.getFlag(n-1)){
+                if (n == 1 || player.getFlag(n - 1)) {
                     //Creates a backUp
                     player.setBackUp();
-                    if(!player.getFlag(n)) {
+                    if (!player.getFlag(n)) {
                         player.visitFlag(n);
                     }
                     System.out.println("Visited: " + player.getFlagsVisited().toString());
@@ -167,99 +176,96 @@ public class TileGrid{
             }
         }
         //Teleporter
-        if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (player.getMoveProgression() == 0)){
-            Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
+        if (tile.hasGameObject(GameObjectType.TELEPORTER) && (player.getMoveProgression() == 0)) {
+            Teleporter teleporter = (Teleporter) tile.getGameObject(GameObjectType.TELEPORTER);
             tile.removeObjectFromTile(player);
             getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
-            setPlayerPosition(player.getPlayerNumber(),teleporter.getTeleportLocation());
+            setPlayerPosition(player.getPlayerNumber(), teleporter.getTeleportLocation());
         }
         // Hole
-        if(tile.hasGameObject(GameObjectType.HOLE)){
+        if (tile.hasGameObject(GameObjectType.HOLE)) {
             respawnPlayer(player.getPlayerNumber());
         }
         // Laser
-        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
+        if (tile.hasGameObject(GameObjectType.LASER_BEAM)) {
+            boolean dual = ((LaserBeam) tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
             if (dual) {
                 player.receiveDamage(2);
-            }
-            else {
+            } else {
                 player.receiveDamage(1);
             }
         }
-        if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
-            boolean dual = ((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
+        if (tile.hasGameObject(GameObjectType.LASER_OUTLET)) {
+            boolean dual = ((LaserOutlet) tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
             if (dual) {
                 player.receiveDamage(2);
-            }
-            else {
+            } else {
                 player.receiveDamage(1);
             }
         }
         // Rotator activation
-        if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
+        if (tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)) {
             applyRotation(Program.RIGHT, player.getPlayerNumber());
         }
-        if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
+        if (tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)) {
             applyRotation(Program.LEFT, player.getPlayerNumber());
         }
         // Pusher activation
-        if(tile.hasGameObject(GameObjectType.PUSHER)){
+        if (tile.hasGameObject(GameObjectType.PUSHER)) {
             Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
             Orientation orientation = pusher.getOrientation();
 
             int n[] = calculateMove(orientation);
-            if((currentPhase+1)%2==0 && pusher.isEven()){
-                movePlayer(player.getPlayerNumber(),n[0],n[1]);
-            }
-            else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
-                movePlayer(player.getPlayerNumber(),n[0],n[1]);
+            if ((currentPhase + 1) % 2 == 0 && pusher.isEven()) {
+                movePlayer(player.getPlayerNumber(), n[0], n[1]);
+            } else if ((currentPhase + 1) % 2 != 0 && !pusher.isEven()) {
+                movePlayer(player.getPlayerNumber(), n[0], n[1]);
             }
             int[] move = calculateMove(pusher.getOrientation());
-            movePlayer(player.getPlayerNumber(), move[0],move[1]);
+            movePlayer(player.getPlayerNumber(), move[0], move[1]);
         }
     }
 
     /**
      * Moves player on conveyor
-     * @param conveyor Conveyor the player is on
+     *
+     * @param conveyor     Conveyor the player is on
      * @param playerNumber Players number
      */
-    private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
+    private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber) {
         IRobot player = getPlayer(playerNumber);
-        if(player.getCurrentMove() == Program.NONE) {
-            if(conveyor.getTurn() > 0){
-                applyRotation(Program.RIGHT,playerNumber);
-            }
-            if(conveyor.getTurn() < 0){
-                applyRotation(Program.LEFT,playerNumber);
-            }
-            int[] move = calculateMove(conveyor.getOrientation());
-            int rowsToMove = move[0];
-            int colsToMove = move[1];
+        if (conveyor.getTurn() > 0) {
+            applyRotation(Program.RIGHT, playerNumber);
+        }
+        if (conveyor.getTurn() < 0) {
+            applyRotation(Program.LEFT, playerNumber);
+        }
+        int[] move = calculateMove(conveyor.getOrientation());
+        int rowsToMove = move[0];
+        int colsToMove = move[1];
 
-            int row = player.getPosition().getRow();
-            int col = player.getPosition().getColumn();
+        int row = player.getPosition().getRow();
+        int col = player.getPosition().getColumn();
 
-            if(conveyor.isFast()){
-                Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
-                if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
-                    rowsToMove *= 2;
-                    colsToMove *= 2;
-                }
+        if (conveyor.isFast()) {
+            Coordinate coordinate = new Coordinate(row + rowsToMove, col + colsToMove);
+            if (getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)) {
+                rowsToMove *= 2;
+                colsToMove *= 2;
             }
-            if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
-                movePlayer(playerNumber,rowsToMove,colsToMove);
-            }
+        }
+        if (canMovePlayer(playerNumber, rowsToMove, colsToMove)) {
+            movePlayer(playerNumber, rowsToMove, colsToMove);
         }
     }
 
     /**
      * Calculate new move, based on orientation
+     *
      * @param orientation Orientation of movement
      * @return a list of integers, first row, second column
      */
-    private int[] calculateMove(Orientation orientation){
+    private int[] calculateMove(Orientation orientation) {
         int[] rowColumn = new int[2];
         switch (orientation) {
             case FACING_NORTH:
@@ -280,32 +286,35 @@ public class TileGrid{
 
     /**
      * Apply the next program in the players queue.
+     *
      * @param playerNumber Player number
      */
-    void applyNextProgram(int playerNumber){
+    void applyNextProgram(int playerNumber) {
         getPlayer(playerNumber).setNextProgram();
     }
 
     /**
-     *Apply rotation to a player
-     * @param move the rotation to be applied.
+     * Apply rotation to a player
+     *
+     * @param move         the rotation to be applied.
      * @param playerNumber the identifier of the player whose move should be continued.
      */
-    private void applyRotation(Program move, int playerNumber){
+    private void applyRotation(Program move, int playerNumber) {
         getPlayer(playerNumber).updateOrientation(move);
     }
 
     /**
      * Method that makes a player perform a move.
-     * @param move the move to apply
+     *
+     * @param move         the move to apply
      * @param playerNumber the number of the player that the move should be applied to
      */
-    private void applyMove(Program move, int playerNumber){
+    private void applyMove(Program move, int playerNumber) {
         int[] movement = calculateMove(getPlayer(0).getOrientation());
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
-        if(move==Program.BACK){
+        if (move == Program.BACK) {
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
@@ -314,20 +323,20 @@ public class TileGrid{
 
     /**
      * Method that continues the move a player has in progress.
+     *
      * @param playerNumber the identifier of the player whose move should be continued.
      */
-    public void continueMove(int playerNumber){
+    public void continueMove(int playerNumber) {
         Program currentMove = getPlayer(playerNumber).getCurrentMove();
         int moveProgression = getPlayer(playerNumber).getMoveProgression();
 
-        if(moveProgression==currentMove.totalMoves()){
+        if (moveProgression == currentMove.totalMoves()) {
             getPlayer(playerNumber).setCurrentMove(Program.NONE);
             getPlayer(playerNumber).resetMoveProgress();
-        }
-        else{
-            if(!currentMove.isMove()){
+        } else {
+            if (!currentMove.isMove()) {
                 applyRotation(currentMove, playerNumber);
-            }else{
+            } else {
                 applyMove(currentMove, playerNumber);
             }
             getPlayer(playerNumber).progressMove();
@@ -336,62 +345,69 @@ public class TileGrid{
 
     /**
      * Move the player
-     * @param playerNumber Player number
-     * @param rowsToMove Rows the Player is to move
+     *
+     * @param playerNumber  Player number
+     * @param rowsToMove    Rows the Player is to move
      * @param columnsToMove Columns the Player is to move
      */
-    public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
+    public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove) {
         int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
         int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
 
-        if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove)) return;
+        if (!canMovePlayer(playerNumber, rowsToMove, columnsToMove)) return;
 
         this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
-        this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getPlayer(playerNumber));
-        setPlayerPosition(playerNumber, (rowOfPlayer+rowsToMove), (columnOfPlayer+columnsToMove));
+        this.tileGrid[rowOfPlayer + rowsToMove][columnOfPlayer + columnsToMove].addObjectOnTile(getPlayer(playerNumber));
+        setPlayerPosition(playerNumber, (rowOfPlayer + rowsToMove), (columnOfPlayer + columnsToMove));
     }
 
     /**
      * TODO Simplify the if statements
      * Checks if the player can move.
-     * @param playerNumber Players number
-     * @param rowsToMove How many rows the player needs to move
+     *
+     * @param playerNumber  Players number
+     * @param rowsToMove    How many rows the player needs to move
      * @param columnsToMove How many columns player needs to move
      * @return Boolean for if the player can move.
      */
-    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
+    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove) {
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
         Orientation directionOfMove = findOrientationOfMovement(rowsToMove, columnsToMove);
-        if(playerBlockedOnCurrentTile(getPlayer(playerNumber), directionOfMove)){
+        if (playerBlockedOnCurrentTile(getPlayer(playerNumber), directionOfMove)) {
+            System.out.println("blocked current!");
             return false;
         }
-        if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
+        if (playerOutOfBounds(coordinateOfPlayer, rowsToMove, columnsToMove)) {
+            System.out.println("respawn");
             respawnPlayer(playerNumber);
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
+        if (playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove, rowsToMove, columnsToMove)) {
+            System.out.println("blocked next!");
             return false;
         }
+        System.out.println("can move???");
         return true;
     }
 
     /**
      * Finds the Orientation of the move about to be applied
-     * @param rowsToMove Rows to be moved
+     *
+     * @param rowsToMove    Rows to be moved
      * @param columnsToMove Columns to be moved.
      * @return The orientation of the movement.
      */
-    private Orientation findOrientationOfMovement(int rowsToMove, int columnsToMove){
-        if(columnsToMove==0){
-            if(rowsToMove>0)
+    private Orientation findOrientationOfMovement(int rowsToMove, int columnsToMove) {
+        if (columnsToMove == 0) {
+            if (rowsToMove > 0)
                 return Orientation.FACING_NORTH;
-            if(rowsToMove<0)
+            if (rowsToMove < 0)
                 return Orientation.FACING_SOUTH;
         }
-        if(rowsToMove==0){
-            if(columnsToMove>0)
+        if (rowsToMove == 0) {
+            if (columnsToMove > 0)
                 return Orientation.FACING_EAST;
-            if(columnsToMove<0)
+            if (columnsToMove < 0)
                 return Orientation.FACING_WEST;
         }
         return null;
@@ -401,23 +417,24 @@ public class TileGrid{
      * @param player Player in question
      * @return If the path is blocked on the Tile
      */
-    private boolean playerBlockedOnCurrentTile(IRobot player, Orientation directionOfMove){
+    private boolean playerBlockedOnCurrentTile(IRobot player, Orientation directionOfMove) {
         Tile tile = getTile(player.getPosition());
         return tile.playerPathBlocked(player, directionOfMove);
     }
+
     /**
-     * @param player Active player
-     * @param rowsToMove Rows to where the player is moving
+     * @param player        Active player
+     * @param rowsToMove    Rows to where the player is moving
      * @param columnsToMove Columns to where the player is moving
      * @return If player can move, or is blocked by wall
      */
-    private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
-        Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
-                player.getPosition().getColumn()+columnsToMove);
-        if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
-            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.PLAYER);
-            int[] move= calculateMove(directionOfMove);
-            movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
+    private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove) {
+        Coordinate coordinate = new Coordinate(player.getPosition().getRow() + rowsToMove,
+                player.getPosition().getColumn() + columnsToMove);
+        if (getTile(coordinate).hasGameObject(GameObjectType.PLAYER)) {
+            Player otherPlayer = (Player) getTile(coordinate).getGameObject(GameObjectType.PLAYER);
+            int[] move = calculateMove(directionOfMove);
+            movePlayer(otherPlayer.getPlayerNumber(), move[0], move[1]);
         }
 
 
@@ -426,22 +443,23 @@ public class TileGrid{
 
     /**
      * Finds out if the player is moving out of bounds
+     *
      * @param coordinateOfPlayer Current position of player in question
-     * @param rowsToMove The number of rows to be moved
-     * @param columnsToMove The number of columns to be moved
+     * @param rowsToMove         The number of rows to be moved
+     * @param columnsToMove      The number of columns to be moved
      * @return Is the move out of bounds.
      */
-    private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
-        Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow()+rowsToMove,
-                coordinateOfPlayer.getColumn()+columnsToMove);
+    private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove) {
+        Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow() + rowsToMove,
+                coordinateOfPlayer.getColumn() + columnsToMove);
 
-        if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
+        if (newCoordinate.getRow() > this.rows - 1 || newCoordinate.getRow() < 0) {
             return true;
         }
-        if(newCoordinate.getColumn() > this.columns-1 || newCoordinate.getColumn() < 0){
+        if (newCoordinate.getColumn() > this.columns - 1 || newCoordinate.getColumn() < 0) {
             return true;
         }
-        if(getTile(newCoordinate).hasGameObject(GameObjectType.HOLE)){
+        if (getTile(newCoordinate).hasGameObject(GameObjectType.HOLE)) {
             return true;
         }
 
@@ -450,15 +468,17 @@ public class TileGrid{
 
     /**
      * Get Player
+     *
      * @param playerNumber Player number
      * @return Wanted Player
      */
-    public IRobot getPlayer(int playerNumber){
+    public IRobot getPlayer(int playerNumber) {
         return this.players[playerNumber];
     }
 
     /**
      * Get all players
+     *
      * @return List of players
      */
     IRobot[] getPlayers() {
@@ -467,17 +487,19 @@ public class TileGrid{
 
     /**
      * Reset a player
+     *
      * @param playerNumber Player number
      */
-    void resetPlayer(int playerNumber){
+    void resetPlayer(int playerNumber) {
         getPlayer(playerNumber).reset();
     }
 
     /**
      * Respawns the player after it has fallen out of grid, with health=6.
+     *
      * @param playerNumber Players number
      */
-    private void respawnPlayer(int playerNumber){
+    private void respawnPlayer(int playerNumber) {
         IRobot player = getPlayer(playerNumber);
         getTile(player.getPosition()).removeObjectFromTile(player);
 
@@ -487,47 +509,52 @@ public class TileGrid{
 
     /**
      * Get Players Coordinates
+     *
      * @param playerNumber Player number
      * @return Players current position
      */
-    public Coordinate getPlayerPosition(int playerNumber){
+    public Coordinate getPlayerPosition(int playerNumber) {
         return getPlayer(playerNumber).getPosition();
     }
 
     /**
      * Get Players ProgramHand
+     *
      * @param playerNumber Players number
      * @return Player ProgramHand
      */
-    ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
+    ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber) {
         return getPlayer(playerNumber).getProgramHand();
     }
 
     /**
      * Get players current move
+     *
      * @param playerNumber Player Number
      * @return Program of current move
      */
-    Program getPlayerCurrentMove(int playerNumber){
+    Program getPlayerCurrentMove(int playerNumber) {
         return getPlayer(playerNumber).getCurrentMove();
     }
 
     /**
      * Set new position of player
+     *
      * @param playerNumber playerNumber
-     * @param row New row
-     * @param column New column
+     * @param row          New row
+     * @param column       New column
      */
-    private void setPlayerPosition(int playerNumber, int row, int column){
-     getPlayer(playerNumber).setPosition(new Coordinate(row, column));
+    private void setPlayerPosition(int playerNumber, int row, int column) {
+        getPlayer(playerNumber).setPosition(new Coordinate(row, column));
     }
 
     /**
      * Set new position of player
+     *
      * @param playerNumber player number
-     * @param coordinate New Coordinate
+     * @param coordinate   New Coordinate
      */
-    private void setPlayerPosition(int playerNumber, Coordinate coordinate){
+    private void setPlayerPosition(int playerNumber, Coordinate coordinate) {
         getPlayer(playerNumber).setPosition(coordinate);
     }
 }
