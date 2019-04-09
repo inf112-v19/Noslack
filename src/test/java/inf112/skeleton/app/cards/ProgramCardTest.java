@@ -19,13 +19,9 @@ public class ProgramCardTest {
     public void TestToString() {
         int priority=60;
         String move ="U Turn";
-        String test = move + " " +priority;
-        boolean result = false;
         ProgramCard card = new ProgramCard(priority,move);
 
-        if(test.equals(card.toString()))
-            result = true;
-        assertTrue(result);
+        assertEquals(move, card.toString());
 
     }
 
