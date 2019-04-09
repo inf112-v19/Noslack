@@ -46,6 +46,22 @@ public class Coordinate {
         this.row += rowsToMove;
         this.column += columnsToMove;
     }
+    public void moveCoordinate(){
+        switch (this.orientation){
+            case FACING_NORTH:
+                this.row++;
+                break;
+            case FACING_SOUTH:
+                this.row--;
+                break;
+            case FACING_EAST:
+                this.column++;
+                break;
+            case FACING_WEST:
+                this.column--;
+                break;
+        }
+    }
 
 
     @Override
