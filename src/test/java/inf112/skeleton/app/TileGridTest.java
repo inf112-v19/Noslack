@@ -66,14 +66,30 @@ public class TileGridTest {
     @Test
     public void firePlayerLaser() {
         TileGrid grid = new TileGrid("fireLaserTestMap.txt");
-        assertEquals(Orientation.FACING_EAST,grid.getPlayer(0).getOrientation());
-
         grid.firePlayerLaser(0);
+
+        assertFalse(grid.getTile(0,0).hasGameObject(GameObjectType.LASER_BEAM));
         assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
-        assertFalse(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+        assertFalse(grid.getTile(0,3).hasGameObject(GameObjectType.LASER_BEAM));
+    }
+
+    @Test
+    public void firePlayerLaser2() {
+        TileGrid grid = new TileGrid("fireLaserTestMap.txt");
+        grid.firePlayerLaser(0);
+
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
     }
 
     @Test
     public void removePlayerLaser() {
+        TileGrid grid = new TileGrid("fireLaserTestMap.txt");
+        grid.firePlayerLaser(0);
+        grid.removePlayerLaser(0);
+
+        assertFalse(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertFalse(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
     }
 }

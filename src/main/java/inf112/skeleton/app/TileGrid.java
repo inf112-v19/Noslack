@@ -538,26 +538,19 @@ public class TileGrid{
         position.setOrientation(getPlayer(playerNumber).getOrientation());
         Orientation laserOrientation;
         switch (position.getOrientation()) {
+            default:
             case FACING_NORTH:
-                laserOrientation = Orientation.VERTICAL;
-                break;
             case FACING_SOUTH:
                 laserOrientation = Orientation.VERTICAL;
                 break;
             case FACING_EAST:
-                laserOrientation = Orientation.HORIZONTAL;
-                break;
             case FACING_WEST:
                 laserOrientation = Orientation.HORIZONTAL;
-                break;
-            default:
-                laserOrientation = Orientation.VERTICAL;
                 break;
         }
         boolean firing = continueFiring(position);
         while (firing) {
-            position.moveCoordinate();
-            System.out.println(position.toString());
+            position = position.moveCoordinate();
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,false, playerNumber));
             firing = continueFiring(position);
         }
@@ -570,21 +563,40 @@ public class TileGrid{
      */
     private boolean continueFiring(Coordinate pos){
         Coordinate position = new Coordinate(pos.getRow(),pos.getColumn(), pos.getOrientation());
-        Tile tile = getTile(position);
-        if(tile.orientationBlocked(position.getOrientation())) {
-            System.out.println("Finds wall on tile");
+        if(tileCheck(position,false)) {
             return false;
         }
-        position.moveCoordinate();
-        if(tile.orientationBlocked(position.getOrientation().opposite())) {
-            System.out.println("Finds wall on next tile");
-            return false;
-        }
-        if(position.getRow()<0 || position.getRow()>this.rows ||
-                position.getColumn()<0 || position.getColumn()>this.columns){
+        position = position.moveCoordinate();
+
+        if(tileCheck(position,true)){
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if it is possible to add a laser on the Tile
+     * @param position Position of the tile
+     * @param nextTile True if it is concerning the next tile over
+     * @return If it's not possible for the laser to be placed on this tile.
+     */
+    private boolean tileCheck(Coordinate position, boolean nextTile){
+        if(position.getRow()<0 || position.getRow()>this.rows-1 ||
+                position.getColumn()<0 || position.getColumn()>this.columns-1){
+            return true;
+        }
+        Tile tile = getTile(position);
+        if(nextTile){
+            if(tile.orientationBlocked(position.getOrientation().opposite())){
+                return true;
+            }
+        }
+        else{
+            if(tile.orientationBlocked(position.getOrientation())){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -594,10 +606,11 @@ public class TileGrid{
     public void removePlayerLaser(int playerNumber){
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
+        System.out.println("Starting position " +position);
         boolean firing = continueFiring(position);
         while (firing) {
-            position.moveCoordinate();
-                getTile(position).removePlayerLaserFromTile(playerNumber);
+            position = position.moveCoordinate();
+            getTile(position).removePlayerLaserFromTile(playerNumber);
             firing = continueFiring(position);
         }
     }

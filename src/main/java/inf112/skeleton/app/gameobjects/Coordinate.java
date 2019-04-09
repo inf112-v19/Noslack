@@ -46,21 +46,24 @@ public class Coordinate {
         this.row += rowsToMove;
         this.column += columnsToMove;
     }
-    public void moveCoordinate(){
+    public Coordinate moveCoordinate(){
+        int row = this.row;
+        int column = this.column;
         switch (this.orientation){
             case FACING_NORTH:
-                this.row++;
+                row++;
                 break;
             case FACING_SOUTH:
-                this.row--;
+                row--;
                 break;
             case FACING_EAST:
-                this.column++;
+                column++;
                 break;
             case FACING_WEST:
-                this.column--;
+                column--;
                 break;
         }
+        return new Coordinate(row, column, this.orientation);
     }
 
 
