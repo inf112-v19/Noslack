@@ -112,11 +112,15 @@ public class TileGrid{
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (IRobot player : players) {
-                    if (tile.hasPlayer(player)) {
+                    if (tile.hasPlayer(player) && !player.hasMoved()) {
                         playerOnTile(tile, player, currentPhase);
                     }
                 }
             }
+        }
+        //PlayerOnTile
+        for(IRobot p : players){
+            p.moved(false);
         }
     }
 
@@ -130,7 +134,7 @@ public class TileGrid{
      */
     private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
         // Conveyor
-
+        player.moved(true);
         if(tile.hasGameObject(GameObjectType.PLAYER)){
 
         }

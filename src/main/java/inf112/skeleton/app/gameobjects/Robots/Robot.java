@@ -26,6 +26,7 @@ public abstract class Robot implements IRobot{
     Stack<ProgramCard> program;
     boolean hasWon;
     private boolean[] flagsVisited;
+    private boolean hasMoved;
 
     @Override
     public int getPlayerNumber() {
@@ -46,6 +47,16 @@ public abstract class Robot implements IRobot{
 
     @Override
     public Sprite getSprite() {return sprite;}
+
+    @Override
+    public boolean hasMoved(){
+        return hasMoved;
+    }
+    @Override
+    public void moved(boolean bol){
+        this.hasMoved = bol;
+    }
+
 
     @Override
     public int getHealth(){

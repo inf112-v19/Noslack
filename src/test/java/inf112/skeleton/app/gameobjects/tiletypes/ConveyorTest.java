@@ -33,7 +33,7 @@ public class ConveyorTest {
             tileGrid.activateTiles();
         }
 
-        assertEquals(new Coordinate(1,0),tileGrid.getPlayerPosition(0));
+            assertEquals(new Coordinate(1,0),tileGrid.getPlayerPosition(0));
     }
 
     @Test
