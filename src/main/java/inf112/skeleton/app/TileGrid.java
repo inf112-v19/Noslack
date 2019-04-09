@@ -530,4 +530,70 @@ public class TileGrid{
     private void setPlayerPosition(int playerNumber, Coordinate coordinate){
         getPlayer(playerNumber).setPosition(coordinate);
     }
+
+    /**
+     * Adds laser to board if player wants to fire.
+     * @param playerNumber player who is to fire laser
+     */
+    public void firePlayerLaser(int playerNumber) {
+        Coordinate position = getPlayerPosition(playerNumber);
+        position.setOrientation(getPlayer(playerNumber).getOrientation());
+        Orientation laserOrientation;
+        switch (position.getOrientation()) {
+            case FACING_NORTH:
+                laserOrientation = Orientation.VERTICAL;
+                break;
+            case FACING_SOUTH:
+                laserOrientation = Orientation.VERTICAL;
+                break;
+            case FACING_EAST:
+                laserOrientation = Orientation.HORIZONTAL;
+                break;
+            case FACING_WEST:
+                laserOrientation = Orientation.HORIZONTAL;
+                break;
+            default:
+                laserOrientation = Orientation.VERTICAL;
+                break;
+        }
+        boolean firing = continueFiring(position);
+        while (firing) {
+            position.moveCoordinate();
+            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,false, playerNumber));
+            firing = continueFiring(position);
+        }
+    }
+
+    /**
+     * Figures out if the laser can keep firing
+     * @param position lasers current position
+     * @return If hte laser can keep firing.
+     */
+    private boolean continueFiring(Coordinate position){
+        Tile tile = getTile(position);
+        if(tile.orientationBlocked(position.getOrientation())) {
+            return false;
+        }
+        position.moveCoordinate();
+        if(position.getRow()<0 || position.getRow()>this.rows ||
+                position.getColumn()<0 || position.getColumn()>this.columns){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Removes the players fired laser
+     * @param playerNumber playerNumber
+     */
+    public void removePlayerLaser(int playerNumber){
+        Coordinate position = getPlayerPosition(playerNumber);
+        position.setOrientation(getPlayer(playerNumber).getOrientation());
+        boolean firing = continueFiring(position);
+        while (firing) {
+            position.moveCoordinate();
+                getTile(position).removePlayerLaserFromTile(playerNumber);
+            firing = continueFiring(position);
+        }
+    }
 }

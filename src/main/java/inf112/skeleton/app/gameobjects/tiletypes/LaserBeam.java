@@ -14,11 +14,20 @@ public class LaserBeam implements GameObject {
     private Sprite sprite;
     private Coordinate coordinate;
     private boolean dual;
+    private int playerNumber;
 
     public LaserBeam(Orientation orientation, boolean dual) {
         this.orientation = orientation;
         this.dual = dual;
+        this.playerNumber = -1;
         evaluateSprite();
+    }
+    public LaserBeam(Orientation orientation, boolean dual, int playerNumber) {
+        this.orientation = orientation;
+        this.dual = dual;
+        this.playerNumber = playerNumber;
+        evaluateSprite();
+
     }
 
     @Override
@@ -47,6 +56,14 @@ public class LaserBeam implements GameObject {
      */
     public boolean isDual(){
         return this.dual;
+    }
+
+    /**
+     * Find out which player fired the laser
+     * @return the number of the player who fired the laser
+     */
+    public int getPlayerNumber(){
+        return playerNumber;
     }
 
     @Override

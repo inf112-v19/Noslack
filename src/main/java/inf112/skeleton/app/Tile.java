@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.gameobjects.*;
 import inf112.skeleton.app.gameobjects.Robots.*;
+import inf112.skeleton.app.gameobjects.tiletypes.LaserBeam;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
@@ -65,6 +66,16 @@ public class Tile implements GameObject{
      */
     public void removeObjectFromTile(GameObject objectToRemove){
         this.objectsOnTile.remove(objectToRemove);
+    }
+
+    public void removePlayerLaserFromTile(int playerNumber){
+        for(GameObject object : objectsOnTile){
+            if(object.getGameObjectType().equals(GameObjectType.LASER_BEAM)){
+                if(((LaserBeam)object).getPlayerNumber()==playerNumber){
+                    removeObjectFromTile(object);
+                }
+            }
+        }
     }
 
     /**
@@ -133,6 +144,15 @@ public class Tile implements GameObject{
         else{
             return this.blocked.contains(directionOfMove.opposite());
         }
+    }
+
+    /**
+     * Finds out if an orientation is blocked
+     * @param orientation The orientation in question
+     * @return If the orientation is blocked
+     */
+    public boolean orientationBlocked(Orientation orientation){
+        return this.blocked.contains(orientation);
     }
 
     @Override
