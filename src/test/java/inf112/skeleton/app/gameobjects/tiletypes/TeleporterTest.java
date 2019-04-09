@@ -11,8 +11,8 @@ public class TeleporterTest {
 
     @Test
     public void teleporterInitialized() {
-        Teleporter tele = new Teleporter(1, 0,0);
-        assertNotEquals(tele, null);
+        Teleporter teleporter = new Teleporter(1, 0,0);
+        assertNotEquals(teleporter, null);
     }
 
     @Test
