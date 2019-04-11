@@ -44,6 +44,7 @@ public enum Ability {
                     "a Move 1 card in the same register as a Rotate Left or Rotate Right card. If you do, " +
                     "during that register your robot will move 1 space to left or right, respectively, " +
                     "without rotating. Priority is that of the Move 1.";
+            //Implemented
             case DoubleBarreledLaser:
                 return "Double Barreled Laser: Whenever your robot fires " +
                     "its main laser, it fires two shots instead of one. You may use this Option with Fire " +
@@ -54,6 +55,7 @@ public enum Ability {
                     "Rotate Right, or U-Turn) in the same register. lf you do, during that phase your robot will " +
                     "move 1 space less than the Move card says to move and then execute the Rotate card. If the " +
                     "Rotate card is a U-Turn, move 2 spaces less than the Move card says if possible.";
+            //Implemented
             case ExtraMemory:
                 return "Extra Memory: You receive one extra Program card each turn. " +
                     "(You still discard all unused Program cards when you're done programming your registers.)";
@@ -84,7 +86,7 @@ public enum Ability {
                         "repair site.";
             case MiniHowitzer:
                 return "Mini Howitzer: Whenever you could fire your main laser at a robot, " +
-                    "you may tire the Mini Howitzer instead. This pushes the target robot 1 space away from your robot, " +
+                    "you may fire the Mini Howitzer instead. This pushes the target robot 1 space away from your robot, " +
                     "and the target robot receives 1 Damage token. (Robots can't be pushed through walls.) You may use " +
                     "this Option five times. Put a Damage token on this card each time you use it and discard this card " +
                     "and the tokens when you put the fifth one on.";
@@ -102,6 +104,7 @@ public enum Ability {
             case RammingGear:
                 return "Ramming Gear: Whenever your robot pushes or bumps into another robot, " +
                         "that robot receives 1 Damage token.";
+            //Implemented
             case RearFiringLaser:
                 return "Rear-Firing Laser: Your robot has a rear-firing laser in addition " +
                         "to its main laser. This laser follows all the same rules as the main laser.";
