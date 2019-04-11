@@ -62,7 +62,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("teleporterTestMap2.txt");
+        this.tileGrid = new TileGrid("horizontalConveyorTestMap.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -81,6 +81,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
         this.roboTick = 0;
         this.animation = false;
+        this.activeTiles = false;
         dealNewCards();
     }
 
@@ -102,11 +103,13 @@ public class RoboRally extends Game implements InputProcessor {
             spriteContainer.renderGrid(tileGrid);
             performPhase();
             if (roboTick % 20 == 0){
-                if (activeTiles){
-                    activateTiles();
-                    activeTiles = false;
-                } else if (sequenceReady){
-                    tick();
+                if(sequenceReady){
+                    if(activeTiles){
+                        activateTiles();
+                        activeTiles = false;
+                    } else {
+                        tick();
+                    }
                 }
             }
 
@@ -160,16 +163,17 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 this.tileGrid.applyNextProgram(0);
                 this.currentPhase++;
+                activeTiles = true;
             }
         }
         // Runs mid phase
         if (!(this.tileGrid.getPlayerCurrentMove(0) == Program.NONE)) {
             this.tileGrid.continueMove(0);
-            activeTiles = true;
         } else if (this.currentPhase > 5){
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
+            activeTiles = true;
         }
     }
 
