@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Robots.*;
-import inf112.skeleton.app.gameobjects.ServerClass;
-import inf112.skeleton.app.gameobjects.ServerConnector;
+import inf112.skeleton.app.server.ServerClass;
+import inf112.skeleton.app.server.ServerConnector;
 
 
 import java.util.ArrayList;

@@ -46,7 +46,7 @@ public enum Ability {
                     "without rotating. Priority is that of the Move 1.";
             case DoubleBarreledLaser:
                 return "Double Barreled Laser: Whenever your robot fires " +
-                    "its main laser, it fires two shots instead of one. You mat use thus Option with Fire " +
+                    "its ServerMain laser, it fires two shots instead of one. You mat use thus Option with Fire " +
                     "Control and/or High-Power Laser.";
             case DualProcessor:
                 return "Dual Processor: When programming your registers, you may " +
@@ -58,7 +58,7 @@ public enum Ability {
                 return "Extra Memory: You receive one extra Program card each turn. " +
                     "(You still discard all unused Program cards when you're done programming your registers.)";
             case FireControl:
-                return "Fire Control: Whenever your robot hits another robot with its main " +
+                return "Fire Control: Whenever your robot hits another robot with its ServerMain " +
                     "laser, instead of doing damage you may choose one of the target robot's registers and lock it or " +
                     "choose one of that player's Options and it. (The player can't discard an Option to avoid this " +
                     "effect.)";
@@ -75,7 +75,7 @@ public enum Ability {
                     "their first registers each turn, state whether this Option is active.When it is, your robot isn't " +
                     "rotated by gears or rotating conveyor belts for that entire turn";
             case HighPoweredLaser:
-                return "High-Power Laser: Your robot's main laser can shoot through one " +
+                return "High-Power Laser: Your robot's ServerMain laser can shoot through one " +
                         "wall or robot to get to a target robot. If you shoot through a robot that robot also receives full " +
                         "damage. You may use this Option with Fire Control and/or Double-Barreled Laser.";
             case MechanicalArm:
@@ -83,7 +83,7 @@ public enum Ability {
                         "space away (diagonally or orthogonally), as long as there isn't a wall between it and the flag or " +
                         "repair site.";
             case MiniHowitzer:
-                return "Mini Howitzer: Whenever you could fire your main laser at a robot, " +
+                return "Mini Howitzer: Whenever you could fire your ServerMain laser at a robot, " +
                     "you may tire the Mini Howitzer instead. This pushes the target robot 1 space away from your robot, " +
                     "and the target robot receives 1 Damage token. (Robots can't be pushed through walls.) You may use " +
                     "this Option five times. Put a Damage token on this card each time you use it and discard this card " +
@@ -92,10 +92,10 @@ public enum Ability {
                 return "Power-Down Shield: As long as your robot is powered down, each " +
                     "register phase you can prevent up to 1 Damage to it from each of the four directions.";
             case PressorBeam:
-                return "Pressor Beam: Whenever you could fire your main laser at a robot you " +
+                return "Pressor Beam: Whenever you could fire your ServerMain laser at a robot you " +
                         "may instead fire the Pressor Beam. This moves the target robot 1 space away from your robot.";
             case RadioControl:
-                return "Radio Control: Whenever you could fire our main laser at a robot, " +
+                return "Radio Control: Whenever you could fire our ServerMain laser at a robot, " +
                     "you may instead fire the Radio Control beam. This causes the target robot to execute your robot's " +
                     "program for the rest of the turn. In cases of card priority, the target robot moves immediately " +
                     "after your robot.";
@@ -104,7 +104,7 @@ public enum Ability {
                         "that robot receives 1 Damage token.";
             case RearFiringLaser:
                 return "Rear-Firing Laser: Your robot has a rear-firing laser in addition " +
-                        "to its main laser. This laser follows all the same rules as the main laser.";
+                        "to its ServerMain laser. This laser follows all the same rules as the ServerMain laser.";
             case Recompile:
                 return "Recompile: Once each turn, you may discard the hand of Program cards " +
                     "dealt to you and draw a new hand from the deck. Your robot then receives 1 Damage token.";
@@ -112,14 +112,14 @@ public enum Ability {
                 return "Reverse Gear: Whenever you execute a Back Up, you may move your robot " +
                         "back 2 spaces instead of Priority is that of the Back Up.";
             case Scrambler:
-                return "Scrambler: Whenever you could fire your main laser at a robot, you may " +
+                return "Scrambler: Whenever you could fire your ServerMain laser at a robot, you may " +
                         "instead fire the Scrambler. This replaces the target robot's next programmed card with " +
                         "the top Program card from the deck. You can't use this Option on the fifth register.";
             case SuperiorArchive:
                 return "Superior Archive: When reentering play after being destroyed your " +
                         "robot doesn't receive the normal 2 Damage tokens.";
             case TractorBeam:
-                return "Tractor Beam: Whenever you could fire your main laser at a robot that " +
+                return "Tractor Beam: Whenever you could fire your ServerMain laser at a robot that " +
                         "isn't in an adjacent space, you may instead fire the Tractor Beam. This pulls the target robot " +
                         "space toward your robot.";
             default:

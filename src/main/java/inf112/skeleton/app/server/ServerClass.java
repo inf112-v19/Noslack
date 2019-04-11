@@ -1,4 +1,4 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.server;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -24,14 +24,9 @@ public class ServerClass {
         kryo.register(inf112.skeleton.app.SomeClass.class);
         kryo.register(java.util.ArrayList.class);
 
-
-
-
-
     }
 
     public void start(){
-
         System.out.println("Server starting");
         server.start();
         try {

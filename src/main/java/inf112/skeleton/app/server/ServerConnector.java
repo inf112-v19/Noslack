@@ -1,4 +1,4 @@
-package inf112.skeleton.app.gameobjects;
+package inf112.skeleton.app.server;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
