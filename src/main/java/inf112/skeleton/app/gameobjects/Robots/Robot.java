@@ -70,17 +70,18 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
-    public void receiveDamage(){
-        this.receiveDamage(1);
+    public boolean receiveDamage(){
+        return this.receiveDamage(1);
     }
 
     @Override
-    public void receiveDamage(int damage){
+    public boolean receiveDamage(int damage){
         this.health -= damage;
         if(this.health<=0){
             this.health=9;
-            this.lives--;
+            return true;
         }
+        return false;
     }
 
     @Override

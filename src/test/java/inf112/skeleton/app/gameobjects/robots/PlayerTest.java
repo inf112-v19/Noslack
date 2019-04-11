@@ -36,6 +36,13 @@ public class PlayerTest {
     }
 
     @Test
+    public void PlayerTakesDamage2() {
+        int oldHP = player.getHealth();
+        assertTrue(player.receiveDamage(9));
+        assertEquals(player.getHealth(), oldHP);
+    }
+
+    @Test
     public void PlayerDrawsCards() {
 
         //player.drawCards();

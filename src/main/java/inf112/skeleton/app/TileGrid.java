@@ -184,22 +184,10 @@ public class TileGrid{
         }
         // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            boolean dual = ((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual();
-            if (dual) {
-                player.receiveDamage(2);
-            }
-            else {
-                player.receiveDamage(1);
-            }
+            laserDamagePlayer(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),player);
         }
         if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
-            boolean dual = ((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual();
-            if (dual) {
-                player.receiveDamage(2);
-            }
-            else {
-                player.receiveDamage(1);
-            }
+            laserDamagePlayer(((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual(),player);
         }
         // Rotator activation
         if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
@@ -222,6 +210,20 @@ public class TileGrid{
             }
             int[] move = calculateMove(pusher.getOrientation());
             movePlayer(player.getPlayerNumber(), move[0],move[1]);
+        }
+    }
+
+    /**
+     * Damage a player by laser
+     * @param dual Is the laser Dual
+     * @param player the player to be damaged
+     */
+    private void laserDamagePlayer(boolean dual, IRobot player){
+        if (dual) {
+            if (player.receiveDamage(2)) respawnPlayer(player);
+        }
+        else {
+            if (player.receiveDamage()) respawnPlayer(player);
         }
     }
 
@@ -481,9 +483,14 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
-        IRobot player = getPlayer(playerNumber);
+        respawnPlayer(getPlayer(playerNumber));
+    }
+    /**
+     * Respawns the player after it has fallen out of grid, with health=6.
+     * @param player The Players
+     */
+    private void respawnPlayer(IRobot player){
         getTile(player.getPosition()).removeObjectFromTile(player);
-
         player.respawn();
         getTile(player.getBackUp()).addObjectOnTile(player);
     }
@@ -559,6 +566,17 @@ public class TileGrid{
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
             firing = continueFiring(position);
         }
+        if(getPlayerAbility(playerNumber).equals(Ability.RearFiringLaser)){
+            position = getPlayerPosition(playerNumber);
+            position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
+
+            firing = continueFiring(position);
+            while (firing) {
+                position = position.moveCoordinate();
+                getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
+                firing = continueFiring(position);
+            }
+        }
     }
 
     /**
@@ -617,6 +635,18 @@ public class TileGrid{
             position = position.moveCoordinate();
             getTile(position).removePlayerLaserFromTile(playerNumber);
             firing = continueFiring(position);
+        }
+
+        if(getPlayerAbility(playerNumber).equals(Ability.RearFiringLaser)){
+            position = getPlayerPosition(playerNumber);
+            position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
+
+            firing = continueFiring(position);
+            while (firing) {
+                position = position.moveCoordinate();
+                getTile(position).removePlayerLaserFromTile(playerNumber);
+                firing = continueFiring(position);
+            }
         }
     }
 }

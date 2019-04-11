@@ -41,13 +41,13 @@ public interface IRobot extends GameObject {
     /**
      * Removes one health from the player.
      */
-    void receiveDamage();
+    boolean receiveDamage();
 
     /**
      * Remove given amount of health from player
      * @param damage amount of health to be deducted
      */
-    void receiveDamage(int damage);
+    boolean receiveDamage(int damage);
 
     /**
      * @return How many lives the player has left.
