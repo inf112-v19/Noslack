@@ -167,4 +167,16 @@ public enum Orientation {
                 return Program.NONE;
         }
     }
+
+    public String getString(){
+        switch (this){
+            default:
+            case FACING_NORTH: return "1";
+            case FACING_EAST: return "2";
+            case FACING_SOUTH: return "3";
+            case FACING_WEST: return "4";
+            case HORIZONTAL: return "H";
+            case VERTICAL: return "V";
+        }
+    }
 }
