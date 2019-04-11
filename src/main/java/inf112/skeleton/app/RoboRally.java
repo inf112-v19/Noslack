@@ -50,7 +50,6 @@ public class RoboRally extends Game implements InputProcessor {
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private ServerClass server;
     private ServerConnector client;
 
     @Override
@@ -61,8 +60,6 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
         this.menuScreen = new MenuScreen(batch);
-        this.server = new ServerClass();
-        server.start();
         this.client = new ServerConnector();
         client.connect();
 
