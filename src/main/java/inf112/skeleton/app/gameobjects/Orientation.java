@@ -168,6 +168,10 @@ public enum Orientation {
         }
     }
 
+    /**
+     * To get a String value corresponding to the Orientation
+     * @return The string
+     */
     public String getString(){
         switch (this){
             default:
