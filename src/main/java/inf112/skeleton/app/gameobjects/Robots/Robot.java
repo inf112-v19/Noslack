@@ -25,6 +25,7 @@ public abstract class Robot implements IRobot{
     private int moveProgression;
     ArrayList<AbilityCard> abilityHand;
     Ability ability;
+    boolean activeAbility;
     Stack<ProgramCard> program;
     boolean hasWon;
     private boolean[] flagsVisited;
@@ -193,6 +194,15 @@ public abstract class Robot implements IRobot{
     @Override
     public Ability getAbility(){
         return this.ability;
+    }
+
+    @Override
+    public void activateAbility(){
+        this.activeAbility = !activeAbility;
+    }
+    @Override
+    public boolean getActiveAbility(){
+        return this.activeAbility;
     }
 
     @Override

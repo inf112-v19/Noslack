@@ -175,6 +175,13 @@ public interface IRobot extends GameObject {
     Ability getAbility();
 
     /**
+     * Activate the players ability
+     */
+    void activateAbility();
+
+    boolean getActiveAbility();
+
+    /**
      * Stop the current program.
      */
     void resetMoveProgress();

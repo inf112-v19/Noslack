@@ -26,6 +26,7 @@ public class Player extends Robot {
         this.program = new Stack<>();
         this.programHand = new ArrayList<>();
         this.abilityHand = new ArrayList<>();
+        this. activeAbility = false;
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         this.hasWon = false;

@@ -113,7 +113,7 @@ public enum Ability {
                     "dealt to you and draw a new hand from the deck. Your robot then receives 1 Damage token.";
             case ReverseGear:
                 return "Reverse Gear: Whenever you execute a Back Up, you may move your robot " +
-                        "back 2 spaces instead of Priority is that of the Back Up.";
+                        "back 2 spaces instead. Priority is that of the Back Up.";
             case Scrambler:
                 return "Scrambler: Whenever you could fire your main laser at a robot, you may " +
                         "instead fire the Scrambler. This replaces the target robot's next programmed card with " +
