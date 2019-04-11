@@ -16,7 +16,7 @@ public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.
     private Sprite cardTestSprite;
     private int currentPhase;
-    private boolean activeTiles;
+    private boolean activatedTiles;
 
     private SpriteBatch batch;
     private TileGrid tileGrid;
@@ -82,7 +82,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
         this.roboTick = 0;
         this.animation = false;
-        this.activeTiles = false;
+        this.activatedTiles = false;
         dealNewCards();
     }
 
@@ -105,9 +105,9 @@ public class RoboRally extends Game implements InputProcessor {
             performPhase();
             if (roboTick % 20 == 0){
                 if(sequenceReady){
-                    if(activeTiles){
+                    if(activatedTiles){
                         activateTiles();
-                        activeTiles = false;
+                        activatedTiles = false;
                     } else {
                         tick();
                     }
@@ -164,7 +164,7 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 this.tileGrid.applyNextProgram(0);
                 this.currentPhase++;
-                activeTiles = true;
+                activatedTiles = true;
             }
         }
         // Runs mid phase
@@ -174,14 +174,13 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
-            activeTiles = true;
+            activatedTiles = true;
         }
     }
 
     private void dealNewCards() {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
-        this.abilityDeck.reset();
         for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
             if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
@@ -196,6 +195,11 @@ public class RoboRally extends Game implements InputProcessor {
         }
         animator = new CardSpriteAnimation(programHand);
         animation = true;
+    }
+
+    public void discardAbility(int playerNumber, RRCard card){
+        this.tileGrid.getPlayer(playerNumber).discardAbility(card);
+        this.abilityDeck.returnCard(card);
     }
 
     @Override
