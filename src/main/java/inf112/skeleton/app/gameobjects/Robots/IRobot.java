@@ -84,6 +84,12 @@ public interface IRobot extends GameObject {
      * @param ProgramCards IDeck of ProgramCards
      */
     void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards);
+
+    /**
+     * Receive extra card from deck.
+     * @param card
+     */
+    void extraCard(RRCard card);
     /**
      * @return Player AbilityDeck
      */

@@ -74,6 +74,11 @@ public class Player extends Robot {
     }
 
     @Override
+    public void extraCard(RRCard card) {
+        this.programHand.add((ProgramCard)card);
+    }
+
+    @Override
     public ArrayList<AbilityCard> getAbilityHand() {return abilityHand;}
 
     @Override

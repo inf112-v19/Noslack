@@ -22,6 +22,11 @@ public class HunterAI extends AI {
     }
 
     @Override
+    public void extraCard(RRCard card) {
+        this.programHand.addExtraCard(card);
+    }
+
+    @Override
     public ArrayList<AbilityCard> getAbilityHand() {
         return null;
     }
