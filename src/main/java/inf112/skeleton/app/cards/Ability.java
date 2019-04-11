@@ -129,4 +129,19 @@ public enum Ability {
                 return "No ability assigned.";
         }
     }
+    public boolean activeAbility(){
+        switch (this){
+            default:
+                return false;
+            case GyroscopicStabilizer:
+            case MiniHowitzer:
+            case PowerDownShield:
+            case PressorBeam:
+            case RadioControl:
+            case ReverseGear:
+            case Scrambler:
+            case TractorBeam:
+                return true;
+        }
+    }
 }

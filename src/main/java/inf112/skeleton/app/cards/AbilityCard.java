@@ -129,6 +129,14 @@ public class AbilityCard implements RRCard {
         return this.ability;
     }
 
+    /**
+     * Finds out if the ability needs to be active to work
+     * @return If it needs to be acttivated to function.
+     */
+    public boolean activeAbility(){
+        return this.ability.activeAbility();
+    }
+
 
     @Override
     public boolean equals(RRCard card) {
