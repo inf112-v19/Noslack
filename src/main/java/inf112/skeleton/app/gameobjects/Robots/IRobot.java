@@ -1,9 +1,6 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
-import inf112.skeleton.app.cards.AbilityCard;
-import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
-import inf112.skeleton.app.cards.RRCard;
+import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Orientation;
@@ -170,6 +167,12 @@ public interface IRobot extends GameObject {
      * Progress the players current move.
      */
     void progressMove();
+
+    /**
+     * Get the players ability, which is decided from the players ability card.
+     * @return The players ability
+     */
+    Ability getAbility();
 
     /**
      * Stop the current program.

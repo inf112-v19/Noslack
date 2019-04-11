@@ -1,6 +1,7 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.cards.Ability;
 import inf112.skeleton.app.cards.AbilityCard;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
@@ -23,6 +24,7 @@ public abstract class Robot implements IRobot{
     private Coordinate backUp;
     private int moveProgression;
     ArrayList<AbilityCard> abilityHand;
+    Ability ability;
     Stack<ProgramCard> program;
     boolean hasWon;
     private boolean[] flagsVisited;
@@ -181,6 +183,11 @@ public abstract class Robot implements IRobot{
     @Override
     public void progressMove(){
         this.moveProgression++;
+    }
+
+    @Override
+    public Ability getAbility(){
+        return this.ability;
     }
 
     @Override

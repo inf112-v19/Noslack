@@ -69,6 +69,7 @@ public class Player extends Robot {
     public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
         for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
         for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
+        this.ability = this.abilityHand.get(0).getAbility();
     }
 
     @Override
