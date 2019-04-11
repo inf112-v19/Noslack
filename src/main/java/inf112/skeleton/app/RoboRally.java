@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Robots.*;
+import inf112.skeleton.app.gameobjects.ServerClass;
+import inf112.skeleton.app.gameobjects.ServerConnector;
+
 
 import java.util.ArrayList;
 
@@ -47,6 +50,8 @@ public class RoboRally extends Game implements InputProcessor {
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
+    private ServerClass server;
+    private ServerConnector client;
 
     @Override
     public void create() {
@@ -56,6 +61,12 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
         this.menuScreen = new MenuScreen(batch);
+        this.server = new ServerClass();
+        server.start();
+        this.client = new ServerConnector();
+        client.connect();
+
+
     }
 
     public void createGame(){
@@ -177,6 +188,17 @@ public class RoboRally extends Game implements InputProcessor {
         for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
             player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+
+            String s = "HELLO SERVER";
+            client.sendOBJECT(s);
+            SomeClass klasse = new SomeClass();
+            client.sendOBJECT(klasse);
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+            client.sendOBJECT(list);
+
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
@@ -185,6 +207,8 @@ public class RoboRally extends Game implements InputProcessor {
         }
         animator = new CardSpriteAnimation(programHand);
         animation = true;
+
+
     }
 
     @Override
