@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.cards.Ability;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.cards.ProgramCard;
 import inf112.skeleton.app.gameobjects.*;
@@ -512,6 +513,15 @@ public class TileGrid{
      */
     Program getPlayerCurrentMove(int playerNumber){
         return getPlayer(playerNumber).getCurrentMove();
+    }
+
+    /**
+     * Get the players ability
+     * @param playerNumber The players number
+     * @return The players ability
+     */
+    Ability getPlayerAbility( int playerNumber){
+        return getPlayer(playerNumber).getAbility();
     }
 
     /**

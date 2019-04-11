@@ -21,7 +21,7 @@ public enum Ability {
             case AbortSwitch:
                 return "Abort Switch: Once each turn, you may " +
                         "replace one of the Program cards you reveal with the top card from " +
-                        "the dek. If you do, you must replace the Program cards for all your " +
+                        "the deck. If you do, you must replace the Program cards for all your " +
                         "remaining register the same way that turn.";
             case Brakes:
                 return "Brakes: Whenever you execute a Move 1, you " +
