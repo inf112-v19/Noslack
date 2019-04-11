@@ -527,8 +527,8 @@ public class TileGrid{
      * @param playerNumber The players number
      * @return The players ability
      */
-    Ability getPlayerAbility( int playerNumber){
-        return getPlayer(playerNumber).getAbility();
+    boolean playerHasAbility(int playerNumber, Ability ability){
+        return getPlayer(playerNumber).hasAbility(ability);
     }
 
     /**
@@ -558,7 +558,7 @@ public class TileGrid{
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
-        boolean dual = getPlayerAbility(0).equals(Ability.DoubleBarreledLaser);
+        boolean dual = playerHasAbility(0, Ability.DoubleBarreledLaser);
 
         boolean firing = continueFiring(position);
         while (firing) {
@@ -566,7 +566,7 @@ public class TileGrid{
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
             firing = continueFiring(position);
         }
-        if(getPlayerAbility(playerNumber).equals(Ability.RearFiringLaser)){
+        if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
             position = getPlayerPosition(playerNumber);
             position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
 
@@ -637,7 +637,7 @@ public class TileGrid{
             firing = continueFiring(position);
         }
 
-        if(getPlayerAbility(playerNumber).equals(Ability.RearFiringLaser)){
+        if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
             position = getPlayerPosition(playerNumber);
             position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
 

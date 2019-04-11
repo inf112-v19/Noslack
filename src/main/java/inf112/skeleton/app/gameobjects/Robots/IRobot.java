@@ -20,23 +20,22 @@ public interface IRobot extends GameObject {
      * Get method for health
      * @return Players health
      */
+    int getHealth();
 
     /**
      * Get method for hasMoved
      * Used in ActivateTiles so we dont move player twice
      * @return hasMoved
      */
-
     boolean hasMoved();
 
     /**
      * Void setter-method for moved
      * Sets hasMoved to true/false
      */
-
     void moved(boolean bol);
 
-    int getHealth();
+
 
     /**
      * Removes one health from the player.
@@ -80,16 +79,28 @@ public interface IRobot extends GameObject {
 
     /**
      * Give Cards to Player
-     * @param AbilityCards IDeck of AbilityCards
-     * @param ProgramCards IDeck of ProgramCards
+     * @param programCards IDeck of ProgramCards
      */
-    void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards);
+    void drawPrograms(ArrayList<RRCard> programCards);
+
+    /**
+     * Draw an ability card for player
+     * @param abilityCard Ability card
+     */
+    void drawAbility(RRCard abilityCard);
+
+    /**
+     * Discards an Ability from the player
+     * @param card The ability card to be discarded
+     */
+    void discardAbility(RRCard card);
 
     /**
      * Receive extra card from deck.
-     * @param card
+     * @param card RRcard
      */
     void extraCard(RRCard card);
+
     /**
      * @return Player AbilityDeck
      */
@@ -178,7 +189,7 @@ public interface IRobot extends GameObject {
      * Get the players ability, which is decided from the players ability card.
      * @return The players ability
      */
-    Ability getAbility();
+    boolean hasAbility(Ability ability);
 
     /**
      * Activate the players ability

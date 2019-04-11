@@ -68,10 +68,11 @@ public class RoboRally extends Game implements InputProcessor {
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
         int playerHealth = this.tileGrid.getPlayer(0).getHealth();
-        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
-        if(this.tileGrid.getPlayerAbility(0).equals(Ability.ExtraMemory)){
-            this.tileGrid.getPlayer(0).extraCard(this.programDeck.dealOne());
+        this.tileGrid.getPlayer(0).drawAbility(this.abilityDeck.dealOne());
+        if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
+            playerHealth++;
         }
+        this.tileGrid.getPlayer(0).drawPrograms(this.programDeck.deal(playerHealth));
         this.programHand = tileGrid.getPlayerProgramHand(0);
         this.animator = new CardSpriteAnimation(programHand);
         this.cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
@@ -183,10 +184,10 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityDeck.reset();
         for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
-            if(this.tileGrid.getPlayerAbility(0).equals(Ability.ExtraMemory)){
+            if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
                 playerHealth++;
             }
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+            player.drawPrograms(this.programDeck.deal(playerHealth));
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);

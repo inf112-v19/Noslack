@@ -1,10 +1,7 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.cards.Ability;
-import inf112.skeleton.app.cards.AbilityCard;
-import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
+import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
 
@@ -24,12 +21,21 @@ public abstract class Robot implements IRobot{
     private Coordinate backUp;
     private int moveProgression;
     ArrayList<AbilityCard> abilityHand;
-    Ability ability;
     boolean activeAbility;
     Stack<ProgramCard> program;
     boolean hasWon;
     private boolean[] flagsVisited;
     private boolean hasMoved;
+
+    @Override
+    public void drawAbility(RRCard abilityCard) {
+        this.abilityHand.add((AbilityCard) abilityCard);
+    }
+
+    @Override
+    public void discardAbility(RRCard card){
+        this.abilityHand.remove(card);
+    }
 
     @Override
     public int getPlayerNumber() {
@@ -192,8 +198,13 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
-    public Ability getAbility(){
-        return this.ability;
+    public boolean hasAbility(Ability ability){
+        for(RRCard card : abilityHand){
+            if(((AbilityCard)card).getAbility().equals(ability)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

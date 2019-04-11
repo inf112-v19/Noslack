@@ -57,7 +57,6 @@ public class Player extends Robot {
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
-
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {
@@ -67,10 +66,8 @@ public class Player extends Robot {
     }
 
     @Override
-    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
-        for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
-        for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
-        this.ability = this.abilityHand.get(0).getAbility();
+    public void drawPrograms(ArrayList<RRCard> programCards){
+        for (RRCard card: programCards) this.programHand.add((ProgramCard) card);
     }
 
     @Override
