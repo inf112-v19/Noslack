@@ -551,11 +551,12 @@ public class TileGrid{
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
+        boolean dual = getPlayerAbility(0).equals(Ability.DoubleBarreledLaser);
 
         boolean firing = continueFiring(position);
         while (firing) {
             position = position.moveCoordinate();
-            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,false, playerNumber));
+            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
             firing = continueFiring(position);
         }
     }

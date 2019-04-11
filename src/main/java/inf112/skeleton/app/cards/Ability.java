@@ -46,7 +46,7 @@ public enum Ability {
                     "without rotating. Priority is that of the Move 1.";
             case DoubleBarreledLaser:
                 return "Double Barreled Laser: Whenever your robot fires " +
-                    "its main laser, it fires two shots instead of one. You mat use thus Option with Fire " +
+                    "its main laser, it fires two shots instead of one. You may use this Option with Fire " +
                     "Control and/or High-Power Laser.";
             case DualProcessor:
                 return "Dual Processor: When programming your registers, you may " +
