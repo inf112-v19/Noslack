@@ -189,14 +189,11 @@ public class RoboRally extends Game implements InputProcessor {
             player.drawPrograms(this.programDeck.deal(playerHealth));
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
-            System.out.println("CurrentAbility: " + this.currentAbility.getAbility());
-            System.out.println("EmptyAbility: " + this.emptyAbility.getAbility());
-            System.out.println("Test: " + this.tileGrid.getPlayer(0).getAbilityHand());
             try{
                 this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
 
             }catch(Exception e){
-                System.out.println("There is a bug in DealNewCards() in Roborally class");
+                System.out.println("There is a bug in DealNewCards() in Roborally class - get(0)");
 
             }
             this.currentAbility.getSprite().setPosition(550,20);

@@ -134,8 +134,6 @@ public class TileGrid{
      * @param player The active player
      */
     private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
-
-        player.moved(true);
         // Conveyor
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
@@ -208,6 +206,7 @@ public class TileGrid{
             int[] move = calculateMove(pusher.getOrientation());
             movePlayer(player.getPlayerNumber(), move[0],move[1]);
         }
+        player.moved(true);
     }
 
     /**
@@ -241,21 +240,21 @@ public class TileGrid{
         int rowsToMove = move[0];
         int colsToMove = move[1];
 
-        Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,colsToMove);
+        Coordinate nextTile = player.getPosition().moveCoordinate(rowsToMove,colsToMove);
 
-        if(conveyor.isFast()){
+        movePlayer(playerNumber,rowsToMove,colsToMove);
+        if(conveyor.isFast() && !player.hasMoved()){
+            player.moved(true);
             try{
-                if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
-                    rowsToMove *= 2;
-                    colsToMove *= 2;
+                if(getTile(nextTile).hasGameObject(GameObjectType.CONVEYOR)){
+                    Conveyor nextConveyor = (Conveyor) getTile(nextTile).getGameObject(GameObjectType.CONVEYOR);
+                    moveInDirectionOfConveyor(nextConveyor,playerNumber);
                 }
             }catch(ArrayIndexOutOfBoundsException e){
 
             }
 
         }
-
-        movePlayer(playerNumber,rowsToMove,colsToMove);
 
     }
 
