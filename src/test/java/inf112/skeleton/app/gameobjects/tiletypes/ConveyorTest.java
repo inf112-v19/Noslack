@@ -27,24 +27,25 @@ public class ConveyorTest {
     public void conveyorMovesPlayer() {
         TileGrid tileGrid = new TileGrid("conveyorTestMap.txt");
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-
+        Coordinate oldPos = tileGrid.getPlayerPosition(0);
         for(int i =0; i<2; i++){
             tileGrid.continueMove(0);
             tileGrid.activateTiles();
         }
 
-            assertEquals(new Coordinate(1,0),tileGrid.getPlayerPosition(0));
+        assertEquals(oldPos.moveCoordinate(1,-2),tileGrid.getPlayerPosition(0));
     }
 
     @Test
     public void fastConveyorMovesPlayer() {
         TileGrid tileGrid = new TileGrid("fastConveyorTestMap.txt");
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
-        for(int i =0; i<2; i++){
-            tileGrid.continueMove(0);
-            tileGrid.activateTiles();
-        }
-        assertEquals(new Coordinate(1,0),tileGrid.getPlayerPosition(0));
+        Coordinate oldPos = tileGrid.getPlayerPosition(0);
+
+        tileGrid.continueMove(0);
+        tileGrid.activateTiles();
+
+        assertEquals(oldPos.moveCoordinate(1,-2),tileGrid.getPlayerPosition(0));
     }
 
     @Test
@@ -63,11 +64,12 @@ public class ConveyorTest {
     public void playerCanPass() {
         TileGrid tileGrid = new TileGrid("conveyorTestMap.txt");
         tileGrid.getPlayer(0).setCurrentMove(Program.MOVE2);
+        Coordinate oldPos = tileGrid.getPlayerPosition(0);
         for(int i =0; i<2; i++){
             tileGrid.continueMove(0);
             tileGrid.activateTiles();
         }
-        assertEquals(new Coordinate(2,1),tileGrid.getPlayerPosition(0));
+        assertEquals(oldPos.moveCoordinate(2,0),tileGrid.getPlayerPosition(0));
     }
 
 }

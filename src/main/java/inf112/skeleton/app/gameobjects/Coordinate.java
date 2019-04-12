@@ -85,7 +85,7 @@ public class Coordinate {
         return false;
     }
     public String toString(){
-        return "Row: "+getRow()+" Column: "+getColumn();
+        return "Row: "+getRow()+" Column: "+getColumn() + " Orientation: " + getOrientation();
     }
 
     /**

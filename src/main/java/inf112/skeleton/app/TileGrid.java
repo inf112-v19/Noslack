@@ -134,12 +134,9 @@ public class TileGrid{
      * @param player The active player
      */
     private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
-        // Conveyor
+
         player.moved(true);
-        if(tile.hasGameObject(GameObjectType.PLAYER)){
-
-        }
-
+        // Conveyor
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
@@ -244,19 +241,22 @@ public class TileGrid{
         int rowsToMove = move[0];
         int colsToMove = move[1];
 
-        int row = player.getPosition().getRow();
-        int col = player.getPosition().getColumn();
+        Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,colsToMove);
 
         if(conveyor.isFast()){
-            Coordinate coordinate = new Coordinate(row+rowsToMove,col+colsToMove);
-            if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
-                rowsToMove *= 2;
-                colsToMove *= 2;
+            try{
+                if(getTile(coordinate).hasGameObject(GameObjectType.CONVEYOR)){
+                    rowsToMove *= 2;
+                    colsToMove *= 2;
+                }
+            }catch(ArrayIndexOutOfBoundsException e){
+
             }
+
         }
-        if(canMovePlayer(playerNumber,rowsToMove,colsToMove)){
-            movePlayer(playerNumber,rowsToMove,colsToMove);
-        }
+
+        movePlayer(playerNumber,rowsToMove,colsToMove);
+
     }
 
     /**
@@ -353,7 +353,7 @@ public class TileGrid{
 
         this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
         this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getPlayer(playerNumber));
-        setPlayerPosition(playerNumber, (rowOfPlayer+rowsToMove), (columnOfPlayer+columnsToMove));
+        setPlayerPosition(playerNumber, getPlayer(playerNumber).getPosition().moveCoordinate(rowsToMove,columnsToMove));
     }
 
     /**
@@ -417,8 +417,7 @@ public class TileGrid{
      * @return If player can move, or is blocked by wall
      */
     private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
-        Coordinate coordinate = new Coordinate(player.getPosition().getRow()+rowsToMove,
-                player.getPosition().getColumn()+columnsToMove);
+        Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,columnsToMove);
         if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
             Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.PLAYER);
             int[] move= calculateMove(directionOfMove);
@@ -437,8 +436,7 @@ public class TileGrid{
      * @return Is the move out of bounds.
      */
     private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
-        Coordinate newCoordinate = new Coordinate(coordinateOfPlayer.getRow()+rowsToMove,
-                coordinateOfPlayer.getColumn()+columnsToMove);
+        Coordinate newCoordinate = coordinateOfPlayer.moveCoordinate(rowsToMove,columnsToMove);
 
         if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
             return true;
@@ -529,16 +527,6 @@ public class TileGrid{
      */
     boolean playerHasAbility(int playerNumber, Ability ability){
         return getPlayer(playerNumber).hasAbility(ability);
-    }
-
-    /**
-     * Set new position of player
-     * @param playerNumber playerNumber
-     * @param row New row
-     * @param column New column
-     */
-    private void setPlayerPosition(int playerNumber, int row, int column){
-     getPlayer(playerNumber).setPosition(new Coordinate(row, column));
     }
 
     /**
