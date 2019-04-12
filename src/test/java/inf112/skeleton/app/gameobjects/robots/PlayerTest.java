@@ -19,7 +19,7 @@ public class PlayerTest {
     @Test
     public void PlayerStartsNorth() {
         //Player player = new Player();
-        Assert.assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
+        assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
     }
 
     @Test
