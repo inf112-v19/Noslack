@@ -1,13 +1,13 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.gameobjects.*;
-import inf112.skeleton.app.gameobjects.Robots.IRobot;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TileGridBuilder {
@@ -15,7 +15,7 @@ public class TileGridBuilder {
     private int rows;
     private int columns;
     private String fileName = "./assets/maps/";
-    private IRobot[] players;
+    private ArrayList<IRobot> robots;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -46,7 +46,7 @@ public class TileGridBuilder {
             getMapInfo(bufferedReader.readLine());
 
             for(int row = this.rows-1; row>=0; row--){
-                String nextTileTypeLine = bufferedReader.readLine();
+                String nextTileTypeLine = bufferedReader.readLine().toUpperCase();
                 String[] nextTileTypeLineArray = nextTileTypeLine.split(space);
                 for(int column = this.columns-1; column>=0; column--) {
                     String nextTileTypesOfColumn = nextTileTypeLineArray[column];
@@ -61,7 +61,6 @@ public class TileGridBuilder {
                     }
                 }
             }
-            System.out.println("Players: " + getPlayers().toString());
             for(IRobot player : getPlayers()){
                 player.setFlagsVisitedSize(getFlagsInitiated());
             }
@@ -132,16 +131,24 @@ public class TileGridBuilder {
                 break;
             case "P":
                 orientation = stringToOrientation(nextTileType);
-                if(nextTileType.contains("Robots")){
 
-                }
-                else {
-                    Player newPlayer;
-                    newPlayer = new Player(this.playersInitiated, orientation);
+
+                if(nextTileType.contains("H")){
+
+                    IRobot newPlayer = new HunterAI(this.playersInitiated,orientation);
                     this.tileGrid[row][column].addObjectOnTile(newPlayer);
-                    this.players[this.playersInitiated++] = newPlayer; // Add new player to list of players.
+                    this.robots.add(newPlayer);
+                    playersInitiated++;
                     newPlayer.initiate(new Coordinate(row, column));
                 }
+                else {
+                    IRobot newPlayer = new Player(this.playersInitiated, orientation);
+                    this.tileGrid[row][column].addObjectOnTile(newPlayer);
+                    this.robots.add(newPlayer);
+                    playersInitiated++;
+                    newPlayer.initiate(new Coordinate(row, column));
+                }
+
                 break;
             case "R":
                 this.tileGrid[row][column].addObjectOnTile(new RepairStation());
@@ -183,9 +190,11 @@ public class TileGridBuilder {
         Scanner s = new Scanner(mapInfo);
         this.rows =s.nextInt();
         this.columns = s.nextInt();
-        this.players = new Player[s.nextInt()];
+        //this.players = new Player[s.nextInt()];
+        this.robots = new ArrayList<IRobot>(s.nextInt());
         this.tileGrid = new Tile[this.rows][this.columns];
         s.close();
+
     }
 
     /**
@@ -308,8 +317,8 @@ public class TileGridBuilder {
     /**
      * @return get the number of
      */
-    public IRobot[] getPlayers() {
-        return this.players;
+    public ArrayList<IRobot> getPlayers() {
+        return this.robots;
     }
 
     /**

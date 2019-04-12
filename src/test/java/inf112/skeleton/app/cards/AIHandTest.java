@@ -4,13 +4,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 public class AIHandTest {
     private AIHand hand;
      @Before
      public void setup(){
          ProgramDeck deck = new ProgramDeck("testAIHand.txt");
-         this.hand = new AIHand(deck.deal(9));
+         ArrayList<ProgramCard> cards = new ArrayList<>();
+         for(RRCard card : deck.deal(9)){
+             cards.add((ProgramCard) card);
+         }
+         //this.hand = new AIHand(cards);
      }
 
     @Test

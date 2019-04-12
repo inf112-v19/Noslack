@@ -20,36 +20,19 @@ public class Player extends Robot {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 9;
-        this.lives = 3;
-        this.orientation = Orientation.FACING_NORTH;
-        this.program = new Stack<>();
-        this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this. activeAbility = false;
-        this.currentMove = Program.NONE;
-        this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "Player" + playerNumber;
-        evaluateSprite();
+        this(playerNumber, Orientation.FACING_NORTH);
     }
-
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber,Orientation orientation){
-        this.health = 9;
-        this.lives = 3;
+        create();
+        this.name = "Player";
         this.orientation = orientation;
-        this.program = new Stack<>();
         this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "Player" + playerNumber;
         evaluateSprite();
     }
 
@@ -57,6 +40,7 @@ public class Player extends Robot {
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
+
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {
@@ -103,6 +87,6 @@ public class Player extends Robot {
 
     @Override
     public String toString(){
-        return this.playerNumber + this.name;
+        return this.playerNumber + ":" + this.name;
     }
 }

@@ -78,7 +78,7 @@ public class LaserBeam implements GameObject {
 
     @Override
     public int compareTo(Object other) {
-        if(((GameObject) other).getGameObjectType() == GameObjectType.PLAYER){
+        if(((GameObject) other).getGameObjectType() == GameObjectType.ROBOT){
             return -1;
         }else{
             return 1;

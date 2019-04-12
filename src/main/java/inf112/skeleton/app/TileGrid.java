@@ -14,7 +14,7 @@ public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private IRobot[] players;
+    private ArrayList<IRobot> players;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int playersInitiated; // How many players have been initiated so far.
 
@@ -24,7 +24,6 @@ public class TileGrid{
      */
     public TileGrid(){
         build("ConveyorLoops.txt");
-
     }
 
     /**
@@ -103,7 +102,6 @@ public class TileGrid{
     /**
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
-     * Player has a boolean hasWon turned true after the player has been checked, and turned false at the end.
      */
 
     public void activateTiles(){
@@ -206,21 +204,6 @@ public class TileGrid{
             int[] move = calculateMove(pusher.getOrientation());
             movePlayer(player.getPlayerNumber(), move[0],move[1]);
         }
-        player.moved(true);
-    }
-
-    /**
-     * Damage a player by laser
-     * @param dual Is the laser Dual
-     * @param player the player to be damaged
-     */
-    private void laserDamagePlayer(boolean dual, IRobot player){
-        if (dual) {
-            if (player.receiveDamage(2)) respawnPlayer(player);
-        }
-        else {
-            if (player.receiveDamage()) respawnPlayer(player);
-        }
     }
 
     /**
@@ -253,9 +236,7 @@ public class TileGrid{
             }catch(ArrayIndexOutOfBoundsException e){
 
             }
-
         }
-
     }
 
     /**
@@ -456,14 +437,14 @@ public class TileGrid{
      * @return Wanted Player
      */
     public IRobot getPlayer(int playerNumber){
-        return this.players[playerNumber];
+        return this.players.get(playerNumber);
     }
 
     /**
      * Get all players
      * @return List of players
      */
-    IRobot[] getPlayers() {
+    ArrayList<IRobot> getPlayers() {
         return players;
     }
 

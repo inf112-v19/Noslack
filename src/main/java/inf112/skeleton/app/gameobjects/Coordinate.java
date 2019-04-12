@@ -8,18 +8,16 @@ public class Coordinate {
     private int column;
     private Orientation orientation;
 
-
+    public Coordinate(int row, int column){
+        this(row,column, Orientation.FACING_NORTH);
+    }
 
     public Coordinate(int row, int column, Orientation orientation){
         this.row = row;
         this.column = column;
         this.orientation = orientation;
     }
-    public Coordinate(int row, int column){
-        this.row = row;
-        this.column = column;
-        this.orientation = Orientation.FACING_NORTH;
-    }
+
     public Coordinate (Coordinate coordinate){
         this.row = coordinate.getRow();
         this.column = coordinate.getColumn();
@@ -85,6 +83,7 @@ public class Coordinate {
         return false;
     }
     public String toString(){
+
         return "Row: "+getRow()+" Column: "+getColumn() + " Orientation: " + getOrientation();
     }
 

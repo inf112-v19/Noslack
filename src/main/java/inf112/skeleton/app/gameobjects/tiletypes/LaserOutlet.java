@@ -76,7 +76,7 @@ public class LaserOutlet implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.ROBOT){
             return -1;
         } else {
             return 1;

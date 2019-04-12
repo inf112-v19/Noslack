@@ -138,7 +138,6 @@ public class Tile implements GameObject{
      */
     public boolean playerPathBlocked(IRobot player, Orientation directionOfMove){
         if(this.objectsOnTile.contains(player)){
-
                 return this.blocked.contains(directionOfMove);
         }
         else{
