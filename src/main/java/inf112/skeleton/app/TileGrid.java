@@ -564,8 +564,7 @@ public class TileGrid{
      * @param pos lasers current position
      * @return If hte laser can keep firing.
      */
-    private boolean continueFiring(Coordinate pos){
-        Coordinate position = new Coordinate(pos.getRow(),pos.getColumn(), pos.getOrientation());
+    private boolean continueFiring(Coordinate position){
         if(tileCheck(position,false)) {
             return false;
         }

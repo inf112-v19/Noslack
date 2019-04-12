@@ -1,6 +1,7 @@
 package inf112.skeleton.app.gameobjects.robots;
 
 import inf112.skeleton.app.TileGrid;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 import inf112.skeleton.app.gameobjects.Robots.HunterAI;
 import inf112.skeleton.app.gameobjects.Robots.IRobot;
@@ -19,7 +20,7 @@ public class RobotTest {
     public void robotOnMap(){
         TileGrid tileGrid = new TileGrid("robotTestMap.txt");
         IRobot robot = tileGrid.getPlayer(0);
-        assertEquals(0,robot.getPlayerNumber());
+        assertEquals("0:HunterAI",robot.toString());
     }
 
     @Test

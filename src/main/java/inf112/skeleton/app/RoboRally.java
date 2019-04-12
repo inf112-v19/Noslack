@@ -62,7 +62,7 @@ public class RoboRally extends Game implements InputProcessor {
         gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("hunterTestMap.txt");
+        this.tileGrid = new TileGrid("teleporterMap.txt");
         this.spriteContainer = new SpriteContainer(batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -277,7 +277,8 @@ public class RoboRally extends Game implements InputProcessor {
                 for(ProgramCard card : chosenCards){
                     if (card.getPriority() == 0) nulls++;
                 }
-                if (nulls == 0) {
+                if (true//nulls == 0
+                ) {
                     this.tileGrid.getPlayer(0).pushProgram(chosenCards);
                     CSI.reset();
                     sequenceReady = true;

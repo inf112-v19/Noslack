@@ -72,11 +72,11 @@ public abstract class AI extends Robot {
                 }
                 break;
             case RIGHT:
-                if(this.programHand.contains(Program.U)&&this.programHand.contains(Program.LEFT)){
+                if(this.programHand.contains(Program.U)&&this.programHand.contains(Program.LEFT)&&this.program.size()<4){
                     this.program.push(programHand.get(Program.U));
                     this.program.push(programHand.get(Program.LEFT));
                 }
-                else if(this.programHand.contains(Program.LEFT,3)&& this.program.size()<4){
+                else if(this.programHand.contains(Program.LEFT,3)&& this.program.size()<3){
                     for (int i =0; i<3; i++){
                         this.program.push(programHand.get(Program.LEFT));
                     }
@@ -84,11 +84,11 @@ public abstract class AI extends Robot {
                 }
                 break;
             case LEFT:
-                if(this.programHand.contains(Program.U)&&this.programHand.contains(Program.RIGHT)){
+                if(this.programHand.contains(Program.U)&&this.programHand.contains(Program.RIGHT)&&this.program.size()<4){
                     this.program.push(programHand.get(Program.U));
                     this.program.push(programHand.get(Program.RIGHT));
                 }
-                else if(this.programHand.contains(Program.RIGHT,3)&& this.program.size()<4){
+                else if(this.programHand.contains(Program.RIGHT,3)&& this.program.size()<3){
                     for (int i =0; i<3; i++) {
                         this.program.push(programHand.get(Program.RIGHT));
                     }

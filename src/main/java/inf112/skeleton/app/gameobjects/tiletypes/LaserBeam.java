@@ -35,7 +35,7 @@ public class LaserBeam implements GameObject {
         try {
             Texture texture;
             if (dual) {
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/dualLaser32x32.png"));
             } else
                 texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
             this.sprite = new Sprite(texture);
@@ -78,7 +78,8 @@ public class LaserBeam implements GameObject {
 
     @Override
     public int compareTo(Object other) {
-        if(((GameObject) other).getGameObjectType() == GameObjectType.ROBOT){
+        GameObjectType obj = ((GameObject) other).getGameObjectType();
+        if(obj == GameObjectType.ROBOT || obj == GameObjectType.WALL || obj == GameObjectType.LASER_OUTLET || obj == GameObjectType.PUSHER){
             return -1;
         }else{
             return 1;
