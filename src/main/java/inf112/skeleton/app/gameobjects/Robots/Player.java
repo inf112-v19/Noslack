@@ -83,7 +83,7 @@ public class Player extends Robot {
     }
 
     @Override
-    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
+    public GameObjectType getGameObjectType() {return GameObjectType.ROBOT;}
 
     @Override
     public String toString(){

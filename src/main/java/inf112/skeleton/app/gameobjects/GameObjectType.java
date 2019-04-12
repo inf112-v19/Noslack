@@ -6,7 +6,7 @@ public enum GameObjectType {
     HOLE,
     LASER_BEAM,
     LASER_OUTLET,
-    PLAYER,
+    ROBOT,
     PUSHER,
     REPAIR_STATION,
     STANDARD_TILE,

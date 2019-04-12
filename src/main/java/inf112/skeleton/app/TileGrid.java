@@ -205,7 +205,19 @@ public class TileGrid{
             movePlayer(player.getPlayerNumber(), move[0],move[1]);
         }
     }
-
+    /**
+     * Damage a player by laser
+     * @param dual Is the laser Dual
+     * @param player the player to be damaged
+     */
+    private void laserDamagePlayer(boolean dual, IRobot player){
+        if (dual) {
+            if (player.receiveDamage(2)) respawnPlayer(player);
+        }
+        else {
+            if (player.receiveDamage()) respawnPlayer(player);
+        }
+    }
     /**
      * Moves player on conveyor
      * @param conveyor Conveyor the player is on
@@ -398,8 +410,8 @@ public class TileGrid{
      */
     private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,columnsToMove);
-        if(getTile(coordinate).hasGameObject(GameObjectType.PLAYER)){
-            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.PLAYER);
+        if(getTile(coordinate).hasGameObject(GameObjectType.ROBOT)){
+            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
             int[] move= calculateMove(directionOfMove);
             movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
         }

@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class RobotTest {
-    private IRobot robot = new HunterAI();
+    private IRobot robot = new HunterAI(0);
 
     @Test
     public void robotInitialized(){

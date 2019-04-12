@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Robots.IRobot;
-import inf112.skeleton.app.gameobjects.Robots.Player;
+import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,7 @@ public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.
     private Sprite cardTestSprite;
     private int currentPhase;
+    private boolean activatedTiles;
 
     private SpriteBatch batch;
     private TileGrid tileGrid;
@@ -68,7 +68,11 @@ public class RoboRally extends Game implements InputProcessor {
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
         int playerHealth = this.tileGrid.getPlayer(0).getHealth();
-        this.tileGrid.getPlayer(0).drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+        this.tileGrid.getPlayer(0).drawAbility(this.abilityDeck.dealOne());
+        if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
+            playerHealth++;
+        }
+        this.tileGrid.getPlayer(0).drawPrograms(this.programDeck.deal(playerHealth));
         this.programHand = tileGrid.getPlayerProgramHand(0);
         this.animator = new CardSpriteAnimation(programHand);
         this.cardTestSprite = tileGrid.getPlayerProgramHand(0).get(0).getSprite();
@@ -78,6 +82,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityText = "";
         this.roboTick = 0;
         this.animation = false;
+        this.activatedTiles = false;
         dealNewCards();
     }
 
@@ -98,8 +103,15 @@ public class RoboRally extends Game implements InputProcessor {
             this.batch.begin();
             spriteContainer.renderGrid(tileGrid);
             performPhase();
-            if (sequenceReady && (roboTick % 20 == 0)) {
-                tick();
+            if (roboTick % 20 == 0){
+                if(sequenceReady){
+                    if(activatedTiles){
+                        activateTiles();
+                        activatedTiles = false;
+                    } else {
+                        tick();
+                    }
+                }
             }
 
             if (animation){
@@ -151,8 +163,8 @@ public class RoboRally extends Game implements InputProcessor {
             // Runs per phase
             if (this.tileGrid.getPlayerCurrentMove(0) == Program.NONE) {
                 this.tileGrid.applyNextProgram(0);
-                activateTiles();
                 this.currentPhase++;
+                activatedTiles = true;
             }
         }
         // Runs mid phase
@@ -162,24 +174,38 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             sequenceReady = false;
             this.currentPhase = 0;
+            activatedTiles = true;
         }
     }
 
     private void dealNewCards() {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
-        this.abilityDeck.reset();
         for(IRobot player : this.tileGrid.getPlayers()){
             int playerHealth = player.getHealth();
-            player.drawCards(this.programDeck.deal(playerHealth), this.abilityDeck.deal(playerHealth));
+            if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
+                playerHealth++;
+            }
+            player.drawPrograms(this.programDeck.deal(playerHealth));
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
-            this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
+            try{
+                this.currentAbility = this.tileGrid.getPlayer(0).getAbilityHand().get(0);
+
+            }catch(Exception e){
+                System.out.println("There is a bug in DealNewCards() in Roborally class - get(0)");
+
+            }
             this.currentAbility.getSprite().setPosition(550,20);
             spriteContainer.getCardSprite(currentAbility);
         }
         animator = new CardSpriteAnimation(programHand);
         animation = true;
+    }
+
+    public void discardAbility(int playerNumber, RRCard card){
+        this.tileGrid.getPlayer(playerNumber).discardAbility(card);
+        this.abilityDeck.returnCard(card);
     }
 
     @Override

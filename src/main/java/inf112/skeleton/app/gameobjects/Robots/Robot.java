@@ -27,6 +27,16 @@ public abstract class Robot implements IRobot{
     private boolean[] flagsVisited;
     private boolean hasMoved;
 
+    public void create(){
+        this.name = "Robot " + playerNumber;
+        this.health = 9;
+        this.lives = 3;
+        this.program = new Stack<>();
+        this.abilityHand = new ArrayList<>();
+        this.currentMove = Program.NONE;
+        this.hasWon = false;
+    }
+
     @Override
     public void drawAbility(RRCard abilityCard) {
         this.abilityHand.add((AbilityCard) abilityCard);
