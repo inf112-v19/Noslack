@@ -126,7 +126,7 @@ public enum Ability {
                         "isn't in an adjacent space, you may instead fire the Tractor Beam. This pulls the target robot " +
                         "space toward your robot.";
             default:
-                return "No ability assigned.";
+                return "No ability assigned:";
         }
     }
     public boolean activeAbility(){

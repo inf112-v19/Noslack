@@ -104,6 +104,7 @@ public class AbilityCard implements RRCard {
                 setSprite("./assets/abilityCards/TractorBeam.png");
                 return Ability.TractorBeam;
             case " ":
+                setSprite("./assets/abilityCards/default.png");
                 return Ability.Empty;
             default:
                 throw new IllegalArgumentException("Invalid ability: " + s);

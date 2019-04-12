@@ -30,7 +30,7 @@ public class Player extends Robot {
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         this.hasWon = false;
-        this.name = "RoboHally";
+        this.name = "Player" + playerNumber;
         evaluateSprite();
     }
 
@@ -49,7 +49,7 @@ public class Player extends Robot {
         this.currentMove = Program.NONE;
         this.playerNumber = playerNumber;
         this.hasWon = false;
-        this.name = "RoboHally";
+        this.name = "Player" + playerNumber;
         evaluateSprite();
     }
 

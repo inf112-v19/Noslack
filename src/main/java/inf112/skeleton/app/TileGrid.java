@@ -103,6 +103,7 @@ public class TileGrid{
     /**
      * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
+     * Player has a boolean hasWon turned true after the player has been checked, and turned false at the end.
      */
 
     public void activateTiles(){
@@ -119,7 +120,6 @@ public class TileGrid{
                 }
             }
         }
-        //PlayerOnTile
         for(IRobot p : players){
             p.moved(false);
         }
