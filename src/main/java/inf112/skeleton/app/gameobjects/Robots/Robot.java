@@ -26,6 +26,7 @@ public abstract class Robot implements IRobot{
     boolean hasWon;
     private boolean[] flagsVisited;
     private boolean hasMoved;
+    boolean powerDown;
 
     public void create(){
         this.name = "Robot " + playerNumber;
@@ -35,6 +36,7 @@ public abstract class Robot implements IRobot{
         this.abilityHand = new ArrayList<>();
         this.currentMove = Program.NONE;
         this.hasWon = false;
+        this.powerDown = false;
     }
 
     @Override
@@ -254,6 +256,16 @@ public abstract class Robot implements IRobot{
     @Override
     public Coordinate getBackUp(){
         return this.backUp;
+    }
+
+    @Override
+    public void powerDown(){
+        this.powerDown = !this.powerDown;
+    }
+
+    @Override
+    public boolean isPoweredDown(){
+        return this.powerDown;
     }
 
     @Override

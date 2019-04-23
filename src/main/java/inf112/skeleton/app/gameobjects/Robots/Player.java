@@ -76,7 +76,6 @@ public class Player extends Robot {
     @Override
     public void reset(){
         this.programHand.clear();
-        this.abilityHand.clear();
         this.program.clear();
         this.currentMove=Program.NONE;
         resetMoveProgress();
