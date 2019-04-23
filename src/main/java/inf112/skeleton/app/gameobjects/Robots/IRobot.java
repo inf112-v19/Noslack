@@ -225,6 +225,17 @@ public interface IRobot extends GameObject {
     Coordinate getBackUp();
 
     /**
+     * Powers down or powers up robot
+     */
+    void powerDown();
+
+    /**
+     * Finds out if the Robot is powered down
+     * @return If the robot is powered down
+     */
+    boolean isPoweredDown();
+
+    /**
      * @return If program chosen by player is completed
      */
     boolean isFinished();

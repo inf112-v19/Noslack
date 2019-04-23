@@ -182,11 +182,13 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.resetPlayer(0);
         this.programDeck.reset();
         for(IRobot player : this.tileGrid.getPlayers()){
-            int playerHealth = player.getHealth();
-            if(this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)){
-                playerHealth++;
+            if(!player.isPoweredDown()) {
+                int playerHealth = player.getHealth();
+                if (this.tileGrid.playerHasAbility(0, Ability.ExtraMemory)) {
+                    playerHealth++;
+                }
+                player.drawPrograms(this.programDeck.deal(playerHealth));
             }
-            player.drawPrograms(this.programDeck.deal(playerHealth));
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             try{
