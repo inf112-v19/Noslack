@@ -8,6 +8,7 @@ import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class TileGrid{
@@ -273,6 +274,30 @@ public class TileGrid{
                 break;
         }
         return rowColumn;
+    }
+
+
+    /**
+     * Figures out the movement queue for the next phase based on the Program Card priorities.
+     * @return A list
+     */
+    public ArrayList<Integer> playerQueue(){
+        ArrayList<Integer> robotQueue = new ArrayList<>();
+        ArrayList<Integer> priorities = new ArrayList<>();
+        for(IRobot robot : this.players){
+            priorities.add(robot.getNextProgramPriority());
+        }
+        while(!priorities.isEmpty()){
+            int priority=0;
+            for(int p : priorities){
+                if(priority>p){
+                    priority=p;
+                }
+            }
+            robotQueue.add(priorities.indexOf(priority));
+            priorities.remove(priority);
+        }
+        return robotQueue;
     }
 
     /**
@@ -561,7 +586,7 @@ public class TileGrid{
 
     /**
      * Figures out if the laser can keep firing
-     * @param pos lasers current position
+     * @param position lasers current position
      * @return If hte laser can keep firing.
      */
     private boolean continueFiring(Coordinate position){
