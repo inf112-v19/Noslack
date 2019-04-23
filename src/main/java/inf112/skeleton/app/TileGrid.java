@@ -530,6 +530,40 @@ public class TileGrid{
         getPlayer(playerNumber).setPosition(coordinate);
     }
 
+    public void fireControl(int playerNumber) {
+        Coordinate position = getPlayerPosition(playerNumber);
+        if(playerHasAbility(playerNumber, Ability.PressorBeam)) {
+            int playerToMove = playerInLine(playerNumber);
+            int[] movement=calculateMove(position.getOrientation());
+            if(playerToMove!=playerNumber) {
+                if(continueBeam(getPlayer(playerNumber).getPosition(), getPlayer(playerToMove).getPosition())) {
+                    movePlayer(playerToMove, movement[0], movement[1]);
+                }
+            }
+        } else if(playerHasAbility(playerNumber, Ability.TractorBeam)) {
+            int playerToMove = playerInLine(playerNumber);
+            int[] movement=calculateMove(position.getOrientation().opposite());
+            if(playerToMove!=playerNumber) {
+                if(continueBeam(getPlayer(playerNumber).getPosition(), getPlayer(playerToMove).getPosition())) {
+                    movePlayer(playerToMove, movement[0], movement[1]);
+                }
+            }
+        } else {
+            firePlayerLaser(playerNumber);
+        }
+    }
+
+    public boolean continueBeam(Coordinate position, Coordinate opponnentPos) {
+
+        while (!position.equals(opponnentPos)) {
+            if(!tileCheck(position, false)){
+                return false;
+            }
+            position = position.moveCoordinate();
+        }
+        return true;
+    }
+
     /**
      * Adds laser to board if player wants to fire.
      * @param playerNumber player who is to fire laser
@@ -557,11 +591,15 @@ public class TileGrid{
                 firing = continueFiring(position);
             }
         }
+
+
     }
+
+
 
     /**
      * Figures out if the laser can keep firing
-     * @param pos lasers current position
+     * @param position lasers current position
      * @return If hte laser can keep firing.
      */
     private boolean continueFiring(Coordinate position){
@@ -627,5 +665,38 @@ public class TileGrid{
                 firing = continueFiring(position);
             }
         }
+    }
+
+    public int playerInLine(int playerNumber) {
+
+        int column = getPlayer(playerNumber).getPosition().getColumn();
+        int row = getPlayer(playerNumber).getPosition().getRow();
+        int playerInLine = playerNumber;
+
+        for(IRobot p : players) {
+            switch (getPlayer(playerNumber).getOrientation()) {
+                case FACING_NORTH:
+                    if(p.getPosition().getRow()==row && p.getPosition().getColumn()>column) {
+                        playerInLine = p.getPlayerNumber();
+                    }
+                    break;
+                case FACING_WEST:
+                    if(p.getPosition().getColumn()==column && p.getPosition().getRow()<row) {
+                        playerInLine = p.getPlayerNumber();
+                    }
+                    break;
+                case FACING_SOUTH:
+                    if(p.getPosition().getRow()==row && p.getPosition().getColumn()<column) {
+                        playerInLine = p.getPlayerNumber();
+                    }
+                    break;
+                case FACING_EAST:
+                    if(p.getPosition().getColumn()==column && p.getPosition().getRow()>row) {
+                        playerInLine = p.getPlayerNumber();
+                    }
+                    break;
+            }
+        }
+        return playerInLine;
     }
 }
