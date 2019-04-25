@@ -112,7 +112,9 @@ public class RoboRally extends Game implements InputProcessor {
             performPhase();
             if (roboTick % 20 == 0){
                 if(sequenceReady){
-                    this.robotQueque = tileGrid.playerQueue();
+                    if(currentPhase<6) {
+                        this.robotQueque = tileGrid.playerQueue();
+                    }
                     if(activatedTiles){
                         activateTiles();
                         activatedTiles = false;
