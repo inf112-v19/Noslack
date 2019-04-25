@@ -8,16 +8,15 @@ import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 
 public class TileGrid{
     private Tile[][] tileGrid;
     private int rows;
     private int columns;
-    private ArrayList<IRobot> players;
+    private ArrayList<IRobot> robots;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
-    private int playersInitiated; // How many players have been initiated so far.
+    private int playersInitiated; // How many robots have been initiated so far.
 
     /**
      * Constructor with specifications.
@@ -42,7 +41,7 @@ public class TileGrid{
     private void build(String file) {
         TileGridBuilder builder= new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
-        this.players = builder.getPlayers();
+        this.robots = builder.getPlayers();
         this.rows = builder.getRows();
         this.columns = builder.getColumns();
         this.playersInitiated = builder.getPlayersInitiated();
@@ -74,7 +73,7 @@ public class TileGrid{
     }
 
     /**
-     * Get the number of players in TileGrid
+     * Get the number of robots in TileGrid
      * @return Players in grid
      */
     int getPlayersInitiated(){
@@ -101,7 +100,7 @@ public class TileGrid{
     }
 
     /**
-     * Runs trough the grid to find the players.
+     * Runs trough the grid to find the robots.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
 
@@ -112,14 +111,14 @@ public class TileGrid{
     public void activateTiles(int currentPhase){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
-                for (IRobot player : players) {
+                for (IRobot player : robots) {
                     if (tile.hasPlayer(player) && !player.hasMoved()) {
                         playerOnTile(tile, player, currentPhase);
                     }
                 }
             }
         }
-        for(IRobot p : players){
+        for(IRobot p : robots){
             p.moved(false);
         }
     }
@@ -225,7 +224,7 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        IRobot player = getPlayer(playerNumber);
+        IRobot player = getRobot(playerNumber);
         if(conveyor.getTurn() > 0){
             applyRotation(Program.RIGHT,playerNumber);
         }
@@ -284,7 +283,7 @@ public class TileGrid{
     public ArrayList<Integer> playerQueue(){
         ArrayList<Integer> robotQueue = new ArrayList<>();
         ArrayList<Integer> priorities = new ArrayList<>();
-        for(IRobot robot : this.players){
+        for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
         }
         while(!priorities.isEmpty()){
@@ -301,11 +300,11 @@ public class TileGrid{
     }
 
     /**
-     * Apply the next program in the players queue.
+     * Apply the next program in the robots queue.
      * @param playerNumber Player number
      */
     void applyNextProgram(int playerNumber){
-        getPlayer(playerNumber).setNextProgram();
+        getRobot(playerNumber).setNextProgram();
     }
 
     /**
@@ -314,7 +313,7 @@ public class TileGrid{
      * @param playerNumber the identifier of the player whose move should be continued.
      */
     private void applyRotation(Program move, int playerNumber){
-        getPlayer(playerNumber).updateOrientation(move);
+        getRobot(playerNumber).updateOrientation(move);
     }
 
     /**
@@ -323,7 +322,7 @@ public class TileGrid{
      * @param playerNumber the number of the player that the move should be applied to
      */
     private void applyMove(Program move, int playerNumber){
-        int[] movement = calculateMove(getPlayer(0).getOrientation());
+        int[] movement = calculateMove(getRobot(0).getOrientation());
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
@@ -343,12 +342,12 @@ public class TileGrid{
      * @param playerNumber the identifier of the player whose move should be continued.
      */
     public void continueMove(int playerNumber){
-        Program currentMove = getPlayer(playerNumber).getCurrentMove();
-        int moveProgression = getPlayer(playerNumber).getMoveProgression();
+        Program currentMove = getRobot(playerNumber).getCurrentMove();
+        int moveProgression = getRobot(playerNumber).getMoveProgression();
 
         if(moveProgression==currentMove.totalMoves()){
-            getPlayer(playerNumber).setCurrentMove(Program.NONE);
-            getPlayer(playerNumber).resetMoveProgress();
+            getRobot(playerNumber).setCurrentMove(Program.NONE);
+            getRobot(playerNumber).resetMoveProgress();
         }
         else{
             if(!currentMove.isMove()){
@@ -356,7 +355,7 @@ public class TileGrid{
             }else{
                 applyMove(currentMove, playerNumber);
             }
-            getPlayer(playerNumber).progressMove();
+            getRobot(playerNumber).progressMove();
         }
     }
 
@@ -372,9 +371,9 @@ public class TileGrid{
 
         if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove)) return;
 
-        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getPlayer(playerNumber));
-        this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getPlayer(playerNumber));
-        setPlayerPosition(playerNumber, getPlayer(playerNumber).getPosition().moveCoordinate(rowsToMove,columnsToMove));
+        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getRobot(playerNumber));
+        this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getRobot(playerNumber));
+        setPlayerPosition(playerNumber, getRobot(playerNumber).getPosition().moveCoordinate(rowsToMove,columnsToMove));
     }
 
     /**
@@ -388,14 +387,14 @@ public class TileGrid{
     private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
         Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
         Orientation directionOfMove = findOrientationOfMovement(rowsToMove, columnsToMove);
-        if(playerBlockedOnCurrentTile(getPlayer(playerNumber), directionOfMove)){
+        if(playerBlockedOnCurrentTile(getRobot(playerNumber), directionOfMove)){
             return false;
         }
         if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
             respawnPlayer(playerNumber);
             return false;
         }
-        if(playerBlockedOnNextTile(getPlayer(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
+        if(playerBlockedOnNextTile(getRobot(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
             return false;
         }
         return true;
@@ -483,16 +482,29 @@ public class TileGrid{
      * @param playerNumber Player number
      * @return Wanted Player
      */
-    public IRobot getPlayer(int playerNumber){
-        return this.players.get(playerNumber);
+    public IRobot getRobot(int playerNumber){
+        return this.robots.get(playerNumber);
     }
 
     /**
-     * Get all players
-     * @return List of players
+     * Get all robots
+     * @return List of robots
      */
-    ArrayList<IRobot> getPlayers() {
-        return players;
+    ArrayList<IRobot> getRobots() {
+        return robots;
+    }
+
+    /**
+     * Finds the player on the bord.
+     * @return Returns the player
+     */
+    IRobot getPlayer(){
+        for(IRobot robot : this.robots){
+            if(!robot.isAI()){
+                return robot;
+            }
+        }
+        return null;
     }
 
     /**
@@ -500,7 +512,7 @@ public class TileGrid{
      * @param playerNumber Player number
      */
     void resetPlayer(int playerNumber){
-        getPlayer(playerNumber).reset();
+        getRobot(playerNumber).reset();
     }
 
     /**
@@ -508,7 +520,7 @@ public class TileGrid{
      * @param playerNumber Players number
      */
     private void respawnPlayer(int playerNumber){
-        respawnPlayer(getPlayer(playerNumber));
+        respawnPlayer(getRobot(playerNumber));
     }
     /**
      * Respawns the player after it has fallen out of grid, with health=6.
@@ -526,7 +538,7 @@ public class TileGrid{
      * @return Players current position
      */
     public Coordinate getPlayerPosition(int playerNumber){
-        return getPlayer(playerNumber).getPosition();
+        return getRobot(playerNumber).getPosition();
     }
 
     /**
@@ -535,25 +547,25 @@ public class TileGrid{
      * @return Player ProgramHand
      */
     ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
-        return getPlayer(playerNumber).getProgramHand();
+        return getRobot(playerNumber).getProgramHand();
     }
 
     /**
-     * Get players current move
+     * Get robots current move
      * @param playerNumber Player Number
      * @return Program of current move
      */
     Program getPlayerCurrentMove(int playerNumber){
-        return getPlayer(playerNumber).getCurrentMove();
+        return getRobot(playerNumber).getCurrentMove();
     }
 
     /**
-     * Get the players ability
-     * @param playerNumber The players number
-     * @return The players ability
+     * Get the robots ability
+     * @param playerNumber The robots number
+     * @return The robots ability
      */
     boolean playerHasAbility(int playerNumber, Ability ability){
-        return getPlayer(playerNumber).hasAbility(ability);
+        return getRobot(playerNumber).hasAbility(ability);
     }
 
     /**
@@ -562,7 +574,7 @@ public class TileGrid{
      * @param coordinate New Coordinate
      */
     private void setPlayerPosition(int playerNumber, Coordinate coordinate){
-        getPlayer(playerNumber).setPosition(coordinate);
+        getRobot(playerNumber).setPosition(coordinate);
     }
 
     public void fireControl(int playerNumber) {
@@ -571,7 +583,7 @@ public class TileGrid{
             int playerToMove = playerInLine(playerNumber);
             int[] movement=calculateMove(position.getOrientation());
             if(playerToMove!=playerNumber) {
-                if(continueBeam(getPlayer(playerNumber).getPosition(), getPlayer(playerToMove).getPosition())) {
+                if(continueBeam(getRobot(playerNumber).getPosition(), getRobot(playerToMove).getPosition())) {
                     movePlayer(playerToMove, movement[0], movement[1]);
                 }
             }
@@ -579,7 +591,7 @@ public class TileGrid{
             int playerToMove = playerInLine(playerNumber);
             int[] movement=calculateMove(position.getOrientation().opposite());
             if(playerToMove!=playerNumber) {
-                if(continueBeam(getPlayer(playerNumber).getPosition(), getPlayer(playerToMove).getPosition())) {
+                if(continueBeam(getRobot(playerNumber).getPosition(), getRobot(playerToMove).getPosition())) {
                     movePlayer(playerToMove, movement[0], movement[1]);
                 }
             }
@@ -605,7 +617,7 @@ public class TileGrid{
      */
     public void firePlayerLaser(int playerNumber) {
         Coordinate position = getPlayerPosition(playerNumber);
-        position.setOrientation(getPlayer(playerNumber).getOrientation());
+        position.setOrientation(getRobot(playerNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
         boolean dual = playerHasAbility(playerNumber, Ability.DoubleBarreledLaser);
 
@@ -629,7 +641,7 @@ public class TileGrid{
         }
         if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
             position = getPlayerPosition(playerNumber);
-            position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
+            position.setOrientation(getRobot(playerNumber).getOrientation().opposite());
 
             firing = continueFiring(position);
             if(!firing && highPowered){
@@ -697,12 +709,12 @@ public class TileGrid{
     }
 
     /**
-     * Removes the players fired laser
+     * Removes the robots fired laser
      * @param playerNumber playerNumber
      */
     public void removePlayerLaser(int playerNumber){
         Coordinate position = getPlayerPosition(playerNumber);
-        position.setOrientation(getPlayer(playerNumber).getOrientation());
+        position.setOrientation(getRobot(playerNumber).getOrientation());
 
         boolean firing = continueFiring(position);
         while (firing) {
@@ -713,7 +725,7 @@ public class TileGrid{
 
         if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
             position = getPlayerPosition(playerNumber);
-            position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
+            position.setOrientation(getRobot(playerNumber).getOrientation().opposite());
 
             firing = continueFiring(position);
             while (firing) {
@@ -726,12 +738,12 @@ public class TileGrid{
 
     public int playerInLine(int playerNumber) {
 
-        int column = getPlayer(playerNumber).getPosition().getColumn();
-        int row = getPlayer(playerNumber).getPosition().getRow();
+        int column = getRobot(playerNumber).getPosition().getColumn();
+        int row = getRobot(playerNumber).getPosition().getRow();
         int playerInLine = playerNumber;
 
-        for(IRobot p : players) {
-            switch (getPlayer(playerNumber).getOrientation()) {
+        for(IRobot p : robots) {
+            switch (getRobot(playerNumber).getOrientation()) {
                 case FACING_NORTH:
                     if(p.getPosition().getRow()==row && p.getPosition().getColumn()>column) {
                         playerInLine = p.getPlayerNumber();

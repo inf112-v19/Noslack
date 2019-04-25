@@ -84,4 +84,9 @@ public class Player extends Robot {
     public String toString(){
         return this.playerNumber + ":" + this.name;
     }
+
+    @Override
+    public boolean isAI(){
+        return false;
+    }
 }

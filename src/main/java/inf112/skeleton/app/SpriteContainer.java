@@ -159,12 +159,12 @@ public class SpriteContainer {
         } else {
             unMuteButton.draw(this.batch);
         }
-        for (int i = 0; i < tileGrid.getPlayer(0).getLives(); i++){
+        for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
             this.lifeHeart.setPosition((12+40*i), 350);
             this.lifeHeart.draw(this.batch);
         }
         font.setColor(0,255,0,1);
-        font.draw(this.batch,"HP: "+tileGrid.getPlayer(0).getHealth(),80,320);
+        font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
         font.setColor(255,255,255,1);
     }
 

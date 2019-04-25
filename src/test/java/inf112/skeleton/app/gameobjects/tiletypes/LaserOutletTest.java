@@ -2,7 +2,6 @@ package inf112.skeleton.app.gameobjects.tiletypes;
 
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.TileGrid;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 import org.junit.Test;
@@ -20,18 +19,18 @@ public class LaserOutletTest {
     @Test
     public void takesDamageSingle() {
         TileGrid tileGrid = new TileGrid("laserOutletTestMap.txt");
-        int oldHP = tileGrid.getPlayer(0).getHealth();
+        int oldHP = tileGrid.getRobot(0).getHealth();
         tileGrid.activateTiles();
-        int newHP = tileGrid.getPlayer(0).getHealth();
+        int newHP = tileGrid.getRobot(0).getHealth();
         assertEquals(oldHP-1, newHP);
     }
 
     @Test
     public void takesDamageDouble() {
         TileGrid tileGrid = new TileGrid("laserOutletTestMap2.txt");
-        int oldHP = tileGrid.getPlayer(0).getHealth();
+        int oldHP = tileGrid.getRobot(0).getHealth();
         tileGrid.activateTiles();
-        int newHP = tileGrid.getPlayer(0).getHealth();
+        int newHP = tileGrid.getRobot(0).getHealth();
         assertEquals(oldHP-2, newHP);
     }
 

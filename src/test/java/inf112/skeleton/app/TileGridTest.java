@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
-import inf112.skeleton.app.gameobjects.Orientation;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,7 +12,7 @@ public class TileGridTest {
     @Test
     public void movePlayer() {
         TileGrid grid = new TileGrid("onePlayerTestMap.txt");
-        grid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        grid.getRobot(0).setCurrentMove(Program.MOVE1);
         Coordinate coordinate = grid.getPlayerPosition(0);
         grid.continueMove(0);
         Coordinate coordinate2 = grid.getPlayerPosition(0);
@@ -26,7 +25,7 @@ public class TileGridTest {
     @Test
     public void getPlayer() {
         TileGrid grid = new TileGrid("onePlayerTestMap.txt");
-        assertEquals(GameObjectType.ROBOT,grid.getPlayer(0).getGameObjectType());
+        assertEquals(GameObjectType.ROBOT,grid.getRobot(0).getGameObjectType());
     }
 
     @Test

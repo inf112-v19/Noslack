@@ -4,7 +4,6 @@ import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.Program;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
-import inf112.skeleton.app.gameobjects.tiletypes.Pusher;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -40,7 +39,7 @@ public class PusherTest {
     @Test
     public void pushPlayerTest() {
         TileGrid tileGrid = new TileGrid("pusherTestMap.txt");
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.getRobot(0).setCurrentMove(Program.MOVE1);
         for(int i =0; i<2; i++){
             tileGrid.continueMove(0);
             tileGrid.activateTiles();

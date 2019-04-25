@@ -155,4 +155,9 @@ public abstract class AI extends Robot {
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
 
     }
+
+    @Override
+    public boolean isAI(){
+        return true;
+    }
 }
