@@ -323,7 +323,7 @@ public class TileGrid{
      * @param playerNumber the number of the player that the move should be applied to
      */
     private void applyMove(Program move, int playerNumber){
-        int[] movement = calculateMove(getPlayer(0).getOrientation());
+        int[] movement = calculateMove(getPlayer(playerNumber).getOrientation());
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
@@ -332,8 +332,11 @@ public class TileGrid{
                 rowsToMove *= -2;
                 columnsToMove *= -2;
             }
-            rowsToMove *= -1;
-            columnsToMove *= -1;
+            else{
+                rowsToMove *= -1;
+                columnsToMove *= -1;
+            }
+
         }
         movePlayer(playerNumber, rowsToMove, columnsToMove);
     }
