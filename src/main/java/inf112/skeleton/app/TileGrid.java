@@ -328,14 +328,9 @@ public class TileGrid{
         int columnsToMove = movement[1];
 
         if(move==Program.BACK){
-            if(playerHasAbility(playerNumber,Ability.ReverseGear)){
-                rowsToMove *= -2;
-                columnsToMove *= -2;
-            }
-            else{
-                rowsToMove *= -1;
-                columnsToMove *= -1;
-            }
+
+            rowsToMove *= -1;
+            columnsToMove *= -1;
 
         }
         movePlayer(playerNumber, rowsToMove, columnsToMove);
@@ -550,7 +545,7 @@ public class TileGrid{
         return getPlayer(playerNumber).getCurrentMove();
     }
 
-    /**
+    /*
      * Get the players ability
      * @param playerNumber The players number
      * @return The players ability

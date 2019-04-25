@@ -23,6 +23,7 @@ public enum Ability {
                         "replace one of the Program cards you reveal with the top card from " +
                         "the deck. If you do, you must replace the Program cards for all your " +
                         "remaining register the same way that turn.";
+            //Implemented
             case Brakes:
                 return "Brakes: Whenever you execute a Move 1, you " +
                     "may move your robot 0 spaces instead of 1. Priority is that of " +
@@ -69,6 +70,7 @@ public enum Ability {
                     "turn, you may put one of your remaining Program cards face down onto this card. You can add that " +
                     "Program card to those dealt to you on any subsequent turn. You can have only one card on Flywheel " +
                     "at a time.";
+            //Implemented
             case FourthGear:
                 return "Fourth Gear: Whenever you execute a Move 3, you may move your robot 4 " +
                         "spaces instead of 3. Priority is that of the Move 3.";
