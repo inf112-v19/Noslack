@@ -10,7 +10,6 @@ import inf112.skeleton.app.gameobjects.Orientation;
 import java.util.ArrayList;
 
 public class HunterAI extends AI {
-    private GameObjectType type;
     private ArrayList<AbilityCard> abilityHand;
 
     public HunterAI(int playerNumber){
@@ -18,13 +17,8 @@ public class HunterAI extends AI {
     }
 
     public HunterAI(int playerNumber, Orientation orientation){
-        create();
-        this.name = "HunterAI";
-        this.playerNumber = playerNumber;
-        this.orientation = orientation;
+        create(playerNumber, orientation);
         this.abilityHand = new ArrayList<>();
-
-        this.type=GameObjectType.ROBOT;
 
         evaluateSprite();
     }
@@ -70,11 +64,4 @@ public class HunterAI extends AI {
     public String toString(){
         return this.playerNumber + ":" + this.name;
     }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return this.type;
-    }
-
-
 }

@@ -28,11 +28,9 @@ public class Player extends Robot {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber,Orientation orientation){
-        create();
+        create(playerNumber, orientation);
         this.name = "Player";
-        this.orientation = orientation;
         this.programHand = new ArrayList<>();
-        this.playerNumber = playerNumber;
         evaluateSprite();
     }
 
@@ -80,9 +78,6 @@ public class Player extends Robot {
         this.currentMove=Program.NONE;
         resetMoveProgress();
     }
-
-    @Override
-    public GameObjectType getGameObjectType() {return GameObjectType.ROBOT;}
 
     @Override
     public String toString(){
