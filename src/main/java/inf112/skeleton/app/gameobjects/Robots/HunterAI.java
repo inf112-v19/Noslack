@@ -4,27 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
 
 public class HunterAI extends AI {
-    private GameObjectType type;
     private ArrayList<AbilityCard> abilityHand;
 
     public HunterAI(int playerNumber){
-        this(playerNumber,Orientation.FACING_NORTH);
+        this(playerNumber,Orientation.FACING_NORTH, new Coordinate(0,0));
     }
 
-    public HunterAI(int playerNumber, Orientation orientation){
-        create();
-        this.name = "HunterAI";
-        this.playerNumber = playerNumber;
-        this.orientation = orientation;
+    public HunterAI(int playerNumber, Orientation orientation, Coordinate position){
+        create(playerNumber, orientation, position);
         this.abilityHand = new ArrayList<>();
-
-        this.type=GameObjectType.ROBOT;
 
         evaluateSprite();
     }
@@ -70,11 +64,4 @@ public class HunterAI extends AI {
     public String toString(){
         return this.playerNumber + ":" + this.name;
     }
-
-    @Override
-    public GameObjectType getGameObjectType() {
-        return this.type;
-    }
-
-
 }

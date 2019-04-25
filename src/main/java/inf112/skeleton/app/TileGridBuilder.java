@@ -131,18 +131,19 @@ public class TileGridBuilder {
                 break;
             case "P":
                 orientation = stringToOrientation(nextTileType);
+                Coordinate position = new Coordinate(row,column);
 
 
                 if(nextTileType.contains("H")){
 
-                    IRobot newPlayer = new HunterAI(this.playersInitiated,orientation);
+                    IRobot newPlayer = new HunterAI(this.playersInitiated,orientation,position);
                     this.tileGrid[row][column].addObjectOnTile(newPlayer);
                     this.robots.add(newPlayer);
                     playersInitiated++;
                     newPlayer.initiate(new Coordinate(row, column));
                 }
                 else {
-                    IRobot newPlayer = new Player(this.playersInitiated, orientation);
+                    IRobot newPlayer = new Player(this.playersInitiated, orientation,position);
                     this.tileGrid[row][column].addObjectOnTile(newPlayer);
                     this.robots.add(newPlayer);
                     playersInitiated++;

@@ -76,6 +76,7 @@ public enum Ability {
                 return "GyroscopicStabilizer :Before players reveal the cards in " +
                     "their first registers each turn, state whether this Option is active.When it is, your robot isn't " +
                     "rotated by gears or rotating conveyor belts for that entire turn";
+            //Implemented
             case HighPoweredLaser:
                 return "High-Power Laser: Your robot's main laser can shoot through one " +
                         "wall or robot to get to a target robot. If you shoot through a robot that robot also receives full " +
@@ -102,6 +103,7 @@ public enum Ability {
                     "you may instead fire the Radio Control beam. This causes the target robot to execute your robot's " +
                     "program for the rest of the turn. In cases of card priority, the target robot moves immediately " +
                     "after your robot.";
+            //Implemented
             case RammingGear:
                 return "Ramming Gear: Whenever your robot pushes or bumps into another robot, " +
                         "that robot receives 1 Damage token.";
@@ -112,6 +114,7 @@ public enum Ability {
             case Recompile:
                 return "Recompile: Once each turn, you may discard the hand of Program cards " +
                     "dealt to you and draw a new hand from the deck. Your robot then receives 1 Damage token.";
+            //Implemented
             case ReverseGear:
                 return "Reverse Gear: Whenever you execute a Back Up, you may move your robot " +
                         "back 2 spaces instead. Priority is that of the Back Up.";

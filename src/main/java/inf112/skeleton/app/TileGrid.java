@@ -328,6 +328,10 @@ public class TileGrid{
         int columnsToMove = movement[1];
 
         if(move==Program.BACK){
+            if(playerHasAbility(playerNumber,Ability.ReverseGear)){
+                rowsToMove *= -2;
+                columnsToMove *= -2;
+            }
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
@@ -436,9 +440,15 @@ public class TileGrid{
     private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
         Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,columnsToMove);
         if(getTile(coordinate).hasGameObject(GameObjectType.ROBOT)){
+
             Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
             int[] move= calculateMove(directionOfMove);
             movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
+
+            //If the player who pushes has a ramming gear ability, the other player takes some damage
+            if(playerHasAbility(player.getPlayerNumber(),Ability.RammingGear)){
+                otherPlayer.receiveDamage();
+            }
         }
 
 
@@ -638,11 +648,7 @@ public class TileGrid{
                 }
             }
         }
-
-
     }
-
-
 
     /**
      * Figures out if the laser can keep firing
@@ -651,6 +657,9 @@ public class TileGrid{
      */
     private boolean continueFiring(Coordinate position){
         if(tileCheck(position,false)) {
+            return false;
+        }
+        if(getTile(position).hasGameObject(GameObjectType.ROBOT)){
             return false;
         }
         position = position.moveCoordinate();

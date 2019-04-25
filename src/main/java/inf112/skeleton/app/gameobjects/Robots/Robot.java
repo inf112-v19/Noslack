@@ -3,6 +3,7 @@ package inf112.skeleton.app.gameobjects.Robots;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
@@ -28,7 +29,10 @@ public abstract class Robot implements IRobot{
     private boolean hasMoved;
     boolean powerDown;
 
-    public void create(){
+    public void create(int playerNumber,Orientation orientation, Coordinate position){
+        this.orientation = orientation;
+        this.position = position;
+        this.playerNumber = playerNumber;
         this.name = "Robot " + playerNumber;
         this.health = 9;
         this.lives = 3;
@@ -60,7 +64,7 @@ public abstract class Robot implements IRobot{
     void turnSprite(){
         try {
             sprite.setRotation(this.orientation.turnSprite());
-            this.position.setOrientation(orientation);
+            this.position.setOrientation(this.orientation);
         }catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error in Player turnSprite");
@@ -286,5 +290,10 @@ public abstract class Robot implements IRobot{
     @Override
     public int compareTo(Object o) {
         return 1;
+    }
+
+    @Override
+    public GameObjectType getGameObjectType() {
+        return GameObjectType.ROBOT;
     }
 }
