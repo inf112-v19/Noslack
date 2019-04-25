@@ -301,6 +301,9 @@ public class RoboRally extends Game implements InputProcessor {
                     gameSounds.resumeGameMusic();
                 }
             }
+            if(spriteContainer.isInsidePowerDown(screenX,screenY)){
+                this.tileGrid.getRobot(currentPlayer).powerDown();
+            }
             spriteContainer.isInsideCard(screenX,screenY,currentAbility);
         }
         return false;
