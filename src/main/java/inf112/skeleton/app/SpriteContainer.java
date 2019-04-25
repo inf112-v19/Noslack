@@ -40,6 +40,9 @@ public class SpriteContainer {
     private int gridRows = 12;
     private int gridColumns = 12;
     private boolean mute = false;
+    private float inc = 0;
+    private ProgramCard hoverCard;
+    private boolean hovered;
 
     public SpriteContainer(SpriteBatch batch){
         this.batch = batch;
@@ -93,12 +96,13 @@ public class SpriteContainer {
 
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
-            font.setColor(255,255,255,1);
-            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
+            if (card != hoverCard || !hovered){
+                font.setColor(255,255,255,1);
+                font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
+                font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
+            }
         }
         this.cardBack.draw(this.batch);
-
     }
 
     public void getCardSprite(AbilityCard abilityCard){
@@ -212,6 +216,45 @@ public class SpriteContainer {
         sprite.setPosition(newX, newY);
         sprite.draw(this.batch);
         this.batch.end();
+    }
+
+    public boolean isInsideBack(float screenX, float screenY){
+        return isInsideSprite(screenX,screenY,this.cardBack);
+    }
+
+    private float hoverScale(){
+        inc += 0.1;
+        float num = 1+(float)(Math.abs(Math.cos(inc))/3);
+        return num;
+    }
+
+    public void isHoveringCard(float screenX, float screenY, ArrayList<ProgramCard> hand){
+        float scale = hoverScale();
+        if (hovered){
+            hoverCard.getSprite().setScale(1);
+        }
+        boolean hover = false;
+
+        for(ProgramCard card : hand){
+            if (isInsideSprite(screenX,screenY,card.getSprite())){
+                hoverCard = card;
+                hover = true;
+                hovered = true;
+                card.getSprite().setScale(scale);
+
+
+            }
+        }
+        if(isInsideGo(screenX, screenY)){
+            goButton.setScale(scale);
+        } else {
+            goButton.setScale(1);
+        }
+        if (!hover && hovered){
+            hoverCard.getSprite().setScale(1);
+            inc = 0;
+            hovered = false;
+        }
     }
 
     public boolean isInsideGo(float screenX, float screenY){
