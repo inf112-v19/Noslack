@@ -648,11 +648,7 @@ public class TileGrid{
                 }
             }
         }
-
-
     }
-
-
 
     /**
      * Figures out if the laser can keep firing
@@ -661,6 +657,9 @@ public class TileGrid{
      */
     private boolean continueFiring(Coordinate position){
         if(tileCheck(position,false)) {
+            return false;
+        }
+        if(getTile(position).hasGameObject(GameObjectType.ROBOT)){
             return false;
         }
         position = position.moveCoordinate();
