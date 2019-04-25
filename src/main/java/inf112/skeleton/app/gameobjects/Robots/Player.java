@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
@@ -20,15 +21,15 @@ public class Player extends Robot {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this(playerNumber, Orientation.FACING_NORTH);
+        this(playerNumber, Orientation.FACING_NORTH, new Coordinate(0,0));
     }
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
-    public Player(int playerNumber,Orientation orientation){
-        create(playerNumber, orientation);
+    public Player(int playerNumber, Orientation orientation, Coordinate position){
+        create(playerNumber, orientation, position);
         this.name = "Player";
         this.programHand = new ArrayList<>();
         evaluateSprite();
@@ -82,5 +83,10 @@ public class Player extends Robot {
     @Override
     public String toString(){
         return this.playerNumber + ":" + this.name;
+    }
+
+    @Override
+    public boolean isAI(){
+        return false;
     }
 }

@@ -124,6 +124,7 @@ public enum Ability {
                 return "Scrambler: Whenever you could fire your main laser at a robot, you may " +
                         "instead fire the Scrambler. This replaces the target robot's next programmed card with " +
                         "the top Program card from the deck. You can't use this Option on the fifth register.";
+            //Implemented
             case SuperiorArchive:
                 return "Superior Archive: When reentering play after being destroyed your " +
                         "robot doesn't receive the normal 2 Damage tokens.";

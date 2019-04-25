@@ -29,8 +29,9 @@ public abstract class Robot implements IRobot{
     private boolean hasMoved;
     boolean powerDown;
 
-    public void create(int playerNumber,Orientation orientation){
+    public void create(int playerNumber,Orientation orientation, Coordinate position){
         this.orientation = orientation;
+        this.position = position;
         this.playerNumber = playerNumber;
         this.name = "Robot " + playerNumber;
         this.health = 9;
@@ -257,7 +258,11 @@ public abstract class Robot implements IRobot{
     public void respawn(){
         reset();
         takeLives();
-        setHealth(7);
+        if(hasAbility(Ability.SuperiorArchive)){
+            setHealth(10);
+        }else {
+            setHealth(7);
+        }
         setPosition(this.backUp);
         setOrientation(this.backUp.getOrientation());
     }

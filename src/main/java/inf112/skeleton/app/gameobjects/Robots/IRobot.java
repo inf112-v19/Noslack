@@ -244,4 +244,10 @@ public interface IRobot extends GameObject {
      * Call if player wins
      */
     void win();
+
+    /**
+     * Finds out if the Robot is an AI
+     * @return
+     */
+    boolean isAI();
 }

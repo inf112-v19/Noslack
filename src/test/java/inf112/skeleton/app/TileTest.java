@@ -45,7 +45,7 @@ public class TileTest {
     @Test
     public void playerPathBlockedByPusherOnNextTile() {
         Tile tile = new Tile(GameObjectType.STANDARD_TILE);
-        Player player = new Player(0,Orientation.FACING_EAST);
+        Player player = new Player(0,Orientation.FACING_EAST,new Coordinate(0,0));
         tile.addObjectOnTile(new Pusher(Orientation.FACING_EAST));
         assertTrue(tile.playerPathBlocked(player, player.getOrientation()));
     }
@@ -60,7 +60,7 @@ public class TileTest {
     @Test
     public void playerPathBlockedByLaserOutletOnNextTile() {
         Tile tile = new Tile(GameObjectType.STANDARD_TILE);
-        Player player = new Player(0,Orientation.FACING_EAST);
+        Player player = new Player(0,Orientation.FACING_EAST,new Coordinate(0,0));
         tile.addObjectOnTile(new LaserOutlet(Orientation.FACING_EAST,false));
         assertTrue(tile.playerPathBlocked(player, player.getOrientation()));
     }

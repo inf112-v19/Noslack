@@ -30,6 +30,8 @@ public class SpriteContainer {
     private Sprite lifeHeart;
     private Sprite cardBack;
     private Sprite emptyCard;
+    private Sprite powerDownButton;
+    private Sprite poweredDownButton;
     private SpriteBatch batch;
     private int drawPositionX;
     private int drawPositionY;
@@ -40,6 +42,7 @@ public class SpriteContainer {
     private int gridRows = 12;
     private int gridColumns = 12;
     private boolean mute = false;
+    private boolean poweredDown = false;
 
     public SpriteContainer(SpriteBatch batch){
         this.batch = batch;
@@ -69,6 +72,11 @@ public class SpriteContainer {
         this.cardBack.setPosition(730,400);
         this.emptyCard = setSprite("./assets/cards/emptyCard.png");
         this.emptyCard.setPosition(550,30);
+        this.powerDownButton = setSprite("./assets/buttons/powerDownButton.png");
+        this.powerDownButton.setPosition(33,170);
+        this.poweredDownButton = setSprite("./assets/buttons/poweredDownButton.png");
+        this.poweredDownButton.setPosition(33,170);
+
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
         this.abilityText = "";
@@ -154,17 +162,22 @@ public class SpriteContainer {
         this.drawPositionY = 0;
         //Drawing the go button
         goButton.draw(this.batch);
+        if (poweredDown){
+            poweredDownButton.draw(this.batch);
+        } else {
+            powerDownButton.draw(this.batch);
+        }
         if (mute){
             muteButton.draw(this.batch);
         } else {
             unMuteButton.draw(this.batch);
         }
-        for (int i = 0; i < tileGrid.getPlayer(0).getLives(); i++){
+        for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
             this.lifeHeart.setPosition((12+40*i), 350);
             this.lifeHeart.draw(this.batch);
         }
         font.setColor(0,255,0,1);
-        font.draw(this.batch,"HP: "+tileGrid.getPlayer(0).getHealth(),80,320);
+        font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
         font.setColor(255,255,255,1);
     }
 
@@ -221,16 +234,20 @@ public class SpriteContainer {
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
-    public boolean isInsideMute(float screenX, float screenY){
-        if (isInsideSprite(screenX,screenY,this.muteButton)){
-            if(!mute){
-                mute = true;
-            } else{
-                mute = false;
-            }
+    public boolean isInsidePowerDown(float screenX, float screenY) {
+        if (isInsideSprite(screenX,screenY,this.powerDownButton)){
+            poweredDown = !poweredDown;
             return true;
         }
-        return isInsideSprite(screenX,screenY,this.muteButton);
+        return false;
+    }
+
+    public boolean isInsideMute(float screenX, float screenY){
+        if (isInsideSprite(screenX,screenY,this.muteButton)){
+            mute = !mute;
+            return true;
+        }
+        return false;
     }
 
     public void drawTextBox(String text, int length){
