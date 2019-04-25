@@ -242,7 +242,11 @@ public abstract class Robot implements IRobot{
     public void respawn(){
         reset();
         takeLives();
-        setHealth(7);
+        if(hasAbility(Ability.SuperiorArchive)){
+            setHealth(10);
+        }else {
+            setHealth(7);
+        }
         setPosition(this.backUp);
         setOrientation(this.backUp.getOrientation());
     }
