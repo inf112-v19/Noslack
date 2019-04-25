@@ -93,6 +93,7 @@ public enum Ability {
             case PowerDownShield:
                 return "Power-Down Shield: As long as your robot is powered down, each " +
                     "register phase you can prevent up to 1 Damage to it from each of the four directions.";
+            //Implemented
             case PressorBeam:
                 return "Pressor Beam: Whenever you could fire your main laser at a robot you " +
                         "may instead fire the Pressor Beam. This moves the target robot 1 space away from your robot.";
@@ -121,6 +122,7 @@ public enum Ability {
             case SuperiorArchive:
                 return "Superior Archive: When reentering play after being destroyed your " +
                         "robot doesn't receive the normal 2 Damage tokens.";
+            //Implemented
             case TractorBeam:
                 return "Tractor Beam: Whenever you could fire your main laser at a robot that " +
                         "isn't in an adjacent space, you may instead fire the Tractor Beam. This pulls the target robot " +
