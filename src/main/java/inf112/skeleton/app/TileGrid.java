@@ -538,23 +538,45 @@ public class TileGrid{
         Coordinate position = getPlayerPosition(playerNumber);
         position.setOrientation(getPlayer(playerNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
-        boolean dual = playerHasAbility(0, Ability.DoubleBarreledLaser);
+        boolean dual = playerHasAbility(playerNumber, Ability.DoubleBarreledLaser);
+
+        boolean highPowered = playerHasAbility(playerNumber, Ability.HighPoweredLaser);
 
         boolean firing = continueFiring(position);
+        if(!firing && highPowered){
+            firing = true;
+            highPowered = false;
+        }
+
         while (firing) {
             position = position.moveCoordinate();
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
             firing = continueFiring(position);
+
+            if(!firing && highPowered){
+                firing = true;
+                highPowered = false;
+            }
         }
         if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
             position = getPlayerPosition(playerNumber);
             position.setOrientation(getPlayer(playerNumber).getOrientation().opposite());
 
             firing = continueFiring(position);
+            if(!firing && highPowered){
+                firing = true;
+                highPowered = false;
+            }
+
             while (firing) {
                 position = position.moveCoordinate();
                 getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
                 firing = continueFiring(position);
+
+                if(!firing && highPowered){
+                    firing = true;
+                    highPowered = false;
+                }
             }
         }
     }
@@ -593,10 +615,11 @@ public class TileGrid{
                 return true;
             }
         }
-        else{
-            if(tile.orientationBlocked(position.getOrientation())){
-                return true;
-            }
+        else if(tile.hasGameObject(GameObjectType.ROBOT)){
+            return true;
+        }
+        else if(tile.orientationBlocked(position.getOrientation())){
+            return true;
         }
         return false;
     }
