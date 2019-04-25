@@ -328,6 +328,10 @@ public class TileGrid{
         int columnsToMove = movement[1];
 
         if(move==Program.BACK){
+            if(playerHasAbility(playerNumber,Ability.ReverseGear)){
+                rowsToMove *= -2;
+                columnsToMove *= -2;
+            }
             rowsToMove *= -1;
             columnsToMove *= -1;
         }

@@ -114,6 +114,7 @@ public enum Ability {
             case Recompile:
                 return "Recompile: Once each turn, you may discard the hand of Program cards " +
                     "dealt to you and draw a new hand from the deck. Your robot then receives 1 Damage token.";
+            //Implemented
             case ReverseGear:
                 return "Reverse Gear: Whenever you execute a Back Up, you may move your robot " +
                         "back 2 spaces instead. Priority is that of the Back Up.";
