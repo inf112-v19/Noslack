@@ -132,7 +132,7 @@ public class AbilityCard implements RRCard {
 
     /**
      * Finds out if the ability needs to be active to work
-     * @return If it needs to be acttivated to function.
+     * @return If it needs to be activated to function.
      */
     public boolean activeAbility(){
         return this.ability.activeAbility();

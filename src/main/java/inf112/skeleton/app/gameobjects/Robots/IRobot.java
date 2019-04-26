@@ -14,7 +14,7 @@ public interface IRobot extends GameObject {
      * Get the players number
      * @return The players number.
      */
-    int getPlayerNumber();
+    int getRobotNumber();
 
     /**
      * Get method for health
@@ -247,7 +247,7 @@ public interface IRobot extends GameObject {
 
     /**
      * Finds out if the Robot is an AI
-     * @return
+     * @return True if the Robot is an AI
      */
     boolean isAI();
 }

@@ -135,7 +135,7 @@ public class TileGrid{
         // Conveyor
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
-            moveInDirectionOfConveyor(conveyor, player.getPlayerNumber());
+            moveInDirectionOfConveyor(conveyor, player.getRobotNumber());
         }
         // Repair Station
         if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
@@ -169,11 +169,11 @@ public class TileGrid{
             Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
             tile.removeObjectFromTile(player);
             getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
-            setPlayerPosition(player.getPlayerNumber(),teleporter.getTeleportLocation());
+            setPlayerPosition(player.getRobotNumber(),teleporter.getTeleportLocation());
         }
         // Hole
         if(tile.hasGameObject(GameObjectType.HOLE)){
-            respawnPlayer(player.getPlayerNumber());
+            respawnPlayer(player.getRobotNumber());
         }
         // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
@@ -184,10 +184,10 @@ public class TileGrid{
         }
         // Rotator activation
         if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
-            applyRotation(Program.RIGHT, player.getPlayerNumber());
+            applyRotation(Program.RIGHT, player.getRobotNumber());
         }
         if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
-            applyRotation(Program.LEFT, player.getPlayerNumber());
+            applyRotation(Program.LEFT, player.getRobotNumber());
         }
         // Pusher activation
         if(tile.hasGameObject(GameObjectType.PUSHER)){
@@ -196,13 +196,13 @@ public class TileGrid{
 
             int n[] = calculateMove(orientation);
             if((currentPhase+1)%2==0 && pusher.isEven()){
-                movePlayer(player.getPlayerNumber(),n[0],n[1]);
+                movePlayer(player.getRobotNumber(),n[0],n[1]);
             }
             else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
-                movePlayer(player.getPlayerNumber(),n[0],n[1]);
+                movePlayer(player.getRobotNumber(),n[0],n[1]);
             }
             int[] move = calculateMove(pusher.getOrientation());
-            movePlayer(player.getPlayerNumber(), move[0],move[1]);
+            movePlayer(player.getRobotNumber(), move[0],move[1]);
         }
     }
     /**
@@ -287,9 +287,9 @@ public class TileGrid{
             priorities.add(robot.getNextProgramPriority());
         }
         while(!priorities.isEmpty()){
-            int priority=0;
-            for(int p : priorities){
-                if(priority>p){
+            Integer priority=0;
+            for(Integer p : priorities){
+                if(priority<p){
                     priority=p;
                 }
             }
@@ -442,10 +442,10 @@ public class TileGrid{
 
             Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
             int[] move= calculateMove(directionOfMove);
-            movePlayer(otherPlayer.getPlayerNumber(),move[0],move[1]);
+            movePlayer(otherPlayer.getRobotNumber(),move[0],move[1]);
 
             //If the player who pushes has a ramming gear ability, the other player takes some damage
-            if(playerHasAbility(player.getPlayerNumber(),Ability.RammingGear)){
+            if(playerHasAbility(player.getRobotNumber(),Ability.RammingGear)){
                 otherPlayer.receiveDamage();
             }
         }
@@ -511,8 +511,14 @@ public class TileGrid{
      * Reset a player
      * @param playerNumber Player number
      */
-    void resetPlayer(int playerNumber){
+    void resetRobot(int playerNumber){
         getRobot(playerNumber).reset();
+    }
+
+    void resetRobots(){
+        for(IRobot robot : this.robots){
+            robot.reset();
+        }
     }
 
     /**
@@ -746,22 +752,22 @@ public class TileGrid{
             switch (getRobot(playerNumber).getOrientation()) {
                 case FACING_NORTH:
                     if(p.getPosition().getRow()==row && p.getPosition().getColumn()>column) {
-                        playerInLine = p.getPlayerNumber();
+                        playerInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_WEST:
                     if(p.getPosition().getColumn()==column && p.getPosition().getRow()<row) {
-                        playerInLine = p.getPlayerNumber();
+                        playerInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_SOUTH:
                     if(p.getPosition().getRow()==row && p.getPosition().getColumn()<column) {
-                        playerInLine = p.getPlayerNumber();
+                        playerInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_EAST:
                     if(p.getPosition().getColumn()==column && p.getPosition().getRow()>row) {
-                        playerInLine = p.getPlayerNumber();
+                        playerInLine = p.getRobotNumber();
                     }
                     break;
             }

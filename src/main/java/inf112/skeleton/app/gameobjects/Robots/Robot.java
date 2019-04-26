@@ -54,7 +54,7 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
-    public int getPlayerNumber() {
+    public int getRobotNumber() {
         return playerNumber;
     }
 
@@ -182,7 +182,12 @@ public abstract class Robot implements IRobot{
 
     @Override
     public int getNextProgramPriority(){
-        return program.peek().getPriority();
+        if(this.program.isEmpty()){
+            return 0;
+        }
+        else {
+            return program.peek().getPriority();
+        }
     }
 
     @Override
