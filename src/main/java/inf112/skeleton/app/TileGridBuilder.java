@@ -61,7 +61,7 @@ public class TileGridBuilder {
                     }
                 }
             }
-            for(IRobot player : getPlayers()){
+            for(IRobot player : getRobots()){
                 player.setFlagsVisitedSize(getFlagsInitiated());
             }
             bufferedReader.close();
@@ -317,7 +317,7 @@ public class TileGridBuilder {
     /**
      * @return get the number of
      */
-    public ArrayList<IRobot> getPlayers() {
+    public ArrayList<IRobot> getRobots() {
         return this.robots;
     }
 
@@ -331,7 +331,7 @@ public class TileGridBuilder {
     /**
      * @return get the number of players in the grid.
      */
-    public int getPlayersInitiated() {
+    public int getRobotsInitiated() {
         return this.playersInitiated;
     }
 

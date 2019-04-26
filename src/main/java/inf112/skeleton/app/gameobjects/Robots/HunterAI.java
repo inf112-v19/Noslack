@@ -62,6 +62,6 @@ public class HunterAI extends AI {
     }
     @Override
     public String toString(){
-        return this.playerNumber + ":" + this.name;
+        return this.robotNumber + ":" + this.name;
     }
 }

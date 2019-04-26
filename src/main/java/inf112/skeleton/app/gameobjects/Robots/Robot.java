@@ -12,7 +12,7 @@ import java.util.Stack;
 
 public abstract class Robot implements IRobot{
     String name;
-    int playerNumber;
+    int robotNumber;
     Sprite sprite;
     Orientation orientation;
     Coordinate position;
@@ -29,11 +29,11 @@ public abstract class Robot implements IRobot{
     private boolean hasMoved;
     boolean powerDown;
 
-    public void create(int playerNumber,Orientation orientation, Coordinate position){
+    public void create(int robotNumber,Orientation orientation, Coordinate position){
         this.orientation = orientation;
         this.position = position;
-        this.playerNumber = playerNumber;
-        this.name = "Robot " + playerNumber;
+        this.robotNumber = robotNumber;
+        this.name = "Robot " + robotNumber;
         this.health = 9;
         this.lives = 3;
         this.program = new Stack<>();
@@ -55,7 +55,7 @@ public abstract class Robot implements IRobot{
 
     @Override
     public int getRobotNumber() {
-        return playerNumber;
+        return this.robotNumber;
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class Robot implements IRobot{
             this.position.setOrientation(this.orientation);
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in Player turnSprite");
+            System.out.println("Error in Robot turnSprite");
         }
     }
 
@@ -114,7 +114,7 @@ public abstract class Robot implements IRobot{
     }
 
     /**
-     * Take a live from player when respawning
+     * Take a live from robot when respawning
      */
     private void takeLives(){
         this.lives--;

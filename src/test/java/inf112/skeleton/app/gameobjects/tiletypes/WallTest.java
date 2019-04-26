@@ -35,20 +35,20 @@ public class WallTest {
     @Test
     public void playerHitWallOnTile() {
         TileGrid tileGrid = new TileGrid("wallTestMap.txt");
-        Coordinate cor = tileGrid.getPlayerPosition(0);
+        Coordinate cor = tileGrid.getRobotPosition(0);
         tileGrid.getRobot(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        Coordinate cor2 = new Coordinate(tileGrid.getPlayerPosition(0));
+        Coordinate cor2 = new Coordinate(tileGrid.getRobotPosition(0));
         assertEquals(cor,cor2);
     }
 
     @Test
     public void playerHitWallOnNextTile() {
         TileGrid tileGrid = new TileGrid("wallTestMap2.txt");
-        Coordinate cor = tileGrid.getPlayerPosition(0);
+        Coordinate cor = tileGrid.getRobotPosition(0);
         tileGrid.getRobot(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
-        Coordinate cor2 = new Coordinate(tileGrid.getPlayerPosition(0));
+        Coordinate cor2 = new Coordinate(tileGrid.getRobotPosition(0));
         assertEquals(cor,cor2);
     }
 }

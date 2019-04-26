@@ -68,10 +68,10 @@ public class Tile implements GameObject{
         this.objectsOnTile.remove(objectToRemove);
     }
 
-    public void removePlayerLaserFromTile(int playerNumber){
+    public void removeRobotLaserFromTile(int robotNumber){
         for(GameObject object : objectsOnTile){
             if(object.getGameObjectType().equals(GameObjectType.LASER_BEAM)){
-                if(((LaserBeam)object).getPlayerNumber()==playerNumber){
+                if(((LaserBeam)object).getRobotNumber()==robotNumber){
                     removeObjectFromTile(object);
                 }
             }
@@ -87,8 +87,8 @@ public class Tile implements GameObject{
         return this.objectsOnTile;
     }
 
-    public Boolean hasPlayer(IRobot player){
-        return this.objectsOnTile.contains(player);
+    public Boolean hasRobot(IRobot robot){
+        return this.objectsOnTile.contains(robot);
     }
 
     public Boolean hasGameObject(GameObjectType objectType){
@@ -114,7 +114,7 @@ public class Tile implements GameObject{
 
     /**
      * Finds out which orientations on the tile are blocked
-     * TODO Add new objects that kan block player
+     * TODO Add new objects that kan block robot
      * @param gameObject Object that was just added to tile
      */
     private void tileBlocked(GameObject gameObject){
@@ -132,12 +132,12 @@ public class Tile implements GameObject{
     }
 
     /**
-     * Finds out if the players path is blocked by object.
-     * @param player player in question
-     * @return if Player can move
+     * Finds out if the robots path is blocked by object.
+     * @param robot robot in question
+     * @return if Robot can move
      */
-    public boolean playerPathBlocked(IRobot player, Orientation directionOfMove){
-        if(this.objectsOnTile.contains(player)){
+    public boolean robotPathBlocked(IRobot robot, Orientation directionOfMove){
+        if(this.objectsOnTile.contains(robot)){
                 return this.blocked.contains(directionOfMove);
         }
         else{

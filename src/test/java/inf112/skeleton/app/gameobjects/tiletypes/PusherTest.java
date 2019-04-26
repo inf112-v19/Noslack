@@ -44,12 +44,12 @@ public class PusherTest {
             tileGrid.continueMove(0);
             tileGrid.activateTiles();
         }
-        Assert.assertEquals(new Coordinate(1,1),tileGrid.getPlayerPosition(0));
+        Assert.assertEquals(new Coordinate(1,1),tileGrid.getRobotPosition(0));
     }
     @Test
     public void pushPlayerEvenTest() {
         TileGrid tileGrid = new TileGrid("pusherEvenTestMap.txt");
         tileGrid.activateTiles(2);
-        assertEquals(new Coordinate(1,2),tileGrid.getPlayerPosition(0));
+        assertEquals(new Coordinate(1,2),tileGrid.getRobotPosition(0));
     }
 }

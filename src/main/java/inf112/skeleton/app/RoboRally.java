@@ -20,7 +20,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteBatch batch;
     private TileGrid tileGrid;
     private ArrayList<Integer> robotQueue;
-    private int currentPlayer;
+    private int currentRobot;
     private ProgramDeck programDeck;
     private AbilityDeck abilityDeck;
     private CardSpriteInteraction CSI;
@@ -49,7 +49,7 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     public void createGame(){
-        this.currentPlayer=0;
+        this.currentRobot =0;
 
         this.gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
@@ -60,17 +60,16 @@ public class RoboRally extends Game implements InputProcessor {
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
-        int playerHealth = this.tileGrid.getPlayer().getHealth();
-        for(IRobot player :this.tileGrid.getRobots()){
-            player.drawAbility(this.abilityDeck.dealOne());
-            if(player.hasAbility(Ability.ExtraMemory)){
-                playerHealth++;
+        for(IRobot robot :this.tileGrid.getRobots()){
+            robot.drawAbility(this.abilityDeck.dealOne());
+            robot.drawPrograms(this.programDeck.deal(robot.getHealth()));
+            if(robot.hasAbility(Ability.ExtraMemory)){
+                robot.extraCard(this.programDeck.dealOne());
             }
-            player.drawPrograms(this.programDeck.deal(playerHealth));
         }
-        this.programHand = this.tileGrid.getPlayerProgramHand(this.tileGrid.getPlayer().getRobotNumber());
+        this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
         this.animator = new CardSpriteAnimation(programHand);
-        this.cardTestSprite = tileGrid.getPlayerProgramHand(this.currentPlayer).get(0).getSprite();
+        this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
         this.emptyProgram = new ProgramCard(0, Program.NONE);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = this.emptyAbility;
@@ -98,7 +97,7 @@ public class RoboRally extends Game implements InputProcessor {
             performPhase();
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
-                    this.robotQueue = this.tileGrid.playerQueue();
+                    this.robotQueue = this.tileGrid.robotQueue();
                     if(this.activatedTiles){
                         activateTiles();
                         this.activatedTiles = false;
@@ -150,24 +149,24 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
-        if(this.tileGrid.getRobot(this.currentPlayer).isFinished()){
+        if(this.tileGrid.getRobot(this.currentRobot).isFinished()){
             this.currentPhase = 100;
         }
         if (this.currentPhase <= 5) {
             // Runs per phase
-            if (this.tileGrid.getPlayerCurrentMove(this.currentPlayer) == Program.NONE) {
-                this.tileGrid.applyNextProgram(this.currentPlayer);
-                this.currentPlayer=this.robotQueue.remove(0);
-                if(this.robotQueue.isEmpty()) {
-                    this.robotQueue = this.tileGrid.playerQueue();
+            if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
+                this.tileGrid.applyNextProgram(this.currentRobot);
+                this.currentRobot =this.robotQueue.remove(0);
+                if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
+                    this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
                     this.activatedTiles = true;
                 }
             }
         }
         // Runs mid phase
-        if (!(this.tileGrid.getPlayerCurrentMove(this.currentPlayer) == Program.NONE)) {
-            this.tileGrid.continueMove(this.currentPlayer);
+        if (!(this.tileGrid.getRobotCurrentMove(this.currentRobot) == Program.NONE)) {
+            this.tileGrid.continueMove(this.currentRobot);
         } else if (this.currentPhase > 5){
             dealNewCards();
             this.sequenceReady = false;
@@ -182,16 +181,15 @@ public class RoboRally extends Game implements InputProcessor {
         this.robotQueue.clear();
         for(IRobot robot : this.tileGrid.getRobots()){
             if(!robot.isPoweredDown()) {
-                int playerHealth = robot.getHealth();
-                if (this.tileGrid.playerHasAbility(robot.getRobotNumber(), Ability.ExtraMemory)) {
-                    playerHealth++;
+                robot.drawPrograms(this.programDeck.deal(robot.getHealth()));
+                if (this.tileGrid.robotHasAbility(robot.getRobotNumber(), Ability.ExtraMemory)) {
+                    robot.extraCard(this.programDeck.dealOne());
                 }
-                robot.drawPrograms(this.programDeck.deal(playerHealth));
             }
         }
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             try{
-                this.currentAbility = this.tileGrid.getRobot(this.currentPlayer).getAbilityHand().get(0);
+                this.currentAbility = this.tileGrid.getRobot(this.currentRobot).getAbilityHand().get(0);
 
             }catch(Exception e){
                 System.out.println("There is a bug in DealNewCards() in Roborally class - get(0)");
@@ -204,8 +202,8 @@ public class RoboRally extends Game implements InputProcessor {
         this.animation = true;
     }
 
-    public void discardAbility(int playerNumber, RRCard card){
-        this.tileGrid.getRobot(playerNumber).discardAbility(card);
+    public void discardAbility(int robotNumber, RRCard card){
+        this.tileGrid.getRobot(robotNumber).discardAbility(card);
         this.abilityDeck.returnCard(card);
     }
 
@@ -293,7 +291,7 @@ public class RoboRally extends Game implements InputProcessor {
                 }
             }
             if(this.spriteContainer.isInsidePowerDown(screenX,screenY)){
-                this.tileGrid.getRobot(this.currentPlayer).powerDown();
+                this.tileGrid.getRobot(this.currentRobot).powerDown();
             }
             this.spriteContainer.isInsideCard(screenX,screenY,this.currentAbility);
         }

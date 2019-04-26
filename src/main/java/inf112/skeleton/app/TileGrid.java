@@ -16,7 +16,7 @@ public class TileGrid{
     private int columns;
     private ArrayList<IRobot> robots;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
-    private int playersInitiated; // How many robots have been initiated so far.
+    private int robotsInitiated; // How many robots have been initiated so far.
 
     /**
      * Constructor with specifications.
@@ -41,10 +41,10 @@ public class TileGrid{
     private void build(String file) {
         TileGridBuilder builder= new TileGridBuilder(file);
         this.tileGrid = builder.getTileGrid();
-        this.robots = builder.getPlayers();
+        this.robots = builder.getRobots();
         this.rows = builder.getRows();
         this.columns = builder.getColumns();
-        this.playersInitiated = builder.getPlayersInitiated();
+        this.robotsInitiated = builder.getRobotsInitiated();
         this.flagsInitiated = builder.getFlagsInitiated();
     }
 
@@ -74,10 +74,10 @@ public class TileGrid{
 
     /**
      * Get the number of robots in TileGrid
-     * @return Players in grid
+     * @return Robots in grid
      */
-    int getPlayersInitiated(){
-        return playersInitiated;
+    int getRobotsInitiated(){
+        return robotsInitiated;
     }
 
     /**
@@ -100,10 +100,9 @@ public class TileGrid{
     }
 
     /**
-     * Runs trough the grid to find the players.
-     * Then activates a function to find out what kind of tile the player is standing on.
+     * Runs trough the grid to find the robots.
+     * Then activates a function to find out what kind of tile the robot is standing on.
      */
-
     public void activateTiles(){
         activateTiles(0);
     }
@@ -111,9 +110,9 @@ public class TileGrid{
     public void activateTiles(int currentPhase){
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
-                for (IRobot player : robots) {
-                    if (tile.hasPlayer(player) && !player.hasMoved()) {
-                        playerOnTile(tile, player, currentPhase);
+                for (IRobot robot : robots) {
+                    if (tile.hasRobot(robot) && !robot.hasMoved()) {
+                        robotOnTile(tile, robot, currentPhase);
                     }
                 }
             }
@@ -126,68 +125,68 @@ public class TileGrid{
 
 
     /**
-     * Finds out what kind of tile the player is standing on and
-     * if it has a function which effects the player.
+     * Finds out what kind of tile the robot is standing on and
+     * if it has a function which effects the robot.
      * @param tile The active file
-     * @param player The active player
+     * @param robot The active robot
      */
-    private void playerOnTile(Tile tile, IRobot player, int currentPhase) {
+    private void robotOnTile(Tile tile, IRobot robot, int currentPhase) {
         // Conveyor
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
-            moveInDirectionOfConveyor(conveyor, player.getRobotNumber());
+            moveInDirectionOfConveyor(conveyor, robot.getRobotNumber());
         }
         // Repair Station
         if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
-            if (player.isFinished()) {
-                player.repair();
-                player.setBackUp();
+            if (robot.isFinished()) {
+                robot.repair();
+                robot.setBackUp();
             }
         }
         // Flag
         if(tile.hasGameObject(GameObjectType.FLAG)){
-            if(player.isFinished()){
+            if(robot.isFinished()){
                 int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
-                if(n==1||player.getFlag(n-1)){
+                if(n==1||robot.getFlag(n-1)){
                     //Creates a backUp
-                    player.setBackUp();
-                    if(!player.getFlag(n)) {
-                        player.visitFlag(n);
+                    robot.setBackUp();
+                    if(!robot.getFlag(n)) {
+                        robot.visitFlag(n);
                     }
-                    System.out.println("Visited: " + player.getFlagsVisited().toString());
+                    System.out.println("Visited: " + robot.getFlagsVisited().toString());
 
                     //if you are on the last flag, and visited all previous, you win.
                     if (n >= flagsInitiated) {
-                        player.win();
+                        robot.win();
                     }
                 }
             }
         }
         //Teleporter
-        if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (player.getMoveProgression() == 0)){
+        if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (robot.getMoveProgression() == 0)){
             Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
-            tile.removeObjectFromTile(player);
-            getTile(teleporter.getTeleportLocation()).addObjectOnTile(player);
-            setPlayerPosition(player.getRobotNumber(),teleporter.getTeleportLocation());
+            tile.removeObjectFromTile(robot);
+            getTile(teleporter.getTeleportLocation()).addObjectOnTile(robot);
+            setRobotPosition(robot.getRobotNumber(),teleporter.getTeleportLocation());
         }
         // Hole
         if(tile.hasGameObject(GameObjectType.HOLE)){
-            respawnPlayer(player.getRobotNumber());
+            respawnRobot(robot.getRobotNumber());
         }
         // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            laserDamagePlayer(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),player);
+            laserDamageRobot(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),robot);
         }
         if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
-            laserDamagePlayer(((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual(),player);
+            laserDamageRobot(((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual(),robot);
         }
         // Rotator activation
         if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
-            applyRotation(Program.RIGHT, player.getRobotNumber());
+            applyRotation(Program.RIGHT, robot.getRobotNumber());
         }
         if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
-            applyRotation(Program.LEFT, player.getRobotNumber());
+            applyRotation(Program.LEFT, robot.getRobotNumber());
         }
         // Pusher activation
         if(tile.hasGameObject(GameObjectType.PUSHER)){
@@ -196,54 +195,54 @@ public class TileGrid{
 
             int n[] = calculateMove(orientation);
             if((currentPhase+1)%2==0 && pusher.isEven()){
-                movePlayer(player.getRobotNumber(),n[0],n[1]);
+                moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
             else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
-                movePlayer(player.getRobotNumber(),n[0],n[1]);
+                moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
             int[] move = calculateMove(pusher.getOrientation());
-            movePlayer(player.getRobotNumber(), move[0],move[1]);
+            moveRobot(robot.getRobotNumber(), move[0],move[1]);
         }
     }
     /**
-     * Damage a player by laser
+     * Damage a robot by laser
      * @param dual Is the laser Dual
-     * @param player the player to be damaged
+     * @param robot the robot to be damaged
      */
-    private void laserDamagePlayer(boolean dual, IRobot player){
+    private void laserDamageRobot(boolean dual, IRobot robot){
         if (dual) {
-            if (player.receiveDamage(2)) respawnPlayer(player);
+            if (robot.receiveDamage(2)) respawnRobot(robot);
         }
         else {
-            if (player.receiveDamage()) respawnPlayer(player);
+            if (robot.receiveDamage()) respawnRobot(robot);
         }
     }
     /**
-     * Moves player on conveyor
-     * @param conveyor Conveyor the player is on
-     * @param playerNumber Players number
+     * Moves robot on conveyor
+     * @param conveyor Conveyor the robot is on
+     * @param robotNumber Robots number
      */
-    private void moveInDirectionOfConveyor(Conveyor conveyor, int playerNumber){
-        IRobot player = getRobot(playerNumber);
+    private void moveInDirectionOfConveyor(Conveyor conveyor, int robotNumber){
+        IRobot robot = getRobot(robotNumber);
         if(conveyor.getTurn() > 0){
-            applyRotation(Program.RIGHT,playerNumber);
+            applyRotation(Program.RIGHT,robotNumber);
         }
         if(conveyor.getTurn() < 0){
-            applyRotation(Program.LEFT,playerNumber);
+            applyRotation(Program.LEFT,robotNumber);
         }
         int[] move = calculateMove(conveyor.getOrientation());
         int rowsToMove = move[0];
         int colsToMove = move[1];
 
-        Coordinate nextTile = player.getPosition().moveCoordinate(rowsToMove,colsToMove);
+        Coordinate nextTile = robot.getPosition().moveCoordinate(rowsToMove,colsToMove);
 
-        movePlayer(playerNumber,rowsToMove,colsToMove);
-        if(conveyor.isFast() && !player.hasMoved()){
-            player.moved(true);
+        moveRobot(robotNumber,rowsToMove,colsToMove);
+        if(conveyor.isFast() && !robot.hasMoved()){
+            robot.moved(true);
             try{
                 if(getTile(nextTile).hasGameObject(GameObjectType.CONVEYOR)){
                     Conveyor nextConveyor = (Conveyor) getTile(nextTile).getGameObject(GameObjectType.CONVEYOR);
-                    moveInDirectionOfConveyor(nextConveyor,playerNumber);
+                    moveInDirectionOfConveyor(nextConveyor,robotNumber);
                 }
             }catch(ArrayIndexOutOfBoundsException e){
 
@@ -280,7 +279,7 @@ public class TileGrid{
      * Figures out the movement queue for the next phase based on the Program Card priorities.
      * @return A list
      */
-    public ArrayList<Integer> playerQueue(){
+    public ArrayList<Integer> robotQueue(){
         ArrayList<Integer> robotQueue = new ArrayList<>();
         ArrayList<Integer> priorities = new ArrayList<>();
         for(IRobot robot : this.robots){
@@ -301,27 +300,27 @@ public class TileGrid{
 
     /**
      * Apply the next program in the robots queue.
-     * @param playerNumber Player number
+     * @param robotNumber Robot number
      */
-    void applyNextProgram(int playerNumber){
-        getRobot(playerNumber).setNextProgram();
+    void applyNextProgram(int robotNumber){
+        getRobot(robotNumber).setNextProgram();
     }
 
     /**
-     *Apply rotation to a player
+     *Apply rotation to a robot
      * @param move the rotation to be applied.
-     * @param playerNumber the identifier of the player whose move should be continued.
+     * @param robotNumber the identifier of the robot whose move should be continued.
      */
-    private void applyRotation(Program move, int playerNumber){
-        getRobot(playerNumber).updateOrientation(move);
+    private void applyRotation(Program move, int robotNumber){
+        getRobot(robotNumber).updateOrientation(move);
     }
 
     /**
-     * Method that makes a player perform a move.
+     * Method that makes a robot perform a move.
      * @param move the move to apply
-     * @param playerNumber the number of the player that the move should be applied to
+     * @param robotNumber the number of the robot that the move should be applied to
      */
-    private void applyMove(Program move, int playerNumber){
+    private void applyMove(Program move, int robotNumber){
         int[] movement = calculateMove(getRobot(0).getOrientation());
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
@@ -330,67 +329,67 @@ public class TileGrid{
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
-        movePlayer(playerNumber, rowsToMove, columnsToMove);
+        moveRobot(robotNumber, rowsToMove, columnsToMove);
     }
 
     /**
-     * Method that continues the move a player has in progress.
-     * @param playerNumber the identifier of the player whose move should be continued.
+     * Method that continues the move a robot has in progress.
+     * @param robotNumber the identifier of the robot whose move should be continued.
      */
-    public void continueMove(int playerNumber){
-        Program currentMove = getRobot(playerNumber).getCurrentMove();
-        int moveProgression = getRobot(playerNumber).getMoveProgression();
+    public void continueMove(int robotNumber){
+        Program currentMove = getRobot(robotNumber).getCurrentMove();
+        int moveProgression = getRobot(robotNumber).getMoveProgression();
 
         if(moveProgression==currentMove.totalMoves()){
-            getRobot(playerNumber).setCurrentMove(Program.NONE);
-            getRobot(playerNumber).resetMoveProgress();
+            getRobot(robotNumber).setCurrentMove(Program.NONE);
+            getRobot(robotNumber).resetMoveProgress();
         }
         else{
             if(!currentMove.isMove()){
-                applyRotation(currentMove, playerNumber);
+                applyRotation(currentMove, robotNumber);
             }else{
-                applyMove(currentMove, playerNumber);
+                applyMove(currentMove, robotNumber);
             }
-            getRobot(playerNumber).progressMove();
+            getRobot(robotNumber).progressMove();
         }
     }
 
     /**
-     * Move the player
-     * @param playerNumber Player number
-     * @param rowsToMove Rows the Player is to move
-     * @param columnsToMove Columns the Player is to move
+     * Move the robot
+     * @param robotNumber Robot number
+     * @param rowsToMove Rows the robot is to move
+     * @param columnsToMove Columns the robot is to move
      */
-    public void movePlayer(int playerNumber, int rowsToMove, int columnsToMove){
-        int rowOfPlayer = getPlayerPosition(playerNumber).getRow();
-        int columnOfPlayer = getPlayerPosition(playerNumber).getColumn();
+    public void moveRobot(int robotNumber, int rowsToMove, int columnsToMove){
+        int rowOfRobot = getRobotPosition(robotNumber).getRow();
+        int columnOfRobot = getRobotPosition(robotNumber).getColumn();
 
-        if(!canMovePlayer(playerNumber, rowsToMove, columnsToMove)) return;
+        if(!canMoveRobot(robotNumber, rowsToMove, columnsToMove)) return;
 
-        this.tileGrid[rowOfPlayer][columnOfPlayer].removeObjectFromTile(getRobot(playerNumber));
-        this.tileGrid[rowOfPlayer+rowsToMove][columnOfPlayer+columnsToMove].addObjectOnTile(getRobot(playerNumber));
-        setPlayerPosition(playerNumber, getRobot(playerNumber).getPosition().moveCoordinate(rowsToMove,columnsToMove));
+        this.tileGrid[rowOfRobot][columnOfRobot].removeObjectFromTile(getRobot(robotNumber));
+        this.tileGrid[rowOfRobot+rowsToMove][columnOfRobot+columnsToMove].addObjectOnTile(getRobot(robotNumber));
+        setRobotPosition(robotNumber, getRobot(robotNumber).getPosition().moveCoordinate(rowsToMove,columnsToMove));
     }
 
     /**
      * TODO Simplify the if statements
-     * Checks if the player can move.
-     * @param playerNumber Players number
-     * @param rowsToMove How many rows the player needs to move
-     * @param columnsToMove How many columns player needs to move
-     * @return Boolean for if the player can move.
+     * Checks if the robot can move.
+     * @param robotNumber Robots number
+     * @param rowsToMove How many rows the robot needs to move
+     * @param columnsToMove How many columns robot needs to move
+     * @return Boolean for if the robot can move.
      */
-    private boolean canMovePlayer(int playerNumber, int rowsToMove, int columnsToMove){
-        Coordinate coordinateOfPlayer = getPlayerPosition(playerNumber);
+    private boolean canMoveRobot(int robotNumber, int rowsToMove, int columnsToMove){
+        Coordinate coordinateOfRobot = getRobotPosition(robotNumber);
         Orientation directionOfMove = findOrientationOfMovement(rowsToMove, columnsToMove);
-        if(playerBlockedOnCurrentTile(getRobot(playerNumber), directionOfMove)){
+        if(robotBlockedOnCurrentTile(getRobot(robotNumber), directionOfMove)){
             return false;
         }
-        if(playerOutOfBounds(coordinateOfPlayer,rowsToMove,columnsToMove)){
-            respawnPlayer(playerNumber);
+        if(robotOutOfBounds(coordinateOfRobot,rowsToMove,columnsToMove)){
+            respawnRobot(robotNumber);
             return false;
         }
-        if(playerBlockedOnNextTile(getRobot(playerNumber), directionOfMove,rowsToMove,columnsToMove)){
+        if(robotBlockedOnNextTile(getRobot(robotNumber), directionOfMove,rowsToMove,columnsToMove)){
             return false;
         }
         return true;
@@ -419,46 +418,46 @@ public class TileGrid{
     }
 
     /**
-     * @param player Player in question
+     * @param robot Robot in question
      * @return If the path is blocked on the Tile
      */
-    private boolean playerBlockedOnCurrentTile(IRobot player, Orientation directionOfMove){
-        Tile tile = getTile(player.getPosition());
-        return tile.playerPathBlocked(player, directionOfMove);
+    private boolean robotBlockedOnCurrentTile(IRobot robot, Orientation directionOfMove){
+        Tile tile = getTile(robot.getPosition());
+        return tile.robotPathBlocked(robot, directionOfMove);
     }
     /**
-     * @param player Active player
-     * @param rowsToMove Rows to where the player is moving
-     * @param columnsToMove Columns to where the player is moving
-     * @return If player can move, or is blocked by wall
+     * @param robot Active robot
+     * @param rowsToMove Rows to where the robot is moving
+     * @param columnsToMove Columns to where the robot is moving
+     * @return If robot can move, or is blocked by wall
      */
-    private boolean playerBlockedOnNextTile(IRobot player, Orientation directionOfMove, int rowsToMove, int columnsToMove){
-        Coordinate coordinate = player.getPosition().moveCoordinate(rowsToMove,columnsToMove);
+    private boolean robotBlockedOnNextTile(IRobot robot, Orientation directionOfMove, int rowsToMove, int columnsToMove){
+        Coordinate coordinate = robot.getPosition().moveCoordinate(rowsToMove,columnsToMove);
         if(getTile(coordinate).hasGameObject(GameObjectType.ROBOT)){
 
-            Player otherPlayer = (Player)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
+            IRobot otherRobot = (IRobot)getTile(coordinate).getGameObject(GameObjectType.ROBOT);
             int[] move= calculateMove(directionOfMove);
-            movePlayer(otherPlayer.getRobotNumber(),move[0],move[1]);
+            moveRobot(otherRobot.getRobotNumber(),move[0],move[1]);
 
-            //If the player who pushes has a ramming gear ability, the other player takes some damage
-            if(playerHasAbility(player.getRobotNumber(),Ability.RammingGear)){
-                otherPlayer.receiveDamage();
+            //If the robot who pushes has a ramming gear ability, the other robot takes some damage
+            if(robotHasAbility(robot.getRobotNumber(),Ability.RammingGear)){
+                otherRobot.receiveDamage();
             }
         }
 
 
-        return getTile(coordinate).playerPathBlocked(player, directionOfMove);
+        return getTile(coordinate).robotPathBlocked(robot, directionOfMove);
     }
 
     /**
-     * Finds out if the player is moving out of bounds
-     * @param coordinateOfPlayer Current position of player in question
+     * Finds out if the robot is moving out of bounds
+     * @param coordinateOfRobot Current position of robot in question
      * @param rowsToMove The number of rows to be moved
      * @param columnsToMove The number of columns to be moved
      * @return Is the move out of bounds.
      */
-    private boolean playerOutOfBounds(Coordinate coordinateOfPlayer, int rowsToMove, int columnsToMove){
-        Coordinate newCoordinate = coordinateOfPlayer.moveCoordinate(rowsToMove,columnsToMove);
+    private boolean robotOutOfBounds(Coordinate coordinateOfRobot, int rowsToMove, int columnsToMove){
+        Coordinate newCoordinate = coordinateOfRobot.moveCoordinate(rowsToMove,columnsToMove);
 
         if(newCoordinate.getRow() > this.rows-1 || newCoordinate.getRow() < 0){
             return true;
@@ -474,12 +473,12 @@ public class TileGrid{
     }
 
     /**
-     * Get Player
-     * @param playerNumber Player number
-     * @return Wanted Player
+     * Get robot
+     * @param robotNumber Robots number
+     * @return Wanted robot
      */
-    public IRobot getRobot(int playerNumber){
-        return this.robots.get(playerNumber);
+    public IRobot getRobot(int robotNumber){
+        return this.robots.get(robotNumber);
     }
 
     /**
@@ -504,11 +503,11 @@ public class TileGrid{
     }
 
     /**
-     * Reset a player
-     * @param playerNumber Player number
+     * Reset a robot
+     * @param robotNumber Robots number
      */
-    void resetRobot(int playerNumber){
-        getRobot(playerNumber).reset();
+    void resetRobot(int robotNumber){
+        getRobot(robotNumber).reset();
     }
 
     void resetRobots(){
@@ -518,93 +517,102 @@ public class TileGrid{
     }
 
     /**
-     * Respawns the player after it has fallen out of grid, with health=6.
-     * @param playerNumber Players number
+     * Respawns the robot after it has fallen out of grid, with health=6.
+     * @param robotNumber Robots number
      */
-    private void respawnPlayer(int playerNumber){
-        respawnPlayer(getRobot(playerNumber));
+    private void respawnRobot(int robotNumber){
+        respawnRobot(getRobot(robotNumber));
     }
     /**
-     * Respawns the player after it has fallen out of grid, with health=6.
-     * @param player The Players
+     * Respawn the robot after it has fallen out of grid, with health=6.
+     * @param robot The Robot
      */
-    private void respawnPlayer(IRobot player){
-        getTile(player.getPosition()).removeObjectFromTile(player);
-        player.respawn();
-        getTile(player.getBackUp()).addObjectOnTile(player);
-    }
-
-    /**
-     * Get Players Coordinates
-     * @param playerNumber Player number
-     * @return Players current position
-     */
-    public Coordinate getPlayerPosition(int playerNumber){
-        return getRobot(playerNumber).getPosition();
+    private void respawnRobot(IRobot robot){
+        getTile(robot.getPosition()).removeObjectFromTile(robot);
+        robot.respawn();
+        getTile(robot.getBackUp()).addObjectOnTile(robot);
     }
 
     /**
-     * Get Players ProgramHand
-     * @param playerNumber Players number
-     * @return Player ProgramHand
+     * Get Robotss Coordinates
+     * @param robotNumber Robots number
+     * @return Robots current position
      */
-    ArrayList<ProgramCard> getPlayerProgramHand(int playerNumber){
-        return getRobot(playerNumber).getProgramHand();
+    public Coordinate getRobotPosition(int robotNumber){
+        return getRobot(robotNumber).getPosition();
+    }
+
+    /**
+     * Get Robots ProgramHand
+     * @param robotNumber Robots number
+     * @return Robots ProgramHand
+     */
+    ArrayList<ProgramCard> getRobotProgramHand(int robotNumber){
+        return getRobot(robotNumber).getProgramHand();
     }
 
     /**
      * Get robots current move
-     * @param playerNumber Player Number
+     * @param robotNumber Robots Number
      * @return Program of current move
      */
-    Program getPlayerCurrentMove(int playerNumber){
-        return getRobot(playerNumber).getCurrentMove();
+    Program getRobotCurrentMove(int robotNumber){
+        return getRobot(robotNumber).getCurrentMove();
+    }
+
+    /**
+     * Check if the robot har finished the current move.
+     * @param robotNumber The robot number
+     * @return If the Current Program is set to none.
+     */
+    Boolean robotFinishedCurrentMove(int robotNumber){
+        return getRobotCurrentMove(robotNumber).equals(Program.NONE);
     }
 
     /**
      * Get the robots ability
-     * @param playerNumber The robots number
+     * @param robotNumber The robots number
      * @return The robots ability
      */
-    boolean playerHasAbility(int playerNumber, Ability ability){
-        return getRobot(playerNumber).hasAbility(ability);
+    boolean robotHasAbility(int robotNumber, Ability ability){
+        return getRobot(robotNumber).hasAbility(ability);
     }
 
     /**
-     * Set new position of player
-     * @param playerNumber player number
+     * Set new position of robot
+     * @param robotNumber robots number
      * @param coordinate New Coordinate
      */
-    private void setPlayerPosition(int playerNumber, Coordinate coordinate){
-        getRobot(playerNumber).setPosition(coordinate);
+    private void setRobotPosition(int robotNumber, Coordinate coordinate){
+        getRobot(robotNumber).setPosition(coordinate);
     }
 
-    public void fireControl(int playerNumber) {
-        Coordinate position = getPlayerPosition(playerNumber);
-        if(playerHasAbility(playerNumber, Ability.PressorBeam)) {
-            int playerToMove = playerInLine(playerNumber);
+    public void fireControl(int robotNumber) {
+        Coordinate position = getRobotPosition(robotNumber);
+        if(robotHasAbility(robotNumber, Ability.PressorBeam)) {
+            int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation());
-            if(playerToMove!=playerNumber) {
-                if(continueBeam(getRobot(playerNumber).getPosition(), getRobot(playerToMove).getPosition())) {
-                    movePlayer(playerToMove, movement[0], movement[1]);
+            if(robotToMove!=robotNumber) {
+                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition())) {
+                    moveRobot(robotToMove, movement[0], movement[1]);
                 }
             }
-        } else if(playerHasAbility(playerNumber, Ability.TractorBeam)) {
-            int playerToMove = playerInLine(playerNumber);
+        } else if(robotHasAbility(robotNumber, Ability.TractorBeam)) {
+            int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation().opposite());
-            if(playerToMove!=playerNumber) {
-                if(continueBeam(getRobot(playerNumber).getPosition(), getRobot(playerToMove).getPosition())) {
-                    movePlayer(playerToMove, movement[0], movement[1]);
+            if(robotToMove!=robotNumber) {
+                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition())) {
+                    moveRobot(robotToMove, movement[0], movement[1]);
                 }
             }
         } else {
-            firePlayerLaser(playerNumber);
+            fireRobotLaser(robotNumber);
         }
     }
 
-    public boolean continueBeam(Coordinate position, Coordinate opponnentPos) {
+    public boolean continueBeam(Coordinate position, Coordinate opponentPosition) {
 
-        while (!position.equals(opponnentPos)) {
+        while (!position.equals(opponentPosition)) {
             if(!tileCheck(position, false)){
                 return false;
             }
@@ -614,16 +622,16 @@ public class TileGrid{
     }
 
     /**
-     * Adds laser to board if player wants to fire.
-     * @param playerNumber player who is to fire laser
+     * Adds laser to board if robot wants to fire.
+     * @param robotNumber robot who is to fire laser
      */
-    public void firePlayerLaser(int playerNumber) {
-        Coordinate position = getPlayerPosition(playerNumber);
-        position.setOrientation(getRobot(playerNumber).getOrientation());
+    public void fireRobotLaser(int robotNumber) {
+        Coordinate position = getRobotPosition(robotNumber);
+        position.setOrientation(getRobot(robotNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
-        boolean dual = playerHasAbility(playerNumber, Ability.DoubleBarreledLaser);
+        boolean dual = robotHasAbility(robotNumber, Ability.DoubleBarreledLaser);
 
-        boolean highPowered = playerHasAbility(playerNumber, Ability.HighPoweredLaser);
+        boolean highPowered = robotHasAbility(robotNumber, Ability.HighPoweredLaser);
 
         boolean firing = continueFiring(position);
         if(!firing && highPowered){
@@ -633,7 +641,7 @@ public class TileGrid{
 
         while (firing) {
             position = position.moveCoordinate();
-            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
+            getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, robotNumber));
             firing = continueFiring(position);
 
             if(!firing && highPowered){
@@ -641,9 +649,9 @@ public class TileGrid{
                 highPowered = false;
             }
         }
-        if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
-            position = getPlayerPosition(playerNumber);
-            position.setOrientation(getRobot(playerNumber).getOrientation().opposite());
+        if(robotHasAbility(robotNumber, Ability.RearFiringLaser)){
+            position = getRobotPosition(robotNumber);
+            position.setOrientation(getRobot(robotNumber).getOrientation().opposite());
 
             firing = continueFiring(position);
             if(!firing && highPowered){
@@ -653,7 +661,7 @@ public class TileGrid{
 
             while (firing) {
                 position = position.moveCoordinate();
-                getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, playerNumber));
+                getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, robotNumber));
                 firing = continueFiring(position);
 
                 if(!firing && highPowered){
@@ -712,62 +720,62 @@ public class TileGrid{
 
     /**
      * Removes the robots fired laser
-     * @param playerNumber playerNumber
+     * @param robotNumber robotNumber
      */
-    public void removePlayerLaser(int playerNumber){
-        Coordinate position = getPlayerPosition(playerNumber);
-        position.setOrientation(getRobot(playerNumber).getOrientation());
+    public void removeRobotLaser(int robotNumber){
+        Coordinate position = getRobotPosition(robotNumber);
+        position.setOrientation(getRobot(robotNumber).getOrientation());
 
         boolean firing = continueFiring(position);
         while (firing) {
             position = position.moveCoordinate();
-            getTile(position).removePlayerLaserFromTile(playerNumber);
+            getTile(position).removeRobotLaserFromTile(robotNumber);
             firing = continueFiring(position);
         }
 
-        if(playerHasAbility(playerNumber, Ability.RearFiringLaser)){
-            position = getPlayerPosition(playerNumber);
-            position.setOrientation(getRobot(playerNumber).getOrientation().opposite());
+        if(robotHasAbility(robotNumber, Ability.RearFiringLaser)){
+            position = getRobotPosition(robotNumber);
+            position.setOrientation(getRobot(robotNumber).getOrientation().opposite());
 
             firing = continueFiring(position);
             while (firing) {
                 position = position.moveCoordinate();
-                getTile(position).removePlayerLaserFromTile(playerNumber);
+                getTile(position).removeRobotLaserFromTile(robotNumber);
                 firing = continueFiring(position);
             }
         }
     }
 
-    public int playerInLine(int playerNumber) {
+    public int robotInLine(int robotNumber) {
 
-        int column = getRobot(playerNumber).getPosition().getColumn();
-        int row = getRobot(playerNumber).getPosition().getRow();
-        int playerInLine = playerNumber;
+        int column = getRobot(robotNumber).getPosition().getColumn();
+        int row = getRobot(robotNumber).getPosition().getRow();
+        int robotInLine = robotNumber;
 
         for(IRobot p : robots) {
-            switch (getRobot(playerNumber).getOrientation()) {
+            switch (getRobot(robotNumber).getOrientation()) {
                 case FACING_NORTH:
                     if(p.getPosition().getRow()==row && p.getPosition().getColumn()>column) {
-                        playerInLine = p.getRobotNumber();
+                        robotInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_WEST:
                     if(p.getPosition().getColumn()==column && p.getPosition().getRow()<row) {
-                        playerInLine = p.getRobotNumber();
+                        robotInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_SOUTH:
                     if(p.getPosition().getRow()==row && p.getPosition().getColumn()<column) {
-                        playerInLine = p.getRobotNumber();
+                        robotInLine = p.getRobotNumber();
                     }
                     break;
                 case FACING_EAST:
                     if(p.getPosition().getColumn()==column && p.getPosition().getRow()>row) {
-                        playerInLine = p.getRobotNumber();
+                        robotInLine = p.getRobotNumber();
                     }
                     break;
             }
         }
-        return playerInLine;
+        return robotInLine;
     }
 }

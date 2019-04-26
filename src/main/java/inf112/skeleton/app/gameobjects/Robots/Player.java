@@ -5,11 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
-import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Player extends Robot {
     private ArrayList<ProgramCard> programHand;
@@ -82,7 +80,7 @@ public class Player extends Robot {
 
     @Override
     public String toString(){
-        return this.playerNumber + ":" + this.name;
+        return this.robotNumber + ":" + this.name;
     }
 
     @Override
