@@ -100,7 +100,7 @@ public class TileGrid{
     }
 
     /**
-     * Runs trough the grid to find the robots.
+     * Runs trough the grid to find the players.
      * Then activates a function to find out what kind of tile the player is standing on.
      */
 
@@ -327,10 +327,6 @@ public class TileGrid{
         int columnsToMove = movement[1];
 
         if(move==Program.BACK){
-            if(playerHasAbility(playerNumber,Ability.ReverseGear)){
-                rowsToMove *= -2;
-                columnsToMove *= -2;
-            }
             rowsToMove *= -1;
             columnsToMove *= -1;
         }

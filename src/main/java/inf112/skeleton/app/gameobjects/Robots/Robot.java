@@ -194,6 +194,18 @@ public abstract class Robot implements IRobot{
     public void setNextProgram(){
         if(!this.program.isEmpty())
             this.currentMove = this.program.pop().getMove();
+        applyAbilityToMoves();
+    }
+    public void applyAbilityToMoves(){
+        if(currentMove == Program.BACK &&  hasAbility(Ability.ReverseGear)){
+            currentMove = Program.BACK2;
+        }
+        if(currentMove == Program.MOVE3 && hasAbility(Ability.FourthGear)){
+            currentMove = Program.MOVE4;
+        }
+        if(currentMove == Program.MOVE1 && hasAbility(Ability.Brakes)){
+            currentMove = Program.NONE;
+        }
     }
 
     @Override

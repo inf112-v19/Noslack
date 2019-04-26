@@ -4,7 +4,7 @@ package inf112.skeleton.app.cards;
  * Program enum
  */
 public enum Program {
-    MOVE1, MOVE2, MOVE3, BACK, RIGHT, LEFT, U, NONE;
+    MOVE1, MOVE2, MOVE3, MOVE4, BACK, BACK2, RIGHT, LEFT, U, NONE;
 
     /**
      * Returns the number a moves a program has
@@ -12,10 +12,15 @@ public enum Program {
      */
     public int totalMoves(){
         switch (this){
+            case NONE:
+                return 0;
             case MOVE2:
+            case BACK2:
                 return 2;
             case MOVE3:
                 return 3;
+            case MOVE4:
+                return 4;
             default: return 1;
         }
     }
