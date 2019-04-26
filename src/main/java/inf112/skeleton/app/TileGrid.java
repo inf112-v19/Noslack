@@ -289,7 +289,7 @@ public class TileGrid{
         while(!priorities.isEmpty()){
             Integer priority=0;
             for(Integer p : priorities){
-                if(priority<p){
+                if(priority<=p){
                     priority=p;
                 }
             }
