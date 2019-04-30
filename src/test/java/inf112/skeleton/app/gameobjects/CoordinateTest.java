@@ -32,6 +32,23 @@ public class CoordinateTest {
 
     @Test
     public void moveCoordinate() {
+        Coordinate oldCoordinate = new Coordinate(3,2);
+        Coordinate newCoordinate = oldCoordinate.moveCoordinate(2,-1);
+        assertEquals(new Coordinate(5,1), newCoordinate);
+    }
+    @Test
+    public void moveInDirection(){
+        Orientation[] directions = {Orientation.FACING_NORTH,Orientation.FACING_EAST,Orientation.FACING_WEST,Orientation.FACING_SOUTH};
+        Coordinate oldCoordinate = new Coordinate(3,3);
+        Orientation orientation;
+        int[] correctResultRow = {1,0,0,-1};
+        int[] correctResultCol = {0,1,-1,0};
+        for (int i = 0; i < 4; i++) {
+            orientation = directions[i];
+            oldCoordinate.setOrientation(orientation);
+
+            assertEquals(oldCoordinate.moveCoordinate(),new Coordinate(3+correctResultRow[i],3+correctResultCol[i]));
+        }
     }
 
     @Test

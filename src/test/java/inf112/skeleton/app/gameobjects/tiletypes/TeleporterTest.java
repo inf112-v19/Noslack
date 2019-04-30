@@ -28,7 +28,7 @@ public class TeleporterTest {
     public void teleportationCheck() {
         TileGrid tileGrid = new TileGrid("teleporterTestMap.txt");
         tileGrid.activateTiles();
-        assertEquals(new Coordinate(0,1), tileGrid.getPlayerPosition(0));
+        assertEquals(new Coordinate(0,1), tileGrid.getRobotPosition(0));
     }
 
 }

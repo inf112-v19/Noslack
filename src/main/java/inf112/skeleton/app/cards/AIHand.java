@@ -13,6 +13,14 @@ public class AIHand {
     }
 
     /**
+     * Add extra cerd to hand
+     * @param card
+     */
+    public void addExtraCard(RRCard card){
+        this.hand.add((ProgramCard)card);
+    }
+
+    /**
      * Finds out if the hand contains a Program
      * @param program The wanted program
      * @return If the hand contains the wanted program.

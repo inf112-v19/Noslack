@@ -104,6 +104,7 @@ public class AbilityCard implements RRCard {
                 setSprite("./assets/abilityCards/TractorBeam.png");
                 return Ability.TractorBeam;
             case " ":
+                setSprite("./assets/abilityCards/default.png");
                 return Ability.Empty;
             default:
                 throw new IllegalArgumentException("Invalid ability: " + s);
@@ -127,6 +128,14 @@ public class AbilityCard implements RRCard {
      */
     public Ability getAbility() {
         return this.ability;
+    }
+
+    /**
+     * Finds out if the ability needs to be active to work
+     * @return If it needs to be activated to function.
+     */
+    public boolean activeAbility(){
+        return this.ability.activeAbility();
     }
 
 

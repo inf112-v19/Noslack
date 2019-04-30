@@ -3,153 +3,145 @@
   <ID>JAVA</ID>
   <OriginalElement>inf112.skeleton.app.gameobjects</OriginalElement>
   <nodes>
-    <node x="3302.3961139097914" y="1563.0">inf112.skeleton.app.gameobjects.tiletypes.LaserBeam</node>
-    <node x="3683.977363909791" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.RotatorTest</node>
-    <node x="486.4153446790224" y="2409.0">inf112.skeleton.app.Main</node>
-    <node x="249.37367801235587" y="1607.5">inf112.skeleton.app.cards.IDeck</node>
-    <node x="3769.388524278448" y="1068.0">inf112.skeleton.app.gameobjects.tiletypes.Wall</node>
-    <node x="2709.504718982255" y="527.5">inf112.skeleton.app.gameobjects.GameObject</node>
-    <node x="2101.1690516029557" y="153.0">inf112.skeleton.app.gameobjects.GameObjectType</node>
-    <node x="307.0833333333335" y="1886.0">inf112.skeleton.app.cards.ProgramDeck</node>
-    <node x="1814.3961139097914" y="1057.0">inf112.skeleton.app.gameobjects.tiletypes.Flag</node>
-    <node x="3156.4107182696225" y="1046.0">inf112.skeleton.app.gameobjects.tiletypes.Conveyor</node>
-    <node x="4054.388524278448" y="1057.0">inf112.skeleton.app.gameobjects.tiletypes.Pusher</node>
-    <node x="100.08333333333348" y="1886.0">inf112.skeleton.app.cards.AbilityDeck</node>
-    <node x="4013.0148849362895" y="0.0">inf112.skeleton.app.cards.Program</node>
-    <node x="549.3333333333335" y="1079.0">inf112.skeleton.app.cards.CardSpriteInteraction</node>
-    <node x="2420.0262960175783" y="1079.0">inf112.skeleton.app.gameobjects.tiletypes.RepairStation</node>
-    <node x="4614.344060440284" y="1530.0">inf112.skeleton.app.gameobjects.tiletypes.Teleporter</node>
-    <node x="4722.602857590407" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.PusherTest</node>
-    <node x="1291.5002805764584" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.FlagTest</node>
-    <node x="577.425003983908" y="494.0">inf112.skeleton.app.cards.ProgramCard</node>
-    <node x="4023.5148849362895" y="153.0">inf112.skeleton.app.gameobjects.Orientation</node>
-    <node x="4423.537508837328" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.WallTest</node>
-    <node x="3525.977363909791" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.TeleporterTest</node>
-    <node x="4210.881258837328" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.HoleTest</node>
-    <node x="1450.0211139097914" y="1563.0">inf112.skeleton.app.Tile</node>
-    <node x="2015.2086139097914" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.LaserOutletTest</node>
-    <node x="5.25" y="153.0">inf112.skeleton.app.cards.Ability</node>
-    <node x="470.9153446790224" y="2330.0">inf112.skeleton.app.RoboRally</node>
-    <node x="331.6750039839085" y="131.0">inf112.skeleton.app.cards.RRCard</node>
-    <node x="3824.977363909791" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.RepairStationTest</node>
-    <node x="2857.4107182696225" y="1057.0">inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet</node>
-    <node x="3334.062780576458" y="2330.0">inf112.skeleton.app.gameobjects.tiletypes.LaserBeamTest</node>
-    <node x="0.0" y="516.0">inf112.skeleton.app.cards.AbilityCard</node>
-    <node x="2136.0262960175783" y="1079.0">inf112.skeleton.app.gameobjects.tiletypes.Rotator</node>
-    <node x="990.2502805764582" y="1068.0">inf112.skeleton.app.gameobjects.Robots.Player</node>
-    <node x="4762.769060440285" y="1057.0">inf112.skeleton.app.gameobjects.Coordinate</node>
-    <node x="3485.388524278448" y="1079.0">inf112.skeleton.app.gameobjects.tiletypes.Hole</node>
-    <node x="3648.0273639097913" y="1886.5">inf112.skeleton.app.TileGrid</node>
+    <node x="2417.0" y="196.0">inf112.skeleton.app.gameobjects.tiletypes.LaserBeam</node>
+    <node x="689.0" y="766.0">inf112.skeleton.app.Main</node>
+    <node x="2939.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.RotatorTest</node>
+    <node x="590.25" y="436.0">inf112.skeleton.app.cards.IDeck</node>
+    <node x="1899.0" y="218.0">inf112.skeleton.app.gameobjects.tiletypes.Wall</node>
+    <node x="2239.0" y="436.0">inf112.skeleton.app.gameobjects.GameObjectType</node>
+    <node x="1505.75" y="0.0">inf112.skeleton.app.gameobjects.GameObject</node>
+    <node x="642.0" y="537.0">inf112.skeleton.app.cards.ProgramDeck</node>
+    <node x="542.0" y="207.0">inf112.skeleton.app.gameobjects.tiletypes.Flag</node>
+    <node x="1362.0" y="196.0">inf112.skeleton.app.gameobjects.tiletypes.Conveyor</node>
+    <node x="1103.0" y="196.0">inf112.skeleton.app.gameobjects.tiletypes.Pusher</node>
+    <node x="450.0" y="537.0">inf112.skeleton.app.cards.AbilityDeck</node>
+    <node x="1718.0" y="436.0">inf112.skeleton.app.cards.Program</node>
+    <node x="1152.0" y="436.0">inf112.skeleton.app.cards.CardSpriteInteraction</node>
+    <node x="3010.0" y="229.0">inf112.skeleton.app.gameobjects.tiletypes.RepairStation</node>
+    <node x="2158.0" y="185.0">inf112.skeleton.app.gameobjects.tiletypes.Teleporter</node>
+    <node x="3093.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.PusherTest</node>
+    <node x="425.0" y="766.0">inf112.skeleton.app.gameobjects.tiletypes.FlagTest</node>
+    <node x="1892.0" y="436.0">inf112.skeleton.app.gameobjects.Orientation</node>
+    <node x="190.0" y="559.0">inf112.skeleton.app.cards.ProgramCard</node>
+    <node x="287.0" y="766.0">inf112.skeleton.app.gameobjects.tiletypes.WallTest</node>
+    <node x="2770.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.TeleporterTest</node>
+    <node x="147.0" y="766.0">inf112.skeleton.app.gameobjects.tiletypes.HoleTest</node>
+    <node x="801.0000000000001" y="218.0">inf112.skeleton.app.Tile</node>
+    <node x="2424.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.LaserOutletTest</node>
+    <node x="562.0" y="766.0">inf112.skeleton.app.cards.Ability</node>
+    <node x="0.0" y="766.0">inf112.skeleton.app.RoboRally</node>
+    <node x="121.75" y="436.0">inf112.skeleton.app.cards.RRCard</node>
+    <node x="2053.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.RepairStationTest</node>
+    <node x="2703.0" y="196.0">inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet</node>
+    <node x="2598.0" y="436.0">inf112.skeleton.app.gameobjects.tiletypes.LaserBeamTest</node>
+    <node x="0.0" y="581.0">inf112.skeleton.app.cards.AbilityCard</node>
+    <node x="1640.0" y="229.0">inf112.skeleton.app.gameobjects.tiletypes.Rotator</node>
+    <node x="259.0" y="218.0">inf112.skeleton.app.gameobjects.Robots.Player</node>
+    <node x="870.0" y="436.0">inf112.skeleton.app.gameobjects.Coordinate</node>
+    <node x="0.0" y="229.0">inf112.skeleton.app.gameobjects.tiletypes.Hole</node>
+    <node x="1521.0" y="436.0">inf112.skeleton.app.TileGrid</node>
   </nodes>
   <notes />
   <edges>
     <edge source="inf112.skeleton.app.gameobjects.Robots.Player" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="128.1875" y="-70.0" />
-      <point x="1264.9377805764582" y="866.0" />
-      <point x="2715.2438494170374" y="866.0" />
-      <point x="-126.26086956521749" y="47.5" />
+      <point x="0.0" y="-70.0" />
+      <point x="390.5" y="125.0" />
+      <point x="1535.625" y="125.0" />
+      <point x="-89.625" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.ProgramCard" target="inf112.skeleton.app.cards.RRCard">
-      <point x="-29.875" y="-81.0" />
-      <point x="667.050003983908" y="464.0" />
-      <point x="467.3000039839085" y="464.0" />
-      <point x="58.125" y="36.5" />
+      <point x="0.0" y="-81.0" />
+      <point x="297.5" y="534.0" />
+      <point x="226.0" y="534.0" />
+      <point x="34.75" y="36.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.LaserOutlet" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="0.0" y="-81.0" />
-      <point x="2996.9107182696225" y="836.0" />
-      <point x="2864.4612407213854" y="836.0" />
-      <point x="22.956521739130494" y="47.5" />
+      <point x="0.0" y="-92.0" />
+      <point x="2846.5" y="125.0" />
+      <point x="1714.875" y="125.0" />
+      <point x="89.625" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.Tile" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="59.0625" y="-70.0" />
-      <point x="1666.5836139097914" y="1440.0" />
-      <point x="2716.5262960175783" y="1440.0" />
-      <point x="2716.5262960175783" y="956.0" />
-      <point x="2818.5481972431244" y="956.0" />
-      <point x="-22.956521739130494" y="47.5" />
+      <point x="0.0" y="-70.0" />
+      <point x="942.0000000000001" y="145.0" />
+      <point x="1575.4583333333333" y="145.0" />
+      <point x="-49.79166666666674" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Hole" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-33.0" y="-59.0" />
-      <point x="3584.388524278448" y="776.0" />
-      <point x="2898.896023330081" y="776.0" />
-      <point x="57.39130434782601" y="47.5" />
+      <point x="0.0" y="-59.0" />
+      <point x="119.5" y="115.0" />
+      <point x="1515.7083333333333" y="115.0" />
+      <point x="-109.54166666666674" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Wall" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="22.0" y="-70.0" />
-      <point x="3923.388524278448" y="726.0" />
-      <point x="2933.3308059387764" y="726.0" />
-      <point x="91.82608695652152" y="47.5" />
+      <point x="0.0" y="-70.0" />
+      <point x="2018.5" y="155.0" />
+      <point x="1655.125" y="155.0" />
+      <point x="29.875" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.AbilityDeck" target="inf112.skeleton.app.cards.IDeck">
-      <point x="77.91666666666663" y="-37.0" />
-      <point x="271.5" y="1866.0" />
-      <point x="273.37367801235587" y="1866.0" />
-      <point x="-24.0" y="25.5" />
+      <point x="0.0" y="-37.0" />
+      <point x="536.0" y="512.0" />
+      <point x="612.5" y="512.0" />
+      <point x="-22.25" y="25.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.AbilityCard" target="inf112.skeleton.app.cards.RRCard">
-      <point x="69.75" y="-59.0" />
-      <point x="162.75" y="424.0" />
-      <point x="351.0500039839085" y="424.0" />
-      <point x="-58.125" y="36.5" />
+      <point x="0.0" y="-59.0" />
+      <point x="85.0" y="534.0" />
+      <point x="156.5" y="534.0" />
+      <point x="-34.75" y="36.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Teleporter" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-37.714285714285325" y="-103.0" />
-      <point x="4708.629774726" y="1250.0" />
-      <point x="4328.888524278448" y="1250.0" />
-      <point x="4328.888524278448" y="676.0" />
-      <point x="2967.7655885474724" y="676.0" />
-      <point x="126.26086956521749" y="47.5" />
+      <point x="0.0" y="-103.0" />
+      <point x="2277.5" y="145.0" />
+      <point x="1675.0416666666667" y="145.0" />
+      <point x="49.79166666666674" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Rotator" target="inf112.skeleton.app.gameobjects.GameObject">
       <point x="0.0" y="-59.0" />
-      <point x="2268.0262960175783" y="896.0" />
-      <point x="2749.6786320257334" y="896.0" />
-      <point x="-91.82608695652152" y="47.5" />
+      <point x="1759.5" y="165.0" />
+      <point x="1635.2083333333335" y="165.0" />
+      <point x="9.958333333333485" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Flag" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-33.0" y="-81.0" />
-      <point x="1913.3961139097914" y="876.0" />
-      <point x="2726.722110286603" y="876.0" />
-      <point x="-114.78260869565202" y="47.5" />
+      <point x="0.0" y="-81.0" />
+      <point x="661.5" y="135.0" />
+      <point x="1555.5416666666667" y="135.0" />
+      <point x="-69.70833333333326" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Conveyor" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-24.25" y="-92.0" />
-      <point x="3277.6607182696225" y="806.0" />
-      <point x="2875.9395015909504" y="806.0" />
-      <point x="34.434782608695514" y="47.5" />
+      <point x="0.0" y="-92.0" />
+      <point x="1491.0" y="165.0" />
+      <point x="1615.2916666666667" y="165.0" />
+      <point x="-9.958333333333258" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.cards.ProgramDeck" target="inf112.skeleton.app.cards.IDeck">
-      <point x="-83.75" y="-37.0" />
-      <point x="323.8333333333335" y="1866.0" />
-      <point x="321.37367801235587" y="1866.0" />
-      <point x="24.0" y="25.5" />
+      <point x="0.0" y="-37.0" />
+      <point x="733.5" y="512.0" />
+      <point x="657.0" y="512.0" />
+      <point x="22.25" y="25.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.Pusher" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-22.0" y="-81.0" />
-      <point x="4164.388524278448" y="696.0" />
-      <point x="2956.287327677907" y="696.0" />
-      <point x="114.78260869565202" y="47.5" />
+      <point x="0.0" y="-92.0" />
+      <point x="1222.5" y="155.0" />
+      <point x="1595.375" y="155.0" />
+      <point x="-29.875" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.RepairStation" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-33.0" y="-59.0" />
-      <point x="2519.0262960175783" y="916.0" />
-      <point x="2772.6351537648634" y="916.0" />
-      <point x="-68.86956521739148" y="47.5" />
+      <point x="0.0" y="-59.0" />
+      <point x="3129.5" y="115.0" />
+      <point x="1734.7916666666667" y="115.0" />
+      <point x="109.54166666666674" y="47.5" />
     </edge>
     <edge source="inf112.skeleton.app.gameobjects.tiletypes.LaserBeam" target="inf112.skeleton.app.gameobjects.GameObject">
-      <point x="-68.75" y="-70.0" />
-      <point x="3371.1461139097914" y="1380.0" />
-      <point x="2727.5262960175783" y="1380.0" />
-      <point x="2727.5262960175783" y="966.0" />
-      <point x="2830.02645811269" y="966.0" />
-      <point x="-11.47826086956502" y="47.5" />
+      <point x="0.0" y="-92.0" />
+      <point x="2550.0" y="135.0" />
+      <point x="1694.9583333333335" y="135.0" />
+      <point x="69.70833333333348" y="47.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.26593130697174744" x="2399.1482051869316" y="1067.0989453007203" />
-  <SelectedNodes>
-    <node>inf112.skeleton.app.gameobjects.tiletypes.LaserBeam</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="0.4980331514400732" x="2157.4600227928086" y="212.35721832272947" />
+  <SelectedNodes />
   <Categories>
     <Category>Constructors</Category>
     <Category>Properties</Category>

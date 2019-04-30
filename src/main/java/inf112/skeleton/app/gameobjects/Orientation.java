@@ -1,7 +1,6 @@
 package inf112.skeleton.app.gameobjects;
 
 import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
 
 public enum Orientation {
     FACING_NORTH,
@@ -165,6 +164,22 @@ public enum Orientation {
                 }
             default:
                 return Program.NONE;
+        }
+    }
+
+    /**
+     * To get a String value corresponding to the Orientation
+     * @return The string
+     */
+    public String getString(){
+        switch (this){
+            default:
+            case FACING_NORTH: return "1";
+            case FACING_EAST: return "2";
+            case FACING_SOUTH: return "3";
+            case FACING_WEST: return "4";
+            case HORIZONTAL: return "H";
+            case VERTICAL: return "V";
         }
     }
 }

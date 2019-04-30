@@ -1,10 +1,9 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.cards.AbilityCard;
-import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
+import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.GameObjectType;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.Stack;
 
 public abstract class Robot implements IRobot{
     String name;
-    int playerNumber;
+    int robotNumber;
     Sprite sprite;
     Orientation orientation;
     Coordinate position;
@@ -23,14 +22,40 @@ public abstract class Robot implements IRobot{
     private Coordinate backUp;
     private int moveProgression;
     ArrayList<AbilityCard> abilityHand;
+    boolean activeAbility;
     Stack<ProgramCard> program;
     boolean hasWon;
     private boolean[] flagsVisited;
     private boolean hasMoved;
+    boolean powerDown;
+
+    public void create(int robotNumber,Orientation orientation, Coordinate position){
+        this.orientation = orientation;
+        this.position = position;
+        this.robotNumber = robotNumber;
+        this.name = "Robot " + robotNumber;
+        this.health = 9;
+        this.lives = 3;
+        this.program = new Stack<>();
+        this.abilityHand = new ArrayList<>();
+        this.currentMove = Program.NONE;
+        this.hasWon = false;
+        this.powerDown = false;
+    }
 
     @Override
-    public int getPlayerNumber() {
-        return playerNumber;
+    public void drawAbility(RRCard abilityCard) {
+        this.abilityHand.add((AbilityCard) abilityCard);
+    }
+
+    @Override
+    public void discardAbility(RRCard card){
+        this.abilityHand.remove(card);
+    }
+
+    @Override
+    public int getRobotNumber() {
+        return this.robotNumber;
     }
 
     /**
@@ -39,10 +64,10 @@ public abstract class Robot implements IRobot{
     void turnSprite(){
         try {
             sprite.setRotation(this.orientation.turnSprite());
-            this.position.setOrientation(orientation);
+            this.position.setOrientation(this.orientation);
         }catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in Player turnSprite");
+            System.out.println("Error in Robot turnSprite");
         }
     }
 
@@ -69,13 +94,18 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
-    public void receiveDamage(){
-        this.health--;
+    public boolean receiveDamage(){
+        return this.receiveDamage(1);
     }
 
     @Override
-    public void receiveDamage(int damage){
+    public boolean receiveDamage(int damage){
         this.health -= damage;
+        if(this.health<=0){
+            this.health=9;
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -84,7 +114,7 @@ public abstract class Robot implements IRobot{
     }
 
     /**
-     * Take a live from player when respawning
+     * Take a live from robot when respawning
      */
     private void takeLives(){
         this.lives--;
@@ -152,13 +182,30 @@ public abstract class Robot implements IRobot{
 
     @Override
     public int getNextProgramPriority(){
-        return program.peek().getPriority();
+        if(this.program.isEmpty()){
+            return 0;
+        }
+        else {
+            return program.peek().getPriority();
+        }
     }
 
     @Override
     public void setNextProgram(){
         if(!this.program.isEmpty())
             this.currentMove = this.program.pop().getMove();
+        applyAbilityToMoves();
+    }
+    public void applyAbilityToMoves(){
+        if(currentMove == Program.BACK &&  hasAbility(Ability.ReverseGear)){
+            currentMove = Program.BACK2;
+        }
+        if(currentMove == Program.MOVE3 && hasAbility(Ability.FourthGear)){
+            currentMove = Program.MOVE4;
+        }
+        if(currentMove == Program.MOVE1 && hasAbility(Ability.Brakes)){
+            currentMove = Program.NONE;
+        }
     }
 
     @Override
@@ -185,6 +232,25 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
+    public boolean hasAbility(Ability ability){
+        for(RRCard card : abilityHand){
+            if(((AbilityCard)card).getAbility().equals(ability)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void activateAbility(){
+        this.activeAbility = !activeAbility;
+    }
+    @Override
+    public boolean getActiveAbility(){
+        return this.activeAbility;
+    }
+
+    @Override
     public void resetMoveProgress(){
         this.moveProgression = 0;
     }
@@ -197,7 +263,11 @@ public abstract class Robot implements IRobot{
     public void respawn(){
         reset();
         takeLives();
-        setHealth(7);
+        if(hasAbility(Ability.SuperiorArchive)){
+            setHealth(10);
+        }else {
+            setHealth(7);
+        }
         setPosition(this.backUp);
         setOrientation(this.backUp.getOrientation());
     }
@@ -214,6 +284,16 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
+    public void powerDown(){
+        this.powerDown = !this.powerDown;
+    }
+
+    @Override
+    public boolean isPoweredDown(){
+        return this.powerDown;
+    }
+
+    @Override
     public void initiate (Coordinate cor){
         setPosition(cor);
         setBackUp();
@@ -227,5 +307,10 @@ public abstract class Robot implements IRobot{
     @Override
     public int compareTo(Object o) {
         return 1;
+    }
+
+    @Override
+    public GameObjectType getGameObjectType() {
+        return GameObjectType.ROBOT;
     }
 }

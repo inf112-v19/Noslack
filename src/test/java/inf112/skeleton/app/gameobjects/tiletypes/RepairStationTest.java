@@ -11,12 +11,12 @@ public class RepairStationTest {
     @Test
     public void playerRepairs() {
         TileGrid tileGrid = new TileGrid("repairTestMap.txt");
-        tileGrid.getPlayer(0).receiveDamage(3);
-        int oldHP = tileGrid.getPlayer(0).getHealth();
-        tileGrid.getPlayer(0).setCurrentMove(Program.MOVE1);
+        tileGrid.getRobot(0).receiveDamage(3);
+        int oldHP = tileGrid.getRobot(0).getHealth();
+        tileGrid.getRobot(0).setCurrentMove(Program.MOVE1);
         tileGrid.continueMove(0);
         tileGrid.activateTiles();
-        int newHP = tileGrid.getPlayer(0).getHealth();
+        int newHP = tileGrid.getRobot(0).getHealth();
         assertEquals(newHP,oldHP+1);
     }
 

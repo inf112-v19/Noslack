@@ -25,7 +25,7 @@ public class TileGridBuilderTest {
 
     @Test
     public void getPlayersInitiated() {
-        assertEquals(1,builder.getPlayersInitiated());
+        assertEquals(1,builder.getRobotsInitiated());
     }
 
     @Test

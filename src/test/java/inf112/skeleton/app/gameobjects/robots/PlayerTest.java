@@ -19,7 +19,7 @@ public class PlayerTest {
     @Test
     public void PlayerStartsNorth() {
         //Player player = new Player();
-        Assert.assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
+        assertEquals(player.getOrientation(), Orientation.FACING_NORTH);
     }
 
     @Test
@@ -33,6 +33,13 @@ public class PlayerTest {
         int oldHP = player.getHealth();
         player.receiveDamage();
         assertEquals(player.getHealth(), oldHP - 1);
+    }
+
+    @Test
+    public void PlayerTakesDamage2() {
+        int oldHP = player.getHealth();
+        assertTrue(player.receiveDamage(9));
+        assertEquals(player.getHealth(), oldHP);
     }
 
     @Test

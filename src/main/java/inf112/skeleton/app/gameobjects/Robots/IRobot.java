@@ -1,9 +1,6 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
-import inf112.skeleton.app.cards.AbilityCard;
-import inf112.skeleton.app.cards.Program;
-import inf112.skeleton.app.cards.ProgramCard;
-import inf112.skeleton.app.cards.RRCard;
+import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.GameObject;
 import inf112.skeleton.app.gameobjects.Orientation;
@@ -14,52 +11,51 @@ import java.util.Stack;
 public interface IRobot extends GameObject {
 
     /**
-     * Get the players number
-     * @return The players number.
+     * Get the robots number
+     * @return The robots number.
      */
-    int getPlayerNumber();
+    int getRobotNumber();
 
     /**
      * Get method for health
-     * @return Players health
+     * @return Robots health
      */
+    int getHealth();
 
     /**
      * Get method for hasMoved
-     * Used in ActivateTiles so we dont move player twice
+     * Used in ActivateTiles so we don't move robot twice
      * @return hasMoved
      */
-
     boolean hasMoved();
 
     /**
      * Void setter-method for moved
      * Sets hasMoved to true/false
      */
-
     void moved(boolean bol);
 
-    int getHealth();
+
 
     /**
-     * Removes one health from the player.
+     * Removes one health from the robot.
      */
-    void receiveDamage();
+    boolean receiveDamage();
 
     /**
-     * Remove given amount of health from player
+     * Remove given amount of health from robot
      * @param damage amount of health to be deducted
      */
-    void receiveDamage(int damage);
+    boolean receiveDamage(int damage);
 
     /**
-     * @return How many lives the player has left.
+     * @return How many lives the robot has left.
      */
     int getLives();
 
     /**
-     * Give player a new orientation
-     * @param orientation The players new orientation
+     * Give robot a new orientation
+     * @param orientation The robots new orientation
      */
     void setOrientation(Orientation orientation);
 
@@ -70,30 +66,48 @@ public interface IRobot extends GameObject {
     void updateOrientation(Program rotation);
 
     /**
-     * Set a new psoition for the player
+     * Set a new psoition for the robot
      * @param position New position
      */
     void setPosition(Coordinate position);
 
     /**
-     * Get the players position
-     * @return Players current position
+     * Get the robots position
+     * @return Robots current position
      */
     Coordinate getPosition();
 
     /**
-     * Give Cards to Player
-     * @param AbilityCards IDeck of AbilityCards
-     * @param ProgramCards IDeck of ProgramCards
+     * Give Cards to Robot
+     * @param programCards IDeck of ProgramCards
      */
-    void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards);
+    void drawPrograms(ArrayList<RRCard> programCards);
+
     /**
-     * @return Player AbilityDeck
+     * Draw an ability card for robot
+     * @param abilityCard Ability card
+     */
+    void drawAbility(RRCard abilityCard);
+
+    /**
+     * Discards an Ability from the robot
+     * @param card The ability card to be discarded
+     */
+    void discardAbility(RRCard card);
+
+    /**
+     * Receive extra card from deck.
+     * @param card RRcard
+     */
+    void extraCard(RRCard card);
+
+    /**
+     * @return Robots AbilityDeck
      */
     ArrayList<AbilityCard> getAbilityHand();
 
     /**
-     * @return Players ProgramDeck
+     * @return Robots ProgramDeck
      */
     ArrayList<ProgramCard> getProgramHand();
     /**
@@ -108,7 +122,7 @@ public interface IRobot extends GameObject {
     int getNextProgramPriority();
 
     /**
-     * Set the players next program from the program stack.
+     * Set the robots next program from the program stack.
      */
     void setNextProgram();
 
@@ -119,13 +133,13 @@ public interface IRobot extends GameObject {
     void setCurrentMove(Program currentMove);
 
     /**
-     * Get the players current program.
+     * Get the robots current program.
      * @return The current program.
      */
     Program getCurrentMove();
 
     /**
-     * Replenishes the players health by 1, up to a maximum of 9 (no damage).
+     * Replenishes the robots health by 1, up to a maximum of 9 (no damage).
      */
     void repair();
 
@@ -136,7 +150,7 @@ public interface IRobot extends GameObject {
     void setFlagsVisitedSize(int n);
 
     /**
-     * @return Get the list of which flags the player has visited.
+     * @return Get the list of which flags the robot has visited.
      */
     boolean[] getFlagsVisited();
 
@@ -156,20 +170,33 @@ public interface IRobot extends GameObject {
     void initiate(Coordinate cor);
 
     /**
-     * Push the players chosen program into a queue
+     * Push the robots chosen program into a queue
      * @param selectedCards The selected programs
      */
     void pushProgram(ArrayList<ProgramCard> selectedCards);
 
     /**
-     * Get the move progression for the players current program
-     * @return How far the player has gotten in the move.
+     * Get the move progression for the robots current program
+     * @return How far the robot has gotten in the move.
      */
     int getMoveProgression();
     /**
-     * Progress the players current move.
+     * Progress the robots current move.
      */
     void progressMove();
+
+    /**
+     * Get the robots ability, which is decided from the robots ability card.
+     * @return The robots ability
+     */
+    boolean hasAbility(Ability ability);
+
+    /**
+     * Activate the robots ability
+     */
+    void activateAbility();
+
+    boolean getActiveAbility();
 
     /**
      * Stop the current program.
@@ -177,33 +204,50 @@ public interface IRobot extends GameObject {
     void resetMoveProgress();
 
     /**
-     * Reset player for new round
+     * Reset robot for new round
      */
     void reset();
 
     /**
-     * Respawn player after death
+     * Respawn robot after death
      */
     void respawn();
 
     /**
-     * Set the players Back Up
+     * Set the robots Back Up
      */
     void setBackUp();
 
     /**
-     * Get the players Back Up
-     * @return the players Back Up
+     * Get the robots Back Up
+     * @return the robots Back Up
      */
     Coordinate getBackUp();
 
     /**
-     * @return If program chosen by player is completed
+     * Powers down or powers up robot
+     */
+    void powerDown();
+
+    /**
+     * Finds out if the Robot is powered down
+     * @return If the robot is powered down
+     */
+    boolean isPoweredDown();
+
+    /**
+     * @return If program chosen by robot is completed
      */
     boolean isFinished();
 
     /**
-     * Call if player wins
+     * Call if robot wins
      */
     void win();
+
+    /**
+     * Finds out if the Robot is an AI
+     * @return True if the Robot is an AI
+     */
+    boolean isAI();
 }

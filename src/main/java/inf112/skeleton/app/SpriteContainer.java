@@ -30,6 +30,8 @@ public class SpriteContainer {
     private Sprite lifeHeart;
     private Sprite cardBack;
     private Sprite emptyCard;
+    private Sprite powerDownButton;
+    private Sprite poweredDownButton;
     private SpriteBatch batch;
     private int drawPositionX;
     private int drawPositionY;
@@ -40,9 +42,7 @@ public class SpriteContainer {
     private int gridRows = 12;
     private int gridColumns = 12;
     private boolean mute = false;
-    private float inc = 0;
-    private ProgramCard hoverCard;
-    private boolean hovered;
+    private boolean poweredDown = false;
 
     public SpriteContainer(SpriteBatch batch){
         this.batch = batch;
@@ -72,6 +72,11 @@ public class SpriteContainer {
         this.cardBack.setPosition(730,400);
         this.emptyCard = setSprite("./assets/cards/emptyCard.png");
         this.emptyCard.setPosition(550,30);
+        this.powerDownButton = setSprite("./assets/buttons/powerDownButton.png");
+        this.powerDownButton.setPosition(33,170);
+        this.poweredDownButton = setSprite("./assets/buttons/poweredDownButton.png");
+        this.poweredDownButton.setPosition(33,170);
+
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = emptyAbility;
         this.abilityText = "";
@@ -96,13 +101,12 @@ public class SpriteContainer {
 
         for (ProgramCard card : programHand) {
             card.getSprite().draw(this.batch);
-            if (card != hoverCard || !hovered){
-                font.setColor(255,255,255,1);
-                font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-                font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
-            }
+            font.setColor(255,255,255,1);
+            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
+            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
         }
         this.cardBack.draw(this.batch);
+
     }
 
     public void getCardSprite(AbilityCard abilityCard){
@@ -158,15 +162,23 @@ public class SpriteContainer {
         this.drawPositionY = 0;
         //Drawing the go button
         goButton.draw(this.batch);
+        if (poweredDown){
+            poweredDownButton.draw(this.batch);
+        } else {
+            powerDownButton.draw(this.batch);
+        }
         if (mute){
             muteButton.draw(this.batch);
         } else {
             unMuteButton.draw(this.batch);
         }
-        for (int i = 0; i < tileGrid.getPlayer(0).getLives(); i++){
+        for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
             this.lifeHeart.setPosition((12+40*i), 350);
             this.lifeHeart.draw(this.batch);
         }
+        font.setColor(0,255,0,1);
+        font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
+        font.setColor(255,255,255,1);
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
@@ -218,59 +230,24 @@ public class SpriteContainer {
         this.batch.end();
     }
 
-    public boolean isInsideBack(float screenX, float screenY){
-        return isInsideSprite(screenX,screenY,this.cardBack);
-    }
-
-    private float hoverScale(){
-        inc += 0.1;
-        float num = 1+(float)(Math.abs(Math.cos(inc))/3);
-        return num;
-    }
-
-    public void isHoveringCard(float screenX, float screenY, ArrayList<ProgramCard> hand){
-        float scale = hoverScale();
-        if (hovered){
-            hoverCard.getSprite().setScale(1);
-        }
-        boolean hover = false;
-
-        for(ProgramCard card : hand){
-            if (isInsideSprite(screenX,screenY,card.getSprite())){
-                hoverCard = card;
-                hover = true;
-                hovered = true;
-                card.getSprite().setScale(scale);
-
-
-            }
-        }
-        if(isInsideGo(screenX, screenY)){
-            goButton.setScale(scale);
-        } else {
-            goButton.setScale(1);
-        }
-        if (!hover && hovered){
-            hoverCard.getSprite().setScale(1);
-            inc = 0;
-            hovered = false;
-        }
-    }
-
     public boolean isInsideGo(float screenX, float screenY){
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
-    public boolean isInsideMute(float screenX, float screenY){
-        if (isInsideSprite(screenX,screenY,this.muteButton)){
-            if(!mute){
-                mute = true;
-            } else{
-                mute = false;
-            }
+    public boolean isInsidePowerDown(float screenX, float screenY) {
+        if (isInsideSprite(screenX,screenY,this.powerDownButton)){
+            poweredDown = !poweredDown;
             return true;
         }
-        return isInsideSprite(screenX,screenY,this.muteButton);
+        return false;
+    }
+
+    public boolean isInsideMute(float screenX, float screenY){
+        if (isInsideSprite(screenX,screenY,this.muteButton)){
+            mute = !mute;
+            return true;
+        }
+        return false;
     }
 
     public void drawTextBox(String text, int length){

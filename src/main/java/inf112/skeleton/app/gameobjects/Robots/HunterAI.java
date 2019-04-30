@@ -1,25 +1,37 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Coordinate;
+import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
 
 public class HunterAI extends AI {
-    private GameObjectType type;
     private ArrayList<AbilityCard> abilityHand;
 
-    public HunterAI(){
-        this.type=GameObjectType.HUNTER;
+    public HunterAI(int playerNumber){
+        this(playerNumber,Orientation.FACING_NORTH, new Coordinate(0,0));
+    }
+
+    public HunterAI(int playerNumber, Orientation orientation, Coordinate position){
+        create(playerNumber, orientation, position);
         this.abilityHand = new ArrayList<>();
+
+        evaluateSprite();
     }
 
     @Override
-    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards) {
-        this.programHand = new AIHand(ProgramCards);
-        for(RRCard card : AbilityCards){
-            this.abilityHand.add((AbilityCard) card);
-        }
+    public void drawPrograms(ArrayList<RRCard> programCards) {
+        this.programHand = new AIHand(programCards);
+
+    }
+
+    @Override
+    public void extraCard(RRCard card) {
+        this.programHand.addExtraCard(card);
     }
 
     @Override
@@ -39,11 +51,17 @@ public class HunterAI extends AI {
 
     @Override
     public void evaluateSprite() {
+        try {
+            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/robot32x32.png"));
 
+            this.sprite = new Sprite(texture);
+            turnSprite();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
     @Override
-    public GameObjectType getGameObjectType() {
-        return this.type;
+    public String toString(){
+        return this.robotNumber + ":" + this.name;
     }
 }

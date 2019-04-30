@@ -35,10 +35,10 @@ public class LaserOutlet implements GameObject {
         try {
             Texture texture;
             if(dual){
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/dualLaserOutlet32x32.png"));
             }
             else {
-                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laser32x32.png"));
+                texture = new Texture(Gdx.files.internal("./assets/gameObjects/laser/laserOutlet32x32.png"));
             }
             this.sprite = new Sprite(texture);
 
@@ -76,7 +76,7 @@ public class LaserOutlet implements GameObject {
 
     @Override
     public int compareTo(Object o) {
-        if(((GameObject)o).getGameObjectType() == GameObjectType.PLAYER){
+        if(((GameObject)o).getGameObjectType() == GameObjectType.ROBOT){
             return -1;
         } else {
             return 1;

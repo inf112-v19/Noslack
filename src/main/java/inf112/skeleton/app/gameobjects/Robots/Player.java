@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.GameObjectType;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Player extends Robot {
     private ArrayList<ProgramCard> programHand;
@@ -20,35 +19,17 @@ public class Player extends Robot {
      * Evaluates sprite based on orientation.
      */
     public Player(int playerNumber){
-        this.health = 9;
-        this.lives = 3;
-        this.orientation = Orientation.FACING_NORTH;
-        this.program = new Stack<>();
-        this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this.currentMove = Program.NONE;
-        this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "RoboHally";
-        evaluateSprite();
+        this(playerNumber, Orientation.FACING_NORTH, new Coordinate(0,0));
     }
-
     /**
      * Constructor of Player class with orientation specified.
      * Initialises health to 9.
      * Evaluates sprite based on orientation.
      */
-    public Player(int playerNumber,Orientation orientation){
-        this.health = 9;
-        this.lives = 3;
-        this.orientation = orientation;
-        this.program = new Stack<>();
+    public Player(int playerNumber, Orientation orientation, Coordinate position){
+        create(playerNumber, orientation, position);
+        this.name = "Player";
         this.programHand = new ArrayList<>();
-        this.abilityHand = new ArrayList<>();
-        this.currentMove = Program.NONE;
-        this.playerNumber = playerNumber;
-        this.hasWon = false;
-        this.name = "RoboHally";
         evaluateSprite();
     }
 
@@ -66,9 +47,13 @@ public class Player extends Robot {
     }
 
     @Override
-    public void drawCards(ArrayList<RRCard> ProgramCards, ArrayList<RRCard> AbilityCards){
-        for (RRCard card:ProgramCards) this.programHand.add((ProgramCard) card);
-        for (RRCard card:AbilityCards) this.abilityHand.add((AbilityCard) card);
+    public void drawPrograms(ArrayList<RRCard> programCards){
+        for (RRCard card: programCards) this.programHand.add((ProgramCard) card);
+    }
+
+    @Override
+    public void extraCard(RRCard card) {
+        this.programHand.add((ProgramCard)card);
     }
 
     @Override
@@ -88,17 +73,18 @@ public class Player extends Robot {
     @Override
     public void reset(){
         this.programHand.clear();
-        this.abilityHand.clear();
         this.program.clear();
         this.currentMove=Program.NONE;
         resetMoveProgress();
     }
 
     @Override
-    public GameObjectType getGameObjectType() {return GameObjectType.PLAYER;}
+    public String toString(){
+        return this.robotNumber + ":" + this.name;
+    }
 
     @Override
-    public String toString(){
-        return this.playerNumber + this.name;
+    public boolean isAI(){
+        return false;
     }
 }
