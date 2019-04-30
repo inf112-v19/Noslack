@@ -93,4 +93,5 @@
 ##### 30.04.2019
 - Going through tasks
 - Player replaced by robot
+- End game screen
 - Alle til stede
