@@ -788,7 +788,8 @@ public class TileGrid{
      * Removes player from the game when out of lives.
      */
     public void removePlayer() {
-        for(IRobot robot : robots) {
+        ArrayList<IRobot> newRobots = new ArrayList<>(robots);
+        for(IRobot robot : newRobots) {
             if(robot.getLives() < 1) {
                 getTile(robot.getPosition()).removeObjectFromTile(robot);
                 robots.remove(robot);
