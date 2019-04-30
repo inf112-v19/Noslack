@@ -778,4 +778,12 @@ public class TileGrid{
         }
         return robotInLine;
     }
+
+    public void decideAiPrograms() {
+        for(IRobot robot : robots){
+            if(robot.isAI()){
+                ((AI) robot).decideProgram(getPlayer().getPosition());
+            }
+        }
+    }
 }

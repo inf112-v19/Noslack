@@ -54,7 +54,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("teleporterMap.txt");
+        this.tileGrid = new TileGrid("LevelX.txt");
         this.robotQueue = new ArrayList<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
@@ -62,22 +62,19 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
         for(IRobot robot :this.tileGrid.getRobots()){
             robot.drawAbility(this.abilityDeck.dealOne());
-            robot.drawPrograms(this.programDeck.deal(robot.getHealth()));
-            if(robot.hasAbility(Ability.ExtraMemory)){
-                robot.extraCard(this.programDeck.dealOne());
-            }
         }
-        this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
-        this.animator = new CardSpriteAnimation(programHand);
-        this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
-        this.emptyProgram = new ProgramCard(0, Program.NONE);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = this.emptyAbility;
         this.abilityText = "";
-        this.roboTick = 0;
+        this.emptyProgram = new ProgramCard(0, Program.NONE);
         this.animation = false;
         this.activatedTiles = false;
+        this.roboTick = 0;
+        this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
         dealNewCards();
+        this.animator = new CardSpriteAnimation(programHand);
+        this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
+
     }
 
     @Override
@@ -200,6 +197,7 @@ public class RoboRally extends Game implements InputProcessor {
         }
         this.animator = new CardSpriteAnimation(this.programHand);
         this.animation = true;
+        this.tileGrid.decideAiPrograms();
     }
 
     public void discardAbility(int robotNumber, RRCard card){
