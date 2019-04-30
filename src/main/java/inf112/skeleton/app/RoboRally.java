@@ -37,7 +37,6 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private GameFinishedScreen gameFinishedScreen;
 
     @Override
     public void create() {
@@ -47,7 +46,6 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
         this.menuScreen = new MenuScreen(this.batch);
-        this.gameFinishedScreen = new GameFinishedScreen(this.batch);
     }
 
     public void createGame(){
@@ -187,6 +185,8 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase = 0;
             this.activatedTiles = true;
         }
+
+
     }
 
     private void dealNewCards() {
