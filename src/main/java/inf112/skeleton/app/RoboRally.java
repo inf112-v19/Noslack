@@ -37,6 +37,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
+    private GameFinishedScreen gameFinishedScreen;
 
     @Override
     public void create() {
@@ -46,6 +47,7 @@ public class RoboRally extends Game implements InputProcessor {
         Gdx.input.setInputProcessor(this);
         this.batch = new SpriteBatch();
         this.menuScreen = new MenuScreen(this.batch);
+        this.gameFinishedScreen = new GameFinishedScreen(this.batch);
     }
 
     public void createGame(){
@@ -84,6 +86,7 @@ public class RoboRally extends Game implements InputProcessor {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if(this.menuScreen.runMenu()){
             if(this.menuScreen.runTests()){
                 this.menuScreen.testMenu();
@@ -91,6 +94,17 @@ public class RoboRally extends Game implements InputProcessor {
                 this.menuScreen.render();
             }
         }
+
+        else if(this.menuScreen.win()){
+            this.menuScreen.gameFinishMenu();
+        }
+
+        else if(this.menuScreen.loose()){
+
+            this.menuScreen.gameFinishMenu();
+        }
+
+
         else{
             this.batch.begin();
             this.spriteContainer.renderGrid(this.tileGrid);
