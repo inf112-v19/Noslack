@@ -778,4 +778,13 @@ public class TileGrid{
         }
         return robotInLine;
     }
+
+    public void removePlayer() {
+        for(IRobot robot : robots) {
+            if(robot.getLives() < 1) {
+                getTile(robot.getPosition()).removeObjectFromTile(robot);
+                robots.remove(robot);
+            }
+        }
+    }
 }

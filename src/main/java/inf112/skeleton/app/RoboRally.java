@@ -54,7 +54,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("teleporterMap.txt");
+        this.tileGrid = new TileGrid("mapLayoutFinishedMap1.txt");
         this.robotQueue = new ArrayList<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
@@ -152,6 +152,7 @@ public class RoboRally extends Game implements InputProcessor {
         if(this.tileGrid.getRobot(this.currentRobot).isFinished()){
             this.currentPhase = 100;
         }
+        tileGrid.removePlayer();
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
