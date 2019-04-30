@@ -184,6 +184,8 @@ public class RoboRally extends Game implements InputProcessor {
                 }
             }
         }
+        this.tileGrid.decideAiPrograms();
+
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             try{
                 this.currentAbility = this.tileGrid.getRobot(this.currentRobot).getAbilityHand().get(0);
@@ -195,9 +197,9 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentAbility.getSprite().setPosition(550,20);
             this.spriteContainer.getCardSprite(this.currentAbility);
         }
+
         this.animator = new CardSpriteAnimation(this.programHand);
         this.animation = true;
-        this.tileGrid.decideAiPrograms();
     }
 
     public void discardAbility(int robotNumber, RRCard card){

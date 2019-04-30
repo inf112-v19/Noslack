@@ -157,11 +157,12 @@ public abstract class AI extends Robot {
             System.out.println("NextMove: " + nextMove);
             this.program.push(nextMove);
         }else{
+            System.out.println("NOT CONTAINS MOVE");
             moveNotFound(Program.MOVE1);
         }
     }
     private void isFull(){
-        this.full = this.program.size()==5;
+        this.full = this.program.size()>=5;
     }
 
     public void pushProgram(ArrayList<ProgramCard> selectedCards){
