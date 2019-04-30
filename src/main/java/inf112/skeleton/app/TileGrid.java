@@ -746,6 +746,11 @@ public class TileGrid{
         }
     }
 
+    /**
+     * Checks if there is a robot in line of sight.
+     * @param robotNumber
+     * @return robotNumber of robot in line of sight.
+     */
     public int robotInLine(int robotNumber) {
 
         int column = getRobot(robotNumber).getPosition().getColumn();
@@ -779,6 +784,9 @@ public class TileGrid{
         return robotInLine;
     }
 
+    /**
+     * Removes player from the game when out of lives.
+     */
     public void removePlayer() {
         for(IRobot robot : robots) {
             if(robot.getLives() < 1) {
