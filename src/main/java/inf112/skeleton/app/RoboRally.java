@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.server.ServerClass;
 import inf112.skeleton.app.server.ServerConnector;
@@ -48,7 +47,6 @@ public class RoboRally extends Game implements InputProcessor {
     private int roboTick;
     private boolean animation;
     private SpriteContainer spriteContainer;
-    private Vector2 hovering;
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
@@ -89,14 +87,10 @@ public class RoboRally extends Game implements InputProcessor {
         this.roboTick = 0;
         this.animation = false;
         dealNewCards();
-
-        this.hovering = new Vector2(0,0);
     }
 
     @Override
     public void render() {
-
-
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -127,9 +121,6 @@ public class RoboRally extends Game implements InputProcessor {
 
             spriteContainer.renderDealtCards(programHand);
             spriteContainer.drawAbilityText();
-            if(!animation){
-                spriteContainer.isHoveringCard(hovering.x,hovering.y,programHand);
-            }
             this.batch.end();
             this.roboTick++;
         }
@@ -281,10 +272,6 @@ public class RoboRally extends Game implements InputProcessor {
                 menuScreen.clickTestStart(screenX,screenY);
             }
         } else {
-            if (spriteContainer.isInsideBack(screenX, screenY) && animation){
-                programHand = animator.finishAnimation();
-                animation = false;
-            }
             if (spriteContainer.isInsideGo(screenX, screenY)) {
                 ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
                 for(ProgramCard card : chosenCards){
@@ -360,10 +347,7 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        if(!menuScreen.runMenu()){
-            this.hovering = new Vector2(screenX,screenY);
-        }
+    public boolean mouseMoved(int i, int i1) {
         return false;
     }
 
