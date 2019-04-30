@@ -45,3 +45,52 @@
 - HVORDAN PROSJEKTET BYGGES, TESTEST, KJØRES
 
 - HVORDAN TESTENE KJØRES
+
+# Referat fra møter
+
+##### 02.04.2019
+- Teleporter functinality
+- Player collision
+- Bug fix
+- Start menu graphics
+- Class diagram animation
+- AI prototyping
+- Alle til stede untatt Stian
+
+##### 04.04.2019
+- Card graphics
+- Abstracting tile class
+- Fixing tests
+- Ability description on click
+- Alle til stede
+
+##### 09.04.2019
+- Multiplayer prototyping
+- Implementing abilities
+- Hover card animation
+- Alle til stede
+
+##### 11.04.2019
+- Online play prototyping
+- Implementing abilities
+- Adding power down back end code
+- Alle til stede
+
+##### 23.04.2019
+- Power down button
+- Removing unused code
+- Player queue calculations
+- Laser sprites
+- Alle til stede untatt Hans Fredrik
+
+##### 25.04.2019
+- Tile graphics
+- Adding test maps
+- Implementing abilities
+- Bug fix
+- Alle til stede
+
+##### 30.04.2019
+- Going through tasks
+- Player replaced by robot
+- Alle til stede
