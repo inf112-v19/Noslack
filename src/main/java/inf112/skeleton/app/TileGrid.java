@@ -110,6 +110,9 @@ public class TileGrid{
     }
 
     public void activateTiles(int currentPhase){
+        for (IRobot robot : this.robots) {
+            fireControl(robot.getRobotNumber());
+        }
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (IRobot robot : robots) {
@@ -122,6 +125,7 @@ public class TileGrid{
         }
         for(IRobot p : robots){
             p.moved(false);
+            removeRobotLaser(p.getRobotNumber());
         }
     }
 
@@ -598,6 +602,9 @@ public class TileGrid{
 
     public void fireControl(int robotNumber) {
         Coordinate position = getRobotPosition(robotNumber);
+        if(robotInLine(robotNumber) < 0) {
+            return;
+        }
         if(robotHasAbility(robotNumber, Ability.PressorBeam)) {
             int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation());
@@ -788,6 +795,8 @@ public class TileGrid{
                         robotInLine = p.getRobotNumber();
                     }
                     break;
+                default:
+                    robotInLine = -1;
             }
         }
         return robotInLine;
