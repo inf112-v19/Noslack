@@ -173,11 +173,17 @@ public abstract class Robot implements IRobot{
     }
 
     @Override
-    public void win(){
-        if(!this.hasWon){
+    public boolean win(){
+        if(flagsVisited[flagsVisited.length-1]){
             System.out.println(this.name + " HAS WON!");
             this.hasWon = true;
         }
+        return hasWon;
+    }
+
+    @Override
+    public boolean dead(){
+        return this.lives <1;
     }
 
     @Override
@@ -286,6 +292,7 @@ public abstract class Robot implements IRobot{
     @Override
     public void powerDown(){
         this.powerDown = !this.powerDown;
+        this.health += 1;
     }
 
     @Override
