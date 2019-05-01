@@ -82,6 +82,7 @@ public class RoboRally extends Game implements InputProcessor {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if(this.menuScreen.runMenu()){
             if(this.menuScreen.runTests()){
                 this.menuScreen.testMenu();
@@ -89,6 +90,17 @@ public class RoboRally extends Game implements InputProcessor {
                 this.menuScreen.render();
             }
         }
+
+        else if(this.menuScreen.win()){
+            this.menuScreen.gameFinishMenu();
+        }
+
+        else if(this.menuScreen.loose()){
+
+            this.menuScreen.gameFinishMenu();
+        }
+
+
         else{
             this.batch.begin();
             this.spriteContainer.renderGrid(this.tileGrid);
@@ -166,6 +178,8 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase = 0;
             activateTiles();
         }
+
+
     }
 
     private void dealNewCards() {
