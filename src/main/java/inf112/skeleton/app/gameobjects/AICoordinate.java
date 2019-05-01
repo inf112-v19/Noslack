@@ -1,24 +1,15 @@
 package inf112.skeleton.app.gameobjects;
 
+import inf112.skeleton.app.cards.Program;
+
 import static java.lang.Math.abs;
 
-public class Coordinate {
-
+public class AICoordinate{
     private int row;
     private int column;
     private Orientation orientation;
 
-    public Coordinate(int row, int column){
-        this(row,column, Orientation.FACING_NORTH);
-    }
-
-    public Coordinate(int row, int column, Orientation orientation){
-        this.row = row;
-        this.column = column;
-        this.orientation = orientation;
-    }
-
-    public Coordinate (Coordinate coordinate){
+    public AICoordinate (Coordinate coordinate){
         this.row = coordinate.getRow();
         this.column = coordinate.getColumn();
         this.orientation = coordinate.getOrientation();
@@ -40,39 +31,40 @@ public class Coordinate {
         return this.orientation;
     }
 
-    /**
-     * Moves the coordinates based on the fed data
-     * @param rowsToMove Rows to move
-     * @param columnsToMove Columns to move
-     * @return The new coordinate
-     */
-    public Coordinate moveCoordinate(int rowsToMove, int columnsToMove){
-        return new Coordinate(this.row+rowsToMove,this.column+columnsToMove,
-                this.orientation);
-    }
-
-    /**
-     * Feeds back a new coordinate moved in the direction of the coordinates orientation
-     * @return the new coordinate
-     */
-    public Coordinate moveCoordinate(){
-        int row = this.row;
-        int column = this.column;
-        switch (this.orientation){
-            case FACING_NORTH:
-                row++;
+    public void moveAICoordiante(Program program){
+        switch(program){
+            case LEFT:
+            case RIGHT:
+            case U:
+                this.orientation = this.orientation.rotate(program);
                 break;
-            case FACING_SOUTH:
-                row--;
+            case BACK:
+                this.moveInDirection(-1);
                 break;
-            case FACING_EAST:
-                column++;
+            case BACK2:
+                this.moveInDirection(-2);
                 break;
-            case FACING_WEST:
-                column--;
+            default:
+                this.moveInDirection(program.totalMoves());
                 break;
         }
-        return new Coordinate(row, column, this.orientation);
+    }
+
+    private void moveInDirection(int move){
+        switch (this.orientation){
+            case FACING_NORTH:
+                this.row+=move;
+                break;
+            case FACING_SOUTH:
+                this.row-=move;
+                break;
+            case FACING_EAST:
+                this.column+=move;
+                break;
+            case FACING_WEST:
+                this.column-=move;
+                break;
+        }
     }
 
 
@@ -81,11 +73,6 @@ public class Coordinate {
         if(o.getClass()==this.getClass())
             return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
         return false;
-    }
-
-    public String toString(){
-
-        return "Row: "+getRow()+" Column: "+getColumn() + " Orientation: " + getOrientation();
     }
 
     /**
