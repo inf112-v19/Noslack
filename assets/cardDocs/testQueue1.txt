@@ -1,0 +1,5 @@
+820 Move 3
+960 Move 2
+340 Rotate Right
+780 Rotate Left
+600 Rotate Right
