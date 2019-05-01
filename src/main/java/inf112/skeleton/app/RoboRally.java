@@ -37,6 +37,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
+    private String selectedMap = "mapLayoutFinishedMap1.txt";
 
     @Override
     public void create() {
@@ -54,7 +55,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("emptyBigMapWithAIAndPlayer.txt");
+        this.tileGrid = new TileGrid(selectedMap);
         this.robotQueue = new ArrayList<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
@@ -261,8 +262,9 @@ public class RoboRally extends Game implements InputProcessor {
             if(this.menuScreen.clickStart(screenX,screenY)){
                 this.menuScreen.stopMenu();
                 createGame();
-            }
-            else {
+            } else if(!this.menuScreen.clickMap(screenX,screenY).equals("no")){
+                this.selectedMap = this.menuScreen.clickMap(screenX,screenY);
+            } else {
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
         } else {
