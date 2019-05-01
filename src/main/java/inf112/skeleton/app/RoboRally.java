@@ -95,12 +95,7 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
                     this.robotQueue = this.tileGrid.robotQueue();
-                    if(this.activatedTiles){
-                        activateTiles();
-                        this.activatedTiles = false;
-                    } else {
-                        tick();
-                    }
+                    tick();
                 }
             }
 
@@ -154,10 +149,10 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                 this.tileGrid.applyNextProgram(this.currentRobot);
                 this.currentRobot =this.robotQueue.remove(0);
+                activateTiles();
                 if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                     this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
-                    this.activatedTiles = true;
                 }
             }
         }
@@ -168,7 +163,7 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;
-            this.activatedTiles = true;
+            activateTiles();
         }
     }
 
