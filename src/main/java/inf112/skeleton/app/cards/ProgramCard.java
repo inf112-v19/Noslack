@@ -72,13 +72,13 @@ public class ProgramCard implements RRCard {
                 setSprite("./assets/cards/back-up.png");
                 return Program.BACK;
             case "Move 1":
-                setSprite("./assets/cards/program-1.png");
+                setSprite("./assets/cards/move.png");
                 return Program.MOVE1;
             case "Move 2":
-                setSprite("./assets/cards/program-1.png");
+                setSprite("./assets/cards/move.png");
                 return Program.MOVE2;
             case "Move 3":
-                setSprite("./assets/cards/program-1.png");
+                setSprite("./assets/cards/move.png");
                 return Program.MOVE3;
             default:
                 throw new IllegalArgumentException("Invalid program: " + s);
