@@ -13,7 +13,6 @@ public class MenuScreen
     private Sprite startGame;
     private Sprite testsButton;
     private Sprite createNewMap;
-    private Sprite hostGame;
     private SpriteContainer spriteContainer;
     private boolean runTests;
     private Sprite drawSpritesBtn;
@@ -46,8 +45,6 @@ public class MenuScreen
         this.testsButton.setPosition(375,220);
         this.createNewMap = spriteContainer.setSprite("./assets/menuScreen/createMapBtn.png");
         this.createNewMap.setPosition(650,220);
-        this.hostGame = spriteContainer.setSprite("./assets/menuScreen/hostGameBtn.png");
-        this.hostGame.setPosition(375,95);
         this.runTests = false;
 
         this.creatingMap = false;
@@ -75,20 +72,14 @@ public class MenuScreen
 
     public void render(){
 
-
         if(creatingMap){
-            batch.begin();
-            background.draw(batch);
-            this.spriteContainer.renderFlexibleGrid(tileGrid, true, 0, 50, 50);
-            createNewMap.draw(batch);
-            batch.end();
+            createMenu();
         } else {
             batch.begin();
             background.draw(batch);
             startGame.draw(batch);
             testsButton.draw(batch);
             createNewMap.draw(batch);
-            hostGame.draw(batch);
             map1.draw(batch);
             map2.draw(batch);
             this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
@@ -101,6 +92,14 @@ public class MenuScreen
     public boolean runMenu() { return run; }
 
     public void stopMenu(){ run = false; }
+
+    public void clickMenu(int screenX, int screenY) {
+        if(spriteContainer.isInsideSprite(screenX,screenY,mainMenuBtn)){
+            this.runLoose = false;
+            this.runWin = false;
+            this.run = true;
+        }
+    }
 
     public void clickCreate(int screenX, int screenY) {
         if(spriteContainer.isInsideSprite(screenX,screenY,createNewMap)){
@@ -131,6 +130,14 @@ public class MenuScreen
             return this.selectedMap;
         }
         return "no";
+    }
+
+    private void createMenu(){
+        batch.begin();
+        background.draw(batch);
+        this.spriteContainer.renderFlexibleGrid(tileGrid, true, 0, 50, 50);
+        createNewMap.draw(batch);
+        batch.end();
     }
 
     public void testMenu(){

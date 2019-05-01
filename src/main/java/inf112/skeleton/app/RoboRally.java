@@ -282,6 +282,8 @@ public class RoboRally extends Game implements InputProcessor {
                 this.menuScreen.clickCreate(screenX,screenY);
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
+        } else if(this.menuScreen.win()){
+            this.menuScreen.clickMenu(screenX,screenY);
         } else {
             if (this.spriteContainer.isInsideGo(screenX, screenY)) {
                 ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
