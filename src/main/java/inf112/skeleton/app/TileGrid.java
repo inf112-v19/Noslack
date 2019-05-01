@@ -8,6 +8,8 @@ import inf112.skeleton.app.gameobjects.Robots.*;
 import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class TileGrid{
@@ -296,15 +298,14 @@ public class TileGrid{
         for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
         }
-        while(!priorities.isEmpty()){
-            Integer priority=0;
-            for(Integer p : priorities){
-                if(priority<=p){
-                    priority=p;
+        Comparator c = Collections.reverseOrder();
+        Collections.sort(priorities, c);
+        for(Integer priority : priorities) {
+            for (IRobot robot : this.robots) {
+                if(priority.equals(robot.getNextProgramPriority())){
+                    robotQueue.add(robot.getRobotNumber());
                 }
             }
-            robotQueue.add(priorities.indexOf(priority));
-            priorities.remove(priority);
         }
         return robotQueue;
     }
