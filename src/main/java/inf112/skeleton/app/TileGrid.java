@@ -134,23 +134,26 @@ public class TileGrid{
      * @param robot The active robot
      */
     private void robotOnTile(Tile tile, IRobot robot, int currentPhase) {
-
-
+        // Laser
+        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
+            sound.laserSound();
+            laserDamageRobot(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),robot);
+        }
         // Conveyor
-        if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
+        else if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             sound.conveyorSound();
             moveInDirectionOfConveyor(conveyor, robot.getRobotNumber());
         }
         // Repair Station
-        if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
+        else if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
             if (robot.isFinished()) {
                 robot.repair();
                 robot.setBackUp();
             }
         }
         // Flag
-        if(tile.hasGameObject(GameObjectType.FLAG)){
+        else if(tile.hasGameObject(GameObjectType.FLAG)){
             if(robot.isFinished()){
                 int n = ((Flag)tile.getGameObject(GameObjectType.FLAG)).getFlagNumber();
                 //Adds flag to flagsVisited only if it has visited all previous flags.
@@ -170,33 +173,31 @@ public class TileGrid{
             }
         }
         //Teleporter
-        if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (robot.getMoveProgression() == 0)){
+        else if(tile.hasGameObject(GameObjectType.TELEPORTER)&& (robot.getMoveProgression() == 0)){
+            sound.teleportSound();
             Teleporter teleporter = (Teleporter)tile.getGameObject(GameObjectType.TELEPORTER);
             tile.removeObjectFromTile(robot);
             getTile(teleporter.getTeleportLocation()).addObjectOnTile(robot);
             setRobotPosition(robot.getRobotNumber(),teleporter.getTeleportLocation());
         }
         // Hole
-        if(tile.hasGameObject(GameObjectType.HOLE)){
+        else if(tile.hasGameObject(GameObjectType.HOLE)){
             respawnRobot(robot.getRobotNumber());
         }
-        // Laser
-        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
-            sound.laserSound();
-            laserDamageRobot(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),robot);
-        }
-        if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
+
+        else if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
             laserDamageRobot(((LaserOutlet)tile.getGameObject(GameObjectType.LASER_OUTLET)).isDual(),robot);
         }
         // Rotator activation
-        if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
+        else if(tile.hasGameObject(GameObjectType.ROTATOR_CLOCKWISE)){
             applyRotation(Program.RIGHT, robot.getRobotNumber());
         }
-        if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
+        else if(tile.hasGameObject(GameObjectType.ROTATOR_COUNTER_CLOCKWISE)){
             applyRotation(Program.LEFT, robot.getRobotNumber());
         }
         // Pusher activation
-        if(tile.hasGameObject(GameObjectType.PUSHER)){
+        else if(tile.hasGameObject(GameObjectType.PUSHER)){
+            sound.pusherSound();
             Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
             Orientation orientation = pusher.getOrientation();
 
@@ -207,6 +208,9 @@ public class TileGrid{
             else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
+        }
+        else{
+            sound.move();
         }
     }
     /**
@@ -366,7 +370,6 @@ public class TileGrid{
      * @param columnsToMove Columns the robot is to move
      */
     public void moveRobot(int robotNumber, int rowsToMove, int columnsToMove){
-        sound.move();
         int rowOfRobot = getRobotPosition(robotNumber).getRow();
         int columnOfRobot = getRobotPosition(robotNumber).getColumn();
 
