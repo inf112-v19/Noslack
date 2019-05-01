@@ -9,7 +9,6 @@ import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 
 public class TileGrid{
@@ -295,11 +294,11 @@ public class TileGrid{
     public ArrayList<Integer> robotQueue(){
         ArrayList<Integer> robotQueue = new ArrayList<>();
         ArrayList<Integer> priorities = new ArrayList<>();
+
         for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
         }
-        Comparator c = Collections.reverseOrder();
-        Collections.sort(priorities, c);
+        Collections.sort(priorities, Collections.reverseOrder());
         for(Integer priority : priorities) {
             for (IRobot robot : this.robots) {
                 if(priority.equals(robot.getNextProgramPriority())){
