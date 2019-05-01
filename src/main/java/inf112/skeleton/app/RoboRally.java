@@ -37,6 +37,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
+    private String selectedMap = "mapLayoutFinishedMap1.txt";
 
     @Override
     public void create() {
@@ -54,7 +55,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.gameSounds.gameMusic();
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
-        this.tileGrid = new TileGrid("mapLayoutFinishedMap1.txt");
+        this.tileGrid = new TileGrid(selectedMap);
         this.robotQueue = new ArrayList<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
@@ -62,22 +63,19 @@ public class RoboRally extends Game implements InputProcessor {
         this.abilityDeck = new AbilityDeck("AbilityCards.txt");
         for(IRobot robot :this.tileGrid.getRobots()){
             robot.drawAbility(this.abilityDeck.dealOne());
-            robot.drawPrograms(this.programDeck.deal(robot.getHealth()));
-            if(robot.hasAbility(Ability.ExtraMemory)){
-                robot.extraCard(this.programDeck.dealOne());
-            }
         }
-        this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
-        this.animator = new CardSpriteAnimation(programHand);
-        this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
-        this.emptyProgram = new ProgramCard(0, Program.NONE);
         this.emptyAbility = new AbilityCard(" ");
         this.currentAbility = this.emptyAbility;
         this.abilityText = "";
-        this.roboTick = 0;
+        this.emptyProgram = new ProgramCard(0, Program.NONE);
         this.animation = false;
         this.activatedTiles = false;
+        this.roboTick = 0;
+        this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
         dealNewCards();
+        this.animator = new CardSpriteAnimation(programHand);
+        this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
+
     }
 
     @Override
@@ -98,12 +96,7 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
                     this.robotQueue = this.tileGrid.robotQueue();
-                    if(this.activatedTiles){
-                        activateTiles();
-                        this.activatedTiles = false;
-                    } else {
-                        tick();
-                    }
+                    tick();
                 }
             }
 
@@ -157,10 +150,10 @@ public class RoboRally extends Game implements InputProcessor {
             if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                 this.tileGrid.applyNextProgram(this.currentRobot);
                 this.currentRobot =this.robotQueue.remove(0);
+                activateTiles();
                 if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                     this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
-                    this.activatedTiles = true;
                 }
             }
         }
@@ -171,7 +164,7 @@ public class RoboRally extends Game implements InputProcessor {
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;
-            this.activatedTiles = true;
+            activateTiles();
         }
     }
 
@@ -187,6 +180,8 @@ public class RoboRally extends Game implements InputProcessor {
                 }
             }
         }
+        this.tileGrid.decideAiPrograms();
+
         if(this.currentAbility.getAbility() == this.emptyAbility.getAbility()){
             try{
                 this.currentAbility = this.tileGrid.getRobot(this.currentRobot).getAbilityHand().get(0);
@@ -198,6 +193,7 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentAbility.getSprite().setPosition(550,20);
             this.spriteContainer.getCardSprite(this.currentAbility);
         }
+
         this.animator = new CardSpriteAnimation(this.programHand);
         this.animation = true;
     }
@@ -266,8 +262,9 @@ public class RoboRally extends Game implements InputProcessor {
             if(this.menuScreen.clickStart(screenX,screenY)){
                 this.menuScreen.stopMenu();
                 createGame();
-            }
-            else {
+            } else if(!this.menuScreen.clickMap(screenX,screenY).equals("no")){
+                this.selectedMap = this.menuScreen.clickMap(screenX,screenY);
+            } else {
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
         } else {

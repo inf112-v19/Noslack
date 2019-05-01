@@ -26,10 +26,11 @@ public enum Program {
     }
     public boolean isMove(){
         switch (this){
-            case MOVE1: return true;
-            case MOVE2: return true;
-            case MOVE3: return true;
-            case BACK: return true;
+            case MOVE1:
+            case MOVE2:
+            case MOVE3:
+            case BACK:
+                return true;
             default: return false;
         }
     }
