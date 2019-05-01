@@ -66,8 +66,6 @@ public abstract class Robot implements IRobot{
             sprite.setRotation(this.orientation.turnSprite());
             this.position.setOrientation(this.orientation);
         }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Robot turnSprite");
         }
     }
 

@@ -94,7 +94,6 @@ public class ProgramCard implements RRCard {
             this.sprite = new Sprite(new Texture(Gdx.files.internal(filepath)));
         }
         catch (Exception e){
-            e.printStackTrace();
         }
     }
 

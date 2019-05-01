@@ -44,8 +44,6 @@ public class LaserOutlet implements GameObject {
 
             sprite.setRotation(this.coordinate.getOrientation().turnSprite());
         }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in LaserOutlets evaluateSprite");
         }
     }
 

@@ -38,8 +38,6 @@ public class Flag implements GameObject {
             }
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in flags evaluateSprite");
         }
     }
 

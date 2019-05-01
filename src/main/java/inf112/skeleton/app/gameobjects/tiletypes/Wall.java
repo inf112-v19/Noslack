@@ -37,7 +37,6 @@ public class Wall implements GameObject {
             this.sprite = new Sprite(texture);
             sprite.setRotation(this.orientation.turnSprite());
         } catch(Exception e){
-            e.printStackTrace();
         }
 
     }

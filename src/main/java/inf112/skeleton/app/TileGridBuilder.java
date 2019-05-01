@@ -66,7 +66,7 @@ public class TileGridBuilder {
             }
             bufferedReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error in TileGridBuilder, did not find file");
         }
     }
     /**

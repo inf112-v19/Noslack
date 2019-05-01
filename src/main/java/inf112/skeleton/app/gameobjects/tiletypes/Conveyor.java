@@ -53,8 +53,6 @@ public class Conveyor implements GameObject {
             }
             sprite.setRotation(this.orientation.turnSprite());
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Pusher evaluateSprite()");
         }
     }
     @Override
