@@ -40,8 +40,6 @@ public class LaserBeam implements GameObject {
             this.sprite = new Sprite(texture);
             this.sprite.setRotation(this.orientation.turnSprite());
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in LaserBeams evaluateSprite");
         }
     }
 

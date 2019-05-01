@@ -112,13 +112,11 @@ public class AbilityCard implements RRCard {
         }
     }
 
-
     private void setSprite(String filepath){
         try {
             this.sprite = new Sprite(new Texture(Gdx.files.internal(filepath)));
         }
         catch (Exception e){
-            e.printStackTrace();
         }
     }
 

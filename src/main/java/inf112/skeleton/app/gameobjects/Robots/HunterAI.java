@@ -58,7 +58,6 @@ public class HunterAI extends AI {
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

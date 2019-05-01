@@ -40,8 +40,6 @@ public class Player extends Robot {
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Player evaluateSprite");
         }
     }
 

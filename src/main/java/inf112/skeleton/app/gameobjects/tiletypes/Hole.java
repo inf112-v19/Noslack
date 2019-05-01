@@ -28,8 +28,6 @@ public class Hole implements GameObject {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/blackHole/blackHole32x32.png"));
             this.sprite = new Sprite(texture);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Hole evaluateSprite");
         }
     }
 
