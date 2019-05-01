@@ -15,6 +15,14 @@ public class AICoordinate{
         this.orientation = coordinate.getOrientation();
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
     public Orientation getOrientation() {
         return this.orientation;
     }
