@@ -320,4 +320,9 @@ public abstract class Robot implements IRobot{
     public GameObjectType getGameObjectType() {
         return GameObjectType.ROBOT;
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

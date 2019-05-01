@@ -253,7 +253,7 @@ public class TileGridBuilder {
 
     /**
      * Figures out if the laser can keep firing
-     * @param pos lasers current position
+     * @param position lasers current position
      * @return If hte laser can keep firing.
      */
     private boolean continueFiring(Coordinate position){
