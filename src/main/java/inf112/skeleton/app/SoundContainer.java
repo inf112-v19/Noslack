@@ -18,23 +18,25 @@ public class SoundContainer {
 
     public SoundContainer(){
 
-        this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
-        this.shuffleCard = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/shuffleCard.wav"));
-        this.conveyor = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/conveyor.wav"));
-        this.move = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/move.wav"));
-        this.laser = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/laser.wav"));
-        //this.pusher = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/servo2.wav"));
-        //this.teleport = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/portal.wav"));
 
-
+        try {
+            this.gameMusic = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/gameTheme.wav"));
+            this.shuffleCard = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/shuffleCard.wav"));
+            this.conveyor = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/conveyor.wav"));
+            this.move = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/move.wav"));
+            this.laser = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/laser.wav"));
+        }catch(Exception e){
+        }
 
         this.playing = false;
 
     }
 
     public void laserSound(){
-        this.laser.play();
-
+        try {
+            this.laser.play();
+        }catch(Exception e){
+        }
     }
     public void pusherSound(){
         //this.pusher.play();
@@ -48,7 +50,10 @@ public class SoundContainer {
 
     }
     public void move(){
-        this.move.play();
+        try {
+            this.move.play();
+        }catch(Exception e){
+        }
     }
 
     public void defeatSound(){

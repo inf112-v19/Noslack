@@ -60,8 +60,5 @@ public class HunterAI extends AI {
         } catch (Exception e) {
         }
     }
-    @Override
-    public String toString(){
-        return this.robotNumber + ":" + this.name;
-    }
+
 }

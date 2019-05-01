@@ -18,7 +18,7 @@ public class RobotTest {
     public void robotOnMap(){
         TileGrid tileGrid = new TileGrid("robotTestMap.txt");
         IRobot robot = tileGrid.getRobot(0);
-        assertEquals("0:HunterAI",robot.toString());
+        assertEquals("Robot 0",robot.toString());
     }
 
     @Test
