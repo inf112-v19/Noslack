@@ -18,13 +18,17 @@ public class MenuScreen
     private boolean runTests;
     private Sprite drawSpritesBtn;
     private Sprite background;
-    private Sprite map1;
-    private Sprite map2;
     private BitmapFont font;
     private Vector2 mapTextPos;
+    private boolean creatingMap;
+    private TileGrid tileGrid;
+    private String selectedMap = "mapLayoutFinishedMap1.txt";
+    private Sprite map1;
+    private Sprite map2;
 
     public MenuScreen(SpriteBatch batch)
     {
+        this.tileGrid = new TileGrid(selectedMap);
         this.batch=batch;
         this.run = true;
         this.spriteContainer = new SpriteContainer(batch);
@@ -40,10 +44,10 @@ public class MenuScreen
         this.hostGame.setPosition(375,95);
         this.runTests = false;
 
+        this.creatingMap = false;
 
         this.font = new BitmapFont();
         this.font.setColor(200,0,0,1);
-
         this.mapTextPos = new Vector2(110,520);
 
         this.map1 = spriteContainer.setSprite("./assets/menuScreen/map1.png");
@@ -61,18 +65,25 @@ public class MenuScreen
 
     public void render(){
 
-        batch.begin();
-        background.draw(batch);
-        startGame.draw(batch);
-        testsButton.draw(batch);
-        createNewMap.draw(batch);
-        hostGame.draw(batch);
-        map1.draw(batch);
-        map2.draw(batch);
-        this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
 
-        batch.end();
-
+        if(creatingMap){
+            batch.begin();
+            background.draw(batch);
+            this.spriteContainer.renderFlexibleGrid(tileGrid, true, 0, 50, 50);
+            createNewMap.draw(batch);
+            batch.end();
+        } else {
+            batch.begin();
+            background.draw(batch);
+            startGame.draw(batch);
+            testsButton.draw(batch);
+            createNewMap.draw(batch);
+            hostGame.draw(batch);
+            map1.draw(batch);
+            map2.draw(batch);
+            this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
+            batch.end();
+        }
     }
 
     public boolean runTests(){ return this.runTests; }
@@ -81,6 +92,13 @@ public class MenuScreen
 
     public void stopMenu(){ run = false; }
 
+    public void clickCreate(int screenX, int screenY) {
+        if(spriteContainer.isInsideSprite(screenX,screenY,createNewMap)){
+            this.tileGrid = new TileGrid(selectedMap);
+            this.creatingMap = !this.creatingMap;
+        }
+    }
+
     public boolean clickStart(int screenX, int screenY){
         return spriteContainer.isInsideSprite(screenX,screenY,startGame);
 
@@ -88,29 +106,26 @@ public class MenuScreen
 
     public void clickTestStart(int screenX, int screenY){
         if(spriteContainer.isInsideSprite(screenX,screenY,testsButton)){
-            if(runTests){
-                this.runTests=false;
-            } else {
-                this.runTests=true;
-            }
+            this.runTests = !this.runTests;
         }
     }
 
     public String clickMap(int screenX, int screenY) {
         if(spriteContainer.isInsideSprite(screenX,screenY,map1)){
             this.mapTextPos = new Vector2(110,520);
-
-            return "mapLayoutFinishedMap1.txt";
+            this.selectedMap = "mapLayoutFinishedMap1.txt";
+            return this.selectedMap;
         } else if(spriteContainer.isInsideSprite(screenX,screenY,map2)){
             this.mapTextPos = new Vector2(260,520);
-
-            return "ConveyorLoops.txt";
+            this.selectedMap = "ConveyorLoops.txt";
+            return this.selectedMap;
         }
         return "no";
     }
 
     public void testMenu(){
         batch.begin();
+        this.background.draw(batch);
         spriteContainer.drawTextBox("Which manual test do you want to run?",500);
         this.drawSpritesBtn = spriteContainer.setSprite("./assets/cards/drawAllSpritesBtn.png");
         this.drawSpritesBtn.setPosition(500,50);

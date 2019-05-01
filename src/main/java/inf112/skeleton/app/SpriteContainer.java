@@ -119,14 +119,29 @@ public class SpriteContainer {
         return new Sprite(texture);
     }
 
-    public void renderGrid(TileGrid tileGrid) {
+    public void renderGrid(TileGrid tileGrid){
+        renderFlexibleGrid(tileGrid, false, 0, 0,0);
+    }
+
+    public void renderFlexibleGrid(TileGrid tileGrid, boolean creating, int size, int startx, int starty) {
+        float scale = 1;
+        if (size == 0){
+            size = TILE_SIZE;
+        } else {
+            scale = 0.3f;
+        }
         background.draw(this.batch);
 
         // Work in progress
 
         // Start draw position after the dealt cards.
-        this.drawPositionX = TILE_SIZE * 4;
-        this.drawPositionY = 40 + TILE_SIZE * 4;
+        if(!creating){
+            this.drawPositionX = size * 4;
+            this.drawPositionY = 40 + size * 4;
+        } else {
+            this.drawPositionX = startx;
+            this.drawPositionY = starty;
+        }
         for (int row = 0; row < this.gridRows; row++) {
             for (int column = 0; column < this.gridColumns; column++) {
 
@@ -138,47 +153,60 @@ public class SpriteContainer {
                 // Draw the tile
                 Sprite spriteOfTile = tileBeingDrawn.getSprite();
                 spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
+                spriteOfTile.setScale(scale);
                 spriteOfTile.draw(this.batch);
 
                 // Draw GameObjects on tile
                 for (GameObject gameObject : objectsOnTile) {
                     Sprite spriteOfGameObject = gameObject.getSprite();
                     spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
+                    spriteOfGameObject.setScale(scale);
                     spriteOfGameObject.draw(this.batch);
-                    if (gameObject.getGameObjectType() == GameObjectType.FLAG){
-                        this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
-                    }
-                    if (gameObject.getGameObjectType() == GameObjectType.TELEPORTER){
-                        this.font.draw(this.batch,((Teleporter)gameObject).getTeleporterNr()+"",drawPositionX+spriteOfGameObject.getWidth()/3,drawPositionY+spriteOfGameObject.getHeight()/2+7);
+                    if (!creating){
+                        if (gameObject.getGameObjectType() == GameObjectType.FLAG){
+                            this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
+                        }
+                        if (gameObject.getGameObjectType() == GameObjectType.TELEPORTER){
+                            this.font.draw(this.batch,((Teleporter)gameObject).getTeleporterNr()+"",drawPositionX+spriteOfGameObject.getWidth()/3,drawPositionY+spriteOfGameObject.getHeight()/2+7);
+                        }
                     }
                 }
 
-                this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
+                this.drawPositionX += size;    // Moving the horizontal drawPosition, one tile over.
             }
-            this.drawPositionX = this.TILE_SIZE * 4; // Resetting the horizontal drawPosition.
-            this.drawPositionY += this.TILE_SIZE;    // Moving the vertical drawPosition, one tile up.
+            this.drawPositionY += size;
+
+            if(!creating){
+                this.drawPositionX = size * 4; // Resetting the horizontal drawPosition.
+            } else {
+                this.drawPositionX = startx; // Moving the vertical drawPosition, one tile up.
+            }
         }
+
         // Resetting the vertical drawPosition.
         this.drawPositionY = 0;
-        //Drawing the go button
-        goButton.draw(this.batch);
-        if (poweredDown){
-            poweredDownButton.draw(this.batch);
-        } else {
-            powerDownButton.draw(this.batch);
+
+        if(!creating){
+            //Drawing the go button
+            goButton.draw(this.batch);
+            if (poweredDown){
+                poweredDownButton.draw(this.batch);
+            } else {
+                powerDownButton.draw(this.batch);
+            }
+            if (mute){
+                muteButton.draw(this.batch);
+            } else {
+                unMuteButton.draw(this.batch);
+            }
+            for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
+                this.lifeHeart.setPosition((12+40*i), 350);
+                this.lifeHeart.draw(this.batch);
+            }
+            font.setColor(0,255,0,1);
+            font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
+            font.setColor(255,255,255,1);
         }
-        if (mute){
-            muteButton.draw(this.batch);
-        } else {
-            unMuteButton.draw(this.batch);
-        }
-        for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
-            this.lifeHeart.setPosition((12+40*i), 350);
-            this.lifeHeart.draw(this.batch);
-        }
-        font.setColor(0,255,0,1);
-        font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
-        font.setColor(255,255,255,1);
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
