@@ -17,6 +17,7 @@ public class TileGrid{
     private ArrayList<IRobot> robots;
     private int flagsInitiated; // How many flags have been initiated so far.(So that you only win when you reach the last one)
     private int robotsInitiated; // How many robots have been initiated so far.
+    private SoundContainer sound;
 
     /**
      * Constructor with specifications.
@@ -46,6 +47,7 @@ public class TileGrid{
         this.columns = builder.getColumns();
         this.robotsInitiated = builder.getRobotsInitiated();
         this.flagsInitiated = builder.getFlagsInitiated();
+        this.sound = new SoundContainer();
     }
 
     /**
@@ -113,6 +115,7 @@ public class TileGrid{
                 for (IRobot robot : robots) {
                     if (tile.hasRobot(robot) && !robot.hasMoved()) {
                         robotOnTile(tile, robot, currentPhase);
+                        robot.moved(true);
                     }
                 }
             }
@@ -129,9 +132,12 @@ public class TileGrid{
      * @param robot The active robot
      */
     private void robotOnTile(Tile tile, IRobot robot, int currentPhase) {
+
+
         // Conveyor
         if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
+            sound.conveyorSound();
             moveInDirectionOfConveyor(conveyor, robot.getRobotNumber());
         }
         // Repair Station
@@ -174,6 +180,7 @@ public class TileGrid{
         }
         // Laser
         if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
+            sound.laserSound();
             laserDamageRobot(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),robot);
         }
         if(tile.hasGameObject(GameObjectType.LASER_OUTLET)){
@@ -359,6 +366,7 @@ public class TileGrid{
      * @param columnsToMove Columns the robot is to move
      */
     public void moveRobot(int robotNumber, int rowsToMove, int columnsToMove){
+        sound.move();
         int rowOfRobot = getRobotPosition(robotNumber).getRow();
         int columnOfRobot = getRobotPosition(robotNumber).getColumn();
 
@@ -782,6 +790,13 @@ public class TileGrid{
         return robotInLine;
     }
 
+    public void decideAiPrograms() {
+        for (IRobot robot : robots) {
+            if (robot.isAI()) {
+                ((AI) robot).decideProgram(getPlayer().getPosition());
+            }
+        }
+    }
     /**
      * Removes player from the game when out of lives.
      */

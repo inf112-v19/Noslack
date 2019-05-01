@@ -73,6 +73,10 @@ public class AIHand {
     }
 
     public boolean containsMove() {
+        System.out.println(hand.size());
+        for(ProgramCard card: hand){
+            return card.getMove().isMove();
+        }
         for(ProgramCard card: hand){
             return card.getMove().isMove();
         }
@@ -115,5 +119,9 @@ public class AIHand {
 
     public ArrayList<ProgramCard> getHand(){
         return this.hand;
+    }
+
+    public ProgramCard getFirst() {
+        return this.hand.get(0);
     }
 }

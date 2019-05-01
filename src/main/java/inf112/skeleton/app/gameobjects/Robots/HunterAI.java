@@ -25,8 +25,8 @@ public class HunterAI extends AI {
 
     @Override
     public void drawPrograms(ArrayList<RRCard> programCards) {
+        System.out.println("Getting cards for ai");
         this.programHand = new AIHand(programCards);
-
     }
 
     @Override

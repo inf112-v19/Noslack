@@ -1,8 +1,10 @@
 package inf112.skeleton.app;
 
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class MenuScreen
 {
@@ -16,6 +18,10 @@ public class MenuScreen
     private boolean runTests;
     private Sprite drawSpritesBtn;
     private Sprite background;
+    private Sprite map1;
+    private Sprite map2;
+    private BitmapFont font;
+    private Vector2 mapTextPos;
 
     public MenuScreen(SpriteBatch batch)
     {
@@ -35,6 +41,16 @@ public class MenuScreen
         this.runTests = false;
 
 
+        this.font = new BitmapFont();
+        this.font.setColor(200,0,0,1);
+
+        this.mapTextPos = new Vector2(110,520);
+
+        this.map1 = spriteContainer.setSprite("./assets/menuScreen/map1.png");
+        this.map1.setPosition(110,400);
+        this.map2 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
+        this.map2.setPosition(260,400);
+
     }
     public void startMenu(){
 
@@ -51,6 +67,10 @@ public class MenuScreen
         testsButton.draw(batch);
         createNewMap.draw(batch);
         hostGame.draw(batch);
+        map1.draw(batch);
+        map2.draw(batch);
+        this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
+
         batch.end();
 
     }
@@ -65,6 +85,7 @@ public class MenuScreen
         return spriteContainer.isInsideSprite(screenX,screenY,startGame);
 
     }
+
     public void clickTestStart(int screenX, int screenY){
         if(spriteContainer.isInsideSprite(screenX,screenY,testsButton)){
             if(runTests){
@@ -73,6 +94,19 @@ public class MenuScreen
                 this.runTests=true;
             }
         }
+    }
+
+    public String clickMap(int screenX, int screenY) {
+        if(spriteContainer.isInsideSprite(screenX,screenY,map1)){
+            this.mapTextPos = new Vector2(110,520);
+
+            return "mapLayoutFinishedMap1.txt";
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,map2)){
+            this.mapTextPos = new Vector2(260,520);
+
+            return "ConveyorLoops.txt";
+        }
+        return "no";
     }
 
     public void testMenu(){
