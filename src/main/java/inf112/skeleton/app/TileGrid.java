@@ -207,8 +207,6 @@ public class TileGrid{
             else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
-            int[] move = calculateMove(pusher.getOrientation());
-            moveRobot(robot.getRobotNumber(), move[0],move[1]);
         }
     }
     /**
