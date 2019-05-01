@@ -98,15 +98,17 @@ public class SpriteContainer {
         this.emptyCard.draw(this.batch);
         font.draw(this.batch,ability,emptyCard.getX()+20-ability.length()/2,emptyCard.getY()+60);
         //this.currentAbility.getSprite().draw(this.batch);
-
-        for (ProgramCard card : programHand) {
-            card.getSprite().draw(this.batch);
-            font.setColor(255,255,255,1);
-            font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-            font.draw(this.batch,""+card.getProgram(),card.getSprite().getX()+7,card.getSprite().getY()+17);
+        try {
+            for (ProgramCard card : programHand) {
+                card.getSprite().draw(this.batch);
+                font.setColor(255, 255, 255, 1);
+                font.draw(this.batch, "" + card.getPriority(), card.getSprite().getX() + 7, card.getSprite().getY() + 100);
+                font.draw(this.batch, "" + card.getProgram(), card.getSprite().getX() + 7, card.getSprite().getY() + 17);
+            }
+            this.cardBack.draw(this.batch);
+        }catch (Exception e){
+            System.out.println("Error in renderDealtCards");
         }
-        this.cardBack.draw(this.batch);
-
     }
 
     public void getCardSprite(AbilityCard abilityCard){

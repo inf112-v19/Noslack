@@ -15,23 +15,11 @@ public class AICoordinate{
         this.orientation = coordinate.getOrientation();
     }
 
-    public int getRow(){
-        return this.row;
-    }
-
-    public int getColumn() {
-        return this.column;
-    }
-
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
     public Orientation getOrientation() {
         return this.orientation;
     }
 
-    public void moveAICoordiante(Program program){
+    public void moveAICoordinate(Program program){
         switch(program){
             case LEFT:
             case RIGHT:

@@ -163,7 +163,7 @@ public abstract class AI extends Robot {
     }
     private void push(ProgramCard card){
         this.program.push(card);
-        this.trackingCoordinate.moveAICoordiante(card.getProgram());
+        this.trackingCoordinate.moveAICoordinate(card.getProgram());
     }
 
     @Override
