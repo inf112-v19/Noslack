@@ -67,6 +67,9 @@ public class Player extends Robot {
         for (int i = (selectedCards.size()-1); i >=0; i--) {
             this.program.push(selectedCards.get(i));
         }
+        if(this.powerDown){
+            this.program.clear();
+        }
     }
 
     @Override

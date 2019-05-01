@@ -293,8 +293,15 @@ public abstract class Robot implements IRobot{
 
     @Override
     public void powerDown(){
-        this.powerDown = !this.powerDown;
-        this.health += 1;
+        this.powerDown = true;
+        if (this.health < 9) {
+            this.health += 1;
+        }
+    }
+
+    @Override
+    public void powerUp(){
+        this.powerDown = false;
     }
 
     @Override

@@ -235,6 +235,11 @@ public interface IRobot extends GameObject {
     void powerDown();
 
     /**
+     * Powers up robot
+     */
+    void powerUp();
+
+    /**
      * Finds out if the Robot is powered down
      * @return If the robot is powered down
      */

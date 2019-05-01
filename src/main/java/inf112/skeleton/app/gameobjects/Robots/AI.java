@@ -1,6 +1,5 @@
 package inf112.skeleton.app.gameobjects.Robots;
 
-import inf112.skeleton.app.TileGrid;
 import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Orientation;
@@ -11,15 +10,6 @@ import java.util.ArrayList;
 public abstract class AI extends Robot {
     AIHand programHand;
     boolean full;
-    TileGrid tileGrid;
-
-    /**
-     * Get the TileGrid of the map so the AI kan keep track of its surroundings.
-     * @param tileGrid The TileGrid
-     */
-    public void getTileGrid(TileGrid tileGrid){
-        this.tileGrid = tileGrid;
-    }
 
     /**
      * Decides the program that the AIBot is to run
