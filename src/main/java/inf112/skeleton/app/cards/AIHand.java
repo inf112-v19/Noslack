@@ -73,7 +73,7 @@ public class AIHand {
     }
 
     public boolean containsMove() {
-        System.out.println(hand.size());
+        System.out.println("Hand size: " + hand.size());
         for(ProgramCard card: hand){
             return card.getMove().isMove();
         }
@@ -119,7 +119,7 @@ public class AIHand {
     public String toString(){
         String s = "";
         for (ProgramCard card : hand){
-            s += card.toString();
+            s += card.toString() + "-";
         }
         return s;
     }
@@ -129,6 +129,12 @@ public class AIHand {
     }
 
     public ProgramCard getFirst() {
-        return this.hand.get(0);
+        try{
+            return this.hand.get(0);
+        }catch(IndexOutOfBoundsException e){
+            System.out.println("AIHand: getFirst has no .get(0)");
+            return null;
+        }
+
     }
 }

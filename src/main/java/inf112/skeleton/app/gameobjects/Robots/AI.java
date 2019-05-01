@@ -28,7 +28,8 @@ public abstract class AI extends Robot {
     public void decideProgram(Coordinate target){
         isFull();
         while(!this.full) {
-            System.out.println("Another one: " + this.program.size());
+            System.out.println("Target : " + target);
+            System.out.println("ProgramSize: " + this.program.size());
             turnDirectionOfTarget(target);
             applyMove();
             isFull();
@@ -44,7 +45,7 @@ public abstract class AI extends Robot {
             return;
         }
         Orientation direction = this.position.orientationToPosition(target);
-        System.out.println(direction);
+        System.out.println("Direction: " + direction);
 
         if(!getOrientation().equals(direction)){
             Program turnNeeded = this.orientation.turnNeeded(direction);
@@ -152,12 +153,11 @@ public abstract class AI extends Robot {
 
     private void applyMove(){
         if(this.programHand.containsMove()) {
-            System.out.println("CONTAINS MOVE");
             ProgramCard nextMove = this.programHand.findMove();
             System.out.println("NextMove: " + nextMove);
             this.program.push(nextMove);
         }else{
-            System.out.println("NOT CONTAINS MOVE");
+            System.out.println("NextMove: Does not contain move");
             moveNotFound(Program.MOVE1);
         }
     }
