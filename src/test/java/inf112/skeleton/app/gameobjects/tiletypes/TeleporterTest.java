@@ -25,10 +25,24 @@ public class TeleporterTest {
     }
 
     @Test
+    public void twoTeleporterCoupling(){
+        TileGrid tileGrid = new TileGrid("teleporterTestMap3.txt");
+        Teleporter teleporter11 = (Teleporter) tileGrid.getTile(0,0).getGameObject(GameObjectType.TELEPORTER);
+        Teleporter teleporter12 = (Teleporter) tileGrid.getTile(0,2).getGameObject(GameObjectType.TELEPORTER);
+        assertEquals(teleporter12.getPosition(), teleporter11.getTeleportLocation());
+        assertEquals(teleporter11.getPosition(), teleporter12.getTeleportLocation());
+        Teleporter teleporter21 = (Teleporter) tileGrid.getTile(0,1).getGameObject(GameObjectType.TELEPORTER);
+        Teleporter teleporter22 = (Teleporter) tileGrid.getTile(0,3).getGameObject(GameObjectType.TELEPORTER);
+        assertEquals(teleporter22.getPosition(), teleporter21.getTeleportLocation());
+        assertEquals(teleporter21.getPosition(), teleporter22.getTeleportLocation());
+    }
+
+    @Test
     public void teleportationCheck() {
         TileGrid tileGrid = new TileGrid("teleporterTestMap.txt");
         tileGrid.activateTiles();
         assertEquals(new Coordinate(0,1), tileGrid.getRobotPosition(0));
     }
+
 
 }

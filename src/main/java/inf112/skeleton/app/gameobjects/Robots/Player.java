@@ -37,7 +37,6 @@ public class Player extends Robot {
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
-
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {

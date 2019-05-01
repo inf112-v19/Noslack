@@ -202,6 +202,8 @@ public abstract class Robot implements IRobot{
             this.currentMove = this.program.pop().getMove();
         applyAbilityToMoves();
     }
+
+    @Override
     public void applyAbilityToMoves(){
         if(currentMove == Program.BACK &&  hasAbility(Ability.ReverseGear)){
             currentMove = Program.BACK2;

@@ -117,12 +117,10 @@ public class TileGrid{
                 }
             }
         }
-        for(IRobot p : robots){
-            p.moved(false);
+        for(IRobot robot : robots){
+            robot.moved(false);
         }
     }
-
-
 
     /**
      * Finds out what kind of tile the robot is standing on and
@@ -321,7 +319,7 @@ public class TileGrid{
      * @param robotNumber the number of the robot that the move should be applied to
      */
     private void applyMove(Program move, int robotNumber){
-        int[] movement = calculateMove(getRobot(0).getOrientation());
+        int[] movement = calculateMove(getRobot(robotNumber).getOrientation());
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
