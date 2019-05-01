@@ -44,6 +44,8 @@ public class AICoordinate{
             case BACK2:
                 this.moveInDirection(-2);
                 break;
+            case NONE:
+                return;
             default:
                 this.moveInDirection(program.totalMoves());
                 break;
@@ -64,9 +66,10 @@ public class AICoordinate{
             case FACING_WEST:
                 this.column-=move;
                 break;
+            default:
+                break;
         }
     }
-
 
     @Override
     public boolean equals(Object o) {

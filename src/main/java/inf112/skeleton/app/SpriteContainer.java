@@ -103,7 +103,7 @@ public class SpriteContainer {
             card.getSprite().draw(this.batch);
             font.setColor(255,255,255,1);
             font.draw(this.batch,""+card.getPriority(),card.getSprite().getX()+7,card.getSprite().getY()+100);
-            font.draw(this.batch,""+card.getMove(),card.getSprite().getX()+7,card.getSprite().getY()+17);
+            font.draw(this.batch,""+card.getProgram(),card.getSprite().getX()+7,card.getSprite().getY()+17);
         }
         this.cardBack.draw(this.batch);
 

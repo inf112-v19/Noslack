@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ProgramCard implements RRCard {
     private int priority;
-    private Program move;
+    private Program program;
     private Sprite sprite;
     private String name;
     private Vector2 position;
@@ -19,22 +19,22 @@ public class ProgramCard implements RRCard {
     /**
      *
      * @param priority is the card priority for movement
-     * @param move is the directioon magnitude or change
+     * @param program is the directioon magnitude or change
      */
-    public ProgramCard(int priority, String move) {
+    public ProgramCard(int priority, String program) {
         this.priority = priority;
-        this.move=translateMove(this.name=move);
+        this.program =translateMove(this.name= program);
     }
 
     /**
      * Only used for testing
      * @param priority priorty of card
-     * @param move move the card is to have
+     * @param program program the card is to have
      */
-    public ProgramCard(int priority,Program move){
+    public ProgramCard(int priority,Program program){
         this.priority = priority;
-        this.move=move;
-        this.name = move.toString();
+        this.program = program;
+        this.name = program.toString();
     }
 
     public void setPosition(Vector2 position) {
@@ -49,8 +49,8 @@ public class ProgramCard implements RRCard {
 
     /** Get Program enum for card.
       */
-    public Program getMove() {
-        return this.move;
+    public Program getProgram() {
+        return this.program;
     }
 
     /**
@@ -72,16 +72,16 @@ public class ProgramCard implements RRCard {
                 setSprite("./assets/cards/back-up.png");
                 return Program.BACK;
             case "Move 1":
-                setSprite("./assets/cards/move-1.png");
+                setSprite("./assets/cards/program-1.png");
                 return Program.MOVE1;
             case "Move 2":
-                setSprite("./assets/cards/move-1.png");
+                setSprite("./assets/cards/program-1.png");
                 return Program.MOVE2;
             case "Move 3":
-                setSprite("./assets/cards/move-1.png");
+                setSprite("./assets/cards/program-1.png");
                 return Program.MOVE3;
             default:
-                throw new IllegalArgumentException("Invalid move: " + s);
+                throw new IllegalArgumentException("Invalid program: " + s);
         }
     }
 
