@@ -37,12 +37,9 @@ public class Player extends Robot {
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
-
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Player evaluateSprite");
         }
     }
 
@@ -67,6 +64,13 @@ public class Player extends Robot {
         this.program.clear();
         for (int i = (selectedCards.size()-1); i >=0; i--) {
             this.program.push(selectedCards.get(i));
+        }
+        if(this.powerDown){
+            this.program.clear();
+            ProgramCard card = new ProgramCard(0, Program.NONE);
+            for(int i =0; i<5; i++){
+                this.program.push(card);
+            }
         }
     }
 

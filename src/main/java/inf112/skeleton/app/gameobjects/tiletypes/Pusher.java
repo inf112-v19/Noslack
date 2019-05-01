@@ -45,8 +45,6 @@ public class Pusher implements GameObject {
             this.sprite = new Sprite(texture);
             sprite.setRotation(this.orientation.turnSprite());
         }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error in Pusher evaluateSprite()");
         }
     }
     public boolean isEven(){

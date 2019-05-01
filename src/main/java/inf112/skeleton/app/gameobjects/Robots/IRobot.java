@@ -127,6 +127,11 @@ public interface IRobot extends GameObject {
     void setNextProgram();
 
     /**
+     * If a robot has a program altering ability it is applied here
+     */
+    void applyAbilityToMoves();
+
+    /**
      * Set the next program to be executed
      * @param currentMove The current Program to be executed
      */
@@ -228,6 +233,11 @@ public interface IRobot extends GameObject {
      * Powers down or powers up robot
      */
     void powerDown();
+
+    /**
+     * Powers up robot
+     */
+    void powerUp();
 
     /**
      * Finds out if the Robot is powered down

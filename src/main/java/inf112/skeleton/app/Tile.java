@@ -36,8 +36,6 @@ public class Tile implements GameObject{
             }
             sprite = new Sprite(texture);
         }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error in Tile evaluateSprite");
         }
     }
 

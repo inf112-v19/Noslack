@@ -110,6 +110,9 @@ public class TileGrid{
     }
 
     public void activateTiles(int currentPhase){
+        for (IRobot robot : this.robots) {
+            fireControl(robot.getRobotNumber());
+        }
         for(Tile[] tileRow : tileGrid){
             for(Tile tile : tileRow){
                 for (IRobot robot : robots) {
@@ -120,12 +123,11 @@ public class TileGrid{
                 }
             }
         }
-        for(IRobot p : robots){
-            p.moved(false);
+        for(IRobot robot : robots){
+            robot.moved(false);
+            removeRobotLaser(robot.getRobotNumber());
         }
     }
-
-
 
     /**
      * Finds out what kind of tile the robot is standing on and
@@ -208,8 +210,6 @@ public class TileGrid{
             else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
-            int[] move = calculateMove(pusher.getOrientation());
-            moveRobot(robot.getRobotNumber(), move[0],move[1]);
         }
         else{
             sound.move();
@@ -600,6 +600,9 @@ public class TileGrid{
 
     public void fireControl(int robotNumber) {
         Coordinate position = getRobotPosition(robotNumber);
+        if(robotInLine(robotNumber) < 0) {
+            return;
+        }
         if(robotHasAbility(robotNumber, Ability.PressorBeam)) {
             int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation());
@@ -790,6 +793,8 @@ public class TileGrid{
                         robotInLine = p.getRobotNumber();
                     }
                     break;
+                default:
+                    robotInLine = -1;
             }
         }
         return robotInLine;

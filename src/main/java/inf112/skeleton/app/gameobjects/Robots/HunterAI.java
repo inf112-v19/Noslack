@@ -33,8 +33,6 @@ public class HunterAI extends AI {
         this.programHand = new AIHand(deck.deal(99));
 
         System.out.println("Hand: " + programHand.toString());
-
-
     }
 
     @Override
@@ -61,15 +59,11 @@ public class HunterAI extends AI {
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/robot32x32.png"));
-
             this.sprite = new Sprite(texture);
             turnSprite();
+
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-    @Override
-    public String toString(){
-        return this.robotNumber + ":" + this.name;
-    }
+
 }
