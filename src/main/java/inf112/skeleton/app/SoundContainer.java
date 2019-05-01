@@ -42,7 +42,11 @@ public class SoundContainer {
         //this.pusher.play();
     }
     public void teleportSound(){
-        this.teleport.play();
+        try {
+            this.teleport.play();
+        }catch (Exception e){
+
+        }
     }
 
     public void conveyorSound()
