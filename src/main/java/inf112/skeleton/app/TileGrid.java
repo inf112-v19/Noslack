@@ -134,8 +134,11 @@ public class TileGrid{
      * @param robot The active robot
      */
     private void robotOnTile(Tile tile, IRobot robot, int currentPhase) {
-
-
+        // Laser
+        if(tile.hasGameObject(GameObjectType.LASER_BEAM)){
+            sound.laserSound();
+            laserDamageRobot(((LaserBeam)tile.getGameObject(GameObjectType.LASER_BEAM)).isDual(),robot);
+        }
         // Conveyor
         else if(tile.hasGameObject(GameObjectType.CONVEYOR)) {
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
