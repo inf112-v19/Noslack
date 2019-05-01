@@ -9,6 +9,8 @@ public class SoundContainer {
     private Sound shuffleCard;
     private Sound conveyor;
     private Sound laser;
+    private Sound teleport;
+    private Sound pusher;
     private Sound move;
     private boolean playing;
 
@@ -35,6 +37,12 @@ public class SoundContainer {
             this.laser.play();
         }catch(Exception e){
         }
+    }
+    public void pusherSound(){
+        //this.pusher.play();
+    }
+    public void teleportSound(){
+        this.teleport.play();
     }
 
     public void conveyorSound()
