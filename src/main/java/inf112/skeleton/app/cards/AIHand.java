@@ -116,6 +116,13 @@ public class AIHand {
         }
         return null;
     }
+    public String toString(){
+        String s = "";
+        for (ProgramCard card : hand){
+            s += card.toString();
+        }
+        return s;
+    }
 
     public ArrayList<ProgramCard> getHand(){
         return this.hand;

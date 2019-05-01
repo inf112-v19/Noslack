@@ -9,6 +9,8 @@ public class SoundContainer {
     private Sound shuffleCard;
     private Sound conveyor;
     private Sound laser;
+    private Sound teleport;
+    private Sound pusher;
     private Sound move;
     private boolean playing;
 
@@ -21,6 +23,10 @@ public class SoundContainer {
         this.conveyor = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/conveyor.wav"));
         this.move = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/move.wav"));
         this.laser = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/laser.wav"));
+        //this.pusher = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/servo2.wav"));
+        //this.teleport = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/portal.wav"));
+
+
 
         this.playing = false;
 
@@ -29,6 +35,12 @@ public class SoundContainer {
     public void laserSound(){
         this.laser.play();
 
+    }
+    public void pusherSound(){
+        //this.pusher.play();
+    }
+    public void teleportSound(){
+        this.teleport.play();
     }
 
     public void conveyorSound()
