@@ -69,6 +69,10 @@ public class Player extends Robot {
         }
         if(this.powerDown){
             this.program.clear();
+            ProgramCard card = new ProgramCard(0, Program.NONE);
+            for(int i =0; i<5; i++){
+                this.program.push(card);
+            }
         }
     }
 
