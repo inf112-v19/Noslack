@@ -42,7 +42,7 @@
 
 - KJENTE FEIL OG SVAKHETER
 
-- HVORDAN PROSJEKTET BYGGES, TESTEST, KJØRES
+- Prosjektet kan kjøres ved å kjøre JAR filen i mappen. Denne må ikke flyttes på ettersom det er nødvendig at den ligger i samme mappe som assets-mappen. Programmet kan ellers kjøres fra IntelliJ ved å kjøre Main klassen. 
 
 - Testene kjøres automatisk når man kjører Main. I tillegg er det manuelle tester for Sprites som kjøres ved å klikke på "Test" knappen på hovedmenyen. Grunnen til at vi har valgt å teste Sprites på denne måten er fordi det var en god del enklere enn å gjøre det direkte i koden. Test knappen tegner alle sprites som metoden drawAll i SpriteContainer får tilsendt.
 
