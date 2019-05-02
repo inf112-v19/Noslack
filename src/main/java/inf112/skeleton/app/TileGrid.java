@@ -832,10 +832,11 @@ public class TileGrid{
     }
 
     public boolean roundFinished(){
-        boolean finished = false;
         for(IRobot robot : this.robots){
-            finished = robot.isFinished();
+            if(!robot.isFinished()){
+                return false;
+            }
         }
-        return finished;
+        return true;
     }
 }
