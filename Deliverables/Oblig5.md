@@ -95,3 +95,18 @@
 - Player replaced by robot
 - End game screen
 - Alle til stede
+
+##### 01.05.2019
+- Fixing main menu
+- Map selection
+- Map creation prototyping
+- AI fixing
+- Bug fix
+- Remove unused abilities
+- Alle til stede untatt Halvard
+
+##### 02.05.2019
+- Finishing up MVP
+- More sounds
+- Win/lose screen
+- Alle til stede
