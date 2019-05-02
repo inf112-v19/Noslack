@@ -29,6 +29,8 @@ public enum Program {
             case MOVE1:
             case MOVE2:
             case MOVE3:
+            case MOVE4:
+            case BACK2:
             case BACK:
                 return true;
             default: return false;
@@ -44,7 +46,9 @@ public enum Program {
             case MOVE1: return "Move 1";
             case MOVE2: return "Move 2";
             case MOVE3: return "Move 3";
+            case MOVE4: return "Move 4";
             case BACK: return "Back Up";
+            case BACK2: return "Back Up 2";
             default: return "No Program";
         }
     }
