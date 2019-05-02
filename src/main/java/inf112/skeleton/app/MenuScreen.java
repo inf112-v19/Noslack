@@ -155,6 +155,8 @@ public class MenuScreen
     public void testMenu(){
         batch.begin();
         ArrayList<Sprite> sprites = new ArrayList<>();
+        this.spriteContainer.renderFlexibleGrid(tileGrid, true, 0, 50, 50);
+
 
         sprites.add(startGame);
         sprites.add(testsButton);

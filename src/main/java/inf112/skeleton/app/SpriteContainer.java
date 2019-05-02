@@ -364,7 +364,6 @@ public class SpriteContainer {
 
 
         try{
-            background.draw(batch);
             unMuteButton.draw(batch);
             cardSlot.draw(batch);
             goButton.draw(batch);
