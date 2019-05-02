@@ -744,25 +744,9 @@ public class TileGrid{
      * @param robotNumber robotNumber
      */
     public void removeRobotLaser(int robotNumber){
-        Coordinate position = getRobotPosition(robotNumber);
-        position.setOrientation(getRobot(robotNumber).getOrientation());
-
-        boolean firing = continueFiring(position);
-        while (firing) {
-            position = position.moveCoordinate();
-            getTile(position).removeRobotLaserFromTile(robotNumber);
-            firing = continueFiring(position);
-        }
-
-        if(robotHasAbility(robotNumber, Ability.RearFiringLaser)){
-            position = getRobotPosition(robotNumber);
-            position.setOrientation(getRobot(robotNumber).getOrientation().opposite());
-
-            firing = continueFiring(position);
-            while (firing) {
-                position = position.moveCoordinate();
-                getTile(position).removeRobotLaserFromTile(robotNumber);
-                firing = continueFiring(position);
+        for(Tile[] tileRow : tileGrid) {
+            for (Tile tile : tileRow) {
+                tile.removeRobotLaserFromTile(robotNumber);
             }
         }
     }
