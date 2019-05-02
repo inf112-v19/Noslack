@@ -819,4 +819,21 @@ public class TileGrid{
             }
         }
     }
+
+    public boolean nextPhase(){
+        boolean next = false;
+        for(IRobot robot : this.robots){
+            next = robot.getCurrentMove().equals(Program.NONE);
+            next = robot.getMoveProgression()==0;
+        }
+        return next;
+    }
+
+    public boolean roundFinished(){
+        boolean finished = false;
+        for(IRobot robot : this.robots){
+            finished = robot.isFinished();
+        }
+        return finished;
+    }
 }
