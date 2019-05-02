@@ -127,6 +127,9 @@ public class AIHand {
     }
 
     public ProgramCard getFirst() {
-        return this.hand.get(0);
+        if(!hand.isEmpty()) {
+            return this.hand.get(0);
+        }
+        return null;
     }
 }

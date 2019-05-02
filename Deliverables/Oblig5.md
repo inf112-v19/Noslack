@@ -40,11 +40,14 @@
 
 ## Deloppgave 3: Kode
 
-- KJENTE FEIL OG SVAKHETER
+- En svakhet i koden er at dersom en map ikke inneholder et flagg, vil man kunne få en ArrayIndexOutOfBoundsException. Dette er derimot ikke et problem om man spiller på skikkelige maps.
 
 - Prosjektet kan kjøres ved å kjøre JAR filen i mappen. Denne må ikke flyttes på ettersom det er nødvendig at den ligger i samme mappe som assets-mappen. Programmet kan ellers kjøres fra IntelliJ ved å kjøre Main klassen. 
 
 - Testene kjøres automatisk når man kjører Main. I tillegg er det manuelle tester for Sprites som kjøres ved å klikke på "Test" knappen på hovedmenyen. Grunnen til at vi har valgt å teste Sprites på denne måten er fordi det var en god del enklere enn å gjøre det direkte i koden. Test knappen tegner alle sprites som metoden drawAll i SpriteContainer får tilsendt.
+
+- Klassediagram
+  - Klassediagrammet ClassDiagram.uml kan åpnes i IntelliJ. I hver klasse vises feltvariabler, metoder, egenskaper og konstruktører. Ut i fra diagrammet kan man se hvordan RoboRally, får inn TileGrid og hvordan TileGrid igjen består av Tiles. Dette er selve kjernen av programmet og viser hvordan vi har kontroll på hva som er på de ulike posisjonene i brettet. Vi har valgt å fjerne testklassene og enums fra diagrammet for at det ikke skal bli forvirrende. 
 
 # Referat fra møter
 

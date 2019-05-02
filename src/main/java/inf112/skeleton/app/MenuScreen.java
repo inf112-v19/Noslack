@@ -28,7 +28,7 @@ public class MenuScreen
     private Sprite map1;
     private Sprite map2;
 
-    private String selectedRobot = "robot1.txt";
+    private String selectedRobot = "./assets/gameObjects/player/player32x32.png";
     private Sprite robot1;
     private Sprite robot2;
 
