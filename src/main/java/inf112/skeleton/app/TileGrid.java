@@ -237,12 +237,14 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int robotNumber){
         IRobot robot = getRobot(robotNumber);
+
         if(conveyor.getTurn() > 0){
             applyRotation(Program.RIGHT,robotNumber);
         }
         if(conveyor.getTurn() < 0){
             applyRotation(Program.LEFT,robotNumber);
         }
+
         int[] move = calculateMove(conveyor.getOrientation());
         int rowsToMove = move[0];
         int colsToMove = move[1];
