@@ -15,11 +15,7 @@ public class Conveyor implements GameObject {
     private int turn;
 
     public Conveyor(){
-        this.orientation = Orientation.FACING_NORTH;
-        this.turn = 0;
-        this.fast = false;
-        this.type = GameObjectType.CONVEYOR;
-        evaluateSprite();
+        this(Orientation.FACING_NORTH,false,0);
     }
 
     public Conveyor(Orientation orientation, boolean fast, int turn){
@@ -35,15 +31,34 @@ public class Conveyor implements GameObject {
         try {
             Texture texture;
             if (this.fast) {
-                if (turn != 0) {
+                if (this.turn == 1) {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
-                } else {
+                }
+                //Fast colored T-shaped intersection(2 ways in, one way out)
+                else if(this.turn == 2){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashT32x32.png"));
+                }
+                //Fast colored X-shaped intersection(3 ways in, one way out)
+                else if(this.turn == 3){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashX32x32.png"));
+                }
+                else {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
                 }
-            } else {
-                if (turn != 0) {
+            }
+            else {
+                if (this.turn == 1) {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
-                } else {
+                }
+                //T-shaped intersection(2 ways in, one way out)
+                else if(this.turn == 2){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashT32x32.png"));
+                }
+                //X-shaped intersection(3 ways in, one way out)
+                else if(this.turn == 3){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashX32x32.png"));
+                }
+                else {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
                 }
             }
