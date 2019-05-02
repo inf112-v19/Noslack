@@ -25,6 +25,8 @@ public class SoundContainer {
             this.conveyor = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/conveyor.wav"));
             this.move = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/move.wav"));
             this.laser = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/laser.wav"));
+            this.teleport = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/portal.wav"));
+
         }catch(Exception e){
         }
 
@@ -42,9 +44,9 @@ public class SoundContainer {
         //this.pusher.play();
     }
     public void teleportSound(){
-        try {
-            this.teleport.play();
-        }catch (Exception e){
+        try{
+            this.teleport.play(0.2f);
+        }catch(Exception e){
 
         }
     }
