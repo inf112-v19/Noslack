@@ -29,10 +29,8 @@ public class HunterAI extends AI {
 
         ProgramDeck deck = new ProgramDeck("programCards.txt");
 
-        //this.programHnad = new AIHand(programCards);
-        this.programHand = new AIHand(deck.deal(99));
-
-        System.out.println("Hand: " + programHand.toString());
+        this.programHand = new AIHand(programCards);
+        //this.programHand = new AIHand(deck.deal(99));
     }
 
     @Override
