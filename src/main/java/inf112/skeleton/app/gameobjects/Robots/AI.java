@@ -32,6 +32,9 @@ public abstract class AI extends Robot {
         while(program.size()>size){
             this.program.pop();
         }
+
+        System.out.println("Ai program: " + this.program);
+
     }
 
     /**
@@ -43,7 +46,6 @@ public abstract class AI extends Robot {
             return;
         }
         Orientation direction = this.trackingCoordinate.orientationToPosition(target);
-        System.out.println(direction);
 
         if(!getOrientation().equals(direction)){
             Program turnNeeded = this.orientation.turnNeeded(direction);

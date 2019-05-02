@@ -12,6 +12,7 @@ import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.
@@ -20,7 +21,7 @@ public class RoboRally extends Game implements InputProcessor {
     private boolean activatedTiles;
     private SpriteBatch batch;
     private TileGrid tileGrid;
-    private ArrayList<Integer> robotQueue;
+    private Stack<Integer> robotQueue;
     private int currentRobot;
     private ProgramDeck programDeck;
     private AbilityDeck abilityDeck;
@@ -40,7 +41,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "PyramidMap.txt";
+    private String selectedMap = "emptyBigMapWithAIAndPlayer.txt";
 
     @Override
     public void create() {
@@ -59,7 +60,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
         this.tileGrid = new TileGrid(selectedMap);
-        this.robotQueue = new ArrayList<>();
+        this.robotQueue = new Stack<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -109,10 +110,8 @@ public class RoboRally extends Game implements InputProcessor {
         else{
             this.batch.begin();
             this.spriteContainer.renderGrid(this.tileGrid);
-            performPhase();
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
-                    this.robotQueue = this.tileGrid.robotQueue();
                     tick();
                 }
             }
@@ -131,9 +130,11 @@ public class RoboRally extends Game implements InputProcessor {
         }
     }
 
-    private void performPhase() {
+    private void startRound() {
         if (this.currentPhase == 0) {
             this.currentPhase++;
+            this.robotQueue = tileGrid.robotQueue();
+            this.currentRobot = this.robotQueue.pop();
         }
     }
 
@@ -162,25 +163,33 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
-        if(this.tileGrid.getRobot(this.currentRobot).isFinished()){
+        startRound();
+
+        if(this.tileGrid.roundFinished()){
             this.currentPhase = 100;
         }
+
+        // If mid-move, continue.
+        if(!(this.tileGrid.getRobotCurrentMove(this.currentRobot) == Program.NONE)){
+            this.tileGrid.continueMove(this.currentRobot);
+            return;
+        }
+
         if (this.currentPhase <= 5) {
-            // Runs per phase
-            if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
-                this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot =this.robotQueue.remove(0);
-                activateTiles();
-                if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
+                //Queue is empty
+                if(tileGrid.nextPhase()) {
+                    activateTiles();
                     this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
+                    return;
                 }
+
+                this.currentRobot = this.robotQueue.pop();
+
+        }else if (this.currentPhase > 5){
+            if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                this.tileGrid.getRobot(this.currentRobot).powerUp();
             }
-        }
-        // Runs mid phase
-        if (!(this.tileGrid.getRobotCurrentMove(this.currentRobot) == Program.NONE)) {
-            this.tileGrid.continueMove(this.currentRobot);
-        } else if (this.currentPhase > 5){
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;
@@ -337,8 +346,14 @@ public class RoboRally extends Game implements InputProcessor {
                     this.gameSounds.resumeGameMusic();
                 }
             }
-            if(this.spriteContainer.isInsidePowerDown(screenX,screenY)){
-                this.tileGrid.getRobot(this.currentRobot).powerDown();
+            if(!sequenceReady){
+                if (this.spriteContainer.isInsidePowerDown(screenX,screenY)){
+                    if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                        this.tileGrid.getRobot(this.currentRobot).powerUp();
+                    } else {
+                        this.tileGrid.getRobot(this.currentRobot).powerDown();
+                    }
+                }
             }
             this.spriteContainer.isInsideCard(screenX,screenY,this.currentAbility);
         }
