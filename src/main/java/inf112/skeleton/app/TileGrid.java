@@ -823,12 +823,12 @@ public class TileGrid{
     }
 
     public boolean nextPhase(){
-        boolean next = false;
         for(IRobot robot : this.robots){
-            next = robot.getCurrentMove().equals(Program.NONE);
-            next = robot.getMoveProgression()==0;
+            if(!robot.getCurrentMove().equals(Program.NONE)|| !(robot.getMoveProgression()==0)){
+                return false;
+            }
         }
-        return next;
+        return true;
     }
 
     public boolean roundFinished(){
