@@ -74,7 +74,7 @@ public class TileGridTest {
         grid.fireRobotLaser(0);
 
         assertFalse(grid.getTile(0,0).hasGameObject(GameObjectType.LASER_BEAM));
-        //assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
         assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
         assertFalse(grid.getTile(0,3).hasGameObject(GameObjectType.LASER_BEAM));
     }
