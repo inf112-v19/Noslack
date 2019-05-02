@@ -181,7 +181,7 @@ public abstract class Robot implements IRobot{
 
     @Override
     public boolean dead(){
-        return this.lives <1;
+        return this.lives < 1;
     }
 
     @Override
