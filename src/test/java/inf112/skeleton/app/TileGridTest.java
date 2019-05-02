@@ -9,6 +9,7 @@ import inf112.skeleton.app.gameobjects.GameObjectType;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -113,9 +114,9 @@ public class TileGridTest {
         grid.getRobot(0).pushProgram(deck1);
         grid.getRobot(1).pushProgram(deck2);
 
-        ArrayList<Integer> list = grid.robotQueue();
+        Stack<Integer> list = grid.robotQueue();
         assertEquals(2, list.size());
-        assertTrue(0==list.get(0));
-        assertTrue(1==list.get(1));
+        assertTrue(0==list.pop());
+        assertTrue(1==list.pop());
     }
 }

@@ -9,6 +9,7 @@ import inf112.skeleton.app.gameobjects.tiletypes.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 
 public class TileGrid{
@@ -291,18 +292,19 @@ public class TileGrid{
      * Figures out the movement queue for the next phase based on the Program Card priorities.
      * @return A list
      */
-    public ArrayList<Integer> robotQueue(){
-        ArrayList<Integer> robotQueue = new ArrayList<>();
+    public Stack<Integer> robotQueue(){
+        Stack<Integer> robotQueue = new Stack<>();
         ArrayList<Integer> priorities = new ArrayList<>();
 
         for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
+            applyNextProgram(robot.getRobotNumber());
         }
-        Collections.sort(priorities, Collections.reverseOrder());
+        Collections.sort(priorities);
         for(Integer priority : priorities) {
             for (IRobot robot : this.robots) {
                 if(priority.equals(robot.getNextProgramPriority())){
-                    robotQueue.add(robot.getRobotNumber());
+                    robotQueue.push(robot.getRobotNumber());
                 }
             }
         }
@@ -822,19 +824,20 @@ public class TileGrid{
     }
 
     public boolean nextPhase(){
-        boolean next = false;
         for(IRobot robot : this.robots){
-            next = robot.getCurrentMove().equals(Program.NONE);
-            next = robot.getMoveProgression()==0;
+            if(!robot.getCurrentMove().equals(Program.NONE)|| !(robot.getMoveProgression()==0)){
+                return false;
+            }
         }
-        return next;
+        return true;
     }
 
     public boolean roundFinished(){
-        boolean finished = false;
         for(IRobot robot : this.robots){
-            finished = robot.isFinished();
+            if(!robot.isFinished()){
+                return false;
+            }
         }
-        return finished;
+        return true;
     }
 }
