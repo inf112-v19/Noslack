@@ -38,7 +38,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "PyramidMap.txt";
+    private String selectedMap = "emptyBigMapWithAIAndPlayer.txt";
 
     @Override
     public void create() {
@@ -93,12 +93,8 @@ public class RoboRally extends Game implements InputProcessor {
         else{
             this.batch.begin();
             this.spriteContainer.renderGrid(this.tileGrid);
-            performPhase();
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
-                    if(robotQueue.isEmpty()) {
-                        this.robotQueue = this.tileGrid.robotQueue();
-                    }
                     tick();
                 }
             }
@@ -114,9 +110,11 @@ public class RoboRally extends Game implements InputProcessor {
         }
     }
 
-    private void performPhase() {
+    private void startRound() {
         if (this.currentPhase == 0) {
             this.currentPhase++;
+            this.robotQueue = tileGrid.robotQueue();
+            this.currentRobot = this.robotQueue.pop();
         }
     }
 
@@ -145,8 +143,7 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
-
-        System.out.println("--- Phase: " + currentPhase);
+        startRound();
 
         if(this.tileGrid.roundFinished()){
             this.currentPhase = 100;
@@ -159,22 +156,20 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         if (this.currentPhase <= 5) {
-            // Runs per phase
-            if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
-                System.out.println("### Player: " + this.currentRobot);
-                System.out.println("%%% QueueSize: " + this.robotQueue.size());
-                this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot = this.robotQueue.pop();
-                activateTiles();
-
-                // Advance phase if queue is finished and no-one is mid-move.
-                if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
-                    System.out.println("Advancing Phase");
+                //Queue is empty
+                if(tileGrid.nextPhase()) {
+                    activateTiles();
                     this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
+                    return;
                 }
-            }
+
+                this.currentRobot = this.robotQueue.pop();
+
         }else if (this.currentPhase > 5){
+            if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                this.tileGrid.getRobot(this.currentRobot).powerUp();
+            }
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;
@@ -301,8 +296,14 @@ public class RoboRally extends Game implements InputProcessor {
                     this.gameSounds.resumeGameMusic();
                 }
             }
-            if(this.spriteContainer.isInsidePowerDown(screenX,screenY)){
-                this.tileGrid.getRobot(this.currentRobot).powerDown();
+            if(!sequenceReady){
+                if (this.spriteContainer.isInsidePowerDown(screenX,screenY)){
+                    if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                        this.tileGrid.getRobot(this.currentRobot).powerUp();
+                    } else {
+                        this.tileGrid.getRobot(this.currentRobot).powerDown();
+                    }
+                }
             }
             this.spriteContainer.isInsideCard(screenX,screenY,this.currentAbility);
         }

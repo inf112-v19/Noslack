@@ -298,8 +298,8 @@ public class TileGrid{
 
         for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
-            applyNextProgram(robot.getRobotNumber());
         }
+
         Collections.sort(priorities);
         for(Integer priority : priorities) {
             for (IRobot robot : this.robots) {
@@ -307,6 +307,10 @@ public class TileGrid{
                     robotQueue.push(robot.getRobotNumber());
                 }
             }
+        }
+
+        for(IRobot robot : this.robots){
+            applyNextProgram(robot.getRobotNumber());
         }
 
         return robotQueue;
@@ -339,10 +343,11 @@ public class TileGrid{
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
-        if(move==Program.BACK){
+        if(move==Program.BACK || move == Program.BACK2){
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
+
         moveRobot(robotNumber, rowsToMove, columnsToMove);
     }
 
@@ -740,25 +745,9 @@ public class TileGrid{
      * @param robotNumber robotNumber
      */
     public void removeRobotLaser(int robotNumber){
-        Coordinate position = getRobotPosition(robotNumber);
-        position.setOrientation(getRobot(robotNumber).getOrientation());
-
-        boolean firing = continueFiring(position);
-        while (firing) {
-            position = position.moveCoordinate();
-            getTile(position).removeRobotLaserFromTile(robotNumber);
-            firing = continueFiring(position);
-        }
-
-        if(robotHasAbility(robotNumber, Ability.RearFiringLaser)){
-            position = getRobotPosition(robotNumber);
-            position.setOrientation(getRobot(robotNumber).getOrientation().opposite());
-
-            firing = continueFiring(position);
-            while (firing) {
-                position = position.moveCoordinate();
-                getTile(position).removeRobotLaserFromTile(robotNumber);
-                firing = continueFiring(position);
+        for(Tile[] tileRow : tileGrid) {
+            for (Tile tile : tileRow) {
+                tile.removeRobotLaserFromTile(robotNumber);
             }
         }
     }
