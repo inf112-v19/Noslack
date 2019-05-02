@@ -303,7 +303,6 @@ public class TileGrid{
         for(Integer priority : priorities) {
             for (IRobot robot : this.robots) {
                 if(priority.equals(robot.getNextProgramPriority())){
-                    System.out.println("Adding " + robot.getRobotNumber());
                     robotQueue.push(robot.getRobotNumber());
                 }
             }
