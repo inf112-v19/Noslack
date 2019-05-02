@@ -148,8 +148,6 @@ public class TileGrid{
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             sound.conveyorSound();
             moveInDirectionOfConveyor(conveyor, robot.getRobotNumber());
-
-
         }
         // Repair Station
         else if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
