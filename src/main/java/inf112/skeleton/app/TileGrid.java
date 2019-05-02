@@ -147,6 +147,8 @@ public class TileGrid{
             Conveyor conveyor = (Conveyor) tile.getGameObject(GameObjectType.CONVEYOR);
             sound.conveyorSound();
             moveInDirectionOfConveyor(conveyor, robot.getRobotNumber());
+
+
         }
         // Repair Station
         else if(tile.hasGameObject(GameObjectType.REPAIR_STATION)){
@@ -205,10 +207,10 @@ public class TileGrid{
             Orientation orientation = pusher.getOrientation();
 
             int n[] = calculateMove(orientation);
-            if((currentPhase+1)%2==0 && pusher.isEven()){
+            if((currentPhase+1)%2==0 && !pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
-            else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
+            else if((currentPhase+1)%2 != 0 && pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
         }
@@ -236,12 +238,13 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int robotNumber){
         IRobot robot = getRobot(robotNumber);
-        if(conveyor.getTurn() > 0){
+        if(conveyor.getTurn() == 1){
             applyRotation(Program.RIGHT,robotNumber);
         }
-        if(conveyor.getTurn() < 0){
+        else if(conveyor.getTurn() == -1){
             applyRotation(Program.LEFT,robotNumber);
         }
+
         int[] move = calculateMove(conveyor.getOrientation());
         int rowsToMove = move[0];
         int colsToMove = move[1];

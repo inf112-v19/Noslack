@@ -78,6 +78,17 @@ public interface IRobot extends GameObject {
     Coordinate getPosition();
 
     /**
+     * Set the robots last direction of movement
+     * @return Robots last direction of movement
+     */
+    void setLastDirectionOfMovement(Orientation orientation);
+    /**
+     * Get the robots last direction of movement
+     * @return Robots last direction of movement
+     */
+    Orientation getLastDirectionOfMovement();
+
+    /**
      * Give Cards to Robot
      * @param programCards IDeck of ProgramCards
      */
