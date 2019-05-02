@@ -96,7 +96,9 @@ public class RoboRally extends Game implements InputProcessor {
             performPhase();
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
-                    this.robotQueue = this.tileGrid.robotQueue();
+                    if(robotQueue.isEmpty()) {
+                        this.robotQueue = this.tileGrid.robotQueue();
+                    }
                     tick();
                 }
             }
@@ -146,7 +148,7 @@ public class RoboRally extends Game implements InputProcessor {
 
         System.out.println("--- Phase: " + currentPhase);
 
-        if(this.tileGrid.getRobot(this.currentRobot).isFinished()){
+        if(this.tileGrid.roundFinished()){
             this.currentPhase = 100;
         }
 
@@ -162,13 +164,13 @@ public class RoboRally extends Game implements InputProcessor {
                 System.out.println("### Player: " + this.currentRobot);
                 System.out.println("%%% QueueSize: " + this.robotQueue.size());
                 this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot =this.robotQueue.pop();
+                this.currentRobot = this.robotQueue.pop();
                 activateTiles();
 
                 // Advance phase if queue is finished and no-one is mid-move.
                 if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                     System.out.println("Advancing Phase");
-                    //this.robotQueue = this.tileGrid.robotQueue();
+                    this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
                 }
             }
