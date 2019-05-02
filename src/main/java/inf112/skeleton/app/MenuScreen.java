@@ -14,7 +14,7 @@ public class MenuScreen
     private boolean run;
     private Sprite startGame;
     private Sprite testsButton;
-    private Sprite createNewMap;
+    private Sprite previewMapButton;
     private SpriteContainer spriteContainer;
     private boolean runTests;
     private Sprite drawSpritesBtn;
@@ -22,15 +22,20 @@ public class MenuScreen
     private BitmapFont font;
     private Vector2 mapTextPos;
     private Vector2 robotTextPos;
-    private boolean creatingMap;
+    private boolean previewingMap;
     private TileGrid tileGrid;
     private String selectedMap = "mapLayoutFinishedMap1.txt";
     private Sprite map1;
     private Sprite map2;
+    private Sprite map3;
+    private Sprite map4;
+    private Sprite map5;
 
     private String selectedRobot = "./assets/gameObjects/player/player32x32.png";
     private Sprite robot1;
     private Sprite robot2;
+    private Sprite robot3;
+    private Sprite robot4;
 
     private Sprite youWin;
     private Sprite youLose;
@@ -50,11 +55,11 @@ public class MenuScreen
         this.startGame.setPosition(100, 220);
         this.testsButton = spriteContainer.setSprite("./assets/menuScreen/testsBtn.png");
         this.testsButton.setPosition(375,220);
-        this.createNewMap = spriteContainer.setSprite("./assets/menuScreen/createMapBtn.png");
-        this.createNewMap.setPosition(650,220);
+        this.previewMapButton = spriteContainer.setSprite("./assets/menuScreen/previewMapBtn.png");
+        this.previewMapButton.setPosition(650,220);
         this.runTests = false;
 
-        this.creatingMap = false;
+        this.previewingMap = false;
 
         this.font = new BitmapFont();
         this.font.setColor(200,0,0,1);
@@ -65,11 +70,21 @@ public class MenuScreen
         this.map1.setPosition(110,400);
         this.map2 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
         this.map2.setPosition(260,400);
+        this.map3 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
+        this.map3.setPosition(410,400);
+        this.map4 = spriteContainer.setSprite("./assets/menuScreen/map4.png");
+        this.map4.setPosition(560,400);
+        this.map5 = spriteContainer.setSprite("./assets/menuScreen/map4.png");
+        this.map5.setPosition(710,400);
 
         this.robot1 = spriteContainer.setSprite("./assets/gameObjects/player/player32x32.png");
         this.robot1.setPosition(150,110);
-        this.robot2 = spriteContainer.setSprite("./assets/gameObjects/player/snaali2.png");
+        this.robot2 = spriteContainer.setSprite("./assets/gameObjects/player/robot3.png");
         this.robot2.setPosition(300,110);
+        this.robot3 = spriteContainer.setSprite("./assets/gameObjects/player/robot4.png");
+        this.robot3.setPosition(450,110);
+        this.robot4 = spriteContainer.setSprite("./assets/gameObjects/player/robot5.png");
+        this.robot4.setPosition(600,110);
 
 
         this.youLose = spriteContainer.setSprite("./assets/menuScreen/youLose.png");
@@ -86,18 +101,23 @@ public class MenuScreen
 
     public void render(){
 
-        if(creatingMap){
-            createMenu();
+        if(previewingMap){
+            previewMenu();
         } else {
             batch.begin();
             background.draw(batch);
             startGame.draw(batch);
             testsButton.draw(batch);
-            createNewMap.draw(batch);
+            previewMapButton.draw(batch);
             map1.draw(batch);
             map2.draw(batch);
+            map3.draw(batch);
+            map4.draw(batch);
+            map5.draw(batch);
             robot1.draw(batch);
             robot2.draw(batch);
+            robot3.draw(batch);
+            robot4.draw(batch);
 
             this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
             this.font.draw(batch,"Selected robot:",robotTextPos.x,robotTextPos.y);
@@ -119,20 +139,20 @@ public class MenuScreen
         }
     }
 
-    public void clickCreate(int screenX, int screenY) {
-        if(spriteContainer.isInsideSprite(screenX,screenY,createNewMap)){
+    public void clickPreview(int screenX, int screenY) {
+        if(spriteContainer.isInsideSprite(screenX,screenY, previewMapButton)){
             this.tileGrid = new TileGrid(selectedMap);
-            this.creatingMap = !this.creatingMap;
+            this.previewingMap = !this.previewingMap;
         }
     }
 
     public boolean clickStart(int screenX, int screenY){
-        return (spriteContainer.isInsideSprite(screenX,screenY,startGame) && !creatingMap);
+        return (spriteContainer.isInsideSprite(screenX,screenY,startGame) && !previewingMap);
 
     }
 
     public void clickTestStart(int screenX, int screenY){
-        if(spriteContainer.isInsideSprite(screenX,screenY,testsButton) && !creatingMap){
+        if(spriteContainer.isInsideSprite(screenX,screenY,testsButton) && !previewingMap){
             this.runTests = !this.runTests;
         }
     }
@@ -156,6 +176,18 @@ public class MenuScreen
             this.mapTextPos = new Vector2(260,520);
             this.selectedMap = "ConveyorLoops.txt";
             return this.selectedMap;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,map3)){
+            this.mapTextPos = new Vector2(410,520);
+            this.selectedMap = "Venezia.txt";
+            return this.selectedMap;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,map4)){
+            this.mapTextPos = new Vector2(560,520);
+            this.selectedMap = "PyramidMap.txt";
+            return this.selectedMap;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,map5)){
+            this.mapTextPos = new Vector2(710,520);
+            this.selectedMap = "LevelX.txt";
+            return this.selectedMap;
         }
         return "no";
     }
@@ -167,17 +199,25 @@ public class MenuScreen
             return this.selectedRobot;
         } else if(spriteContainer.isInsideSprite(screenX,screenY,robot2)){
             this.robotTextPos = new Vector2(260,180);
-            this.selectedRobot = "./assets/gameObjects/player/snaali2.png";
+            this.selectedRobot = "./assets/gameObjects/player/robot3.png";
+            return this.selectedRobot;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,robot3)){
+            this.robotTextPos = new Vector2(410,180);
+            this.selectedRobot = "./assets/gameObjects/player/robot4.png";
+            return this.selectedRobot;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,robot4)){
+            this.robotTextPos = new Vector2(560,180);
+            this.selectedRobot = "./assets/gameObjects/player/robot5.png";
             return this.selectedRobot;
         }
         return "no";
     }
 
-    private void createMenu(){
+    private void previewMenu(){
         batch.begin();
         background.draw(batch);
         this.spriteContainer.renderFlexibleGrid(tileGrid, true, 0, 50, 50);
-        createNewMap.draw(batch);
+        previewMapButton.draw(batch);
         batch.end();
     }
 
@@ -189,7 +229,7 @@ public class MenuScreen
 
         sprites.add(startGame);
         sprites.add(testsButton);
-        sprites.add(createNewMap);
+        sprites.add(previewMapButton);
         sprites.add(map1);
         sprites.add(map2);
         sprites.add(youWin);

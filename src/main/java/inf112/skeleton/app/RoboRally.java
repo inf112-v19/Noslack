@@ -320,7 +320,7 @@ public class RoboRally extends Game implements InputProcessor {
             } else if(!this.menuScreen.clickRobot(screenX,screenY).equals("no")){
                 this.selectedRobot = this.menuScreen.clickRobot(screenX,screenY);
             } else {
-                this.menuScreen.clickCreate(screenX,screenY);
+                this.menuScreen.clickPreview(screenX,screenY);
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
         } else if (this.menuScreen.hasWon() || this.menuScreen.hasLost()) {
