@@ -81,17 +81,21 @@ public class TileGridTest {
 
     @Test
     public void firePlayerLaser2() {
-        TileGrid grid = new TileGrid("fireLaserTestMap.txt");
-        grid.fireRobotLaser(0);
-
+        TileGrid grid = new TileGrid("fireLaserTestMap2.txt");
+        grid.fireRobotLaser(1);
         assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
         assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+        assertFalse(grid.getTile(0,3).hasGameObject(GameObjectType.LASER_BEAM));
     }
+
 
     @Test
     public void removePlayerLaser() {
         TileGrid grid = new TileGrid("fireLaserTestMap.txt");
         grid.fireRobotLaser(0);
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+
         grid.removeRobotLaser(0);
 
         assertFalse(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
