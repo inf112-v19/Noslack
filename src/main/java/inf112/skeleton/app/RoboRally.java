@@ -93,12 +93,8 @@ public class RoboRally extends Game implements InputProcessor {
         else{
             this.batch.begin();
             this.spriteContainer.renderGrid(this.tileGrid);
-            performPhase();
             if (this.roboTick % 20 == 0){
                 if(sequenceReady){
-                    if(robotQueue.isEmpty()) {
-                        this.robotQueue = this.tileGrid.robotQueue();
-                    }
                     tick();
                 }
             }
@@ -114,9 +110,10 @@ public class RoboRally extends Game implements InputProcessor {
         }
     }
 
-    private void performPhase() {
+    private void startRound() {
         if (this.currentPhase == 0) {
             this.currentPhase++;
+            this.robotQueue = tileGrid.robotQueue();
         }
     }
 
@@ -145,6 +142,7 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
+        startRound();
 
         System.out.println("--- Phase: " + currentPhase);
 
@@ -159,21 +157,20 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         if (this.currentPhase <= 5) {
-            // Runs per phase
-            if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                 System.out.println("### Player: " + this.currentRobot);
                 System.out.println("%%% QueueSize: " + this.robotQueue.size());
-                this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot = this.robotQueue.pop();
-                activateTiles();
 
-                // Advance phase if queue is finished and no-one is mid-move.
-                if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
+                //Queue is empty
+                if(tileGrid.nextPhase()) {
+                    activateTiles();
                     System.out.println("Advancing Phase");
                     this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
+                    return;
                 }
-            }
+
+                this.currentRobot = this.robotQueue.pop();
+
         }else if (this.currentPhase > 5){
             dealNewCards();
             this.sequenceReady = false;
