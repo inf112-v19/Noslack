@@ -20,6 +20,7 @@ public abstract class Robot implements IRobot{
     int health;
     Program currentMove;
     private Coordinate backUp;
+    private int backUpHP = 9;
     private int moveProgression;
     ArrayList<AbilityCard> abilityHand;
     boolean activeAbility;
@@ -28,6 +29,7 @@ public abstract class Robot implements IRobot{
     private boolean[] flagsVisited;
     private boolean hasMoved;
     boolean powerDown;
+
 
     public void create(int robotNumber,Orientation orientation, Coordinate position){
         this.orientation = orientation;
@@ -181,7 +183,7 @@ public abstract class Robot implements IRobot{
 
     @Override
     public boolean dead(){
-        return this.lives <1;
+        return this.lives < 1;
     }
 
     @Override
@@ -272,7 +274,7 @@ public abstract class Robot implements IRobot{
         if(hasAbility(Ability.SuperiorArchive)){
             setHealth(10);
         }else {
-            setHealth(7);
+            setHealth(backUpHP);
         }
         setPosition(this.backUp);
         setOrientation(this.backUp.getOrientation());
@@ -282,6 +284,7 @@ public abstract class Robot implements IRobot{
     public void setBackUp(){
         this.backUp = this.getPosition();
         this.backUp.setOrientation(getOrientation());
+        this.backUpHP = this.health;
     }
 
     @Override

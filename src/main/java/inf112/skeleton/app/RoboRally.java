@@ -37,7 +37,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "mapLayoutFinishedMap1.txt";
+    private String selectedMap = "PyramidMap.txt";
 
     @Override
     public void create() {
@@ -142,25 +142,36 @@ public class RoboRally extends Game implements InputProcessor {
      * Round Logic
      */
     private void tick() {
+
+        System.out.println("--- Phase: " + currentPhase);
+
         if(this.tileGrid.getRobot(this.currentRobot).isFinished()){
             this.currentPhase = 100;
         }
+
+        // If mid-move, continue.
+        if(!(this.tileGrid.getRobotCurrentMove(this.currentRobot) == Program.NONE)){
+            this.tileGrid.continueMove(this.currentRobot);
+            return;
+        }
+
         if (this.currentPhase <= 5) {
             // Runs per phase
             if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
+                System.out.println("### Player: " + this.currentRobot);
+                System.out.println("%%% QueueSize: " + this.robotQueue.size());
                 this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot =this.robotQueue.remove(0);
+                this.currentRobot = this.robotQueue.remove(0);
                 activateTiles();
+
+                // Advance phase if queue is finished and no-one is mid-move.
                 if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
-                    this.robotQueue = this.tileGrid.robotQueue();
+                    System.out.println("Advancing Phase");
+                    //this.robotQueue = this.tileGrid.robotQueue();
                     this.currentPhase++;
                 }
             }
-        }
-        // Runs mid phase
-        if (!(this.tileGrid.getRobotCurrentMove(this.currentRobot) == Program.NONE)) {
-            this.tileGrid.continueMove(this.currentRobot);
-        } else if (this.currentPhase > 5){
+        }else if (this.currentPhase > 5){
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;

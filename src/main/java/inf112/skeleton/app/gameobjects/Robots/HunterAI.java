@@ -26,9 +26,11 @@ public class HunterAI extends AI {
     @Override
     public void drawPrograms(ArrayList<RRCard> programCards) {
         System.out.println("Getting cards for ai");
-        this.programHand = new AIHand(programCards);
-        System.out.println("Hand: " + programHand.toString());
 
+        ProgramDeck deck = new ProgramDeck("programCards.txt");
+
+        this.programHand = new AIHand(programCards);
+        //this.programHand = new AIHand(deck.deal(99));
     }
 
     @Override
@@ -57,6 +59,7 @@ public class HunterAI extends AI {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/robot32x32.png"));
             this.sprite = new Sprite(texture);
             turnSprite();
+
         } catch (Exception e) {
         }
     }
