@@ -119,6 +119,9 @@ public class RoboRally extends Game implements InputProcessor {
 
             if (this.animation){
                 this.programHand = this.animator.updatePositions();
+                if (this.animator.isDone()){
+                    this.animation = false;
+                }
             }
 
             if(!animation){
@@ -185,7 +188,9 @@ public class RoboRally extends Game implements InputProcessor {
                     return;
                 }
 
-                this.currentRobot = this.robotQueue.pop();
+                if (!this.robotQueue.empty()){
+                    this.currentRobot = this.robotQueue.pop();
+                }
 
         }else if (this.currentPhase > 5){
             if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
@@ -198,7 +203,7 @@ public class RoboRally extends Game implements InputProcessor {
         }
 
         for(IRobot r : this.tileGrid.getRobots()){
-            
+
             if(!r.isAI()){
                 if(r.win()){
                     menuScreen.drawWin();
@@ -206,6 +211,11 @@ public class RoboRally extends Game implements InputProcessor {
                     gameSounds.victorySound();
                 }
                 else if(r.dead()){
+                    menuScreen.drawLost();
+                    gameSounds.stopMusic();
+                    gameSounds.defeatSound();
+                }
+                else if(r.isAI() && r.win()){
                     menuScreen.drawLost();
                     gameSounds.stopMusic();
                     gameSounds.defeatSound();
@@ -320,7 +330,7 @@ public class RoboRally extends Game implements InputProcessor {
             } else if(!this.menuScreen.clickRobot(screenX,screenY).equals("no")){
                 this.selectedRobot = this.menuScreen.clickRobot(screenX,screenY);
             } else {
-                this.menuScreen.clickCreate(screenX,screenY);
+                this.menuScreen.clickPreview(screenX,screenY);
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
         } else if (this.menuScreen.hasWon() || this.menuScreen.hasLost()) {
@@ -328,6 +338,7 @@ public class RoboRally extends Game implements InputProcessor {
         } else {
             if (spriteContainer.isInsideBack(screenX, screenY) && animation){
                 programHand = animator.finishAnimation();
+                animator.isDone();
                 animation = false;
             }
             if (this.spriteContainer.isInsideGo(screenX, screenY)) {
@@ -367,7 +378,7 @@ public class RoboRally extends Game implements InputProcessor {
         screenX = transformX(screenX);
         screenY = transformY(screenY);
         //Stops the function if the user is still in the menu
-        if(this.menuScreen.runMenu()){
+        if(this.menuScreen.runMenu() || animation){
             return false;
         }
 
@@ -392,7 +403,7 @@ public class RoboRally extends Game implements InputProcessor {
         screenX = transformX(screenX);
         screenY = transformY(screenY);
         //Stops the function if the user is still in the menu
-        if(this.menuScreen.runMenu()){
+        if(this.menuScreen.runMenu() || animation){
             return false;
         }
 
