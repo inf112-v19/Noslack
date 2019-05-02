@@ -82,6 +82,7 @@ public class Coordinate {
             return this.row == ((Coordinate) o).getRow() && this.column == ((Coordinate) o).getColumn();
         return false;
     }
+
     public String toString(){
 
         return "Row: "+getRow()+" Column: "+getColumn() + " Orientation: " + getOrientation();

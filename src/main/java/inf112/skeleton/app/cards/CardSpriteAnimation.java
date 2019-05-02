@@ -25,7 +25,11 @@ public class CardSpriteAnimation {
         this.i = 0;
         this.j = 0;
         for (ProgramCard card : hand){
-            card.getSprite().setPosition(startPos.x,startPos.y);
+            try {
+                card.getSprite().setPosition(startPos.x, startPos.y);
+            }catch (Exception e){
+                System.out.println("Error in CardSpriteAnimation");
+            }
         }
 
     }
@@ -56,17 +60,25 @@ public class CardSpriteAnimation {
 
             Vector2 pos = new Vector2(x,y);
             ProgramCard card = hand.get(i);
-            card.getSprite().setPosition(pos.x,pos.y);
+            try {
+                card.getSprite().setPosition(pos.x, pos.y);
+            }catch (Exception e){
+                System.out.println("Error in shuffleLeft line 54");
+            }
             card.setPosition(pos);
             hand.set(i,card);
             j+=10;
 
             if(x <= end){
-                sounds.shuffleCardSound();
-                card.getSprite().setPosition((float)end,endPos.y);
-                card.setPosition(new Vector2((float)end,endPos.y));
-                i++;
-                j=0;
+                try {
+                    sounds.shuffleCardSound();
+                    card.getSprite().setPosition((float) end, endPos.y);
+                    card.setPosition(new Vector2((float) end, endPos.y));
+                    i++;
+                    j = 0;
+                }catch (Exception e){
+                    System.out.println("Error in shuffleLaft line 64");
+                }
             }
 
         }

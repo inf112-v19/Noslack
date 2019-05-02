@@ -21,7 +21,7 @@ public class AIHandTest {
     @Test
     public void findMove() {
         ProgramCard program = hand.findMove();
-        assertTrue(program.getMove().isMove());
+        assertTrue(program.getProgram().isMove());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class AIHandTest {
     @Test
     public void findTurn() {
          ProgramCard programCard = hand.findTurn();
-         assertFalse(programCard.getMove().isMove());
+         assertFalse(programCard.getProgram().isMove());
     }
 
     @Test
@@ -48,6 +48,6 @@ public class AIHandTest {
     @Test
     public void get() {
          ProgramCard programCard = hand.get(Program.MOVE3);
-         assertEquals(Program.MOVE3, programCard.getMove());
+         assertEquals(Program.MOVE3, programCard.getProgram());
     }
 }
