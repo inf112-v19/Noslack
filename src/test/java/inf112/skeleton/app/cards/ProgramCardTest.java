@@ -12,7 +12,7 @@ public class ProgramCardTest {
         String move ="U Turn";
         ProgramCard card = new ProgramCard(priority,move);
         assertEquals(priority,card.getPriority());
-        assertSame(card.getMove(), Program.U);
+        assertSame(card.getProgram(), Program.U);
 
     }
     @Test
@@ -31,7 +31,7 @@ public class ProgramCardTest {
         String move = "Move 3";
         ProgramCard card = new ProgramCard(priority,move);
         assertEquals(priority,card.getPriority());
-        assertSame(card.getMove(), Program.MOVE3);
+        assertSame(card.getProgram(), Program.MOVE3);
     }
 
     @Test
@@ -52,9 +52,9 @@ public class ProgramCardTest {
         ProgramCard p3 = new ProgramCard(890, Program.MOVE3);
         ProgramCard p4 = new ProgramCard(400, Program.BACK);
 
-        assertEquals(1, p1.getMove().totalMoves());
-        assertEquals(2, p2.getMove().totalMoves());
-        assertEquals(3, p3.getMove().totalMoves());
-        assertEquals(1, p4.getMove().totalMoves());
+        assertEquals(1, p1.getProgram().totalMoves());
+        assertEquals(2, p2.getProgram().totalMoves());
+        assertEquals(3, p3.getProgram().totalMoves());
+        assertEquals(1, p4.getProgram().totalMoves());
     }
 }

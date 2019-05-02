@@ -105,21 +105,15 @@ public class TileGridTest {
         for(RRCard card : deck){
             deck1.add((ProgramCard) card);
         }
-
         deck = new ProgramDeck("testQueue2.txt").deal(5);
         ArrayList<ProgramCard> deck2 = new ArrayList<>();
         for(RRCard card : deck){
             deck2.add((ProgramCard) card);
         }
-
         grid.getRobot(0).pushProgram(deck1);
         grid.getRobot(1).pushProgram(deck2);
 
         ArrayList<Integer> list = grid.robotQueue();
-        System.out.println(grid.getRobots());
-        for(Integer i : list){
-            System.out.println("Robot number: "+i);
-        }
         assertEquals(2, list.size());
         assertTrue(0==list.get(0));
         assertTrue(1==list.get(1));

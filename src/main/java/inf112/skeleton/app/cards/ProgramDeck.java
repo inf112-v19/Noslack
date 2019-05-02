@@ -88,7 +88,7 @@ public class ProgramDeck implements IDeck {
     public boolean contains(RRCard card) {
         for (RRCard c :this.deck)
             if(((ProgramCard)c).getPriority() == ((ProgramCard)card).getPriority() &&
-                    ((ProgramCard)c).getMove().equals(((ProgramCard)card).getMove()))
+                    ((ProgramCard)c).getProgram().equals(((ProgramCard)card).getProgram()))
                 return true;
         return false;
     }

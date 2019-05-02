@@ -27,7 +27,7 @@ public class AIHand {
      */
     public boolean contains(Program program){
         for(ProgramCard card : this.hand){
-            if(card.getMove().equals(program))
+            if(card.getProgram().equals(program))
                 return true;
         }
         return false;
@@ -42,7 +42,7 @@ public class AIHand {
     public boolean contains(Program program, int n){
         int i = 0;
         for(ProgramCard card : this.hand){
-            if(card.getMove().equals(program))
+            if(card.getProgram().equals(program))
                 i++;
         }
         return (n<i);
@@ -55,7 +55,7 @@ public class AIHand {
      */
     public ProgramCard get(Program program){
         for(int i = 0; i<hand.size(); i++){
-            if(hand.get(i).getMove().equals(program)){
+            if(hand.get(i).getProgram().equals(program)){
                 return hand.remove(i);
             }
         }
@@ -74,11 +74,10 @@ public class AIHand {
 
     public boolean containsMove() {
         System.out.println(hand.size());
-        for(ProgramCard card: hand){
-            return card.getMove().isMove();
-        }
-        for(ProgramCard card: hand){
-            return card.getMove().isMove();
+        for(ProgramCard card : hand) {
+            if (card.getProgram().isMove()) {
+                return true;
+            }
         }
         return false;
     }
@@ -89,7 +88,7 @@ public class AIHand {
      */
     public ProgramCard findMove() {
         for(ProgramCard card: hand){
-            if(card.getMove().isMove() && !card.getMove().equals(Program.BACK)){
+            if(card.getProgram().isMove() && !card.getProgram().equals(Program.BACK)){
                return get(card);
             }
         }
@@ -101,7 +100,7 @@ public class AIHand {
 
     public boolean containsTurn() {
         for(ProgramCard card: hand){
-            if(!card.getMove().isMove()){
+            if(!card.getProgram().isMove()){
                 return true;
             }
         }
@@ -110,7 +109,7 @@ public class AIHand {
 
     public ProgramCard findTurn(){
         for (ProgramCard card : hand) {
-            if(!card.getMove().isMove()){
+            if(!card.getProgram().isMove()){
                 return get(card);
             }
         }

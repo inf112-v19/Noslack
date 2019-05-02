@@ -1,7 +1,6 @@
 package inf112.skeleton.app.cards;
 
 import org.junit.Test;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class ProgramDeckTest {
         card=(ProgramCard)testDeck.get(0);
 
         assertEquals(priority,card.getPriority());
-        assertSame(program,card.getMove());
+        assertSame(program,card.getProgram());
     }
 
     @Test
