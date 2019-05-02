@@ -10,7 +10,6 @@ public class SoundContainer {
     private Sound conveyor;
     private Sound laser;
     private Sound teleport;
-    private Sound pusher;
     private Sound move;
     private Sound victory;
     private Sound defeat;
@@ -44,9 +43,6 @@ public class SoundContainer {
         }catch(Exception e){
         }
     }
-    public void pusherSound(){
-        //this.pusher.play();
-    }
     public void teleportSound(){
         try{
             this.teleport.play(0.2f);
@@ -55,9 +51,8 @@ public class SoundContainer {
         }
     }
 
-    public void conveyorSound()
-    {
-
+    public void conveyorSound() {
+        this.conveyor.play();
     }
     public void move(){
         try {
@@ -67,7 +62,7 @@ public class SoundContainer {
     }
 
     public void defeatSound(){
-
+        defeat.play();
     }
 
     public void gameMusic(){
@@ -87,15 +82,10 @@ public class SoundContainer {
     public void resumeGameMusic(){
         this.gameMusic.resume();
         this.playing = true;
-        //this.gameMusic.setPitch();
     }
 
     public boolean isGameMusicPlaying(){
         return playing;
-    }
-
-    public void rotateSound(){
-
     }
 
     public void shuffleCardSound(){
@@ -106,9 +96,4 @@ public class SoundContainer {
     public void victorySound(){
         victory.play();
     }
-
-    public void takeDamageSound(){
-        defeat.play();
-    }
-
 }
