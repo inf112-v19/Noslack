@@ -21,7 +21,6 @@ public abstract class AI extends Robot {
         isFull();
         this.trackingCoordinate = new AICoordinate(this.position);
         while(!this.full) {
-            System.out.println("Another one: " + this.program.size());
             turnDirectionOfTarget(target);
             applyMove();
             isFull();
@@ -67,7 +66,7 @@ public abstract class AI extends Robot {
     private void turnNotFound(Program turnNeeded){
         switch (turnNeeded){
             case U:
-                if(this.programHand.contains(Program.RIGHT,2)&& this.program.size()<4){
+                if(this.programHand.contains(Program.RIGHT,2)&& this.program.size()<this.health){
                     this.push(programHand.get(Program.RIGHT));
                     this.push(programHand.get(Program.RIGHT));
                 }
@@ -152,12 +151,9 @@ public abstract class AI extends Robot {
 
     private void applyMove(){
         if(this.programHand.containsMove()) {
-            System.out.println("CONTAINS MOVE");
             ProgramCard nextMove = this.programHand.findMove();
-            System.out.println("NextMove: " + nextMove);
             this.push(nextMove);
         }else{
-            System.out.println("NOT CONTAINS MOVE");
             moveNotFound(Program.MOVE1);
         }
     }

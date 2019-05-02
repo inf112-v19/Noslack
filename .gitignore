@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!RoboMotocross.jar
 *.war
 *.nar
 *.ear
