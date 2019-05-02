@@ -237,7 +237,10 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int robotNumber){
         IRobot robot = getRobot(robotNumber);
-        if(conveyor.getTurn() == 1){
+        if(conveyor.isIntersection()){
+            calculateIntersection(conveyor,robotNumber);
+        }
+        else if(conveyor.getTurn() == 1){
             applyRotation(Program.RIGHT,robotNumber);
         }
         else if(conveyor.getTurn() == -1){
@@ -263,6 +266,56 @@ public class TileGrid{
             }
         }
     }
+    public void calculateIntersection(Conveyor conveyor, int robotNumber){
+        IRobot robot = getRobot(robotNumber);
+        switch(conveyor.getOrientation()){
+            case FACING_NORTH:
+                switch(robot.getLastDirectionOfMovement()){
+                    case FACING_NORTH:
+                        return;
+                    case FACING_EAST:
+                        applyRotation(Program.LEFT,robotNumber);
+                    case FACING_SOUTH:
+                        return;
+                    case FACING_WEST:
+                        applyRotation(Program.RIGHT,robotNumber);
+                }
+            case FACING_EAST:
+                switch(robot.getLastDirectionOfMovement()){
+                    case FACING_NORTH:
+                        applyRotation(Program.RIGHT,robotNumber);
+                    case FACING_EAST:
+                        return;
+                    case FACING_SOUTH:
+                        applyRotation(Program.LEFT,robotNumber);
+                    case FACING_WEST:
+                        return;
+                }
+            case FACING_SOUTH:
+                switch(robot.getLastDirectionOfMovement()){
+                    case FACING_NORTH:
+                        return;
+                    case FACING_EAST:
+                        applyRotation(Program.RIGHT,robotNumber);
+                    case FACING_SOUTH:
+                        return;
+                    case FACING_WEST:
+                        applyRotation(Program.LEFT,robotNumber);
+                }
+            case FACING_WEST:
+                switch(robot.getLastDirectionOfMovement()){
+                    case FACING_NORTH:
+                        applyRotation(Program.LEFT,robotNumber);
+                    case FACING_EAST:
+                        return;
+                    case FACING_SOUTH:
+                        applyRotation(Program.RIGHT,robotNumber);
+                    case FACING_WEST:
+                        return;
+                }
+        }
+    }
+
 
     /**
      * Calculate new move, based on orientation
@@ -344,9 +397,26 @@ public class TileGrid{
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
+
         if(move==Program.BACK || move == Program.BACK2){
             rowsToMove *= -1;
             columnsToMove *= -1;
+        }
+
+        if(rowsToMove > 0){
+            getRobot(robotNumber).setLastDirectionOfMovement(Orientation.FACING_NORTH);
+        }
+
+        else if(rowsToMove < 0){
+            getRobot(robotNumber).setLastDirectionOfMovement(Orientation.FACING_SOUTH);
+        }
+
+        else if(columnsToMove > 0){
+            getRobot(robotNumber).setLastDirectionOfMovement(Orientation.FACING_EAST);
+        }
+
+        else if(columnsToMove < 0){
+            getRobot(robotNumber).setLastDirectionOfMovement(Orientation.FACING_WEST);
         }
 
         moveRobot(robotNumber, rowsToMove, columnsToMove);
