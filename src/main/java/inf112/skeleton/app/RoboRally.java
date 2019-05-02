@@ -186,6 +186,19 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase = 0;
             activateTiles();
         }
+
+        for(IRobot r : this.tileGrid.getRobots()){
+            
+            if(!r.isAI()){
+                if(r.win()){
+                    menuScreen.drawWin();
+                }
+                else if(r.dead()){
+                    menuScreen.drawLost();
+                }
+            }
+
+        }
     }
 
     private void dealNewCards() {
