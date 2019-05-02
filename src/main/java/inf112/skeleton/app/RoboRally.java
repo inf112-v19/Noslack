@@ -11,6 +11,7 @@ import inf112.skeleton.app.cards.*;
 import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class RoboRally extends Game implements InputProcessor {
     // Dealt cards background texture and sprite.
@@ -19,7 +20,7 @@ public class RoboRally extends Game implements InputProcessor {
     private boolean activatedTiles;
     private SpriteBatch batch;
     private TileGrid tileGrid;
-    private ArrayList<Integer> robotQueue;
+    private Stack<Integer> robotQueue;
     private int currentRobot;
     private ProgramDeck programDeck;
     private AbilityDeck abilityDeck;
@@ -56,7 +57,7 @@ public class RoboRally extends Game implements InputProcessor {
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
         this.tileGrid = new TileGrid(selectedMap);
-        this.robotQueue = new ArrayList<>();
+        this.robotQueue = new Stack<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
         this.currentPhase = 0;
         this.programDeck = new ProgramDeck("ProgramCards.txt");
@@ -149,7 +150,7 @@ public class RoboRally extends Game implements InputProcessor {
             // Runs per phase
             if (this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                 this.tileGrid.applyNextProgram(this.currentRobot);
-                this.currentRobot =this.robotQueue.remove(0);
+                this.currentRobot =this.robotQueue.pop();
                 activateTiles();
                 if(this.robotQueue.isEmpty() && this.tileGrid.robotFinishedCurrentMove(this.currentRobot)) {
                     this.robotQueue = this.tileGrid.robotQueue();
