@@ -11,12 +11,6 @@ import static org.junit.Assert.*;
 public class ConveyorTest {
 
     @Test
-    public void pusherInitialized() {
-        Pusher pusher = new Pusher(Orientation.FACING_NORTH);
-        assertNotEquals(pusher, null);
-    }
-
-    @Test
     public void conveyorInitialized() {
         Conveyor conveyor = new Conveyor(Orientation.FACING_NORTH, false, 0);
         assertNotEquals(conveyor, null);
