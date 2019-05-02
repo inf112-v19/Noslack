@@ -7,7 +7,7 @@
 
 - Kommunikasjonen i gruppen har vært veldig god. Vi har brukt Slack for å kommunisere utenom arbeidstidene. På den måten har vi avtalt møtetidspunkt, eller endringer i tidspunktene for at det skal passe best mulig for alle. Veldig mye av koden er skrevet mens hele gruppen er samlet, noe som medfører at mye av kommunikasjonen har blitt gjort face-to-face.
 
-- REFERAT FRA MØTER
+- Referat fra møter ligger nederst i dokumentet
 
 
 ### Retrospektiv
@@ -44,7 +44,7 @@
 
 - HVORDAN PROSJEKTET BYGGES, TESTEST, KJØRES
 
-- HVORDAN TESTENE KJØRES
+- Testene kjøres automatisk når man kjører Main. I tillegg er det manuelle tester for Sprites som kjøres ved å klikke på "Test" knappen på hovedmenyen. Grunnen til at vi har valgt å teste Sprites på denne måten er fordi det var en god del enklere enn å gjøre det direkte i koden. Test knappen tegner alle sprites som metoden drawAll i SpriteContainer får tilsendt.
 
 # Referat fra møter
 

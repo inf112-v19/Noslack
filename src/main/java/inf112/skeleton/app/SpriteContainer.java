@@ -231,6 +231,7 @@ public class SpriteContainer {
 
     public Sprite getCurrentSprite() {return this.currentCard.getSprite();}
 
+    //Method checks if click is performed on a card
     public boolean isInsideCard(float screenX, float screenY, RRCard card) {
         Sprite sprite = card.getSprite();
         if (isInsideSprite(screenX,screenY,sprite)){
@@ -251,6 +252,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to move sprites
     public void moveSprite(Sprite sprite, float newX, float newY) {
         this.batch.begin();
         sprite.setPosition(newX, newY);
@@ -262,6 +264,7 @@ public class SpriteContainer {
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
+    //Method to see if click is performed on powerDown button
     public boolean isInsidePowerDown(float screenX, float screenY) {
         if (isInsideSprite(screenX,screenY,this.powerDownButton)){
             poweredDown = !poweredDown;
@@ -270,6 +273,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to check if click is performed on mute/unmute button
     public boolean isInsideMute(float screenX, float screenY){
         if (isInsideSprite(screenX,screenY,this.muteButton)){
             mute = !mute;
@@ -278,6 +282,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to draw a Textvbox
     public void drawTextBox(String text, int length){
         ArrayList<String> lines = new ArrayList<>();
 
@@ -302,7 +307,41 @@ public class SpriteContainer {
         }
     }
 
+    //Method to draw a text from a abilitycard
     public void drawAbilityText(){
         drawTextBox(this.abilityText, 50);
     }
+
+
+    //Method for Manual testing of Sprites existence
+    public void drawAll(ArrayList<Sprite> sprites){
+
+
+        try{
+            background.draw(batch);
+            unMuteButton.draw(batch);
+            cardSlot.draw(batch);
+            goButton.draw(batch);
+            muteButton.draw(batch);
+            lifeHeart.draw(batch);
+            cardBack.draw(batch);
+            emptyCard.draw(batch);
+            powerDownButton.draw(batch);
+            poweredDownButton.draw(batch);
+
+            for(Sprite s :sprites) {
+                s.draw(batch);
+            }
+        }
+        catch (Exception e){
+            System.out.println("A sprite could not be found");
+
+        }
+
+
+
+
+
     }
+
+}

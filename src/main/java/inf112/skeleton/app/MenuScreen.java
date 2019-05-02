@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 public class MenuScreen
 {
     private SpriteBatch batch;
@@ -64,8 +66,8 @@ public class MenuScreen
         this.youWin.setPosition(225,400);
         this.mainMenuBtn = spriteContainer.setSprite("./assets/menuScreen/mainMenuBtn.png");
         this.mainMenuBtn.setPosition(325, 100);
-        this.runWin = true;
-        this.runLoose = true;
+        this.runWin = false;
+        this.runLoose = false;
 
     }
 
@@ -142,12 +144,22 @@ public class MenuScreen
 
     public void testMenu(){
         batch.begin();
-        this.background.draw(batch);
-        spriteContainer.drawTextBox("Which manual test do you want to run?",500);
-        this.drawSpritesBtn = spriteContainer.setSprite("./assets/cards/drawAllSpritesBtn.png");
-        this.drawSpritesBtn.setPosition(500,50);
-        this.drawSpritesBtn.draw(batch);
-        testsButton.draw(batch);
+        ArrayList<Sprite> sprites = new ArrayList<>();
+
+        sprites.add(startGame);
+        sprites.add(testsButton);
+        sprites.add(createNewMap);
+        sprites.add(map1);
+        sprites.add(map2);
+        sprites.add(youWin);
+        sprites.add(youLose);
+
+
+
+
+
+
+        spriteContainer.drawAll(sprites);
         batch.end();
     }
 
@@ -165,12 +177,18 @@ public class MenuScreen
         batch.end();
     }
 
-    public boolean win(){
-        runLoose = false;
+    public boolean hasWon(){
         return runWin;
     }
 
-    public boolean loose(){
-        runWin = false;
-        return runLoose;}
+    public boolean hasLost(){
+        return runLoose;
+    }
+
+    public void drawWin(){
+        runWin = true;
+    }
+    public void drawLost(){
+        runLoose = true;
+    }
 }

@@ -91,11 +91,11 @@ public class RoboRally extends Game implements InputProcessor {
             }
         }
 
-        else if(this.menuScreen.win()){
+        else if(this.menuScreen.hasWon()){
             this.menuScreen.gameFinishMenu();
         }
 
-        else if(this.menuScreen.loose()){
+        else if(this.menuScreen.hasLost()){
 
             this.menuScreen.gameFinishMenu();
         }
@@ -178,6 +178,8 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentPhase = 0;
             activateTiles();
         }
+
+
 
 
     }
@@ -282,9 +284,7 @@ public class RoboRally extends Game implements InputProcessor {
                 this.menuScreen.clickCreate(screenX,screenY);
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
-        } else if(this.menuScreen.win()){
-            this.menuScreen.clickMenu(screenX,screenY);
-        } else {
+        }  else {
             if (this.spriteContainer.isInsideGo(screenX, screenY)) {
                 ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
                 for(ProgramCard card : chosenCards){
