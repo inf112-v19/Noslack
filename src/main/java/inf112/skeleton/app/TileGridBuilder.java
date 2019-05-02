@@ -89,14 +89,17 @@ public class TileGridBuilder {
                     turn = 1;
                 else if(nextTileType.contains("L"))
                     turn = -1;
-                else if(nextTileType.contains("T"))
-                    turn = 2;
-                else if(nextTileType.contains("X"))
-                    turn = 3;
                 else
                     turn = 0;
+
+                boolean Tintersection = false, Xintersection = false;
+                if(nextTileType.contains("T"))
+                    Tintersection = true;
+                if(nextTileType.contains("X"))
+                    Xintersection = true;
+
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,turn));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,turn,Tintersection,Xintersection));
                 break;
             case "D":
                 boolean evenPusher = nextTileType.contains("DD");

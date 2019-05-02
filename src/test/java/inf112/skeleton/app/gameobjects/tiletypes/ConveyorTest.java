@@ -12,7 +12,7 @@ public class ConveyorTest {
 
     @Test
     public void conveyorInitialized() {
-        Conveyor conveyor = new Conveyor(Orientation.FACING_NORTH, false, 0);
+        Conveyor conveyor = new Conveyor(Orientation.FACING_NORTH, false, 0,false,false);
         assertNotEquals(conveyor, null);
     }
 

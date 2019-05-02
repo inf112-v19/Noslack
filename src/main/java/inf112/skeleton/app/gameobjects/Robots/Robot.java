@@ -186,6 +186,9 @@ public abstract class Robot implements IRobot{
 
     @Override
     public boolean win(){
+        if(flagsVisited.length == 0){
+            return false;
+        }
         if(flagsVisited[flagsVisited.length-1]){
             System.out.println(this.name + " HAS WON!");
             this.hasWon = true;
