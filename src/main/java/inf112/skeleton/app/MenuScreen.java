@@ -121,6 +121,16 @@ public class MenuScreen
         }
     }
 
+    public void clickMenuBtn(float screenX, float screenY){{
+        if(spriteContainer.isInsideSprite(screenX,screenY,mainMenuBtn)){
+            runWin = false;
+            runLoose = false;
+            run = true;
+        }
+    }
+
+    }
+
     public String clickMap(int screenX, int screenY) {
         if(spriteContainer.isInsideSprite(screenX,screenY,map1)){
             this.mapTextPos = new Vector2(110,520);
@@ -153,12 +163,6 @@ public class MenuScreen
         sprites.add(map2);
         sprites.add(youWin);
         sprites.add(youLose);
-
-
-
-
-
-
         spriteContainer.drawAll(sprites);
         batch.end();
     }
