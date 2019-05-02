@@ -126,7 +126,15 @@ public class TileGridTest {
 
     @Test
     public void robotInLine() {
-        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
+        TileGrid grid = new TileGrid("fireLaserTestMap2.txt");
+        assertEquals(1, grid.robotInLine(0));
+        assertEquals(0, grid.robotInLine(1));
+
+    }
+
+    @Test
+    public void robotInLine2() {
+        TileGrid grid = new TileGrid("robotInLineTestMap.txt");
         assertEquals(1, grid.robotInLine(0));
         assertEquals(0, grid.robotInLine(1));
 

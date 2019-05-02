@@ -832,25 +832,52 @@ public class TileGrid{
     public int robotInLine(int robotNumber) {
         int column = getRobotPosition(robotNumber).getColumn();
         int row = getRobotPosition(robotNumber).getRow();
-        System.out.println(row+" "+ column);
+
         for(IRobot robot : robots) {
+            int row2 = robot.getPosition().getRow();
+            int column2 = robot.getPosition().getColumn();
             if(robotNumber!=robot.getRobotNumber()) {
-                System.out.println("Robot tested for: "+robot.getRobotNumber());
-                System.out.println("Row: "+robot.getPosition().getRow()+" Column "+robot.getPosition().getColumn());
                 switch (getRobot(robotNumber).getOrientation()) {
                     case FACING_NORTH:
+                        if(column== column2){
+                            if(row<row2) {
+                                return robot.getRobotNumber();
+                            }
+                            if(robotHasAbility(robotNumber, Ability.RearFiringLaser) && row>row2){
+                                return robot.getRobotNumber();
+                            }
+                        }
+                        break;
                     case FACING_SOUTH:
-                        if (robot.getPosition().getColumn() == column &&
-                                (robot.getPosition().getRow() > row || robot.getPosition().getRow() < row)) {
-                            return robot.getRobotNumber();
+                        if (column== column2) {
+                            if(row>row2) {
+                                return robot.getRobotNumber();
+                            }
+                            if(robotHasAbility(robotNumber, Ability.RearFiringLaser) && row<row2){
+                                return robot.getRobotNumber();
+                            }
+                        }
+                        break;
+                    case FACING_EAST:
+                        if (row==row2) {
+                            if(column<column2) {
+                                return robot.getRobotNumber();
+                            }
+                            if(robotHasAbility(robotNumber, Ability.RearFiringLaser) && column>column2){
+                                return robot.getRobotNumber();
+                            }
                         }
                         break;
                     case FACING_WEST:
-                    case FACING_EAST:
-                        if (robot.getPosition().getRow() == row &&
-                                (robot.getPosition().getColumn() < column || robot.getPosition().getColumn() > column)) {
-                            return robot.getRobotNumber();
+                        if(row==row2) {
+                            if(column>column2) {
+                                return robot.getRobotNumber();
+                            }
+                            if(robotHasAbility(robotNumber, Ability.RearFiringLaser) && column<column2){
+                                return robot.getRobotNumber();
+                            }
                         }
+                        break;
                 }
             }
         }
