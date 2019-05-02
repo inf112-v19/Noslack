@@ -41,7 +41,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "emptyBigMapWithAIAndPlayer.txt";
+    private String selectedMap = "weirdProportionsTestMap.txt";
 
     @Override
     public void create() {
