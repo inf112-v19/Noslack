@@ -40,7 +40,7 @@
 
 ## Deloppgave 3: Kode
 
-- En svakhet i koden er at dersom en map ikke inneholder et flagg, vil man kunne få en ArrayIndexOutOfBoundsException. Dette er derimot ikke et problem om man spiller på skikkelige maps.
+- En svakhet i koden er at dersom en map ikke inneholder et flagg, vil man kunne få en ArrayIndexOutOfBoundsException. Dette er derimot ikke et problem om man spiller på skikkelige maps. Lasere er et kjendt problem i koden også, selv om de kan fungere fint hos AI.
 
 - Prosjektet kan kjøres ved å kjøre JAR filen i mappen. Denne må ikke flyttes på ettersom det er nødvendig at den ligger i samme mappe som assets-mappen. Programmet kan ellers kjøres fra IntelliJ ved å kjøre Main klassen. 
 

@@ -70,11 +70,11 @@ public class MenuScreen
         this.map1.setPosition(110,400);
         this.map2 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
         this.map2.setPosition(260,400);
-        this.map3 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
+        this.map3 = spriteContainer.setSprite("./assets/menuScreen/map3.png");
         this.map3.setPosition(410,400);
         this.map4 = spriteContainer.setSprite("./assets/menuScreen/map4.png");
         this.map4.setPosition(560,400);
-        this.map5 = spriteContainer.setSprite("./assets/menuScreen/map4.png");
+        this.map5 = spriteContainer.setSprite("./assets/menuScreen/map5.png");
         this.map5.setPosition(710,400);
 
         this.robot1 = spriteContainer.setSprite("./assets/gameObjects/player/player32x32.png");

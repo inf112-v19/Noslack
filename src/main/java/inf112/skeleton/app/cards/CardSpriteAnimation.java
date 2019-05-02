@@ -14,6 +14,7 @@ public class CardSpriteAnimation {
     private Vector2 startPos;
     private Vector2 endPos;
     private SoundContainer sounds;
+    private boolean isDone;
 
     public CardSpriteAnimation(ArrayList<ProgramCard> hand){
         this.sounds = new SoundContainer();
@@ -35,6 +36,7 @@ public class CardSpriteAnimation {
     }
 
     public ArrayList<ProgramCard> updatePositions(){
+        isDone = false;
         shuffleLeft();
         return hand;
     }
@@ -49,7 +51,6 @@ public class CardSpriteAnimation {
     }
 
     private void shuffleLeft(){
-
         if(i<hand.size()){
             double end = 25+i*80;
             int x = (int)(startPos.x - j);
@@ -81,18 +82,16 @@ public class CardSpriteAnimation {
                 }
             }
 
+        } else {
+            isDone = true;
         }
-
-
-
-
-
     }
 
-    private void fancyDealing(){
-
+    public void setDone() {
+        isDone = true;
     }
 
-
-
+    public boolean isDone() {
+        return isDone;
+    }
 }
