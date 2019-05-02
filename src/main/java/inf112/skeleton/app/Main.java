@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "RoboHally";
+        cfg.title = "RoboMotocross";
 
         /*
         * The width is composed of 12 tile-sizes to

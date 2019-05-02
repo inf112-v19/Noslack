@@ -13,20 +13,21 @@ public class Conveyor implements GameObject {
     private GameObjectType type;
     private boolean fast;
     private int turn;
+    private boolean Tintersection;
+    private boolean Xintersection;
+
 
     public Conveyor(){
-        this.orientation = Orientation.FACING_NORTH;
-        this.turn = 0;
-        this.fast = false;
-        this.type = GameObjectType.CONVEYOR;
-        evaluateSprite();
+        this(Orientation.FACING_NORTH,false,0,false,false);
     }
 
-    public Conveyor(Orientation orientation, boolean fast, int turn){
+    public Conveyor(Orientation orientation, boolean fast, int turn,boolean Tintersection,boolean Xintersection){
         this.orientation = orientation;
         this.turn = turn;
         this.fast = fast;
         this.type = GameObjectType.CONVEYOR;
+        this.Tintersection = Tintersection;
+        this.Xintersection = Xintersection;
         evaluateSprite();
     }
 
@@ -35,20 +36,39 @@ public class Conveyor implements GameObject {
         try {
             Texture texture;
             if (this.fast) {
-                if (turn != 0) {
+                if (this.turn != 0) {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashTurn32x32.png"));
-                } else {
+                }
+                //Fast colored T-shaped intersection(2 ways in, one way out)
+                else if(this.Tintersection){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashT32x32.png"));
+                }
+                //Fast colored X-shaped intersection(3 ways in, one way out)
+                else if(this.Xintersection){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDashX32x32.png"));
+                }
+                else {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/twoDash32x32.png"));
                 }
-            } else {
-                if (turn != 0) {
+            }
+            else {
+                if (this.turn != 0) {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashTurn32x32.png"));
-                } else {
+                }
+                //T-shaped intersection(2 ways in, one way out)
+                else if(this.Tintersection){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashT32x32.png"));
+                }
+                //X-shaped intersection(3 ways in, one way out)
+                else if(this.Xintersection){
+                    texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDashX32x32.png"));
+                }
+                else {
                     texture = new Texture(Gdx.files.internal("./assets/gameObjects/conveyor/oneDash32x32.png"));
                 }
             }
             this.sprite = new Sprite(texture);
-            if (turn < 0) {
+            if (turn == -1) {
                 sprite.flip(true, false);
             }
             sprite.setRotation(this.orientation.turnSprite());
@@ -80,6 +100,12 @@ public class Conveyor implements GameObject {
      */
     public int getTurn(){
         return this.turn;
+    }
+
+    public boolean isIntersection(){
+        if(this.Tintersection || this.Xintersection)
+            return true;
+        return false;
     }
 
     @Override

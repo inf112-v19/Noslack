@@ -21,11 +21,16 @@ public class MenuScreen
     private Sprite background;
     private BitmapFont font;
     private Vector2 mapTextPos;
+    private Vector2 robotTextPos;
     private boolean creatingMap;
     private TileGrid tileGrid;
     private String selectedMap = "mapLayoutFinishedMap1.txt";
     private Sprite map1;
     private Sprite map2;
+
+    private String selectedRobot = "./assets/gameObjects/player/player32x32.png";
+    private Sprite robot1;
+    private Sprite robot2;
 
     private Sprite youWin;
     private Sprite youLose;
@@ -54,11 +59,18 @@ public class MenuScreen
         this.font = new BitmapFont();
         this.font.setColor(200,0,0,1);
         this.mapTextPos = new Vector2(110,520);
+        this.robotTextPos = new Vector2(110,180);
 
         this.map1 = spriteContainer.setSprite("./assets/menuScreen/map1.png");
         this.map1.setPosition(110,400);
         this.map2 = spriteContainer.setSprite("./assets/menuScreen/map2.png");
         this.map2.setPosition(260,400);
+
+        this.robot1 = spriteContainer.setSprite("./assets/gameObjects/player/player32x32.png");
+        this.robot1.setPosition(150,110);
+        this.robot2 = spriteContainer.setSprite("./assets/gameObjects/player/snaali2.png");
+        this.robot2.setPosition(300,110);
+
 
         this.youLose = spriteContainer.setSprite("./assets/menuScreen/youLose.png");
         this.youLose.setPosition(225,400);
@@ -84,7 +96,11 @@ public class MenuScreen
             createNewMap.draw(batch);
             map1.draw(batch);
             map2.draw(batch);
+            robot1.draw(batch);
+            robot2.draw(batch);
+
             this.font.draw(batch,"Selected map:",mapTextPos.x,mapTextPos.y);
+            this.font.draw(batch,"Selected robot:",robotTextPos.x,robotTextPos.y);
             batch.end();
         }
     }
@@ -111,12 +127,12 @@ public class MenuScreen
     }
 
     public boolean clickStart(int screenX, int screenY){
-        return spriteContainer.isInsideSprite(screenX,screenY,startGame);
+        return (spriteContainer.isInsideSprite(screenX,screenY,startGame) && !creatingMap);
 
     }
 
     public void clickTestStart(int screenX, int screenY){
-        if(spriteContainer.isInsideSprite(screenX,screenY,testsButton)){
+        if(spriteContainer.isInsideSprite(screenX,screenY,testsButton) && !creatingMap){
             this.runTests = !this.runTests;
         }
     }
@@ -140,6 +156,19 @@ public class MenuScreen
             this.mapTextPos = new Vector2(260,520);
             this.selectedMap = "ConveyorLoops.txt";
             return this.selectedMap;
+        }
+        return "no";
+    }
+
+    public String clickRobot(int screenX, int screenY) {
+        if(spriteContainer.isInsideSprite(screenX,screenY,robot1)){
+            this.robotTextPos = new Vector2(110,180);
+            this.selectedRobot = "./assets/gameObjects/player/player32x32.png";
+            return this.selectedRobot;
+        } else if(spriteContainer.isInsideSprite(screenX,screenY,robot2)){
+            this.robotTextPos = new Vector2(260,180);
+            this.selectedRobot = "./assets/gameObjects/player/snaali2.png";
+            return this.selectedRobot;
         }
         return "no";
     }

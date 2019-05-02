@@ -10,7 +10,6 @@ public class SoundContainer {
     private Sound conveyor;
     private Sound laser;
     private Sound teleport;
-    private Sound pusher;
     private Sound move;
     private Sound victory;
     private Sound defeat;
@@ -44,9 +43,6 @@ public class SoundContainer {
         }catch(Exception e){
         }
     }
-    public void pusherSound(){
-        //this.pusher.play();
-    }
     public void teleportSound(){
         try{
             this.teleport.play(0.2f);
@@ -55,8 +51,11 @@ public class SoundContainer {
         }
     }
 
-    public void conveyorSound()
-    {
+    public void conveyorSound() {
+        try{
+            this.conveyor.play();
+        }catch(Exception e){
+        }
 
     }
     public void move(){
@@ -67,48 +66,64 @@ public class SoundContainer {
     }
 
     public void defeatSound(){
-
+        try {
+            this.defeat.play();
+        }catch(Exception e){
+        }
     }
 
     public void gameMusic(){
-        this.gameMusic.loop();
-        this.playing = true;
+        try {
+            this.gameMusic.loop();
+            this.playing = true;
+        }catch(Exception e){
+        }
+
     }
 
     public void pauseGameMusic(){
-        this.gameMusic.pause();
-        this.playing = false;
+        try {
+            this.gameMusic.pause();
+            this.playing = false;
+        }catch(Exception e){
+        }
+
     }
 
     public void stopMusic(){
-        this.gameMusic.stop();
+        try {
+            this.gameMusic.stop();
+        }catch(Exception e){
+        }
+
     }
 
     public void resumeGameMusic(){
-        this.gameMusic.resume();
-        this.playing = true;
-        //this.gameMusic.setPitch();
+        try {
+            this.gameMusic.resume();
+            this.playing = true;
+        }catch(Exception e){
+        }
+
     }
 
     public boolean isGameMusicPlaying(){
         return playing;
     }
 
-    public void rotateSound(){
-
-    }
-
     public void shuffleCardSound(){
-        shuffleCard.play();
+
+        try {
+            this.shuffleCard.play();
+        }catch(Exception e){
+        }
 
     }
 
     public void victorySound(){
-        victory.play();
+        try {
+            victory.play();
+        }catch(Exception e){
+        }
     }
-
-    public void takeDamageSound(){
-        defeat.play();
-    }
-
 }

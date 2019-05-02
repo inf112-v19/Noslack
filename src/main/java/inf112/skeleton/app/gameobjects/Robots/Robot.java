@@ -29,6 +29,7 @@ public abstract class Robot implements IRobot{
     private boolean[] flagsVisited;
     private boolean hasMoved;
     boolean powerDown;
+    Orientation lastDirectionOfMovement;
 
 
     public void create(int robotNumber,Orientation orientation, Coordinate position){
@@ -141,11 +142,22 @@ public abstract class Robot implements IRobot{
     public void setPosition(Coordinate position) {
         this.position =position;
     }
-
     @Override
     public Coordinate getPosition() {
         return position;
     }
+
+    @Override
+    public void setLastDirectionOfMovement(Orientation orientation){
+        this.lastDirectionOfMovement = orientation;
+    }
+    @Override
+    public Orientation getLastDirectionOfMovement(){
+        return this.lastDirectionOfMovement;
+    }
+
+
+
 
     @Override
     public void setFlagsVisitedSize(int n){
@@ -174,6 +186,9 @@ public abstract class Robot implements IRobot{
 
     @Override
     public boolean win(){
+        if(flagsVisited.length == 0){
+            return false;
+        }
         if(flagsVisited[flagsVisited.length-1]){
             System.out.println(this.name + " HAS WON!");
             this.hasWon = true;
@@ -206,13 +221,13 @@ public abstract class Robot implements IRobot{
     @Override
     public void applyAbilityToMoves(){
         if(currentMove == Program.BACK &&  hasAbility(Ability.ReverseGear)){
-            currentMove = Program.BACK2;
+            this.currentMove = Program.BACK2;
         }
         if(currentMove == Program.MOVE3 && hasAbility(Ability.FourthGear)){
-            currentMove = Program.MOVE4;
+            this.currentMove = Program.MOVE4;
         }
         if(currentMove == Program.MOVE1 && hasAbility(Ability.Brakes)){
-            currentMove = Program.NONE;
+            this.currentMove = Program.NONE;
         }
     }
 

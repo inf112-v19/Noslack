@@ -82,15 +82,24 @@ public class TileGridBuilder {
                 //One speed conveyors
                 boolean fast = nextTileType.contains("CC");
 
-                int rotating;
+                //Instead of it being a turn-conveyor, it can be a TShape or XShape conveyor which is basically just a normal conveyor
+                //Except that it visually looks different for aesthetic purposes
+                int turn;
                 if (nextTileType.contains("R"))
-                    rotating = 1;
+                    turn = 1;
                 else if(nextTileType.contains("L"))
-                    rotating = -1;
+                    turn = -1;
                 else
-                    rotating = 0;
+                    turn = 0;
+
+                boolean Tintersection = false, Xintersection = false;
+                if(nextTileType.contains("T"))
+                    Tintersection = true;
+                if(nextTileType.contains("X"))
+                    Xintersection = true;
+
                 orientation = stringToOrientation(nextTileType);
-                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,rotating));
+                this.tileGrid[row][column].addObjectOnTile(new Conveyor(orientation,fast,turn,Tintersection,Xintersection));
                 break;
             case "D":
                 boolean evenPusher = nextTileType.contains("DD");

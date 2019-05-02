@@ -5,7 +5,7 @@
 - C1 CC3 - - - - - - CC1 C3 -
 - C1 CC3 - H - - H - CC1 C3 -
 - C1 CC3 - - P - - - CC1 C3 -
-- C1 CC3 - - - - - - CC1 C3 -
+- C1 CC3 - - - F - - CC1 C3 -
 - C1 CC3 - H - - H - CC1 C3 -
 - C1 CC3 - - - - - - CC1 C3 -
 - C1 CCL2 CC2 CC2 CC2 CC2 CC2 CC2 CCL1 C3 -
