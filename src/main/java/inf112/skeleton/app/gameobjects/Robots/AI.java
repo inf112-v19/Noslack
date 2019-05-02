@@ -23,6 +23,13 @@ public abstract class AI extends Robot {
             applyMove();
             isFull();
         }
+        int size=5;
+        if(this.health<5){
+            size=this.health;
+        }
+        while(program.size()>size){
+            this.program.pop();
+        }
     }
 
     /**
