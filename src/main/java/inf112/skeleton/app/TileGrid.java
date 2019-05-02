@@ -343,10 +343,11 @@ public class TileGrid{
         int rowsToMove = movement[0];
         int columnsToMove = movement[1];
 
-        if(move==Program.BACK){
+        if(move==Program.BACK || move == Program.BACK2){
             rowsToMove *= -1;
             columnsToMove *= -1;
         }
+
         moveRobot(robotNumber, rowsToMove, columnsToMove);
     }
 

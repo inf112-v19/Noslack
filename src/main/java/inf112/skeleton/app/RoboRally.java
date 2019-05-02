@@ -38,7 +38,7 @@ public class RoboRally extends Game implements InputProcessor {
     private SpriteContainer spriteContainer;
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "PyramidMap.txt";
+    private String selectedMap = "emptyBigMapWithAIAndPlayer.txt";
 
     @Override
     public void create() {
