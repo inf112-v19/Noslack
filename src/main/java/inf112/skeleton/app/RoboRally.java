@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
+import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class RoboRally extends Game implements InputProcessor {
     private int roboTick;
     private boolean animation;
     private SpriteContainer spriteContainer;
+    private Vector2 hovering;
+
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
     private String selectedMap = "PyramidMap.txt";
@@ -73,6 +76,8 @@ public class RoboRally extends Game implements InputProcessor {
         this.roboTick = 0;
         this.programHand = this.tileGrid.getRobotProgramHand(this.tileGrid.getPlayer().getRobotNumber());
         dealNewCards();
+
+        this.hovering = new Vector2(0,0);
         this.animator = new CardSpriteAnimation(programHand);
         this.cardTestSprite = tileGrid.getRobotProgramHand(this.currentRobot).get(0).getSprite();
 
@@ -104,6 +109,9 @@ public class RoboRally extends Game implements InputProcessor {
                 this.programHand = this.animator.updatePositions();
             }
 
+            if(!animation){
+                spriteContainer.isHoveringCard(hovering.x,hovering.y,programHand);
+            }
             this.spriteContainer.renderDealtCards(this.programHand);
             this.spriteContainer.drawAbilityText();
             this.batch.end();
@@ -193,6 +201,10 @@ public class RoboRally extends Game implements InputProcessor {
             this.currentAbility.getSprite().setPosition(550,20);
             this.spriteContainer.getCardSprite(this.currentAbility);
         }
+        animator = new CardSpriteAnimation(programHand);
+        animation = true;
+
+
 
         this.animator = new CardSpriteAnimation(this.programHand);
         this.animation = true;
@@ -269,6 +281,10 @@ public class RoboRally extends Game implements InputProcessor {
                 this.menuScreen.clickTestStart(screenX,screenY);
             }
         } else {
+            if (spriteContainer.isInsideBack(screenX, screenY) && animation){
+                programHand = animator.finishAnimation();
+                animation = false;
+            }
             if (this.spriteContainer.isInsideGo(screenX, screenY)) {
                 ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
                 for(ProgramCard card : chosenCards){
@@ -348,7 +364,10 @@ public class RoboRally extends Game implements InputProcessor {
     }
 
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(int screenX, int screenY) {
+        if(!menuScreen.runMenu()){
+            this.hovering = new Vector2(screenX,screenY);
+        }
         return false;
     }
 
