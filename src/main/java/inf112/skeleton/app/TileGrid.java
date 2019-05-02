@@ -298,6 +298,7 @@ public class TileGrid{
 
         for(IRobot robot : this.robots){
             priorities.add(robot.getNextProgramPriority());
+            applyNextProgram(robot.getRobotNumber());
         }
         Collections.sort(priorities);
         for(Integer priority : priorities) {
