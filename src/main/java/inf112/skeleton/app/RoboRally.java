@@ -167,6 +167,9 @@ public class RoboRally extends Game implements InputProcessor {
                 this.currentRobot = this.robotQueue.pop();
 
         }else if (this.currentPhase > 5){
+            if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                this.tileGrid.getRobot(this.currentRobot).powerUp();
+            }
             dealNewCards();
             this.sequenceReady = false;
             this.currentPhase = 0;
@@ -293,8 +296,14 @@ public class RoboRally extends Game implements InputProcessor {
                     this.gameSounds.resumeGameMusic();
                 }
             }
-            if(this.spriteContainer.isInsidePowerDown(screenX,screenY)){
-                this.tileGrid.getRobot(this.currentRobot).powerDown();
+            if(!sequenceReady){
+                if (this.spriteContainer.isInsidePowerDown(screenX,screenY)){
+                    if (this.tileGrid.getRobot(this.currentRobot).isPoweredDown()){
+                        this.tileGrid.getRobot(this.currentRobot).powerUp();
+                    } else {
+                        this.tileGrid.getRobot(this.currentRobot).powerDown();
+                    }
+                }
             }
             this.spriteContainer.isInsideCard(screenX,screenY,this.currentAbility);
         }
