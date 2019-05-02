@@ -10,6 +10,7 @@ import inf112.skeleton.app.gameobjects.Orientation;
 import java.util.ArrayList;
 
 public class Player extends Robot {
+    public String selectedSprite = "./assets/gameObjects/player/player32x32.png";
     private ArrayList<ProgramCard> programHand;
 
     /**
@@ -33,10 +34,15 @@ public class Player extends Robot {
         evaluateSprite();
     }
 
+    public void setSelectedSprite(String sprite){
+        this.selectedSprite = sprite;
+        evaluateSprite();
+    }
+
     @Override
     public void evaluateSprite() {
         try {
-            Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/player32x32.png"));
+            Texture texture = new Texture(Gdx.files.internal(this.selectedSprite));
             this.sprite = new Sprite(texture);
             turnSprite();
         } catch (Exception e) {

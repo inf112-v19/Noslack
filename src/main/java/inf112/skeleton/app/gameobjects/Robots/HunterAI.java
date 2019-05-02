@@ -19,18 +19,13 @@ public class HunterAI extends AI {
     public HunterAI(int playerNumber, Orientation orientation, Coordinate position){
         create(playerNumber, orientation, position);
         this.abilityHand = new ArrayList<>();
-
         evaluateSprite();
     }
 
     @Override
     public void drawPrograms(ArrayList<RRCard> programCards) {
-        System.out.println("Getting cards for ai");
-
         ProgramDeck deck = new ProgramDeck("programCards.txt");
-
         this.programHand = new AIHand(programCards);
-        //this.programHand = new AIHand(deck.deal(99));
     }
 
     @Override

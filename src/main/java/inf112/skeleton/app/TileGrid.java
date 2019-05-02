@@ -201,7 +201,6 @@ public class TileGrid{
         }
         // Pusher activation
         else if(tile.hasGameObject(GameObjectType.PUSHER)){
-            sound.pusherSound();
             Pusher pusher = (Pusher) tile.getGameObject(GameObjectType.PUSHER);
             Orientation orientation = pusher.getOrientation();
 
@@ -583,10 +582,10 @@ public class TileGrid{
      * Finds the player on the bord.
      * @return Returns the player
      */
-    IRobot getPlayer(){
+    Player getPlayer(){
         for(IRobot robot : this.robots){
             if(!robot.isAI()){
-                return robot;
+                return (Player)robot;
             }
         }
         return null;
