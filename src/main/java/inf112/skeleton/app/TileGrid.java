@@ -206,10 +206,10 @@ public class TileGrid{
             Orientation orientation = pusher.getOrientation();
 
             int n[] = calculateMove(orientation);
-            if((currentPhase+1)%2==0 && pusher.isEven()){
+            if((currentPhase+1)%2==0 && !pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
-            else if((currentPhase+1)%2 != 0 && !pusher.isEven()){
+            else if((currentPhase+1)%2 != 0 && pusher.isEven()){
                 moveRobot(robot.getRobotNumber(),n[0],n[1]);
             }
         }
@@ -237,11 +237,10 @@ public class TileGrid{
      */
     private void moveInDirectionOfConveyor(Conveyor conveyor, int robotNumber){
         IRobot robot = getRobot(robotNumber);
-
-        if(conveyor.getTurn() > 0){
+        if(conveyor.getTurn() == 1){
             applyRotation(Program.RIGHT,robotNumber);
         }
-        if(conveyor.getTurn() < 0){
+        else if(conveyor.getTurn() == -1){
             applyRotation(Program.LEFT,robotNumber);
         }
 
@@ -617,7 +616,7 @@ public class TileGrid{
             int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation());
             if(robotToMove!=robotNumber) {
-                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition())) {
+                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition(), -1)) {
                     moveRobot(robotToMove, movement[0], movement[1]);
                 }
             }
@@ -625,7 +624,7 @@ public class TileGrid{
             int robotToMove = robotInLine(robotNumber);
             int[] movement=calculateMove(position.getOrientation().opposite());
             if(robotToMove!=robotNumber) {
-                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition())) {
+                if(continueBeam(getRobot(robotNumber).getPosition(), getRobot(robotToMove).getPosition(),-1)) {
                     moveRobot(robotToMove, movement[0], movement[1]);
                 }
             }
@@ -634,10 +633,10 @@ public class TileGrid{
         }
     }
 
-    public boolean continueBeam(Coordinate position, Coordinate opponentPosition) {
+    public boolean continueBeam(Coordinate position, Coordinate opponentPosition, int robotNumber) {
 
         while (!position.equals(opponentPosition)) {
-            if(!tileCheck(position, false)){
+            if(!tileCheck(position, false, robotNumber)){
                 return false;
             }
             position = position.moveCoordinate();
@@ -650,24 +649,22 @@ public class TileGrid{
      * @param robotNumber robot who is to fire laser
      */
     public void fireRobotLaser(int robotNumber) {
-        Coordinate position = getRobotPosition(robotNumber);
+        Coordinate position = new Coordinate(getRobotPosition(robotNumber));
         position.setOrientation(getRobot(robotNumber).getOrientation());
         Orientation laserOrientation = position.getOrientation().laserOrientation();
         boolean dual = robotHasAbility(robotNumber, Ability.DoubleBarreledLaser);
 
         boolean highPowered = robotHasAbility(robotNumber, Ability.HighPoweredLaser);
 
-        boolean firing = continueFiring(position);
+        boolean firing = continueFiring(position, robotNumber);
         if(!firing && highPowered){
             firing = true;
             highPowered = false;
         }
-
         while (firing) {
             position = position.moveCoordinate();
             getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, robotNumber));
-            firing = continueFiring(position);
-
+            firing = continueFiring(position, robotNumber);
             if(!firing && highPowered){
                 firing = true;
                 highPowered = false;
@@ -677,7 +674,7 @@ public class TileGrid{
             position = getRobotPosition(robotNumber);
             position.setOrientation(getRobot(robotNumber).getOrientation().opposite());
 
-            firing = continueFiring(position);
+            firing = continueFiring(position, robotNumber);
             if(!firing && highPowered){
                 firing = true;
                 highPowered = false;
@@ -686,7 +683,7 @@ public class TileGrid{
             while (firing) {
                 position = position.moveCoordinate();
                 getTile(position).addObjectOnTile(new LaserBeam(laserOrientation,dual, robotNumber));
-                firing = continueFiring(position);
+                firing = continueFiring(position, robotNumber);
 
                 if(!firing && highPowered){
                     firing = true;
@@ -696,21 +693,21 @@ public class TileGrid{
         }
     }
 
+    public boolean continueFiring(){
+        return true;
+    }
     /**
      * Figures out if the laser can keep firing
      * @param position lasers current position
      * @return If hte laser can keep firing.
      */
-    private boolean continueFiring(Coordinate position){
-        if(tileCheck(position,false)) {
-            return false;
-        }
-        if(getTile(position).hasGameObject(GameObjectType.ROBOT)){
+    private boolean continueFiring(Coordinate position, int robotNumber){
+        if(tileCheck(position,false, robotNumber)) {
             return false;
         }
         position = position.moveCoordinate();
 
-        if(tileCheck(position,true)){
+        if(tileCheck(position,true,robotNumber)){
             return false;
         }
         return true;
@@ -722,19 +719,23 @@ public class TileGrid{
      * @param nextTile True if it is concerning the next tile over
      * @return If it's not possible for the laser to be placed on this tile.
      */
-    private boolean tileCheck(Coordinate position, boolean nextTile){
+    private boolean tileCheck(Coordinate position, boolean nextTile, int robotNumber){
         if(position.getRow()<0 || position.getRow()>this.rows-1 ||
                 position.getColumn()<0 || position.getColumn()>this.columns-1){
             return true;
         }
+
         Tile tile = getTile(position);
+        if(tile.hasGameObject(GameObjectType.ROBOT) && !nextTile){
+            if(robotNumber != ((IRobot)tile.getGameObject(GameObjectType.ROBOT)).getRobotNumber()){
+                return true;
+            }
+        }
+
         if(nextTile){
             if(tile.orientationBlocked(position.getOrientation().opposite())){
                 return true;
             }
-        }
-        else if(tile.hasGameObject(GameObjectType.ROBOT)){
-            return true;
         }
         else if(tile.orientationBlocked(position.getOrientation())){
             return true;
