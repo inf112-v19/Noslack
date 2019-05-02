@@ -33,8 +33,6 @@ public abstract class AI extends Robot {
             this.program.pop();
         }
 
-        System.out.println("Ai program: " + this.program);
-
     }
 
     /**

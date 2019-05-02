@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.cards.*;
-import inf112.skeleton.app.gameobjects.Coordinate;
 import inf112.skeleton.app.gameobjects.Robots.*;
 
 import java.util.ArrayList;
@@ -61,7 +60,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.CSI = new CardSpriteInteraction();
         //NEW SPRITECONTAINER
         this.tileGrid = new TileGrid(selectedMap);
-        System.out.println(this.selectedRobot);
         this.tileGrid.getPlayer().setSelectedSprite(this.selectedRobot);
         this.robotQueue = new Stack<>();
         this.spriteContainer = new SpriteContainer(this.batch, this.tileGrid.getRows(), this.tileGrid.getColumns());
@@ -320,7 +318,6 @@ public class RoboRally extends Game implements InputProcessor {
             } else if(!this.menuScreen.clickMap(screenX,screenY).equals("no")){
                 this.selectedMap = this.menuScreen.clickMap(screenX,screenY);
             } else if(!this.menuScreen.clickRobot(screenX,screenY).equals("no")){
-                System.out.println("lego");
                 this.selectedRobot = this.menuScreen.clickRobot(screenX,screenY);
             } else {
                 this.menuScreen.clickCreate(screenX,screenY);
@@ -338,8 +335,7 @@ public class RoboRally extends Game implements InputProcessor {
                 for(ProgramCard card : chosenCards){
                     if (card.getPriority() == 0) nulls++;
                 }
-                if (true//nulls == 0
-                ) {
+                if (nulls == 0) {
                     this.tileGrid.getRobot(this.tileGrid.getPlayer().getRobotNumber()).pushProgram(chosenCards);
                     this.CSI.reset();
                     this.sequenceReady = true;
