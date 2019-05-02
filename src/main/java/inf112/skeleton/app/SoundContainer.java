@@ -52,7 +52,11 @@ public class SoundContainer {
     }
 
     public void conveyorSound() {
-        this.conveyor.play();
+        try{
+            this.conveyor.play();
+        }catch(Exception e){
+        }
+
     }
     public void move(){
         try {
@@ -62,26 +66,45 @@ public class SoundContainer {
     }
 
     public void defeatSound(){
-        defeat.play();
+        try {
+            this.defeat.play();
+        }catch(Exception e){
+        }
     }
 
     public void gameMusic(){
-        this.gameMusic.loop();
-        this.playing = true;
+        try {
+            this.gameMusic.loop();
+            this.playing = true;
+        }catch(Exception e){
+        }
+
     }
 
     public void pauseGameMusic(){
-        this.gameMusic.pause();
-        this.playing = false;
+        try {
+            this.gameMusic.pause();
+            this.playing = false;
+        }catch(Exception e){
+        }
+
     }
 
     public void stopMusic(){
-        this.gameMusic.stop();
+        try {
+            this.gameMusic.stop();
+        }catch(Exception e){
+        }
+
     }
 
     public void resumeGameMusic(){
-        this.gameMusic.resume();
-        this.playing = true;
+        try {
+            this.gameMusic.resume();
+            this.playing = true;
+        }catch(Exception e){
+        }
+
     }
 
     public boolean isGameMusicPlaying(){
@@ -89,11 +112,18 @@ public class SoundContainer {
     }
 
     public void shuffleCardSound(){
-        shuffleCard.play();
+
+        try {
+            this.shuffleCard.play();
+        }catch(Exception e){
+        }
 
     }
 
     public void victorySound(){
-        victory.play();
+        try {
+            victory.play();
+        }catch(Exception e){
+        }
     }
 }
