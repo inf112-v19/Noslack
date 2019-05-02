@@ -53,16 +53,4 @@ public class ConveyorTest {
         assertEquals(oldO.rotate(Program.LEFT),tileGrid.getRobot(0).getOrientation());
     }
 
-    @Test
-    public void playerCanPass() {
-        TileGrid tileGrid = new TileGrid("conveyorTestMap.txt");
-        tileGrid.getRobot(0).setCurrentMove(Program.MOVE2);
-        Coordinate oldPos = tileGrid.getRobotPosition(0);
-        for(int i =0; i<2; i++){
-            tileGrid.continueMove(0);
-            tileGrid.activateTiles();
-        }
-        assertEquals(oldPos.moveCoordinate(2,0),tileGrid.getRobotPosition(0));
-    }
-
 }
