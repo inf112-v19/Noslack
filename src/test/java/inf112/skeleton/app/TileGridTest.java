@@ -123,4 +123,12 @@ public class TileGridTest {
         assertTrue(0==list.pop());
         assertTrue(1==list.pop());
     }
+
+    @Test
+    public void robotInLine() {
+        TileGrid grid = new TileGrid("twoPlayersTestMap.txt");
+        assertEquals(1, grid.robotInLine(0));
+        assertEquals(0, grid.robotInLine(1));
+
+    }
 }

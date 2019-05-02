@@ -760,38 +760,31 @@ public class TileGrid{
      * @return robotNumber of robot in line of sight.
      */
     public int robotInLine(int robotNumber) {
-
-        int column = getRobot(robotNumber).getPosition().getColumn();
-        int row = getRobot(robotNumber).getPosition().getRow();
-        int robotInLine = robotNumber;
-
-        for(IRobot p : robots) {
-            switch (getRobot(robotNumber).getOrientation()) {
-                case FACING_NORTH:
-                    if(p.getPosition().getRow()==row && p.getPosition().getColumn()>column) {
-                        robotInLine = p.getRobotNumber();
-                    }
-                    break;
-                case FACING_WEST:
-                    if(p.getPosition().getColumn()==column && p.getPosition().getRow()<row) {
-                        robotInLine = p.getRobotNumber();
-                    }
-                    break;
-                case FACING_SOUTH:
-                    if(p.getPosition().getRow()==row && p.getPosition().getColumn()<column) {
-                        robotInLine = p.getRobotNumber();
-                    }
-                    break;
-                case FACING_EAST:
-                    if(p.getPosition().getColumn()==column && p.getPosition().getRow()>row) {
-                        robotInLine = p.getRobotNumber();
-                    }
-                    break;
-                default:
-                    robotInLine = -1;
+        int column = getRobotPosition(robotNumber).getColumn();
+        int row = getRobotPosition(robotNumber).getRow();
+        System.out.println(row+" "+ column);
+        for(IRobot robot : robots) {
+            if(robotNumber!=robot.getRobotNumber()) {
+                System.out.println("Robot tested for: "+robot.getRobotNumber());
+                System.out.println("Row: "+robot.getPosition().getRow()+" Column "+robot.getPosition().getColumn());
+                switch (getRobot(robotNumber).getOrientation()) {
+                    case FACING_NORTH:
+                    case FACING_SOUTH:
+                        if (robot.getPosition().getColumn() == column &&
+                                (robot.getPosition().getRow() > row || robot.getPosition().getRow() < row)) {
+                            return robot.getRobotNumber();
+                        }
+                        break;
+                    case FACING_WEST:
+                    case FACING_EAST:
+                        if (robot.getPosition().getRow() == row &&
+                                (robot.getPosition().getColumn() < column || robot.getPosition().getColumn() > column)) {
+                            return robot.getRobotNumber();
+                        }
+                }
             }
         }
-        return robotInLine;
+        return -1;
     }
 
     public void decideAiPrograms() {
