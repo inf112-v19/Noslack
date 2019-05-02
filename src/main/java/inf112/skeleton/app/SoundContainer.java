@@ -12,6 +12,8 @@ public class SoundContainer {
     private Sound teleport;
     private Sound pusher;
     private Sound move;
+    private Sound victory;
+    private Sound defeat;
     private boolean playing;
 
 
@@ -26,6 +28,8 @@ public class SoundContainer {
             this.move = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/move.wav"));
             this.laser = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/laser.wav"));
             this.teleport = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/portal.wav"));
+            this.victory = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/victoryroyale.wav"));
+            this.defeat = Gdx.audio.newSound(Gdx.files.internal("./assets/sound/rip.wav"));
 
         }catch(Exception e){
         }
@@ -76,6 +80,10 @@ public class SoundContainer {
         this.playing = false;
     }
 
+    public void stopMusic(){
+        this.gameMusic.stop();
+    }
+
     public void resumeGameMusic(){
         this.gameMusic.resume();
         this.playing = true;
@@ -96,11 +104,11 @@ public class SoundContainer {
     }
 
     public void victorySound(){
-
+        victory.play();
     }
 
     public void takeDamageSound(){
-
+        defeat.play();
     }
 
 }

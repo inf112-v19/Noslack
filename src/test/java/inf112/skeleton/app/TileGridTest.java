@@ -9,6 +9,7 @@ import inf112.skeleton.app.gameobjects.GameObjectType;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -73,24 +74,28 @@ public class TileGridTest {
         grid.fireRobotLaser(0);
 
         assertFalse(grid.getTile(0,0).hasGameObject(GameObjectType.LASER_BEAM));
-        //assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
         assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
         assertFalse(grid.getTile(0,3).hasGameObject(GameObjectType.LASER_BEAM));
     }
 
     @Test
     public void firePlayerLaser2() {
-        TileGrid grid = new TileGrid("fireLaserTestMap.txt");
-        grid.fireRobotLaser(0);
-
+        TileGrid grid = new TileGrid("fireLaserTestMap2.txt");
+        grid.fireRobotLaser(1);
         assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
         assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+        assertFalse(grid.getTile(0,3).hasGameObject(GameObjectType.LASER_BEAM));
     }
+
 
     @Test
     public void removePlayerLaser() {
         TileGrid grid = new TileGrid("fireLaserTestMap.txt");
         grid.fireRobotLaser(0);
+        assertTrue(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
+        assertTrue(grid.getTile(0,2).hasGameObject(GameObjectType.LASER_BEAM));
+
         grid.removeRobotLaser(0);
 
         assertFalse(grid.getTile(0,1).hasGameObject(GameObjectType.LASER_BEAM));
@@ -113,9 +118,9 @@ public class TileGridTest {
         grid.getRobot(0).pushProgram(deck1);
         grid.getRobot(1).pushProgram(deck2);
 
-        ArrayList<Integer> list = grid.robotQueue();
+        Stack<Integer> list = grid.robotQueue();
         assertEquals(2, list.size());
-        assertTrue(0==list.get(0));
-        assertTrue(1==list.get(1));
+        assertTrue(0==list.pop());
+        assertTrue(1==list.pop());
     }
 }

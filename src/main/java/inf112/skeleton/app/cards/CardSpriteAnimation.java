@@ -39,6 +39,15 @@ public class CardSpriteAnimation {
         return hand;
     }
 
+    public ArrayList<ProgramCard> finishAnimation(){
+        for (int k = 0; k < hand.size(); k++){
+            ProgramCard card = hand.get(k);
+            card.getSprite().setPosition((float)25+k*80,endPos.y);
+            card.setPosition(new Vector2((float)25+k*80,endPos.y));
+        }
+        return hand;
+    }
+
     private void shuffleLeft(){
 
         if(i<hand.size()){

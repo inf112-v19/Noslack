@@ -42,6 +42,9 @@ public class SpriteContainer {
     private int gridRows = 12;
     private int gridColumns = 12;
     private boolean mute = false;
+    private float inc = 0;
+    private ProgramCard hoverCard;
+    private boolean hovered;
     private boolean poweredDown = false;
 
     public SpriteContainer(SpriteBatch batch){
@@ -101,9 +104,11 @@ public class SpriteContainer {
         try {
             for (ProgramCard card : programHand) {
                 card.getSprite().draw(this.batch);
-                font.setColor(255, 255, 255, 1);
-                font.draw(this.batch, "" + card.getPriority(), card.getSprite().getX() + 7, card.getSprite().getY() + 100);
-                font.draw(this.batch, "" + card.getProgram(), card.getSprite().getX() + 7, card.getSprite().getY() + 17);
+                if (card != hoverCard || !hovered) {
+                    font.setColor(255, 255, 255, 1);
+                    font.draw(this.batch, "" + card.getPriority(), card.getSprite().getX() + 7, card.getSprite().getY() + 100);
+                    font.draw(this.batch, "" + card.getProgram(), card.getSprite().getX() + 7, card.getSprite().getY() + 17);
+                }
             }
             this.cardBack.draw(this.batch);
         }catch (Exception e){
@@ -121,14 +126,29 @@ public class SpriteContainer {
         return new Sprite(texture);
     }
 
-    public void renderGrid(TileGrid tileGrid) {
+    public void renderGrid(TileGrid tileGrid){
+        renderFlexibleGrid(tileGrid, false, 0, 0,0);
+    }
+
+    public void renderFlexibleGrid(TileGrid tileGrid, boolean creating, int size, int startx, int starty) {
+        float scale = 1;
+        if (size == 0){
+            size = TILE_SIZE;
+        } else {
+            scale = 0.3f;
+        }
         background.draw(this.batch);
 
         // Work in progress
 
         // Start draw position after the dealt cards.
-        this.drawPositionX = TILE_SIZE * 4;
-        this.drawPositionY = 40 + TILE_SIZE * 4;
+        if(!creating){
+            this.drawPositionX = size * 4;
+            this.drawPositionY = 40 + size * 4;
+        } else {
+            this.drawPositionX = startx;
+            this.drawPositionY = starty;
+        }
         for (int row = 0; row < this.gridRows; row++) {
             for (int column = 0; column < this.gridColumns; column++) {
 
@@ -140,47 +160,60 @@ public class SpriteContainer {
                 // Draw the tile
                 Sprite spriteOfTile = tileBeingDrawn.getSprite();
                 spriteOfTile.setPosition(this.drawPositionX, this.drawPositionY);
+                spriteOfTile.setScale(scale);
                 spriteOfTile.draw(this.batch);
 
                 // Draw GameObjects on tile
                 for (GameObject gameObject : objectsOnTile) {
                     Sprite spriteOfGameObject = gameObject.getSprite();
                     spriteOfGameObject.setPosition(this.drawPositionX, this.drawPositionY);
+                    spriteOfGameObject.setScale(scale);
                     spriteOfGameObject.draw(this.batch);
-                    if (gameObject.getGameObjectType() == GameObjectType.FLAG){
-                        this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
-                    }
-                    if (gameObject.getGameObjectType() == GameObjectType.TELEPORTER){
-                        this.font.draw(this.batch,((Teleporter)gameObject).getTeleporterNr()+"",drawPositionX+spriteOfGameObject.getWidth()/3,drawPositionY+spriteOfGameObject.getHeight()/2+7);
+                    if (!creating){
+                        if (gameObject.getGameObjectType() == GameObjectType.FLAG){
+                            this.font.draw(this.batch,((Flag)gameObject).getFlagNumber()+"",drawPositionX+spriteOfGameObject.getWidth()/2,drawPositionY+spriteOfGameObject.getHeight()/2);
+                        }
+                        if (gameObject.getGameObjectType() == GameObjectType.TELEPORTER){
+                            this.font.draw(this.batch,((Teleporter)gameObject).getTeleporterNr()+"",drawPositionX+spriteOfGameObject.getWidth()/3,drawPositionY+spriteOfGameObject.getHeight()/2+7);
+                        }
                     }
                 }
 
-                this.drawPositionX += this.TILE_SIZE;    // Moving the horizontal drawPosition, one tile over.
+                this.drawPositionX += size;    // Moving the horizontal drawPosition, one tile over.
             }
-            this.drawPositionX = this.TILE_SIZE * 4; // Resetting the horizontal drawPosition.
-            this.drawPositionY += this.TILE_SIZE;    // Moving the vertical drawPosition, one tile up.
+            this.drawPositionY += size;
+
+            if(!creating){
+                this.drawPositionX = size * 4; // Resetting the horizontal drawPosition.
+            } else {
+                this.drawPositionX = startx; // Moving the vertical drawPosition, one tile up.
+            }
         }
+
         // Resetting the vertical drawPosition.
         this.drawPositionY = 0;
-        //Drawing the go button
-        goButton.draw(this.batch);
-        if (poweredDown){
-            poweredDownButton.draw(this.batch);
-        } else {
-            powerDownButton.draw(this.batch);
+
+        if(!creating){
+            //Drawing the go button
+            goButton.draw(this.batch);
+            if (poweredDown){
+                poweredDownButton.draw(this.batch);
+            } else {
+                powerDownButton.draw(this.batch);
+            }
+            if (mute){
+                muteButton.draw(this.batch);
+            } else {
+                unMuteButton.draw(this.batch);
+            }
+            for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
+                this.lifeHeart.setPosition((12+40*i), 350);
+                this.lifeHeart.draw(this.batch);
+            }
+            font.setColor(0,255,0,1);
+            font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
+            font.setColor(255,255,255,1);
         }
-        if (mute){
-            muteButton.draw(this.batch);
-        } else {
-            unMuteButton.draw(this.batch);
-        }
-        for (int i = 0; i < tileGrid.getRobot(0).getLives(); i++){
-            this.lifeHeart.setPosition((12+40*i), 350);
-            this.lifeHeart.draw(this.batch);
-        }
-        font.setColor(0,255,0,1);
-        font.draw(this.batch,"HP: "+tileGrid.getRobot(0).getHealth(),80,320);
-        font.setColor(255,255,255,1);
     }
 
     public boolean isInsideSprite(float screenX, float screenY, Sprite sprite){
@@ -205,6 +238,7 @@ public class SpriteContainer {
 
     public Sprite getCurrentSprite() {return this.currentCard.getSprite();}
 
+    //Method checks if click is performed on a card
     public boolean isInsideCard(float screenX, float screenY, RRCard card) {
         Sprite sprite = card.getSprite();
         if (isInsideSprite(screenX,screenY,sprite)){
@@ -225,6 +259,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to move sprites
     public void moveSprite(Sprite sprite, float newX, float newY) {
         this.batch.begin();
         sprite.setPosition(newX, newY);
@@ -232,10 +267,50 @@ public class SpriteContainer {
         this.batch.end();
     }
 
+    public boolean isInsideBack(float screenX, float screenY){
+        return isInsideSprite(screenX,screenY,this.cardBack);
+    }
+
+    private float hoverScale(){
+        inc += 0.1;
+        float num = 1+(float)(Math.abs(Math.cos(inc))/3);
+        return num;
+    }
+
+    public void isHoveringCard(float screenX, float screenY, ArrayList<ProgramCard> hand){
+        float scale = hoverScale();
+        if (hovered){
+            hoverCard.getSprite().setScale(1);
+        }
+        boolean hover = false;
+
+        for(ProgramCard card : hand){
+            if (isInsideSprite(screenX,screenY,card.getSprite())){
+                hoverCard = card;
+                hover = true;
+                hovered = true;
+                card.getSprite().setScale(scale);
+
+
+            }
+        }
+        if(isInsideGo(screenX, screenY)){
+            goButton.setScale(scale);
+        } else {
+            goButton.setScale(1);
+        }
+        if (!hover && hovered){
+            hoverCard.getSprite().setScale(1);
+            inc = 0;
+            hovered = false;
+        }
+    }
+
     public boolean isInsideGo(float screenX, float screenY){
         return isInsideSprite(screenX,screenY,this.goButton);
     }
 
+    //Method to see if click is performed on powerDown button
     public boolean isInsidePowerDown(float screenX, float screenY) {
         if (isInsideSprite(screenX,screenY,this.powerDownButton)){
             poweredDown = !poweredDown;
@@ -244,6 +319,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to check if click is performed on mute/unmute button
     public boolean isInsideMute(float screenX, float screenY){
         if (isInsideSprite(screenX,screenY,this.muteButton)){
             mute = !mute;
@@ -252,6 +328,7 @@ public class SpriteContainer {
         return false;
     }
 
+    //Method to draw a Textvbox
     public void drawTextBox(String text, int length){
         ArrayList<String> lines = new ArrayList<>();
 
@@ -276,7 +353,40 @@ public class SpriteContainer {
         }
     }
 
+    //Method to draw a text from a abilitycard
     public void drawAbilityText(){
         drawTextBox(this.abilityText, 50);
     }
+
+
+    //Method for Manual testing of Sprites existence
+    public void drawAll(ArrayList<Sprite> sprites){
+
+
+        try{
+            unMuteButton.draw(batch);
+            cardSlot.draw(batch);
+            goButton.draw(batch);
+            muteButton.draw(batch);
+            lifeHeart.draw(batch);
+            cardBack.draw(batch);
+            emptyCard.draw(batch);
+            powerDownButton.draw(batch);
+            poweredDownButton.draw(batch);
+
+            for(Sprite s :sprites) {
+                s.draw(batch);
+            }
+        }
+        catch (Exception e){
+            System.out.println("A sprite could not be found");
+
+        }
+
+
+
+
+
     }
+
+}
