@@ -106,6 +106,10 @@ public class AIHand {
         return false;
     }
 
+    /**
+     * Find a turn in the hand
+     * @return a card with a turn program
+     */
     public ProgramCard findTurn(){
         for (ProgramCard card : hand) {
             if(!card.getProgram().isMove()){
@@ -122,10 +126,18 @@ public class AIHand {
         return s;
     }
 
+    /**
+     * Get the entire hand
+     * @return all the cards in the hand
+     */
     public ArrayList<ProgramCard> getHand(){
         return this.hand;
     }
 
+    /**
+     * Get the first card in the hand
+     * @return A program card
+     */
     public ProgramCard getFirst() {
         if(!hand.isEmpty()) {
             return this.hand.get(0);
@@ -133,6 +145,9 @@ public class AIHand {
         return null;
     }
 
+    /**
+     * Clears the cards in the AIHand
+     */
     public void clear() {
         hand.clear();
     }
