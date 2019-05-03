@@ -42,7 +42,7 @@
 
 - En svakhet i koden er at dersom en map ikke inneholder et flagg, vil man kunne få en ArrayIndexOutOfBoundsException. Dette er derimot ikke et problem om man spiller på skikkelige maps. Lasere er et kjendt problem i koden også, selv om de kan fungere fint hos AI.
 
-- Prosjektet kan kjøres ved å kjøre JAR filen i mappen. Denne må ikke flyttes på ettersom det er nødvendig at den ligger i samme mappe som assets-mappen. Programmet kan ellers kjøres fra IntelliJ ved å kjøre Main klassen. 
+- Programmet kan kjøres fra IntelliJ ved å kjøre Main klassen. IntelliJ vil også kunne importere Maven instillinger automatisk. 
 
 - Testene kjøres automatisk når man kjører Main. I tillegg er det manuelle tester for Sprites som kjøres ved å klikke på "Test" knappen på hovedmenyen. Grunnen til at vi har valgt å teste Sprites på denne måten er fordi det var en god del enklere enn å gjøre det direkte i koden. Test knappen tegner alle sprites som metoden drawAll i SpriteContainer får tilsendt.
 
