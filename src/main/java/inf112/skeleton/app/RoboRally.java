@@ -40,7 +40,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private SoundContainer gameSounds;
     private MenuScreen menuScreen;
-    private String selectedMap = "ConveyorLoops2.txt";
+    private String selectedMap = "ConveyorLoops.txt";
     private String selectedRobot = "./assets/gameObjects/player/player32x32.png";
 
     @Override
