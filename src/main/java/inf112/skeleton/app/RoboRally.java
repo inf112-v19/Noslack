@@ -136,6 +136,7 @@ public class RoboRally extends Game implements InputProcessor {
 
     private void startRound() {
         if (this.currentPhase == 0) {
+            spriteContainer.powerUP();
             this.currentPhase++;
             this.robotQueue = tileGrid.robotQueue();
             this.currentRobot = this.robotQueue.pop();
@@ -345,6 +346,9 @@ public class RoboRally extends Game implements InputProcessor {
                 ArrayList<ProgramCard> chosenCards = this.CSI.getChosenCards();
                 for(ProgramCard card : chosenCards){
                     if (card.getPriority() == 0) nulls++;
+                }
+                if(tileGrid.getPlayer().isPoweredDown()){
+                    nulls=0;
                 }
                 if (nulls == 0) {
                     this.tileGrid.getRobot(this.tileGrid.getPlayer().getRobotNumber()).pushProgram(chosenCards);

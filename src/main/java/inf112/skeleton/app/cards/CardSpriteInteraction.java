@@ -7,18 +7,11 @@ import java.util.ArrayList;
 
 public class CardSpriteInteraction {
 
-    private ProgramCard[] cardSequence;
-
     private ArrayList<ProgramCard> chosenCards;
-
     private ArrayList<Vector2> cardSlotPositions;
-
     private int intOffset = 15;
-
     private Vector2 cardOffset = new Vector2(74 + intOffset, 115 + intOffset);
-
     private ProgramCard empty = new ProgramCard(0, Program.NONE);
-
     private ProgramCard overlappingCard;
 
     public CardSpriteInteraction(ArrayList<ProgramCard> chosenCards) {

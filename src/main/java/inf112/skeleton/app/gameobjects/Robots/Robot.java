@@ -215,6 +215,8 @@ public abstract class Robot implements IRobot{
     public void setNextProgram(){
         if(!this.program.isEmpty())
             this.currentMove = this.program.pop().getProgram();
+        else
+            this.currentMove = Program.NONE;
         applyAbilityToMoves();
     }
 

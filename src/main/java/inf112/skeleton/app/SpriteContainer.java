@@ -319,6 +319,10 @@ public class SpriteContainer {
         return false;
     }
 
+    public void powerUP(){
+        poweredDown= false;
+    }
+
     //Method to check if click is performed on mute/unmute button
     public boolean isInsideMute(float screenX, float screenY){
         if (isInsideSprite(screenX,screenY,this.muteButton)){
