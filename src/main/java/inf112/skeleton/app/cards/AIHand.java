@@ -132,4 +132,8 @@ public class AIHand {
         }
         return null;
     }
+
+    public void clear() {
+        hand.clear();
+    }
 }
