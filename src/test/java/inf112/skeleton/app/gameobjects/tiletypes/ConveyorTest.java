@@ -52,18 +52,4 @@ public class ConveyorTest {
         }
         assertEquals(oldO.rotate(Program.LEFT),tileGrid.getRobot(0).getOrientation());
     }
-
-    @Test
-    public void intersectionTest(){
-        TileGrid tileGrid = new TileGrid("intersectionTestMap.txt");
-        Coordinate oldCor = tileGrid.getRobot(0).getPosition();
-        tileGrid.getRobot(0).setCurrentMove(Program.MOVE1);
-        for(int i =0; i<2; i++){
-            tileGrid.continueMove(0);
-            tileGrid.activateTiles();
-        }
-        assertEquals(oldCor.moveCoordinate(1,1),tileGrid.getRobot(0).getPosition());
-        assertEquals(oldCor.getOrientation().rotate(Program.RIGHT),tileGrid.getRobot(0).getOrientation());
-    }
-
 }
