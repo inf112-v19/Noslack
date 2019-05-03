@@ -170,6 +170,15 @@ public abstract class AI extends Robot {
     }
 
     @Override
+    public void reset() {
+        programHand.clear();
+        powerUp();
+        this.program.clear();
+        this.currentMove=Program.NONE;
+        resetMoveProgress();
+    }
+
+    @Override
     public boolean isAI(){
         return true;
     }

@@ -82,6 +82,7 @@ public class Player extends Robot {
 
     @Override
     public void reset(){
+        powerUp();
         this.programHand.clear();
         this.program.clear();
         this.currentMove=Program.NONE;

@@ -44,11 +44,6 @@ public class HunterAI extends AI {
     }
 
     @Override
-    public void reset() {
-
-    }
-
-    @Override
     public void evaluateSprite() {
         try {
             Texture texture = new Texture(Gdx.files.internal("./assets/gameObjects/player/robot32x32.png"));

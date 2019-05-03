@@ -277,6 +277,7 @@ public abstract class Robot implements IRobot{
     public void resetMoveProgress(){
         this.moveProgression = 0;
     }
+
     @Override
     public void repair(){
         if(health < 9)this.health++;
