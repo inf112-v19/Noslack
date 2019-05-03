@@ -147,23 +147,6 @@ public class RoboRally extends Game implements InputProcessor {
         this.tileGrid.activateTiles(this.currentPhase);
     }
 
-    private long diff, start = System.currentTimeMillis();
-
-    private void sleep(int fps) {
-        if (fps > 0) {
-            this.diff = System.currentTimeMillis() - this.start;
-            long targetDelay = 1000 / fps;
-            if (this.diff < targetDelay) {
-                try {
-                    Thread.sleep(targetDelay - this.diff);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            this.start = System.currentTimeMillis();
-        }
-    }
-
     /**
      * Round Logic
      */

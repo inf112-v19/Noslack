@@ -171,6 +171,10 @@ public abstract class AI extends Robot {
 
     @Override
     public void reset() {
+        powerUp();
+        this.program.clear();
+        this.currentMove=Program.NONE;
+        resetMoveProgress();
     }
 
     @Override

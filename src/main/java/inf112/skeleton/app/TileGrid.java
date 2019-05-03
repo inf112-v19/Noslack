@@ -907,7 +907,9 @@ public class TileGrid{
     public boolean nextPhase(){
         for(IRobot robot : this.robots){
             if(!robot.getCurrentMove().equals(Program.NONE)|| !(robot.getMoveProgression()==0)){
-                return false;
+                if (!robot.isFinished()) {
+                    return false;
+                }
             }
         }
         return true;

@@ -132,7 +132,4 @@ public class AIHand {
         }
         return null;
     }
-    public void clear(){
-        this.hand.clear();
-    }
 }
