@@ -171,7 +171,8 @@ public abstract class AI extends Robot {
 
     @Override
     public void reset() {
-        programHand.clear();
+        if(programHand != null)
+            programHand.clear();
         powerUp();
         this.program.clear();
         this.currentMove=Program.NONE;
